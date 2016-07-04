@@ -59,20 +59,20 @@
 		START_PROCESSING(SSobj, src)
 		return TRUE
 
-/obj/structure/fireplace/attackby(obj/item/T, mob/user)
+/obj/structure/fireplace/attackby(obj/item/T, mob/andy)
 	if(istype(T,/obj/item/stack/sheet/mineral/wood))
 		if(wood > 4)
-			user << "<span class = 'warning'>There's already enough logs in the [src].</span>"
+			andy << "<span class = 'warning'>There's already enough logs in the [src].</span>"
 			return
-		var/woodnumber = input(user, "Fireplace Fuel: Max 4 logs.", "How much wood do you want to add?", 0) as num //Something is causing this to break
+		var/woodnumber = input(andy, "Fireplace Fuel: Max 4 logs.", "How much wood do you want to add?", 0) as num //Something is causing this to break
 		woodnumber = Clamp(woodnumber,0,4)
 		var/obj/item/stack/sheet/mineral/wood/woody = T
-		if(!user.incapacitated() && in_range(src, user) && woody.use(woodnumber))
+		if(!andy.incapacitated() && in_range(src, andy) && woody.use(woodnumber))
 			wood += woodnumber * SECONDS_PER_LOG
-			user.visible_message("<span class='notice'>[user] tosses some wood into [name].</span>", "<span class='notice'>You add some fuel to [src].</span>")
+			andy.visible_message("<span class='notice'>[andy] tosses some wood into [name].</span>", "<span class='notice'>You add some fuel to [src].</span>")
 			return
 
-	else if(try_light(T,user))
+	else if(try_light(T,andy))
 		return
 
 /obj/structure/fireplace/update_icon()
