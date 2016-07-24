@@ -1,0 +1,11 @@
+<ui-display title='DNA Vault Database'>
+  <ui-section label='Human DNA'>
+    <span>{{data.dna}} Samples</span>
+  </ui-section>
+  <ui-section label='Plant Data'>
+    <span>{{data.plants}} Samples</span>
+  </ui-section>
+  <ui-section label='Animal Data'>
+    <span>{{data.animals}} Samples</span>
+  </ui-section>
+</ui-display>
