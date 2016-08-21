@@ -172,7 +172,7 @@
 	var/turf/point = get_front_turf()
 	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
 		T.ex_act(1)
-	point.Beam(get_target_turf(),icon_state="bsa_beam",icon='icons/effects/effects.dmi',time=50,maxdistance = world.maxx) //ZZZAP
+	point.Beam(get_target_turf(),icon_state="bsa_beam",icon='icons/effects/beam.dmi',time=50,maxdistance = world.maxx) //ZZZAP
 
 /obj/machinery/bsa/full/Destroy()
 	for(var/V in fillers)
