@@ -335,10 +335,10 @@
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
-		occupant << "<span class='notice'><b>The world is suddenly bright \
-			and sudden and loud!</b><br>\
-			<i>You feel your body weight suddenly, as your mind suddenly \
-			comprehends where you are and what is suddenly going on.</i></span>"
+		occupant << "<span class='notice'><b>Suddenly, the world is suddenly bright \
+			and suddenly sudden and loud!</b><br>\
+			<i>You suddenly feel your sudden body weight suddenly, as your mind suddenly \
+			comprehends where you are suddenly and what is suddenly going on.</i></span>"
 		occupant.flash_eyes()
 
 	var/turf/T = get_turf(src)
