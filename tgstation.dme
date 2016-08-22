@@ -1240,6 +1240,7 @@
 #include "code\modules\jobs\job_types\science.dm"
 #include "code\modules\jobs\job_types\security.dm"
 #include "code\modules\jobs\job_types\silicon.dm"
+#include "code\modules\law\law.dm"
 #include "code\modules\library\lib_codex_gigas.dm"
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
