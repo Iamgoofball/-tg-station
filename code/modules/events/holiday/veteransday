@@ -1,0 +1,13 @@
+/datum/round_event_control/veteransday
+	name = "Veterans' Day"
+	holidayID = "Veterans' Day"
+	typepath = /datum/round_event/veteransday
+	weight = -1							//forces it to be called, regardless of weight
+	max_occurrences = 1
+	earliest_start = 0
+
+/datum/round_event/veteransday/start()
+	..()
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
+		new /obj/item/weapon/reagent_containers/food/snacks/grown/poppy(b)
