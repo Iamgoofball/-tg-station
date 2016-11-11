@@ -274,6 +274,14 @@
 	begin_day = 1
 	begin_month = NOVEMBER
 
+/datum/holiday/veterans
+	name = "Veterans' Day"
+	begin_day = 11
+	begin_month = NOVEMBER
+
+/datum/holiday/veterans/greet()	
+	return "The 11th hour on the 11th day of the 11th month. "
+
 /datum/holiday/kindness
 	name = "Kindness Day"
 	begin_day = 13
