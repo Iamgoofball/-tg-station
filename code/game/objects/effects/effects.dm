@@ -42,7 +42,3 @@
 
 /obj/effect/experience_pressure_difference()
 	return
-
-/obj/effect/singularity_act()
-	qdel(src)
-	return 0
