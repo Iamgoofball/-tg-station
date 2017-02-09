@@ -3906,6 +3906,8 @@
 	},
 /obj/structure/rack,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
+/obj/item/weapon/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -62595,7 +62597,7 @@
 	network = list("SS13","Medbay")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/limbgrower,
+/obj/structure/closet/crate/freezer/surplus_limbs,
 /obj/item/weapon/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
@@ -73081,7 +73083,6 @@
 	},
 /area/crew_quarters/hor)
 "ctb" = (
-/obj/machinery/computer/aifixer,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -73093,6 +73094,7 @@
 	pixel_x = 0;
 	pixel_y = 30
 	},
+/obj/machinery/modular_computer/console/preset/research,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -126213,7 +126215,7 @@ coe
 cpq
 cqJ
 crP
-cta
+cuN
 ctR
 cuN
 cvR
