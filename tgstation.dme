@@ -14,7 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
@@ -1960,6 +1960,7 @@
 #include "code\modules\station_goals\shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
 #include "code\modules\stats\stat.dm"
+#include "code\modules\stats\structures.dm"
 #include "code\modules\stats\survival.dm"
 #include "code\modules\stock_market\articles.dm"
 #include "code\modules\stock_market\computer.dm"

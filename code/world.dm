@@ -244,6 +244,11 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	world << "<span class='boldannounce'>Rebooting world. Loading next map...</span>"
 	for(var/thing in clients)
 		var/client/C = thing
+		if(C.skills.len)
+			for(var/datum/stat/S in C.skills)
+				S.parent = null
+			var/savefile/saved_skills = new /savefile("data/skill_saves/[C.ckey].sav")
+			saved_skills[C.ckey] << C.skills
 		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 

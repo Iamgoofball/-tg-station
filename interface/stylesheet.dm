@@ -138,6 +138,10 @@ h1.alert, h2.alert		{color: #000000;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif; font-style: italic;}
+.clwunescape_clean		{font-family: "RuneScape UF", cursive, sans-serif;}
+.clwunescape			{color: #999900; font-size: 14px; font-family: "RuneScape UF", cursive, sans-serif;}
+.skill_big				{text-align: center; vertical-align: middle; font-size: 5; font-family: 'RuneScape UF', cursive, sans-serif;}
+.skill_small			{text-align: center; vertical-align: middle; font-size: 4; font-family: 'RuneScape UF', cursive, sans-serif;}
 
 BIG IMG.icon 			{width: 32px; height: 32px;}
 

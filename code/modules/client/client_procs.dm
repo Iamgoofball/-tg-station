@@ -300,11 +300,16 @@ var/next_external_rsc = 0
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
-
+	var/savefile/saved_skills = new /savefile("data/skill_saves/[ckey].sav")
+	var/list/saved_skill_list = list()
+	saved_skills[ckey] >> saved_skill_list
+	if(saved_skill_list && saved_skill_list.len)
+		skills = saved_skill_list
 	if(!skills.len)
 		for(var/stat in subtypesof(/datum/stat))
-			skills += new stat(src)
-
+			skills += new stat()
+	for(var/datum/stat/S in skills)
+		S.parent = src
 
 //////////////
 //DISCONNECT//
@@ -320,6 +325,11 @@ var/next_external_rsc = 0
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	if(skills.len)
+		for(var/datum/stat/S in skills)
+			S.parent = null
+		var/savefile/saved_skills = new /savefile("data/skill_saves/[ckey].sav")
+		saved_skills[ckey] << skills
 	return ..()
 
 /client/Destroy()

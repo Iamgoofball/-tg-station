@@ -1,8 +1,7 @@
+var/preload_cluwnescape = 'icons/font/runescape_uf.ttf'
+
 /datum/stat
 	var/statName = "noname"	//Name of the stat
-	var/statDesc = ""		//Description of the stat
-	var/statId = ""			//Id of the stat for referencing it
-	var/statIcon = ""		//Iconstate of the stat
 
 	var/statBase = 0		//The rolled base stat
 	var/statBaseOld = 0		//For rerolls
@@ -20,15 +19,9 @@
 	var/totalXP = 0 // total gained XP
 	var/xpToLevel = 120 // base XP per level
 	var/lvl_up_sound = null
+	var/client/parent
 
-/datum/stat/New(var/name = "error", var/id = "", var/limit=FALSE, var/cur=0, var/min=0, var/max=100, var/staticon = "")
-	if(limit)
-		isLimited = limit
-		statMin = min
-	statName = name
-	statId = id
-	statIcon = staticon
-
+/datum/stat/New(var/cur=1, var/min=1, var/max=99)
 	statBase = cur
 	statCurr = statBase
 
@@ -57,14 +50,15 @@
 /datum/stat/proc/revert()
 	statBase = statBaseOld
 
-/datum/stat/proc/addxp(var/n, var/client/reciever)
+/datum/stat/proc/addxp(var/n)
 	totalXP += n
 	if(totalXP >= xpToLevel)
 		change(1)
-		reciever << "<text style='text-align: center; vertical-align: middle; font-size: 5;'>\blue Congratulations, you've just advanced a [statName] level.</text>"
-		reciever << "<text style='text-align: center; vertical-align: middle; font-size: 4;'>Your [statName] level is now [statCurr].</text>"
-		if(lvl_up_sound)
-			playsound(get_turf(reciever), lvl_up_sound, 50, 0)
+		if(parent)
+			parent << "<span class = 'skill_big'>\blue Congratulations, you've just advanced a [statName] level.</span>"
+			parent << "<span class = 'skill_small'>Your [statName] level is now [statCurr].</span>"
+			if(lvl_up_sound)
+				parent << sound(lvl_up_sound, repeat = 0, wait = 0, volume = 50, channel = 1)
 		var/temp_xp = round(statCurr + 300 * 2 ** (statCurr/7)) / 4
 		xpToLevel += round(temp_xp)
 
