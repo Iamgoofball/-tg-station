@@ -1959,6 +1959,8 @@
 #include "code\modules\station_goals\dna_vault.dm"
 #include "code\modules\station_goals\shield.dm"
 #include "code\modules\station_goals\station_goal.dm"
+#include "code\modules\stats\stat.dm"
+#include "code\modules\stats\survival.dm"
 #include "code\modules\stock_market\articles.dm"
 #include "code\modules\stock_market\computer.dm"
 #include "code\modules\stock_market\events.dm"
