@@ -22,21 +22,19 @@
 
 /obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charges > 0)
-		new /obj/structure/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
 		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else
 		to_chat(user, "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>")
 
-/obj/structure/rend
+/obj/effect/rend
 	name = "tear in the fabric of reality"
 	desc = "You should run now."
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "rift"
-	density = 1
-	anchored = 1
-	obj_integrity = 500
-	max_integrity = 500
+	density = TRUE
+	anchored = TRUE
 	var/spawn_path = /mob/living/simple_animal/cow //defaulty cows to prevent unintentional narsies
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
@@ -45,11 +43,15 @@
 	spawn_path = /mob/living/simple_animal/hostile/faithless
 	spawn_amt_left = 30
 
-/obj/structure/rend/New()
+/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
+	src.spawn_path = spawn_type
+	src.spawn_amt_left = spawn_amt
+	src.desc = desc
+	src.spawn_fast = spawn_fast
 	START_PROCESSING(SSobj, src)
 	return
 
-/obj/structure/rend/process()
+/obj/effect/rend/process()
 	if(!spawn_fast)
 		if(locate(/mob) in loc)
 			return
@@ -58,7 +60,7 @@
 	if(spawn_amt_left <= 0)
 		qdel(src)
 
-/obj/structure/rend/attackby(obj/item/I, mob/user, params)
+/obj/effect/rend/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/nullrod))
 		user.visible_message("<span class='danger'>[user] seals \the [src] with \the [I].</span>")
 		qdel(src)
@@ -457,7 +459,6 @@
 	var/obj/item/link = null
 	var/cooldown_time = 30 //3s
 	var/cooldown = 0
-	obj_integrity = 10
 	max_integrity = 10
 	resistance_flags = FLAMMABLE
 
