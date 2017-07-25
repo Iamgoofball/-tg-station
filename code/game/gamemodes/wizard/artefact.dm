@@ -39,7 +39,7 @@
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
 
-/obj/structure/rend/hfs
+/obj/effect/rend/hfs
 	spawn_path = /mob/living/simple_animal/hostile/faithless
 	spawn_amt_left = 30
 
