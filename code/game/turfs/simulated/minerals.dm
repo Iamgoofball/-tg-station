@@ -400,7 +400,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	if(!GLOB.secret_triggered)
 		GLOB.secret_triggered = TRUE
 		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
-		new /obj/structure/rend/hfs(src)
+		new /obj/effect/rend/hfs(src)
 	..()
 
 
