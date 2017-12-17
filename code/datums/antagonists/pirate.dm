@@ -35,6 +35,12 @@
 		owner.objectives -= crew.objectives
 	. = ..()
 
+/datum/antagonist/pirate/apply_innate_effects(mob/living/M)
+	M.gain_trauma(/datum/brain_trauma/mild/pirate_slang, TRUE)
+
+/datum/antagonist/pirate/remove_innate_effects(mob/living/M)
+	M.cure_trauma_type(/datum/brain_trauma/mild/pirate_slang, TRUE)
+
 /datum/objective_team/pirate
 	name = "Pirate crew"
 

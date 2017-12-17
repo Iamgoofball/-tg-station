@@ -1517,3 +1517,41 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/V in GLOB.player_list)
 		if(is_servant_of_ratvar(V) || isobserver(V))
 			. += V
+
+// RUDE LANGUAGES FOLLOWS
+/proc/piratify(message)
+	var/static/list/replacements = list(
+		"asses" = "booties",
+		"\\bass\\b" = "booty",
+		"asshole" = "barrelstopper",
+		"bitches" = "tarts",
+		"bitch" = "tart",
+		"blowjob" = "harmonica lesson",
+		"clit" = "rosebud",
+		"cock" = "mast",
+		"cocksuck" = "bilgedrink",
+		"cum" = "bilge",
+		"cunt" = "shrew",
+		"dildo" = "tickler",
+		"fag" = "landlubber",
+		"fuck" = "scupper",
+		"muff" = "britches",
+		"penis" = "John Thomas",
+		"pussy" = "kitty",
+		"shit\\b" = "cannon",
+		"shit" = "barnacle",
+		"slut" = "strumpet",
+		"tits" = "bosom",
+		"titty" = "bosom",
+		"twat" = "halibut",
+		"whore" = "flirt",
+		"vaginas" = "danties",
+		"vagina" = "danty"
+	)
+
+	for(var/key in replacements)
+		var/value = replacements[key]
+		message = replacetext(message, regex(key, "i"), value)
+
+	return message
+
