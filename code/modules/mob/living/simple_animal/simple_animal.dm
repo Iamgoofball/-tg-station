@@ -246,7 +246,7 @@
 	if(butcher_results)
 		var/atom/Tsec = drop_location()
 		for(var/path in butcher_results)
-			for(var/i in 1 to butcher_results[path])
+			for(var/i in 1 to butcher_results[path]) //whoa
 				new path(Tsec)
 	..()
 
