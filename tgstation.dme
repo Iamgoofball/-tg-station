@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -1374,6 +1375,8 @@
 #include "code\modules\cargo\exports\sheets.dm"
 #include "code\modules\cargo\exports\tools.dm"
 #include "code\modules\cargo\exports\weapons.dm"
+#include "code\modules\cargo\lootboxes\skin_pack.dm"
+#include "code\modules\cargo\lootboxes\skins.dm"
 #include "code\modules\chatter\chatter.dm"
 #include "code\modules\client\asset_cache.dm"
 #include "code\modules\client\client_colour.dm"
