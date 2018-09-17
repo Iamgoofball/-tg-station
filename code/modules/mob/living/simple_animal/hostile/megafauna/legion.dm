@@ -43,7 +43,7 @@ Difficulty: Medium
 	score_type = LEGION_SCORE
 	pixel_y = -90
 	pixel_x = -75
-	loot = list(/obj/item/stack/sheet/bone = 3)
+	loot = list(/obj/item/stack/sheet/bone = 3, /obj/item/megafauna_craft_item/legion = 1)
 	vision_range = 13
 	wander = FALSE
 	elimination = 1
@@ -205,3 +205,8 @@ Difficulty: Medium
 	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
+
+/obj/item/megafauna_craft_item/legion
+	name = "legion's eye"
+	icon_state = "legion"
+	desc = "I have met many gods in my life. And relayed many greetings from home."

@@ -55,8 +55,8 @@ Difficulty: Hard
 	ranged = 1
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
-	loot = list(/obj/item/hierophant_club)
-	crusher_loot = list(/obj/item/hierophant_club)
+	loot = list(/obj/item/hierophant_club, /obj/item/megafauna_craft_item/misc)
+	crusher_loot = list(/obj/item/hierophant_club, /obj/item/megafauna_craft_item/misc)
 	wander = FALSE
 	medal_type = BOSS_MEDAL_HIEROPHANT
 	score_type = HIEROPHANT_SCORE

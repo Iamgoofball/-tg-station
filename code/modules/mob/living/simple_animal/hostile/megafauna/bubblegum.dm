@@ -44,8 +44,8 @@ Difficulty: Hard
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher, /obj/item/megafauna_craft_item/misc)
+	loot = list(/obj/structure/closet/crate/necropolis/bubblegum, /obj/item/megafauna_craft_item/misc)
 	var/charging = 0
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE

@@ -51,8 +51,8 @@ Difficulty: Medium
 	move_to_delay = 10
 	ranged = 1
 	pixel_x = -16
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/dragon)
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher, /obj/item/megafauna_craft_item/drake)
+	loot = list(/obj/structure/closet/crate/necropolis/dragon, /obj/item/megafauna_craft_item/drake)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
@@ -386,9 +386,14 @@ Difficulty: Medium
 	melee_damage_lower = 30
 	mouse_opacity = MOUSE_OPACITY_ICON
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	loot = list()
-	crusher_loot = list()
+	loot = list(/obj/item/megafauna_craft_item/drake)
+	crusher_loot = list(/obj/item/megafauna_craft_item/drake)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
+
+/obj/item/megafauna_craft_item/drake
+	name = "ash drake's heart"
+	desc = "The gods have many followers, one of which dwarfs a god I have never encountered, whose name I have forgotten."
+	icon_state = "drake"

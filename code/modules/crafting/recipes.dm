@@ -711,3 +711,12 @@
 	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/megafauna_reward
+	name = "Baldwin's Lament"
+	result = /obj/item/megafauna_reward
+	time = 20
+	reqs = list(/obj/item/megafauna_craft_item/legion = 1,
+				/obj/item/megafauna_craft_item/drake = 1,
+				/obj/item/megafauna_craft_item/misc = 1)
+	category = CAT_MISC

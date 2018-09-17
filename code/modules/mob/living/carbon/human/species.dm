@@ -1098,7 +1098,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/obj/item/I in H.held_items)
 			if(I.item_flags & SLOWS_WHILE_IN_HAND)
 				. += I.slowdown
-		var/health_deficiency = (100 - H.health + H.staminaloss)
+		var/health_deficiency = (H.maxHealth - H.health + H.staminaloss)
 		if(health_deficiency >= 40)
 			if(flight)
 				. += (health_deficiency / 75)
@@ -1367,7 +1367,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					else
 						H.adjustBrainLoss(I.force * 0.2)
 
-					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((100 - H.health) * 0.5))) // rev deconversion through blunt trauma.
+					if(H.stat == CONSCIOUS && H != user && prob(I.force + ((H.maxHealth - H.health) * 0.5))) // rev deconversion through blunt trauma.
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
 						if(rev)
 							rev.remove_revolutionary(FALSE, user)

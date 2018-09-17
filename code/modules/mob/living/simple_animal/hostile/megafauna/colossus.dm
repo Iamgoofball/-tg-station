@@ -44,8 +44,8 @@ Difficulty: Very Hard
 	del_on_death = 1
 	medal_type = BOSS_MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
-	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
-	loot = list(/obj/structure/closet/crate/necropolis/colossus)
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher, /obj/item/megafauna_craft_item/misc)
+	loot = list(/obj/structure/closet/crate/necropolis/colossus, /obj/item/megafauna_craft_item/misc)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
