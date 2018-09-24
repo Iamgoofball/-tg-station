@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/aa = 0 // amt_of_crew
 	var/xx = 0 // dead_crew
 	var/vv = 0.5 // mult_at_50_percent
-	var/sensors_detection = 0.15 // this * amt of crew is the amount that needs to actually be dead before we start fucking with the refueling timer or allowing a call to begin with
+	var/sensors_detection = 0.1 // this * amt of crew is the amount that needs to actually be dead before we start fucking with the refueling timer or allowing a call to begin with
 
 	for(var/mob/M in GLOB.mob_list)
 		if(ishuman(M))
@@ -193,7 +193,7 @@ SUBSYSTEM_DEF(shuttle)
 				if(H.stat && !H.suiciding)
 					xx++
 		CHECK_TICK
-	if(!xx || xx < round((aa * sensors_detection)) && round((aa * sensors_detection)) >= 5)
+	if(!xx || xx < round((aa * sensors_detection)) && round((aa * sensors_detection)) >= 10)
 		to_chat(user, "Central Command Emergency Sensors indicate [station_name()] is operating normally. Your request for a shuttle is denied for the time being. Thank you, and have a productive shift!")
 		return
 
