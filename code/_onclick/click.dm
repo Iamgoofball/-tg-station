@@ -2,7 +2,7 @@
 	Click code cleanup
 	~Sayu
 */
-
+// just making a branch
 // 1 decisecond click delay (above and beyond mob/next_move)
 //This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
 /mob/var/next_click	= 0
