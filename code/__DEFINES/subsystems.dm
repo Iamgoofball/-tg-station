@@ -1,7 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
-#define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 7
+#define DB_MAJOR_VERSION 5
+#define DB_MINOR_VERSION 0
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
@@ -21,8 +21,6 @@
 //Loops the timer repeatedly until qdeleted
 //In most cases you want a subsystem instead
 #define TIMER_LOOP				(1<<5)
-
-#define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
 
 #define TIMER_ID_NULL -1
 
@@ -80,7 +78,7 @@
 #define INIT_ORDER_STICKY_BAN		-10
 #define INIT_ORDER_LIGHTING			-20
 #define INIT_ORDER_SHUTTLE			-21
-#define INIT_ORDER_SQUEAK			-40
+#define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_PERSISTENCE		-100
 
@@ -101,7 +99,6 @@
 #define FIRE_PRIORITY_SPACEDRIFT	30
 #define FIRE_PRIORITY_FIELDS		30
 #define FIRE_PRIOTITY_SMOOTHING		35
-#define FIRE_PRIORITY_ORBIT			35
 #define FIRE_PRIORITY_NETWORKS		40
 #define FIRE_PRIORITY_OBJ			40
 #define FIRE_PRIORITY_ACID			40
@@ -143,6 +140,12 @@
 		}\
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
+		}\
+		for(var/I in A.alternate_appearances){\
+			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
+			if(AA.transfer_overlays){\
+				AA.copy_overlays(A, TRUE);\
+			}\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

@@ -7,6 +7,8 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
+#define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
+
 ///////////
 // BUFFS //
 ///////////
@@ -32,17 +34,28 @@
 
 #define STATUS_EFFECT_HIPPOCRATIC_OATH /datum/status_effect/hippocraticOath //Gives you an aura of healing as well as regrowing the Rod of Asclepius if lost
 
+#define STATUS_EFFECT_GOOD_MUSIC /datum/status_effect/good_music
+
+#define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core
+#define STATUS_EFFECT_CREEP /datum/status_effect/creep //you feel fuckin great around your obsession
+
 /////////////
 // DEBUFFS //
 /////////////
 
-#define STATUS_EFFECT_STUN /datum/status_effect/incapacitating/stun //the affected is stunned
+#define STATUS_EFFECT_STUN /datum/status_effect/incapacitating/stun //the affected is unable to move or use items
 
-#define STATUS_EFFECT_KNOCKDOWN /datum/status_effect/incapacitating/knockdown //the affected is knocked down
+#define STATUS_EFFECT_KNOCKDOWN /datum/status_effect/incapacitating/knockdown //the affected is unable to stand up
+
+#define STATUS_EFFECT_IMMOBILIZED /datum/status_effect/incapacitating/immobilized //the affected is unable to move
+
+#define STATUS_EFFECT_PARALYZED /datum/status_effect/incapacitating/paralyzed //the affected is unable to move, use items, or stand up.
 
 #define STATUS_EFFECT_UNCONSCIOUS /datum/status_effect/incapacitating/unconscious //the affected is unconscious
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
+
+#define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
 
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 
@@ -51,6 +64,8 @@
 #define STATUS_EFFECT_MANIAMOTOR /datum/status_effect/maniamotor //disrupts, damages, and confuses the affected as long as they're in range of the motor
 #define MAX_MANIA_SEVERITY 100 //how high the mania severity can go
 #define MANIA_DAMAGE_TO_CONVERT 90 //how much damage is required before it'll convert affected targets
+
+#define STATUS_EFFECT_CHOKINGSTRAND /datum/status_effect/strandling //Choking Strand
 
 #define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.
 

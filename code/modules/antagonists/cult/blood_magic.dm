@@ -263,7 +263,7 @@
 		H.hallucination = max(H.hallucination, 120)
 		SEND_SOUND(ranged_ability_user, sound('sound/effects/ghost.ogg',0,1,50))
 		var/image/C = image('icons/effects/cult_effects.dmi',H,"bloodsparkles", ABOVE_MOB_LAYER)
-		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, FALSE)
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)
 		addtimer(CALLBACK(H,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), 2400, TIMER_OVERRIDE|TIMER_UNIQUE)
 		to_chat(ranged_ability_user,"<span class='cult'><b>[H] has been cursed with living nightmares!</b></span>")
 		attached_action.charges--
@@ -339,7 +339,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | NODROP | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -355,6 +355,10 @@
 	uses = source.charges
 	health_cost = source.health_cost
 	..()
+
+/obj/item/melee/blood_magic/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/melee/blood_magic/Destroy()
 	if(!QDELETED(source))
@@ -432,8 +436,8 @@
 				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 		else
-			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
-			L.Knockdown(160)
+			to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
+			L.Paralyze(160)
 			L.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L
@@ -487,11 +491,12 @@
 			to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 			return
 		uses--
-		user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
-		"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
+		var/turf/origin = get_turf(user)
 		var/mob/living/L = target
-		L.forceMove(dest)
-		dest.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+		if(do_teleport(L, dest, channel = TELEPORT_CHANNEL_CULT))
+			origin.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
+				"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
+			dest.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 		..()
 
 //Shackles
@@ -758,7 +763,7 @@
 		switch(choice)
 			if("Blood Spear (150)")
 				if(uses < 150)
-					to_chat(user, "<span class='cultitalic'>You need 200 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 150 charges to perform this rite.</span>")
 				else
 					uses -= 150
 					var/turf/T = get_turf(user)
@@ -774,7 +779,7 @@
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
 			if("Blood Bolt Barrage (300)")
 				if(uses < 300)
-					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 300 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
 					uses -= 300
@@ -786,7 +791,7 @@
 						qdel(rite)
 			if("Blood Beam (500)")
 				if(uses < 500)
-					to_chat(user, "<span class='cultitalic'>You need 600 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 500 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
 					uses -= 500
