@@ -175,36 +175,12 @@
 
 /mob/living/simple_animal/bot/cleanbot/proc/get_targets()
 	target_types = list(
-		/obj/effect/decal/cleanable/oil,
-		/obj/effect/decal/cleanable/vomit,
-		/obj/effect/decal/cleanable/robot_debris,
-		/obj/effect/decal/cleanable/molten_object,
-		/obj/effect/decal/cleanable/food/tomato_smudge,
-		/obj/effect/decal/cleanable/food/egg_smudge,
-		/obj/effect/decal/cleanable/food/pie_smudge,
-		/obj/effect/decal/cleanable/food/flour,
-		/obj/effect/decal/cleanable/ash,
-		/obj/effect/decal/cleanable/greenglow,
-		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/insectguts,
+		/obj/effect/decal/cleanable,
+		/mob/living/simple_animal/cockroach,
+		/mob/living/simple_animal/mouse,
+		/obj/item/trash,
 		/obj/effect/decal/remains
 		)
-
-	if(blood)
-		target_types += /obj/effect/decal/cleanable/xenoblood
-		target_types += /obj/effect/decal/cleanable/blood
-		target_types += /obj/effect/decal/cleanable/trail_holder
-
-	if(pests)
-		target_types += /mob/living/simple_animal/cockroach
-		target_types += /mob/living/simple_animal/mouse
-
-	if(drawn)
-		target_types += /obj/effect/decal/cleanable/crayon
-
-	if(trash)
-		target_types += /obj/item/trash
-
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
@@ -290,10 +266,6 @@ Status: <A href='?src=[REF(src)];power=1'>[on ? "On" : "Off"]</A><BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(!locked || issilicon(user)|| IsAdminGhost(user))
-		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
-		dat += "<BR>Clean Graffiti: <A href='?src=[REF(src)];operation=drawn'>[drawn ? "Yes" : "No"]</A>"
-		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"
 		dat += "<BR><BR>Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
 	return dat
 
@@ -301,14 +273,5 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(..())
 		return 1
 	if(href_list["operation"])
-		switch(href_list["operation"])
-			if("blood")
-				blood = !blood
-			if("pests")
-				pests = !pests
-			if("trash")
-				trash = !trash
-			if("drawn")
-				drawn = !drawn
 		get_targets()
 		update_controls()
