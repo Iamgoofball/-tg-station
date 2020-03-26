@@ -1168,6 +1168,15 @@
 	hidden = TRUE
 	experimental = TRUE
 
+/datum/techweb_node/syndicate_basic/New()		//Crappy way of making syndicate gear decon supported until there's another way.
+	. = ..()
+	boost_item_paths = list()
+	for(var/path in GLOB.uplink_items)
+		var/datum/uplink_item/UI = new path
+		if(!UI.item || !UI.illegal_tech)
+			continue
+		boost_item_paths |= UI.item	//allows deconning to unlock.
+
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_exports()
 	var/list/datum/techweb_node/processing = list()

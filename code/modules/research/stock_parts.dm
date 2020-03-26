@@ -273,6 +273,44 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	rating = 4
 	custom_materials = list(/datum/material/iron=80)
 
+//Rating 6, tier 5
+
+/obj/item/stock_parts/capacitor/tier5
+	name = "black hole capacitor"
+	desc = "An capacity capacitor used in the construction of a variety of devices."
+	icon_state = "t5_capacitor"
+	rating = 6
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
+
+/obj/item/stock_parts/scanning_module/tier5
+	name = "neutrino mass scanning module"
+	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
+	icon_state = "t5_scan_module"
+	rating = 6
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
+
+/obj/item/stock_parts/manipulator/tier5
+	name = "yocto-manipulator"
+	desc = "A tiny little manipulator used in the construction of certain devices."
+	icon_state = "t5_mani"
+	rating = 6
+	custom_materials = list(/datum/material/iron=30)
+
+/obj/item/stock_parts/micro_laser/tier5
+	name = "solar micro-laser"
+	icon_state = "t5_micro_laser"
+	desc = "A tiny laser used in certain devices."
+	rating = 6
+	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
+
+/obj/item/stock_parts/matter_bin/tier5
+	name = "black hole matter bin"
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
+	icon_state = "t5_matter_bin"
+	rating = 6
+	custom_materials = list(/datum/material/iron=80)
+
+
 // Subspace stock parts
 
 /obj/item/stock_parts/subspace/ansible
