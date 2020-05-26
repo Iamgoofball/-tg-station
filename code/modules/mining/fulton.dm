@@ -9,7 +9,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
-	var/can_use_indoors
 	var/safe_for_living_creatures = 1
 	var/max_force_fulton = MOVE_FORCE_STRONG
 
@@ -47,11 +46,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		beacon = null
 		to_chat(user, "<span class='warning'>The connected beacon has been destroyed!</span>")
 		return
-	if(!can_use_indoors)
-		var/area/area = get_area(A)
-		if(!area.outdoors)
-			to_chat(user, "<span class='warning'>[src] can only be used on things that are outdoors!</span>")
-			return
 	if(!flag)
 		return
 	if(!istype(A))
