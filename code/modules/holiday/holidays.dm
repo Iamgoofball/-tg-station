@@ -649,4 +649,4 @@
 	end_month = JUNE
 
 /datum/holiday/pride_week/getStationPrefix()
-	return pick("Trans Rights Are Human Rights","Stonewall","LGBTQIAP+","Justice For George Floyd","Black Lives Matter","Trans Rights","LGBTQIAP+ Rights", "Pride")
+	return pick("Trans Rights","Stonewall","LGBTQIAP+","Pride")
