@@ -137,6 +137,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/persistent_scars = TRUE
 	///If we want to broadcast deadchat connect/disconnect messages
 	var/broadcast_login_logout = TRUE
+	///OWO Device IP
+	var/owo_device_ip
+	///OWO Enable/Disable
+	var/owo_toggle = FALSE
 
 /datum/preferences/New(client/C)
 	parent = C

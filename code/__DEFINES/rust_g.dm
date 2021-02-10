@@ -99,3 +99,4 @@
 #define rustg_sql_disconnect_pool(handle) call(RUST_G, "sql_disconnect_pool")(handle)
 #define rustg_sql_check_query(job_id) call(RUST_G, "sql_check_query")("[job_id]")
 
+#define rustg_udp_shipper_send(addr, text) call(RUST_G, "udp_shipper_send")(addr, text)
