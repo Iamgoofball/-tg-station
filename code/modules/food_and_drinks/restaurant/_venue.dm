@@ -3,7 +3,7 @@
 	///Name of the venue, also used for the icon state of any radials it can be selected in
 	var/name = "unnamed venue"
 	///Max amount of guests at any time
-	var/max_guests = 6
+	var/max_guests = 3
 	///Weighted list of customer types
 	var/list/customer_types
 	///Is the venue open at the moment?
