@@ -2,6 +2,7 @@
 	name = "bicycle"
 	desc = "Keep away from electricity."
 	icon_state = "bicycle"
+	color = rgb(33, 132, 219)
 
 /obj/vehicle/ridden/bicycle/Initialize()
 	. = ..()
