@@ -170,7 +170,7 @@
 	Slimes
 	Nothing happening here
 */
-/mob/living/simple_animal/slime/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/slime/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(LIVING_UNARMED_ATTACK_BLOCKED(attack_target))
 		return
 	if(isturf(attack_target))

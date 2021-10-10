@@ -231,7 +231,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/red/do_effect(mob/user)
 	var/slimesfound = FALSE
-	for(var/mob/living/simple_animal/slime/S in view(get_turf(user), 7))
+	for(var/mob/living/basic/slime/S in view(get_turf(user), 7))
 		slimesfound = TRUE
 		S.docile = TRUE
 	if(slimesfound)

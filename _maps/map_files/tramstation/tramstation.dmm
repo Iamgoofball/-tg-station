@@ -27490,7 +27490,7 @@
 /turf/open/floor/engine/co2,
 /area/engineering/atmos)
 "hUF" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "hVc" = (

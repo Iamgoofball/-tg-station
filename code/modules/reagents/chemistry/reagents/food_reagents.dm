@@ -326,7 +326,7 @@
 		exposed_open_turf.air.temperature -= (MOLES_CELLSTANDARD * 100 * reac_volume) / exposed_open_turf.air.heat_capacity() // reduces environment temperature by 5K per unit.
 	if(reac_volume < 5)
 		return
-	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
+	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.adjustToxLoss(rand(15,30))
 
 /datum/reagent/consumable/condensedcapsaicin

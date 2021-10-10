@@ -12,7 +12,7 @@ Slimecrossing Mobs
 	cooldown_min = 0
 	charge_max = 0
 	invocation_type = "none"
-	shapeshift_type = /mob/living/simple_animal/slime/transformedslime
+	shapeshift_type = /mob/living/basic/slime/transformedslime
 	convert_damage = TRUE
 	convert_damage_type = CLONE
 	var/remove_on_restore = FALSE
@@ -24,9 +24,9 @@ Slimecrossing Mobs
 	return ..()
 
 //Transformed slime - Burning Black
-/mob/living/simple_animal/slime/transformedslime
+/mob/living/basic/slime/transformedslime
 
-/mob/living/simple_animal/slime/transformedslime/Reproduce() //Just in case.
+/mob/living/basic/slime/transformedslime/Reproduce() //Just in case.
 	to_chat(src, span_warning("I can't reproduce..."))
 	return
 

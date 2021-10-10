@@ -742,10 +742,10 @@ GENE SCANNER
 	if (!isslime(M))
 		to_chat(user, span_warning("This device can only scan slimes!"))
 		return
-	var/mob/living/simple_animal/slime/T = M
+	var/mob/living/basic/slime/T = M
 	slime_scan(T, user)
 
-/proc/slime_scan(mob/living/simple_animal/slime/T, mob/living/user)
+/proc/slime_scan(mob/living/basic/slime/T, mob/living/user)
 	var/to_render = "========================\
 					\n<b>Slime scan results:</b>\
 					\n[span_notice("[T.colour] [T.is_adult ? "adult" : "baby"] slime")]\

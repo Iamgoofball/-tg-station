@@ -91,7 +91,7 @@ In all, this is a lot like the monkey code. /N
 			if(STAMINA)
 				adjustStaminaLoss(damage)
 
-/mob/living/carbon/alien/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/alien/attack_slime(mob/living/basic/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
 		if(M.is_adult)

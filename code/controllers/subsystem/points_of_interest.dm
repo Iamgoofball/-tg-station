@@ -241,7 +241,7 @@ SUBSYSTEM_DEF(points_of_interest)
 		return 7
 	if(istype(target, /mob/dead/new_player))
 		return 8
-	if(istype(target, /mob/living/simple_animal/slime))
+	if(istype(target, /mob/living/basic/slime))
 		return 9
 	if(istype(target, /mob/living/simple_animal))
 		return 10

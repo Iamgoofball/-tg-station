@@ -19400,7 +19400,7 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/fore)
 "cOM" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "cON" = (

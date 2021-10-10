@@ -63,7 +63,7 @@
 *
 * By using a valid core on a living adult slime, then feeding it nine more of the same type, you can mutate it into more useful items. Not every slime type has an implemented core cross.
 */
-/obj/item/slime_extract/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slime_extract/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))
 		return ..()
 	if(M.stat)
@@ -105,7 +105,7 @@
 		if(SLIME_ACTIVATE_MAJOR)
 			to_chat(user, span_notice("Your [name] starts pulsing..."))
 			if(do_after(user, 40, target = user))
-				var/mob/living/simple_animal/slime/S = new(get_turf(user), "grey")
+				var/mob/living/basic/slime/S = new(get_turf(user), "grey")
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				to_chat(user, span_notice("You spit out [S]."))
 				return 350
@@ -294,7 +294,7 @@
 
 		if(SLIME_ACTIVATE_MAJOR)
 			user.visible_message(span_warning("[user]'s skin flashes red for a moment..."), span_warning("Your skin flashes red as you emit rage-inducing pheromones..."))
-			for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(user), null))
+			for(var/mob/living/basic/slime/slime in viewers(get_turf(user), null))
 				slime.rabid = TRUE
 				slime.visible_message(span_danger("The [slime] is driven into a frenzy!"))
 			return 600
@@ -652,7 +652,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potsilver"
 
-/obj/item/slimepotion/slime/docility/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/docility/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))
 		to_chat(user, span_warning("The potion only works on slimes!"))
 		return ..()
@@ -793,7 +793,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potred"
 
-/obj/item/slimepotion/slime/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/steroid/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
 		to_chat(user, span_warning("The steroid only works on baby slimes!"))
 		return ..()
@@ -823,7 +823,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potcyan"
 
-/obj/item/slimepotion/slime/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/stabilizer/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))
 		to_chat(user, span_warning("The stabilizer only works on slimes!"))
 		return ..()
@@ -844,7 +844,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potgreen"
 
-/obj/item/slimepotion/slime/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
+/obj/item/slimepotion/slime/mutator/attack(mob/living/basic/slime/M, mob/user)
 	if(!isslime(M))
 		to_chat(user, span_warning("The mutator only works on slimes!"))
 		return ..()

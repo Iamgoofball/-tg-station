@@ -102,7 +102,7 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
 
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/simple_animal/attack_slime(mob/living/basic/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(M.is_adult)

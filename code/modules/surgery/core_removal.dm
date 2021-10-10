@@ -3,7 +3,7 @@
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/extract_core)
-	target_mobtypes = list(/mob/living/simple_animal/slime)
+	target_mobtypes = list(/mob/living/basic/slime)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	lying_required = FALSE
 	ignore_clothes = TRUE
@@ -27,7 +27,7 @@
 		span_notice("[user] begins to extract a core from [target]."))
 
 /datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/mob/living/simple_animal/slime/target_slime = target
+	var/mob/living/basic/slime/target_slime = target
 	if(target_slime.cores > 0)
 		target_slime.cores--
 		display_results(user, target, span_notice("You successfully extract a core from [target]. [target_slime.cores] core\s remaining."),

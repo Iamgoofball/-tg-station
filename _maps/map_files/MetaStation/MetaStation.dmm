@@ -13638,7 +13638,7 @@
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cSy" = (
-/mob/living/simple_animal/slime,
+/mob/living/basic/slime,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cSA" = (

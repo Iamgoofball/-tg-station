@@ -369,7 +369,7 @@
 	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness)
 
 
-/mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/carbon/human/attack_slime(mob/living/basic/slime/M)
 	. = ..()
 	if(!.) // slime attack failed
 		return

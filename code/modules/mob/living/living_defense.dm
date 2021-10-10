@@ -196,7 +196,7 @@
 		return TRUE
 
 
-/mob/living/attack_slime(mob/living/simple_animal/slime/M)
+/mob/living/attack_slime(mob/living/basic/slime/M)
 	if(!SSticker.HasRoundStarted())
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
