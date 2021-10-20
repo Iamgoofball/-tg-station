@@ -204,4 +204,4 @@
 #define BB_TARGETTING_DATUM "targetting_datum"
 
 ///Slime subtrees
-#define BB_SLIME_NUTRITION "BB_slime_nutrition"
+#define BB_SLIME_FEED_TARGET "BB_slime_feed_target"

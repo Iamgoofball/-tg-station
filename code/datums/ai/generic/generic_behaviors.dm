@@ -193,7 +193,7 @@
 		finish_action(controller, FALSE)
 
 /datum/ai_behavior/find_and_set/proc/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	return locate(locate_path) in oview(search_range, controller.pawn)
+	return locate(locate_path) in view(search_range, controller.pawn)
 
 /**
  * Variant of find and set that fails if the living pawn doesn't hold something
@@ -206,6 +206,31 @@
 		return //we want to fail the search if we don't have something held
 	. = ..()
 
+/**
+ * Variant of find and set that prioritizes targets based on their human species.
+ * Thanks, whoever made monkey a species.
+ * ~Goof
+ */
+/datum/ai_behavior/find_and_set/racism
+
+/datum/ai_behavior/find_and_set/racism/perform(delta_time, datum/ai_controller/controller, set_key, racism_list, search_range)
+	controller.behavior_cooldowns[src] = world.time + action_cooldown // real OOP hours
+	var/find_this_thing = search_tactic(controller, racism_list, search_range)
+	if(find_this_thing)
+		controller.blackboard[set_key] = find_this_thing
+		finish_action(controller, TRUE)
+	else
+		finish_action(controller, FALSE)
+
+/datum/ai_behavior/find_and_set/racism/search_tactic(datum/ai_controller/controller, list/racism_list, search_range)
+	var/list/potential_targets = view(search_range, controller.pawn)
+	for(var/mob/living/carbon/human/potential_target in potential_targets)
+		var/list/path_to_target = get_path_to(controller.pawn, get_turf(potential_target), AI_MAX_PATH_LENGTH, controller.max_target_distance, id=controller.get_access())
+		if(!path_to_target) // can't get to this motherfucker
+			continue
+		for(var/species_type in racism_list)
+			if(istype(potential_target.dna.species, species_type))
+				return potential_target
 /**
  * Variant of find and set that also requires the item to be edible. checks hands too
  */

@@ -33,7 +33,7 @@
 	var/obj/machinery/monkey_recycler/connected_recycler
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
-	var/max_slimes = 5
+	var/max_slimes = 25
 	var/monkeys = 0
 
 	icon_screen = "slime_comp"
