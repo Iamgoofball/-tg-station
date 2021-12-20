@@ -194,6 +194,9 @@
 	if(should_give_codewords)
 		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
 		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	if(AMOGUS in SSevents.holidays)
+		to_chat(datum_owner, "You are able to use the ventilation shafts on the station to traverse. Be careful to not get spotted!")
+		ADD_TRAIT(datum_owner, TRAIT_VENTCRAWLER_ALWAYS, AMOGUS)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -202,6 +205,8 @@
 
 	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
 		component.delete_if_from_source(src)
+	if(AMOGUS in SSevents.holidays)
+		REMOVE_TRAIT(datum_owner, TRAIT_VENTCRAWLER_ALWAYS, AMOGUS)
 
 /datum/antagonist/traitor/ui_static_data(mob/user)
 	var/list/data = list()
