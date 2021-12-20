@@ -785,3 +785,16 @@
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+#define AMOGUS "Among Us Release Date"
+/datum/holiday/amogus
+	name = AMOGUS
+	begin_day = 15
+	begin_month = JUNE
+
+/datum/holiday/amogus/getStationPrefix()
+	return pick("Sussus","Among Us","Sus","Sussy Baka","Impostor", "Vent", "Sussus Amogus")
+
+/datum/holiday/amogus/greet()
+	return "Remind the Among Us developers we got here first, the bastards."
+
