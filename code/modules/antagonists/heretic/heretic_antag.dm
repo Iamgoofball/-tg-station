@@ -300,6 +300,8 @@
 
 	target_turf.balloon_alert(user, "rune created")
 	new /obj/effect/heretic_rune/big(target_turf)
+	var/area/A = get_area(target_turf)
+	A.area_flags |= NOTELEPORT
 	drawing_rune = FALSE
 
 /**
