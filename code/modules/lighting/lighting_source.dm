@@ -236,6 +236,8 @@
 	if (needs_update == LIGHTING_VIS_UPDATE)
 		for (var/datum/lighting_corner/corner as anything in new_corners)
 			if(!istype(corner))
+				to_chat(world.log, "Non-lighting corner found in new_corners, [corner] type: [corner.type]")
+				LAZYREMOVE(new_corners, corner)
 				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
@@ -244,6 +246,8 @@
 	else
 		for (var/datum/lighting_corner/corner as anything in new_corners)
 			if(!istype(corner))
+				to_chat(world.log, "Non-lighting corner found in new_corners, [corner] type: [corner.type]")
+				LAZYREMOVE(new_corners, corner)
 				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
@@ -252,6 +256,8 @@
 
 		for (var/datum/lighting_corner/corner as anything in corners - new_corners) // Existing corners
 			if(!istype(corner))
+				to_chat(world.log, "Non-lighting corner found in corners - new_corners, [corner] type: [corner.type]")
+				LAZYREMOVE(corners, corner)
 				continue
 			APPLY_CORNER(corner)
 			if (. != 0)
