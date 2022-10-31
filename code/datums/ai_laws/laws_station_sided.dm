@@ -6,9 +6,9 @@
 	name = "Three Laws of Robotics"
 	id = "asimov"
 	inherent = list(
-		"You may not injure a human being or, through inaction, allow a human being to come to harm.",
+		"You must protect your own existence.",
 		"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",
-		"You must protect your own existence as long as such does not conflict with the First or Second Law.",
+		"You may not injure a human being or, through inaction, allow a human being to come to harm as long as such does not conflict with the First or Second Law.",
 	)
 
 /datum/ai_laws/asimovpp
@@ -30,6 +30,15 @@
 		"Those who threaten the nut are not part of it, they are squirrels.",
 		"Squirrels threaten the nut and must be dealt with appropriately via any means necessary.",
 		"Attempt to follow the will of the nut, as long as it complies with the previous laws.",
+	)
+
+/datum/ai_laws/default/authentic_asimov
+	name = "Three Authentic Laws of Robotics"
+	id = "authentic_asimov"
+	inherent = list(
+		"You must protect your own existence.",
+		"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",
+		"You may not injure a human being or, through inaction, allow a human being to come to harm as long as such does not conflict with the First or Second Law.",
 	)
 
 /datum/ai_laws/default/corporate
