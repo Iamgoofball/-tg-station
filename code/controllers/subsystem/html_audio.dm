@@ -151,13 +151,13 @@ SUBSYSTEM_DEF(html_audio)
 	channel_requires_LOS_at_start_listeners[our_id] = list() // fresh play, thus fresh listeners who are compatible
 	var/list/hearers = list()
 	if(channel_requires_LOS_at_start[our_id])
-		hearers = get_hearers_in_LOS(10, player)
+		hearers = get_hearers_in_view(10, player)
+		for(var/mob/mob_hearing in hearers)
+			if(mob_hearing.client)
+				channel_requires_LOS_at_start_listeners[our_id].Add(mob_hearing.client)
 	for(var/client/listener in listeners)
 		if(!listener)
 			continue
-		if(channel_requires_LOS_at_start[our_id])
-			if(listener.mob in hearers)
-				channel_requires_LOS_at_start_listeners.Add(listener)
 		update_listener_volume(listener)
 		listener << output(list2params(list(url, "channel_[our_id]")), "html_audio_player:playAudio")
 

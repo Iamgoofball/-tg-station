@@ -3,7 +3,7 @@
 	desc = "An inflatable distraction dummy that repeats lines to anyone who can hear it."
 	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "syndicate_sword"
-	var/quote_url = "https://file.house/MI58.mp3"
+	var/quote_url = "https://file.house/-98z.mp3"
 
 /obj/item/heavy_ass_man/Initialize()
 	..()
