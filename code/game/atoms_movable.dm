@@ -110,9 +110,6 @@
 /atom/movable/Initialize(mapload)
 	. = ..()
 
-	if(!voice && SStts.tts_enabled)
-		voice = pick(SStts.available_speakers)
-
 	switch(blocks_emissive)
 		if(EMISSIVE_BLOCK_GENERIC)
 			var/static/mutable_appearance/emissive_blocker/blocker = new()
