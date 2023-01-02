@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(html_audio)
 	name = "HTML Audio"
 	init_order = INIT_ORDER_HTMLAUDIO
 	flags = SS_NO_FIRE
-	var/max_channels = 128 // set this to how many total channels you want
+	var/max_channels = 256 // set this to how many total channels you want
 	var/list/channel_assignment = list() // list([atom in the world], [atom in the world], ...) for keeping track of what channels are in use and by what
 	var/list/channel_loop_status = list() // list([atom in the world] = TRUE/FALSE, ...) for keeping track of what channels are looping
 	var/list/listeners = list() // list of client listeners to update when audio gets added
@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(html_audio)
 	for(var/i in 1 to max_channels)
 		var/volume_to_use = 0
 		var/distance = get_dist(channel_assignment[i], listener.mob)
-		if(!channel_assignment[i] || distance >= 10 || (channel_requires_LOS_at_start[i] && !(listener in channel_requires_LOS_at_start_listeners[i])))
+		if(!channel_assignment[i] || distance >= 10 || (channel_requires_LOS_at_start[i] && !(listener in channel_requires_LOS_at_start_listeners[i])) || !listener.prefs.read_preference(/datum/preference/toggle/sound_tts_use_html_audio))
 			volume_to_use = 0
 		else
 			volume_to_use = (1-(1/10*distance))**2
