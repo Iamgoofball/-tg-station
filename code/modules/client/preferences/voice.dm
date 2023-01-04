@@ -29,3 +29,6 @@
 	savefile_key = "tts_test"
 	priority = PREFERENCE_PRIORITY_VOICE
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
+
+/datum/preference/tts_test/voice/apply_to_human(mob/living/carbon/human/target, value)
+	return TRUE
