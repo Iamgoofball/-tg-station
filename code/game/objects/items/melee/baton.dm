@@ -60,12 +60,19 @@
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
+	//So we can deactivate batons when the security level changes
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
 
 	register_item_context()
 
+/obj/item/melee/baton/proc/check_security_level(datum/source, new_level)
+	SIGNAL_HANDLER
+	var/mob/living/user = src.loc
+	if(active && istype(user) && new_level < SEC_LEVEL_RED)
+		to_chat(user, span_alert("Your baton turns off as the threat to the station has passed"))
 /**
  * Ok, think of baton attacks like a melee attack chain:
  *
@@ -92,6 +99,7 @@
 			return ..()
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
+
 
 /obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))
@@ -519,9 +527,19 @@
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)
-		active = !active
-		balloon_alert(user, "turned [active ? "on" : "off"]")
-		playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+			active = !active
+			balloon_alert(user, "turned [active ? "on" : "off"]")
+			playsound(src, SFX_SPARKS, 75, TRUE, -1)
+		else
+			//Allow turning it off
+			if (!active)
+				to_chat(user, span_warning("You cannot use your baton in a non emergency situation"))
+			else
+				active = FALSE
+				balloon_alert(user, "turned [active ? "on" : "off"]")
+				playsound(src, SFX_SPARKS, 75, TRUE, -1)
+
 	else
 		active = FALSE
 		if(!cell)
