@@ -73,6 +73,10 @@
 	var/mob/living/user = src.loc
 	if(active && istype(user) && new_level < SEC_LEVEL_RED)
 		to_chat(user, span_alert("Your baton turns off as the threat to the station has passed"))
+		active = !active
+		update_appearance()
+		return TRUE
+		
 /**
  * Ok, think of baton attacks like a melee attack chain:
  *
@@ -438,6 +442,11 @@
 			cell = new preload_cell_type(src)
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, PROC_REF(convert))
 	update_appearance()
+
+/obj/item/melee/baton/security/check_security_level(datum/source, new_level)
+	var/shut_off = ..()
+	if(shut_off)
+		playsound(src, SFX_SPARKS, 75, TRUE, -1)
 
 /obj/item/melee/baton/security/get_cell()
 	return cell
