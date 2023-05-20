@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(tts)
 		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, datum/language/language, range = 7, volume_offset = 0)
+/datum/controller/subsystem/tts/proc/play_tts(target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0)
 	var/turf/turf_source = get_turf(target)
 	if(!turf_source)
 		return
@@ -87,20 +87,24 @@ SUBSYSTEM_DEF(tts)
 	var/channel = SSsounds.random_available_channel()
 	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[turf_source.z])//observers always hear through walls
 		var/volume_to_play_at = listening_mob.client?.prefs.read_preference(/datum/preference/numeric/sound_tts_volume)
+		var/use_blips = listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
 		if(volume_to_play_at == 0 || !listening_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_tts))
 			continue
 
 		var/sound_volume = ((listening_mob == target)? 60 : 85) + volume_offset
 		sound_volume = sound_volume * (volume_to_play_at / 100)
 		var/datum/language_holder/holder = listening_mob.get_language_holder()
-		if(get_dist(listening_mob, turf_source) <= range && holder.has_language(language, spoken = FALSE))
+		var/audio_to_use = use_blips ? audio_blips : audio
+		if(!holder.has_language(language, spoken = FALSE))
+			continue
+		if(get_dist(listening_mob, turf_source) <= range)
 			listening_mob.playsound_local(
 				turf_source,
 				vol = sound_volume,
 				falloff_exponent = SOUND_FALLOFF_EXPONENT,
 				channel = channel,
 				pressure_affected = TRUE,
-				sound_to_use = audio,
+				sound_to_use = audio_to_use,
 				max_distance = SOUND_RANGE,
 				falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE,
 				distance_multiplier = 1,
@@ -112,7 +116,8 @@ SUBSYSTEM_DEF(tts)
 	tts_enabled = FALSE
 	for(var/datum/tts_request/data in in_process_http_messages)
 		var/datum/http_request/request = data.request
-		UNTIL(request.is_complete())
+		var/datum/http_request/request_blips = data.request_blips
+		UNTIL(request.is_complete() && request_blips.is_complete())
 
 #define SHIFT_DATA_ARRAY(tts_message_queue, target, data) \
 	popleft(##data); \
@@ -146,19 +151,22 @@ SUBSYSTEM_DEF(tts)
 		var/datum/tts_request/current_request = processing_messages[processing_messages.len]
 		processing_messages.len--
 		var/datum/http_request/request = current_request.request
-		if(!request.is_complete())
+		var/datum/http_request/request_blips = current_request.request_blips
+		if(!request.is_complete() || !request_blips.is_complete())
 			continue
 
 		var/datum/http_response/response = request.into_response()
+		var/datum/http_response/response_blips = request_blips.into_response()
 		in_process_http_messages -= current_request
 		average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, world.time - current_request.start_time)
 		var/identifier = current_request.identifier
-		if(response.errored)
+		if(response.errored || response_blips.errored)
 			continue
 		current_request.audio_length = text2num(response.headers["audio-length"]) * 10
 		if(!current_request.audio_length)
 			current_request.audio_length = 0
 		current_request.audio_file = "tmp/tts/[identifier].ogg"
+		current_request.audio_file_blips = "tmp/tts/[identifier]_blips.ogg" // We aren't as concerned about the audio length for blips as we are with actual speech
 		// Don't need the request anymore so we can deallocate it
 		current_request.request = null
 		if(MC_TICK_CHECK)
@@ -192,11 +200,21 @@ SUBSYSTEM_DEF(tts)
 					SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 				continue
 			var/sound/audio_file = new(current_target.audio_file)
+			var/sound/audio_file_blips = new(current_target.audio_file_blips)
 			if(current_target.local)
-				SEND_SOUND(tts_target, audio_file)
+				var/use_blips
+				if(istype(current_target.target, /client)) // this can be a client sometimes instead of a mob for some fucking reason
+					var/client/current_client = current_target.target
+					use_blips = current_client?.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
+				else
+					use_blips = current_target.target.client?.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
+				if(use_blips)
+					SEND_SOUND(current_target.target, audio_file_blips)
+				else
+					SEND_SOUND(current_target.target, audio_file)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			else if(current_target.when_to_play < world.time)
-				play_tts(tts_target, current_target.listeners, audio_file, current_target.language, current_target.message_range)
+				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range)
 				if(length(data) != 1)
 					var/datum/tts_request/next_target = data[2]
 					next_target.when_to_play = world.time + current_target.audio_length
@@ -236,9 +254,12 @@ SUBSYSTEM_DEF(tts)
 	headers["Content-Type"] = "application/json"
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
 	var/datum/http_request/request = new()
+	var/datum/http_request/request_blips = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
+	var/file_name_blips = "tmp/tts/[identifier]_blips.ogg"
 	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name)
-	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners)
+	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips)
+	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners)
 	var/list/player_queued_tts_messages = queued_tts_messages[target]
 	if(!player_queued_tts_messages)
 		player_queued_tts_messages = list()
@@ -246,6 +267,7 @@ SUBSYSTEM_DEF(tts)
 	player_queued_tts_messages += current_request
 	if(length(in_process_http_messages) < max_concurrent_requests)
 		request.begin_async()
+		request_blips.begin_async()
 		in_process_http_messages += current_request
 	else
 		queued_http_messages.insert(current_request)
@@ -259,6 +281,8 @@ SUBSYSTEM_DEF(tts)
 	var/list/listeners
 	/// The HTTP request of this message
 	var/datum/http_request/request
+	/// The HTTP request of this message for blips
+	var/datum/http_request/request_blips
 	/// The language to limit this TTS message to
 	var/datum/language/language
 	/// The message itself
@@ -276,6 +300,8 @@ SUBSYSTEM_DEF(tts)
 
 	/// The audio file of this tts request.
 	var/sound/audio_file
+	/// The blips audio file of this tts request.
+	var/sound/audio_file_blips
 	/// The audio length of this tts request.
 	var/audio_length
 	/// When the audio file should play at the minimum
@@ -284,10 +310,11 @@ SUBSYSTEM_DEF(tts)
 	var/timed_out = FALSE
 
 
-/datum/tts_request/New(identifier, datum/http_request/request, message, target, local, datum/language/language, message_range, volume_offset, list/listeners)
+/datum/tts_request/New(identifier, datum/http_request/request, datum/http_request/request_blips, message, target, local, datum/language/language, message_range, volume_offset, list/listeners)
 	. = ..()
 	src.identifier = identifier
 	src.request = request
+	src.request_blips = request_blips
 	src.message = message
 	src.language = language
 	src.target = target

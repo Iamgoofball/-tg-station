@@ -252,6 +252,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
+
+/// Returns 0 for didn't hear and didn't understand, returns 1 for didn't understand or didn't hear, returns 2 for understood and heard
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	if(!GET_CLIENT(src))
 		return FALSE
@@ -308,8 +310,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = deaf_message
 
 		var/show_message_success = show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
-
-		return understood && show_message_success
+		return understood + show_message_success
 
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be separate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
@@ -329,7 +330,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 	var/show_message_success = show_message(message, MSG_AUDIBLE, deaf_message, deaf_type, avoid_highlight)
-	return understood && show_message_success
+	return understood + show_message_success
 
 /mob/living/send_speech(message_raw, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, list/message_mods = list(), forced = null, tts_message, list/tts_filter)
 	var/whisper_range = 0
