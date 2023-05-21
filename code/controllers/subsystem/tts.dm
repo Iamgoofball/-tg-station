@@ -139,8 +139,7 @@ SUBSYSTEM_DEF(tts)
 			if(timeout < world.time)
 				entry.timed_out = TRUE
 				continue
-			var/datum/http_request/request = entry.request
-			request.begin_async()
+			entry.start_requests()
 			in_process_http_messages += entry
 		current_processing_http_messages = in_process_http_messages.Copy()
 		current_processing_tts_messages = queued_tts_messages.Copy()
@@ -150,17 +149,14 @@ SUBSYSTEM_DEF(tts)
 	while(processing_messages.len)
 		var/datum/tts_request/current_request = processing_messages[processing_messages.len]
 		processing_messages.len--
-		var/datum/http_request/request = current_request.request
-		var/datum/http_request/request_blips = current_request.request_blips
-		if(!request.is_complete() || !request_blips.is_complete())
+		if(!current_request.requests_completed())
 			continue
 
-		var/datum/http_response/response = request.into_response()
-		var/datum/http_response/response_blips = request_blips.into_response()
+		var/datum/http_response/response = current_request.get_primary_response()
 		in_process_http_messages -= current_request
 		average_tts_messages_time = MC_AVERAGE(average_tts_messages_time, world.time - current_request.start_time)
 		var/identifier = current_request.identifier
-		if(response.errored || response_blips.errored)
+		if(current_request.requests_errored())
 			continue
 		current_request.audio_length = text2num(response.headers["audio-length"]) * 10
 		if(!current_request.audio_length)
@@ -199,21 +195,19 @@ SUBSYSTEM_DEF(tts)
 				if(current_target.when_to_play < world.time)
 					SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 				continue
-			var/sound/audio_file = new(current_target.audio_file)
-			var/sound/audio_file_blips = new(current_target.audio_file_blips)
+			var/sound/audio_file
+			var/sound/audio_file_blips
 			if(current_target.local)
-				var/use_blips
-				if(istype(current_target.target, /client)) // this can be a client sometimes instead of a mob for some fucking reason
-					var/client/current_client = current_target.target
-					use_blips = current_client?.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
-				else
-					use_blips = current_target.target.client?.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
-				if(use_blips)
+				if(current_target.use_blips)
+					audio_file_blips = new(current_target.audio_file_blips)
 					SEND_SOUND(current_target.target, audio_file_blips)
 				else
+					audio_file = new(current_target.audio_file)
 					SEND_SOUND(current_target.target, audio_file)
 				SHIFT_DATA_ARRAY(queued_tts_messages, tts_target, data)
 			else if(current_target.when_to_play < world.time)
+				audio_file = new(current_target.audio_file)
+				audio_file_blips = new(current_target.audio_file_blips)
 				play_tts(tts_target, current_target.listeners, audio_file, audio_file_blips, current_target.language, current_target.message_range)
 				if(length(data) != 1)
 					var/datum/tts_request/next_target = data[2]
@@ -266,8 +260,7 @@ SUBSYSTEM_DEF(tts)
 		queued_tts_messages[target] = player_queued_tts_messages
 	player_queued_tts_messages += current_request
 	if(length(in_process_http_messages) < max_concurrent_requests)
-		request.begin_async()
-		request_blips.begin_async()
+		current_request.start_requests()
 		in_process_http_messages += current_request
 	else
 		queued_http_messages.insert(current_request)
@@ -308,6 +301,8 @@ SUBSYSTEM_DEF(tts)
 	var/when_to_play = 0
 	/// Whether this request was timed out or not
 	var/timed_out = FALSE
+	/// Does this use blips during local generation or not?
+	var/use_blips = FALSE
 
 
 /datum/tts_request/New(identifier, datum/http_request/request, datum/http_request/request_blips, message, target, local, datum/language/language, message_range, volume_offset, list/listeners)
@@ -324,3 +319,57 @@ SUBSYSTEM_DEF(tts)
 	src.listeners = listeners
 	start_time = world.time
 
+/datum/tts_request/proc/start_requests()
+	if(istype(target, /client))
+		var/client/current_client = target
+		use_blips = current_client?.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
+	else if(istype(target, /mob))
+		use_blips = target.client?.prefs.read_preference(/datum/preference/toggle/sound_tts_blips)
+	if(local)
+		if(use_blips)
+			request_blips.begin_async()
+		else
+			request.begin_async()
+	else
+		request.begin_async()
+		request_blips.begin_async()
+
+/datum/tts_request/proc/get_primary_request()
+	if(local)
+		if(use_blips)
+			return request_blips
+		else
+			return request
+	else
+		return request
+
+/datum/tts_request/proc/get_primary_response()
+	if(local)
+		if(use_blips)
+			return request_blips.into_response()
+		else
+			return request.into_response()
+	else
+		return request.into_response()
+
+/datum/tts_request/proc/requests_errored()
+	if(local)
+		var/datum/http_response/response
+		if(use_blips)
+			response = request_blips.into_response()
+		else
+			response = request.into_response()
+		return response.errored
+	else
+		var/datum/http_response/response = request.into_response()
+		var/datum/http_response/response_blips = request_blips.into_response()
+		return response.errored || response_blips.errored
+
+/datum/tts_request/proc/requests_completed()
+	if(local)
+		if(use_blips)
+			return request_blips.is_complete()
+		else
+			return request.is_complete()
+	else
+		return request.is_complete() && request_blips.is_complete()
