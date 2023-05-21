@@ -12,5 +12,5 @@
 		return TRUE
 	var/speaker = preferences.read_preference(/datum/preference/choiced/voice)
 	COOLDOWN_START(src, tts_test_cooldown, 0.5 SECONDS)
-	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, pick("Hello, this is my voice.", "The clown is a traitor!", "Does anyone know who ate all the donuts?"), speaker = speaker, local = TRUE)
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), user.client, "Hello, this is my voice.", speaker = speaker, local = TRUE)
 	return TRUE
