@@ -6,8 +6,7 @@
 	wires = list(
 		WIRE_POWER,
 		WIRE_IDSCAN, WIRE_AI,
-		WIRE_PANIC, WIRE_ALARM,
-		WIRE_SPEAKER
+		WIRE_PANIC, WIRE_ALARM
 	)
 	add_duds(3)
 	..()
@@ -71,5 +70,3 @@
 			if(A.alarm_manager.send_alarm(ALARM_ATMOS))
 				A.danger_level = AIR_ALARM_ALERT_HAZARD
 			A.update_appearance()
-		if(WIRE_SPEAKER)
-			A.speaker_enabled = mend
