@@ -64,7 +64,7 @@
 	var/warning_message = null
 
 	//Stops the air alarm from talking about their atmos problems.
-	var/speaker_enabled = TRUE
+	var/speaker_enabled = FALSE
 
 	///Cooldown on sending warning messages
 	COOLDOWN_DECLARE(warning_cooldown)
