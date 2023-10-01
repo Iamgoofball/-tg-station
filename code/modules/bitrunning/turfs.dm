@@ -11,3 +11,7 @@
 /obj/effect/baseturf_helper/virtual_domain
 	name = "virtual domain baseturf editor"
 	baseturf = /turf/open/indestructible/binary
+
+/obj/effect/baseturf_helper/virtual_domain/dirt
+	name = "virtual domain baseturf editor"
+	baseturf = /turf/open/misc/beach/sand

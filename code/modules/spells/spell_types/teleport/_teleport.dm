@@ -108,6 +108,19 @@
 
 	return valid_turfs
 
+/datum/action/cooldown/spell/teleport/area_teleport/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/area/owner_area = get_area(owner)
+	if(!owner_area)
+		return FALSE
+
+	if(owner_area.area_flags & NOTELEPORT)
+		if(feedback)
+			to_chat(owner, span_danger("Some dull, universal force is stopping you from teleporting here."))
+		return FALSE
+
 /datum/action/cooldown/spell/teleport/area_teleport/before_cast(atom/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)

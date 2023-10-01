@@ -20,6 +20,8 @@
 	var/datum/mind/owner
 	/// A list to all spellbook entries within
 	var/list/entries = list()
+	/// Is this a bitrunning spellbook?
+	var/bitrunner = FALSE
 
 /obj/item/spellbook/Initialize(mapload)
 	. = ..()
@@ -129,7 +131,7 @@
 	var/entry_types = subtypesof(/datum/spellbook_entry)
 	for(var/type in entry_types)
 		var/datum/spellbook_entry/possible_entry = new type()
-		if(!possible_entry.can_be_purchased())
+		if(!possible_entry.can_be_purchased(bitrunner))
 			qdel(possible_entry)
 			continue
 
@@ -325,3 +327,8 @@
 		entries_copy -= entry
 
 	refunds_allowed = FALSE
+
+/obj/item/spellbook/bitrunner
+	name = "digital spellbook"
+	desc = "Has less spells than the real deal. Why? It's programming, I don't gotta explain shit."
+	bitrunner = TRUE

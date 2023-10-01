@@ -227,14 +227,14 @@
 		return return_information
 	return null
 
-/// Gets the turf below the given target. Returns null if there is no turf below the target
-/datum/turf_reservation/proc/get_turf_below(turf/target)
+/// Gets the turf above the given target. Returns null if there is no turf below the target
+/datum/turf_reservation/proc/get_turf_above(turf/target)
 	var/list/bounds_info = calculate_turf_bounds_information(target)
 	if(isnull(bounds_info))
 		return null
 
 	var/z_idx = bounds_info["z_idx"]
-	// check what z level, if its the max, then there is no turf below
+	// check what z level, if its the max, then there is no turf above
 	if(z_idx == z_size)
 		return null
 
@@ -243,14 +243,14 @@
 	var/turf/bottom_left = bottom_left_turfs[z_idx + 1]
 	return locate(bottom_left.x + offset_x, bottom_left.y + offset_y, bottom_left.z)
 
-/// Gets the turf above the given target. Returns null if there is no turf above the target
-/datum/turf_reservation/proc/get_turf_above(turf/target)
+/// Gets the turf below the given target. Returns null if there is no turf below the target
+/datum/turf_reservation/proc/get_turf_below(turf/target)
 	var/list/bounds_info = calculate_turf_bounds_information(target)
 	if(isnull(bounds_info))
 		return null
 
 	var/z_idx = bounds_info["z_idx"]
-	// check what z level, if its the min, then there is no turf above
+	// check what z level, if its the min, then there is no turf below
 	if(z_idx == 1)
 		return null
 

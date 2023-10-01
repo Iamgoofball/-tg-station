@@ -28,7 +28,7 @@
 
 /obj/item/climbing_hook/afterattack(turf/open/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(target.z == user.z)
+	if(target.z == user.z && !(target.turf_flags & RESERVATION_TURF))
 		return
 	if(!istype(target) || isopenspaceturf(target))
 		return

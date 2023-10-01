@@ -1088,14 +1088,28 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	icon_state = "trapdoor"
 	var/opens_on_crossed = FALSE
+	var/trapdoor_turf_path = /turf/open/openspace
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE, opens_on_crossed = opens_on_crossed)
+	component_target.AddComponent(/datum/component/trapdoor, openspace_to_use = trapdoor_turf_path, starts_open = FALSE, conspicuous = FALSE, opens_on_crossed = opens_on_crossed)
 	qdel(src)
 
 /obj/effect/mapping_helpers/trapdoor_placer/trap
 	opens_on_crossed = TRUE
+	trapdoor_turf_path = /turf/open/openspace/no_transparency
+
+/obj/effect/mapping_helpers/trap_trigger
+	name = "crossed trap trigger"
+	late = TRUE
+	icon_state = "component"
+	var/trap_id_to_trigger
+	var/trigger_on_click = TRUE
+
+/obj/effect/mapping_helpers/trap_trigger/LateInitialize()
+	var/turf/component_target = get_turf(src)
+	component_target.AddComponent(/datum/component/trap_trigger, trap_id_to_trigger = trap_id_to_trigger, triggers_on_crossed = TRUE, triggers_on_clicked = trigger_on_click)
+	qdel(src)
 
 /obj/effect/mapping_helpers/ztrait_injector
 	name = "ztrait injector"

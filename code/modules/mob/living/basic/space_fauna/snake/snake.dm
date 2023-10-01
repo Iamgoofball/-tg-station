@@ -84,3 +84,13 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/random_speech/snake,
 	)
+
+/mob/living/basic/snake/dungeon
+	ai_controller = /datum/ai_controller/basic_controller/snake/dungeon
+
+/// Dungeon snakes are another story.
+/datum/ai_controller/basic_controller/snake/dungeon
+	blackboard = list(
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/attack_until_dead,
+	)
+	ai_traits = 0

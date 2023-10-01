@@ -15,7 +15,6 @@
 /obj/item/clothing/mask/gas/driscoll,
 /obj/item/clothing/shoes/cowboy/black,
 /obj/item/climbing_hook,
-/obj/item/pickaxe/rusted,
 /obj/item/flashlight/flare/torch,
 /obj/item/storage/box/syndie_kit/throwing_weapons,
 /turf/open/floor/wood,
@@ -33,7 +32,6 @@
 /obj/item/fireaxe/boneaxe,
 /obj/item/clothing/shoes/plate/red,
 /obj/item/climbing_hook,
-/obj/item/pickaxe/rusted,
 /obj/item/flashlight/flare/torch,
 /turf/open/floor/wood,
 /area/virtual_domain/safehouse)
@@ -62,11 +60,10 @@
 /obj/item/gun/magic/wand/fireball,
 /obj/item/clothing/suit/wizrobe,
 /obj/item/clothing/shoes/sandal/magic,
-/obj/item/spellbook,
 /obj/item/climbing_hook,
-/obj/item/pickaxe/rusted,
 /obj/item/flashlight/flare/torch,
 /obj/item/gun/magic/staff/healing/unrestricted,
+/obj/item/spellbook/bitrunner,
 /turf/open/floor/wood,
 /area/virtual_domain/safehouse)
 "t" = (
@@ -82,7 +79,7 @@
 "y" = (
 /obj/structure/mineral_door/wood,
 /obj/structure/fans/tiny,
-/turf/closed/indestructible/wood,
+/turf/open/floor/wood,
 /area/virtual_domain/safehouse)
 "B" = (
 /obj/structure/table/wood,

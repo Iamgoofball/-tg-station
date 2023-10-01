@@ -91,6 +91,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
 
+	/// Should we slow an overlay if we're wet?
+	var/show_wet_floor_overlay = TRUE
+
 #if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 	/// For the area_contents list unit test
 	/// Allows us to know our area without needing to preassign it

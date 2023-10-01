@@ -11,6 +11,7 @@
 	spell_type = /datum/action/cooldown/spell/emp/disable_tech
 	category = "Defensive"
 	cost = 1
+	no_bitrunners = TRUE // we are in fantasy land
 
 /datum/spellbook_entry/repulse
 	name = "Repulse"
@@ -55,6 +56,7 @@
 	spell_type =  /datum/action/cooldown/spell/lichdom
 	category = "Defensive"
 	no_coexistance_typecache = list(/datum/action/cooldown/spell/splattercasting)
+	no_bitrunners = TRUE // no
 
 /datum/spellbook_entry/chuunibyou
 	name = "Chuuni Invocations"
@@ -69,6 +71,7 @@
 	spell_type = /datum/action/cooldown/spell/spacetime_dist
 	category = "Defensive"
 	cost = 1
+	no_bitrunners = TRUE // you can trap yourself with this
 
 /datum/spellbook_entry/the_traps
 	name = "The Traps!"
@@ -93,6 +96,7 @@
 	spell_type = /datum/action/cooldown/spell/touch/duffelbag
 	category = "Defensive"
 	cost = 1
+	no_bitrunners = TRUE // griefs your team
 
 /datum/spellbook_entry/item/staffhealing
 	name = "Staff of Healing"
@@ -112,6 +116,7 @@
 	desc = "An incandescent orb of crackling energy. Using it will allow you to release your ghost while alive, allowing you to spy upon the station and talk to the deceased. In addition, buying it will permanently grant you X-ray vision."
 	item_path = /obj/item/scrying
 	category = "Defensive"
+	no_bitrunners = TRUE // no pondering the orb while on official bitrunner business
 
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"

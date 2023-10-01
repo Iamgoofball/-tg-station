@@ -59,6 +59,11 @@
 	baseturfs = /turf/closed/indestructible/sandstone
 	smoothing_flags = SMOOTH_BITMASK
 
+/turf/closed/indestructible/sandstone/no_smooth
+	smoothing_flags = null
+	smoothing_groups = null
+	canSmoothWith = null
+
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 
@@ -294,6 +299,11 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
+
+/turf/closed/indestructible/iron/no_smooth
+	smoothing_flags = null
+	smoothing_groups = null
+	canSmoothWith = null
 
 /turf/closed/indestructible/riveted/boss
 	name = "necropolis wall"

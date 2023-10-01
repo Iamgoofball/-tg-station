@@ -1,0 +1,79 @@
+GLOBAL_LIST_EMPTY(traps_list)
+
+/obj/effect/abstract/trap // rocks fall, spacemen die
+	name = "generic trap"
+	desc = "You shouldn't be able to see this, tell the dungeon master to use a dice shield."
+	var/trap_id = "CHANGE ME OR SUFFER THE WRATH OF NON-FUNCTIONAL TRAPS"
+	var/repeatable = FALSE
+	var/triggered = FALSE
+
+/obj/effect/abstract/trap/Initialize(mapload)
+	. = ..()
+	GLOB.traps_list += src
+
+/obj/effect/abstract/trap/Destroy(force)
+	GLOB.traps_list -= src
+	. = ..()
+
+/obj/effect/abstract/trap/proc/trigger_trap()
+	SHOULD_CALL_PARENT(TRUE)
+	if(triggered && !repeatable)
+		return FALSE
+	triggered = TRUE
+	return TRUE
+
+/obj/effect/abstract/trap/rocks_fall_everyone_dies
+	name = "collapsing ceiling trap"
+
+/obj/effect/abstract/trap/rocks_fall_everyone_dies/trigger_trap()
+	if(!..())
+		return
+	var/turf/T = get_turf(src)
+	new /obj/structure/flora/rock/style_random(T)
+	for(var/mob/living/trapped_individual in T.contents)
+		trapped_individual.balloon_alert(trapped_individual, "rocks fall!")
+		trapped_individual.emote("scream")
+		trapped_individual.gib(TRUE)
+
+/obj/effect/abstract/trap/ceiling_lower
+	name = "crushing ceiling trap"
+	var/path_for_ceiling = /turf/closed/indestructible/iron
+
+/obj/effect/abstract/trap/ceiling_lower/trigger_trap()
+	if(!..())
+		return
+	playsound(src, 'sound/effects/stonedoor_openclose.ogg', 50)
+	addtimer(CALLBACK(src, PROC_REF(lower_ceiling)), 4 SECONDS)
+
+/obj/effect/abstract/trap/ceiling_lower/proc/lower_ceiling()
+	var/turf/T = get_turf(src)
+	playsound(src, 'sound/effects/stonedoor_openclose.ogg', 50)
+	T.ChangeTurf(path_for_ceiling)
+	for(var/mob/living/trapped_individual in T.contents)
+		trapped_individual.balloon_alert(trapped_individual, "rocks fall!")
+		trapped_individual.emote("scream")
+		trapped_individual.gib(TRUE)
+
+/obj/effect/abstract/trap/create_turf
+	name = "create turf trap"
+	var/path_for_turf = /turf/closed/indestructible/iron
+
+/obj/effect/abstract/trap/create_turf/trigger_trap()
+	if(!..())
+		return
+	var/turf/T = get_turf(src)
+	T.ChangeTurf(path_for_turf)
+
+/obj/effect/abstract/trap/create_atom
+	name = "create atom trap"
+	var/path_for_atom = /mob/living/basic/snake
+	var/amount_to_spawn = 1
+	var/text_to_display = "snakes!"
+
+/obj/effect/abstract/trap/create_atom/trigger_trap()
+	if(!..())
+		return
+	var/turf/T = get_turf(src)
+	for(var/i in 1 to amount_to_spawn)
+		new path_for_atom(T)
+	T.balloon_alert_to_viewers(text_to_display)

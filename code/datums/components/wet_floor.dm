@@ -51,6 +51,9 @@
 
 /datum/component/wet_floor/proc/update_overlay()
 	var/intended
+	var/turf/parent_turf = parent
+	if(!parent_turf.show_wet_floor_overlay)
+		return
 	if(!isfloorturf(parent))
 		intended = generic_turf_overlay
 	else

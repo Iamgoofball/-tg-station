@@ -16,6 +16,7 @@
 	desc = "Take on the form of an immovable rod, destroying all in your path. Purchasing this spell multiple times will also increase the rod's damage and travel range."
 	spell_type = /datum/action/cooldown/spell/rod_form
 	category = "Offensive"
+	no_bitrunners = TRUE // bypass walls
 
 /datum/spellbook_entry/disintegrate
 	name = "Smite"
@@ -37,6 +38,7 @@
 	spell_type = /datum/action/cooldown/spell/pointed/blind
 	category = "Offensive"
 	cost = 1
+	no_bitrunners = TRUE // griefs the team
 
 /datum/spellbook_entry/mutate
 	name = "Mutate"
@@ -84,6 +86,7 @@
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	spell_type = /datum/action/cooldown/spell/pointed/barnyardcurse
 	category = "Offensive"
+	no_bitrunners = TRUE // grief your team
 
 /datum/spellbook_entry/splattercasting
 	name = "Splattercasting"
@@ -111,6 +114,7 @@
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/gun/magic/staff/chaos
 	category = "Offensive"
+	no_bitrunners = TRUE // can be a door bolt
 
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"

@@ -103,9 +103,9 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
 	playsound(src, openSound, 100, TRUE)
-	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
 	sleep(1 SECONDS)
+	set_opacity(FALSE)
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER

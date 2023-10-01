@@ -30,6 +30,8 @@
 	area_flags = UNIQUE_AREA | NOTELEPORT | ABDUCTOR_PROOF | EVENT_PROTECTED
 	icon_state = "bit_safe"
 	requires_power = FALSE
+	static_lighting = FALSE
+	base_lighting_alpha = 255
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 /// Custom subtypes

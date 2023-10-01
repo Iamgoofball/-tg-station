@@ -19,16 +19,20 @@
 	var/conspicuous
 	/// does this trap door open when something crosses it?
 	var/opens_on_crossed
+	/// what turf should we use?
+	var/openspace_to_use = /turf/open/openspace
 	/// overlay that makes trapdoors more obvious
 	var/static/trapdoor_overlay
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, opens_on_crossed = FALSE)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, opens_on_crossed = FALSE, openspace_to_use = null)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.conspicuous = conspicuous
 	src.assembly = assembly
 	src.opens_on_crossed = opens_on_crossed
+	if(openspace_to_use)
+		src.openspace_to_use = openspace_to_use
 
 	if(!trapdoor_overlay)
 		trapdoor_overlay = mutable_appearance('icons/turf/overlays.dmi', "border_black", ABOVE_NORMAL_TURF_LAYER)
@@ -208,7 +212,7 @@
 		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, PROC_REF(decal_detached))
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message(span_warning("[trapdoor_turf] swings open!"))
-	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
+	trapdoor_turf.ChangeTurf(openspace_to_use, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)
 
 /**
  * ## try_closing

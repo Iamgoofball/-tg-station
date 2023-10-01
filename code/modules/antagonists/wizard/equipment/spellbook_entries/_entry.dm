@@ -32,6 +32,8 @@
 	var/requires_wizard_garb = FALSE
 	/// Used so you can't have specific spells together
 	var/list/no_coexistance_typecache
+	/// Used to prevent Bitrunners from purchasing this entry.
+	var/no_bitrunners = FALSE
 
 /datum/spellbook_entry/New()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
@@ -48,8 +50,10 @@
  *
  * Return FALSE to prevent the entry from being added to wizard spellbooks, TRUE otherwise
  */
-/datum/spellbook_entry/proc/can_be_purchased()
+/datum/spellbook_entry/proc/can_be_purchased(bitrunner = FALSE)
 	if(!name || !desc || !category) // Erroneously set or abstract
+		return FALSE
+	if(bitrunner && no_bitrunners)
 		return FALSE
 	return TRUE
 
@@ -217,6 +221,7 @@
 	limit = 1
 	refundable = FALSE
 	buy_word = "Cast"
+	no_bitrunners = TRUE // casting these would impat reality
 
 /datum/spellbook_entry/summon/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	if(log_buy)
@@ -232,6 +237,8 @@
 	category = "Challenges"
 	refundable = FALSE
 	buy_word = "Accept"
+	no_bitrunners = TRUE // bitrunners are too gamer to fuck themselves over
+
 
 // See, non-purchasable.
 /datum/spellbook_entry/challenge/can_buy(mob/living/carbon/human/user, obj/item/spellbook/book)

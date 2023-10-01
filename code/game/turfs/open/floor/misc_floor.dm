@@ -272,9 +272,15 @@
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
 
+/turf/open/floor/stone/disguised
+	show_wet_floor_overlay = FALSE
+
 /turf/open/floor/stone/disguised/Initialize(mapload)
 	. = ..()
 	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+	var/list/sound_list = list('sound/misc/slip.ogg')
+	sound_list['sound/misc/slip.ogg'] = 1
+	AddComponent(/datum/component/squeak, sound_list, 50, falloff_exponent = 20)
 
 /turf/open/floor/vault
 	name = "strange floor"

@@ -12,12 +12,16 @@
 	plane = TRANSPARENT_FLOOR_PLANE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
+	var/show_through = TRUE
 
 /turf/open/openspace/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/openspace/airless/planetary
 	planetary_atmos = TRUE
+
+/turf/open/openspace/no_transparency
+	show_through = FALSE
 
 // Reminder, any behavior code written here needs to be duped to /turf/open/space/openspace
 // I am so sorry
@@ -33,10 +37,14 @@
 
 /turf/open/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency)
+	if(show_through)
+		AddElement(/datum/element/turf_z_transparency)
+	else
+		ADD_TRAIT(src, TURF_Z_TRANSPARENT_TRAIT, REF(src))
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
+	REMOVE_TRAIT(src, TURF_Z_TRANSPARENT_TRAIT, REF(src))
 	return ..()
 
 /**

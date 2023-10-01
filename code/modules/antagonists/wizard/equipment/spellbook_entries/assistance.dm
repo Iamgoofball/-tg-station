@@ -39,6 +39,8 @@
 		The spell Artificer allows you to create arcane machines for the captured souls to pilot."
 	item_path = /obj/item/storage/belt/soulstone/full
 	category = "Assistance"
+	no_bitrunners = TRUE // we do not want people soulstoning bitrunners
+
 
 /datum/spellbook_entry/item/soulstones/try_equip_item(mob/living/carbon/human/user, obj/item/to_equip)
 	var/was_equipped = user.equip_to_slot_if_possible(to_equip, ITEM_SLOT_BELT, disable_warning = TRUE)
@@ -58,6 +60,7 @@
 	item_path = /obj/item/necromantic_stone
 	category = "Assistance"
 
+
 /datum/spellbook_entry/item/contract
 	name = "Contract of Apprenticeship"
 	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
@@ -71,6 +74,7 @@
 	It would be wise to avoid buying these with anything capable of causing you to swap bodies with others."
 	item_path = /obj/item/guardiancreator/choose/wizard
 	category = "Assistance"
+	no_bitrunners = TRUE // your guardian being replaced with an agent smith, while funny, griefs your team
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
@@ -82,6 +86,8 @@
 	limit = 3
 	category = "Assistance"
 	refundable = TRUE
+	no_bitrunners = TRUE // there is no situation in which you need this as a bitrunner
+
 
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
@@ -97,6 +103,7 @@
 	limit = 3
 	category = "Assistance"
 	refundable = TRUE
+	no_bitrunners = TRUE // there is no situation in which you need this as a bitrunner
 
 /datum/spellbook_entry/item/vendormancer
 	name = "Scepter of Vendormancy"

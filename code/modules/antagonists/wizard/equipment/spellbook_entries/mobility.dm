@@ -4,6 +4,7 @@
 	desc = "Allows you to switch bodies with a target next to you. You will both fall asleep when this happens, and it will be quite obvious that you are the target's body if someone watches you do it."
 	spell_type = /datum/action/cooldown/spell/pointed/mind_transfer
 	category = "Mobility"
+	no_bitrunners = TRUE // griefing your team(or mindswapping with Agent Smith to REALLY grief your team)
 
 /datum/spellbook_entry/knock
 	name = "Knock"
@@ -17,18 +18,21 @@
 	desc = "Randomly teleports you a short distance."
 	spell_type = /datum/action/cooldown/spell/teleport/radius_turf/blink
 	category = "Mobility"
+	no_bitrunners = TRUE // bitrunner areas are NO_TELEPORT
 
 /datum/spellbook_entry/teleport
 	name = "Teleport"
 	desc = "Teleports you to an area of your selection."
 	spell_type = /datum/action/cooldown/spell/teleport/area_teleport/wizard
 	category = "Mobility"
+	no_bitrunners = TRUE // SEE ABOVE
 
 /datum/spellbook_entry/jaunt
 	name = "Ethereal Jaunt"
 	desc = "Turns your form ethereal, temporarily making you invisible and able to pass through walls."
 	spell_type = /datum/action/cooldown/spell/jaunt/ethereal_jaunt
 	category = "Mobility"
+	no_bitrunners = TRUE // SEE ABOVE X2
 
 /datum/spellbook_entry/swap
 	name = "Swap"
@@ -43,6 +47,7 @@
 	item_path = /obj/item/warp_whistle
 	category = "Mobility"
 	cost = 1
+	no_bitrunners = TRUE // SEE ABOVE
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
@@ -50,3 +55,4 @@
 	item_path = /obj/item/gun/magic/staff/door
 	cost = 1
 	category = "Mobility"
+	no_bitrunners = TRUE // can trap yourself
