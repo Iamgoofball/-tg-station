@@ -33,6 +33,8 @@
 
 /datum/component/trap_trigger/proc/click_trigger_trap(atom/source, location, control, params, user)
 	SIGNAL_HANDLER
+	if(!user.Adjacent(parent))
+		return
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, LEFT_CLICK))
