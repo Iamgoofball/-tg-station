@@ -17,15 +17,18 @@
 	var/trapdoor_turf_path
 	/// is this trapdoor "conspicuous" (ie. it gets examine text and overlay added)
 	var/conspicuous
+	/// does this trap door open when something crosses it?
+	var/opens_on_crossed
 	/// overlay that makes trapdoors more obvious
 	var/static/trapdoor_overlay
 
-/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE)
+/datum/component/trapdoor/Initialize(starts_open, trapdoor_turf_path, assembly, conspicuous = TRUE, opens_on_crossed = FALSE)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.conspicuous = conspicuous
 	src.assembly = assembly
+	src.opens_on_crossed = opens_on_crossed
 
 	if(!trapdoor_overlay)
 		trapdoor_overlay = mutable_appearance('icons/turf/overlays.dmi', "border_black", ABOVE_NORMAL_TURF_LAYER)
@@ -60,6 +63,8 @@
 	else
 		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
+	if(opens_on_crossed)
+		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(open_on_crossed))
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -69,6 +74,8 @@
 	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
+	if(opens_on_crossed)
+		UnregisterSignal(parent, COMSIG_ATOM_ENTERED)
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -169,6 +176,24 @@
 	SIGNAL_HANDLER
 	if(conspicuous)
 		examine_text += "There seems to be a tiny gap around this tile with some wires that you might be able to pulse with a <b>multitool</b>."
+
+/**
+ * ## open_on_crossed
+ *
+ * opens the trap door when crossed, only active if opens_on_crossed is TRUE during RegisterWithParent()
+ */
+
+/datum/component/trapdoor/proc/open_on_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	var/turf/open/trapdoor_turf = parent
+	if(isitem(arrived))
+		var/obj/item/I = arrived
+		if(I.item_flags & ABSTRACT)
+			return
+	if(arrived.movement_type & (FLYING|FLOATING) || !arrived.has_gravity())
+		return
+	if(!istype(trapdoor_turf, /turf/open/openspace))
+		try_opening()
 
 /**
  * ## try_opening

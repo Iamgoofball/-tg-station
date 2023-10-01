@@ -27,10 +27,13 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 
+	///poison to apply, does nothing if not defined
+	var/poison_to_apply
+
 	///So we can update ant damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, paralyze_duration = 6 SECONDS, flags = NONE, soundfile = null)
+/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, paralyze_duration = 6 SECONDS, flags = NONE, soundfile = null, poison_to_apply = null)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -41,6 +44,7 @@
 	src.paralyze_duration = paralyze_duration
 	src.flags = flags
 	src.soundfile = soundfile
+	src.poison_to_apply = poison_to_apply
 
 	if(ismovable(parent))
 		AddComponent(/datum/component/connect_loc_behalf, parent, crossed_connections)
@@ -113,6 +117,8 @@
 		)
 
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)
+	if(poison_to_apply)
+		H.reagents.add_reagent(poison_to_apply, 15, added_purity = 100)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
 		H.Paralyze(paralyze_duration)

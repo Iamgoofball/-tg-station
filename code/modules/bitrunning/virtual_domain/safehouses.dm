@@ -46,6 +46,10 @@
 /datum/map_template/safehouse/ice
 	filename = "ice.dmm"
 
+/datum/map_template/safehouse/tavern
+	filename = "fantasy_tavern.dmm"
+
+
 /**
  * Your safehouse here
  * /datum/map_template/safehouse/your_type

@@ -1087,11 +1087,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "trapdoor placer"
 	late = TRUE
 	icon_state = "trapdoor"
+	var/opens_on_crossed = FALSE
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE)
+	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE, conspicuous = FALSE, opens_on_crossed = opens_on_crossed)
 	qdel(src)
+
+/obj/effect/mapping_helpers/trapdoor_placer/trap
+	opens_on_crossed = TRUE
 
 /obj/effect/mapping_helpers/ztrait_injector
 	name = "ztrait injector"

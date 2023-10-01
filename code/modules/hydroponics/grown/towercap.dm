@@ -139,10 +139,12 @@
 	buckle_lying = 90
 	/// Overlay we apply when impaling a mob.
 	var/mutable_appearance/stab_overlay
+	/// What poison should we apply, if any?
+	var/poison_to_apply = null
 
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
+	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES, poison_to_apply = poison_to_apply)
 	build_stab_overlay()
 
 /obj/structure/punji_sticks/proc/build_stab_overlay()
@@ -195,3 +197,13 @@
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"
 	icon_state = "woodspike"
+
+/obj/structure/punji_sticks/spikes/poisoned
+	name = "poison-tipped wooden spikes"
+	poison_to_apply = /datum/reagent/toxin/carpotoxin
+
+/obj/structure/punji_sticks/spikes/poisoned/strong
+	poison_to_apply = /datum/reagent/toxin/amatoxin
+
+/obj/structure/punji_sticks/spikes/poisoned/delayed
+	poison_to_apply = /datum/reagent/toxin/amanitin // for when you really hate someone
