@@ -3,15 +3,18 @@
 	// What trap ID should we trigger?
 	var/trap_id_to_trigger
 
-/datum/component/trap_trigger/Initialize(trap_id_to_trigger, triggers_on_crossed = TRUE, triggers_on_attacked = FALSE)
+/datum/component/trap_trigger/Initialize(trap_id_to_trigger, triggers_on_crossed = FALSE, triggers_on_attackhand = FALSE, triggers_on_attacked = FALSE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.trap_id_to_trigger = trap_id_to_trigger
 	if(triggers_on_crossed)
 		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(crossed_trigger_trap))
 
+	if(triggers_on_attackhand)
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand_trigger_trap))
+
 	if(triggers_on_attacked)
-		RegisterSignal(parent, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(attack_trigger_trap))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attack_trigger_trap))
 
 /datum/component/trap_trigger/proc/crossed_trigger_trap(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -23,7 +26,11 @@
 		return
 	trigger_trap()
 
-/datum/component/trap_trigger/proc/attack_trigger_trap(datum/source, mob/attacker)
+/datum/component/trap_trigger/proc/attack_trigger_trap(datum/source, obj/item/attacking_item, mob/living/attacker, params)
+	SIGNAL_HANDLER
+	trigger_trap()
+
+/datum/component/trap_trigger/proc/attack_hand_trigger_trap(atom/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 	trigger_trap()
 

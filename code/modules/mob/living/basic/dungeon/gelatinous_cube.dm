@@ -1,3 +1,7 @@
+#define GELATINOUS_CUBE_SIZE_NORMAL 1 // 1x1 cube
+#define GELATINOUS_CUBE_SIZE_LARGE 2 // 2x2 cube
+#define GELATINOUS_CUBE_SIZE_HUGE 3 // 3x3 cube
+
 /mob/living/basic/gelatinous_cube
 	name = "gelatinous cube"
 	desc = "Found underground or in dungeons, these quivering cubes of slime continuously scour their domain for food. The acid in their bodies is weak enough that many gelatinous cubes still contain the gear of their victims, as they're unable to break them down."
@@ -10,8 +14,8 @@
 	gender = NEUTER
 	speak_emote = list("blorbles")
 	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	health = 200
-	maxHealth = 200
+	health = 50
+	maxHealth = 50
 	combat_mode = TRUE
 	melee_damage_lower = 1
 	melee_damage_upper = 6
@@ -19,7 +23,6 @@
 	attack_verb_continuous = "slimes"
 	attack_verb_simple = "slime"
 	attack_sound = 'sound/effects/blobattack.ogg'
-	melee_attack_cooldown = 1.5 SECONDS
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -32,16 +35,15 @@
 	minimum_survivable_temperature = 250
 	maximum_survivable_temperature = INFINITY
 	alpha = 50 // Cubes are hard to spot at first, they're so transparent.
-	max_buckled_mobs = 4 // able to eat an entire adventuring party at once
+	max_buckled_mobs = 1
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	base_pixel_x = 16
-	base_pixel_y = 16
-	speed = 0.8
+	speed = 1
+	var/number_of_killed_people = 0
+	var/current_cube_size = GELATINOUS_CUBE_SIZE_NORMAL
 
 /mob/living/basic/gelatinous_cube/Initialize(mapload)
 	. = ..()
-	transform *= 2
 	RegisterSignal(src, COMSIG_LIVING_MOB_BUMP, PROC_REF(check_bump))
 	RegisterSignal(src, COMSIG_ATOM_BUMPED, PROC_REF(bumped_hit))
 
@@ -54,19 +56,46 @@
 		src.unbuckle_all_mobs()
 	. = ..()
 
+// See if we need to size up, and heal up if we've just finished killing someone.
+/mob/living/basic/gelatinous_cube/proc/check_size()
+	switch(number_of_killed_people)
+		if(1 to 9)
+			if(current_cube_size != GELATINOUS_CUBE_SIZE_LARGE)
+				transform *= 2
+				current_cube_size = GELATINOUS_CUBE_SIZE_LARGE
+			speed = 0.8
+			health = 150
+			maxHealth = 150
+			max_buckled_mobs = 4
+			melee_damage_lower = 2
+			melee_damage_upper = 12
+		if(10 to INFINITY)
+			if(current_cube_size != GELATINOUS_CUBE_SIZE_HUGE)
+				transform *= 1.5
+				current_cube_size = GELATINOUS_CUBE_SIZE_HUGE
+			speed = 0.6
+			health = 400
+			maxHealth = 400
+			max_buckled_mobs = 8
+			melee_damage_lower = 3
+			melee_damage_upper = 18
+
 /mob/living/basic/gelatinous_cube/Life(seconds_per_tick, times_fired)
 	. = ..()
+
 	if(!src.stat)
 		if(src.has_buckled_mobs())
 			for(var/mob/living/victim in src.buckled_mobs)
 				if(prob(15))
 					victim.emote("scream")
-				victim.take_overall_damage(burn = roll("2d6"))
+				victim.take_overall_damage(burn = roll("2d6") * current_size)
 				victim.acid_act(2, 15)
 				victim.Stun(3 SECONDS)
 				victim.Paralyze(3 SECONDS)
 				if(victim.stat == DEAD)
+					number_of_killed_people++
 					unbuckle_mob(victim, force = TRUE)
+					check_size()
 
 /mob/living/basic/gelatinous_cube/proc/check_bump(mob/living/bumper, mob/living/victim)
 	SIGNAL_HANDLER
@@ -83,6 +112,10 @@
 
 /mob/living/basic/gelatinous_cube/proc/engulf_victim(mob/living/victim)
 	if(victim.stat)
+		return
+	if(length(buckled_mobs) && length(buckled_mobs) == max_buckled_mobs)
+		if(world.time > next_move)
+			melee_attack(victim)
 		return
 	victim.balloon_alert_to_viewers("engulfed!")
 	src.buckle_mob(victim, force = TRUE)
@@ -120,6 +153,7 @@
 	. = ..()
 	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
 		return
+
 	controller.queue_behavior(engulf_behavior, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM)
 	if (end_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING
@@ -154,11 +188,8 @@
 	if(!targetting_datum.can_attack(basic_mob, target))
 		finish_action(controller, FALSE, target_key)
 		return
-	basic_mob.Move(get_turf(target))
-	if(length(basic_mob.buckled_mobs) && basic_mob.buckled_mobs.Find(target))
-		finish_action(controller, TRUE, target_key)
-		return
-	finish_action(controller, FALSE, target_key)
+	basic_mob.Move(get_turf(target)) // if we don't engulf, we attack anyways
+	finish_action(controller, TRUE, target_key)
 
 
 /datum/ai_behavior/gelatinous_cube_engulf/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key)

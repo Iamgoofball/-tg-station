@@ -8,12 +8,24 @@
 "bi" = (
 /turf/closed/indestructible/sandstone,
 /area/virtual_domain/powered)
+"bQ" = (
+/obj/effect/abstract/trap/fire_projectile{
+	trap_id = "room10_3";
+	dir = 1;
+	repeatable = 1
+	},
+/turf/closed/indestructible/iron/no_smooth,
+/area/virtual_domain/powered)
 "df" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 9;
 	pixel_y = 16
 	},
 /turf/open/floor/stone,
+/area/virtual_domain/powered)
+"ed" = (
+/obj/effect/mapping_helpers/archway2_location,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "fx" = (
 /obj/structure/mineral_door/iron,
@@ -37,8 +49,12 @@
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
 "gt" = (
-/obj/structure/sign/painting/large,
-/turf/closed/indestructible/iron,
+/obj/effect/turf_decal/trimline/dark_red/line{
+	pixel_y = 7;
+	pixel_x = -3
+	},
+/obj/structure/trap_archway,
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "gD" = (
 /obj/effect/abstract/trap/create_atom{
@@ -50,6 +66,18 @@
 	path_for_turf = /turf/open/misc/sandy_dirt
 	},
 /turf/closed/indestructible/sandstone,
+/area/virtual_domain/powered)
+"hb" = (
+/obj/effect/abstract/trap/fire_projectile{
+	trap_id = "room10_2";
+	dir = 8;
+	repeatable = 1
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"ib" = (
+/obj/structure/statue/sandstone/assistant,
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "in" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -65,18 +93,6 @@
 "iJ" = (
 /obj/structure/stairs/north,
 /turf/open/misc/sandy_dirt,
-/area/virtual_domain/powered)
-"jy" = (
-/obj/structure/falsewall/iron,
-/turf/closed/indestructible/iron/no_smooth,
-/area/virtual_domain/powered)
-"kH" = (
-/obj/effect/turf_decal/trimline/dark_red/line{
-	pixel_y = 7;
-	pixel_x = -3
-	},
-/obj/structure/trap_archway,
-/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "mi" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -100,10 +116,6 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
-"pQ" = (
-/obj/structure/trap_archway/clothing_thief,
-/turf/open/floor/stone,
-/area/virtual_domain/powered)
 "qT" = (
 /obj/structure/mineral_door/iron,
 /turf/closed/indestructible/iron/no_smooth,
@@ -124,6 +136,25 @@
 "sO" = (
 /turf/open/floor/vault/sandstone,
 /area/virtual_domain/powered)
+"sR" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 10 B trigger";
+	trap_id_to_trigger = "room10_B";
+	triggers_on_crossed = 0;
+	triggers_on_attackhand = 1
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_B";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 B trap"
+	},
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/structure/mineral_door/iron/trap/b;
+	trap_id = "room10_B";
+	name = "create atom room 10 B trap"
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "ta" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 10;
@@ -136,6 +167,17 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
+"uf" = (
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room3_painting";
+	path_for_turf = /turf/open/floor/stone
+	},
+/obj/effect/abstract/trap/create_atom{
+	trap_id = "room3_painting";
+	path_for_atom = /obj/structure/mineral_door/iron
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "uq" = (
 /obj/structure/stairs/south,
 /turf/open/misc/sandy_dirt,
@@ -146,6 +188,10 @@
 	path_for_turf = /turf/open/floor/stone
 	},
 /turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"vG" = (
+/obj/structure/trap_archway/clothing_thief,
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "wr" = (
 /obj/effect/baseturf_helper/virtual_domain{
@@ -170,9 +216,24 @@
 "zn" = (
 /turf/closed/indestructible/sandstone/no_smooth,
 /area/virtual_domain/powered)
-"zR" = (
-/obj/effect/mapping_helpers/archway2_gear,
-/turf/open/misc/beach/sand,
+"zI" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 10 E trigger";
+	trap_id_to_trigger = "room10_E";
+	triggers_on_crossed = 0;
+	triggers_on_attackhand = 1
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_E";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 E trap"
+	},
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/structure/mineral_door/iron/trap/e;
+	trap_id = "room10_E";
+	name = "create atom room 10 E trap"
+	},
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "Ai" = (
 /turf/open/misc/sandy_dirt,
@@ -188,6 +249,44 @@
 "AO" = (
 /turf/open/floor/wood/large,
 /area/virtual_domain/powered)
+"AX" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 10 C trigger";
+	trap_id_to_trigger = "room10_C";
+	triggers_on_crossed = 0;
+	triggers_on_attackhand = 1
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_C";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 C trap"
+	},
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/structure/mineral_door/iron/trap/c;
+	trap_id = "room10_C";
+	name = "create atom room 10 C trap"
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"By" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 10 G trigger";
+	trap_id_to_trigger = "room10_G";
+	triggers_on_crossed = 0;
+	triggers_on_attackhand = 1
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_G";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 G trap"
+	},
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/structure/mineral_door/iron/trap/g;
+	trap_id = "room10_G";
+	name = "create atom room 10 G trap"
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "BK" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 5;
@@ -198,6 +297,18 @@
 "BZ" = (
 /obj/effect/abstract/trap/ceiling_lower{
 	trap_id = "room2"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Cq" = (
+/obj/effect/mapping_helpers/archway2_gear,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
+"Cs" = (
+/obj/structure/mineral_door/iron,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room8";
+	path_to_trap = /obj/structure/mineral_door/iron
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
@@ -244,6 +355,25 @@
 /obj/structure/table/wood/fancy,
 /turf/open/floor/vault/sandstone,
 /area/virtual_domain/powered)
+"Gq" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 10 D trigger";
+	trap_id_to_trigger = "room10_D";
+	triggers_on_crossed = 0;
+	triggers_on_attackhand = 1
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_D";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 D trap"
+	},
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/structure/mineral_door/iron/trap/d;
+	trap_id = "room10_D";
+	name = "create atom room 10 D trap"
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "GE" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 5;
@@ -262,9 +392,9 @@
 /obj/structure/closet/crate/wooden,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
-"JC" = (
-/obj/effect/mapping_helpers/archway2_location,
-/turf/open/misc/beach/sand,
+"Kj" = (
+/obj/effect/mapping_helpers/archway_success,
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "KD" = (
 /turf/closed/indestructible/iron/no_smooth,
@@ -341,6 +471,14 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"NT" = (
+/obj/effect/abstract/trap/fire_projectile{
+	trap_id = "room10_4";
+	dir = 8;
+	repeatable = 1
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "Pm" = (
 /turf/open/water/beach{
 	baseturfs = s
@@ -357,10 +495,6 @@
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room2"
 	},
-/turf/open/floor/stone,
-/area/virtual_domain/powered)
-"Sp" = (
-/obj/effect/mapping_helpers/archway_success,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Sv" = (
@@ -383,6 +517,13 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"SK" = (
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /mob/living/basic/gargoyle;
+	trap_id = "room8"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "Tp" = (
 /obj/effect/baseturf_helper/virtual_domain{
 	baseturf = /turf/open/misc/sandy_dirt
@@ -394,6 +535,15 @@
 	dir = 4
 	},
 /turf/open/misc/sandy_dirt,
+/area/virtual_domain/powered)
+"Up" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 8;
+	pixel_y = -7;
+	pixel_x = -2
+	},
+/obj/structure/trap_gargoyle_head,
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "UE" = (
 /obj/structure/chair/pew/right,
@@ -410,6 +560,25 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"Wz" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 10 F trigger";
+	trap_id_to_trigger = "room10_F";
+	triggers_on_crossed = 0;
+	triggers_on_attackhand = 1
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_F";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 F trap"
+	},
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/structure/mineral_door/iron/trap/f;
+	trap_id = "room10_F";
+	name = "create atom room 10 F trap"
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "WT" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 9;
@@ -419,15 +588,6 @@
 	dir = 8;
 	pixel_y = -15
 	},
-/turf/open/floor/stone,
-/area/virtual_domain/powered)
-"Xe" = (
-/obj/effect/turf_decal/trimline/dark_red/line{
-	dir = 8;
-	pixel_y = -7;
-	pixel_x = -2
-	},
-/obj/structure/trap_gargoyle_head,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Xi" = (
@@ -443,7 +603,24 @@
 	dir = 8;
 	pixel_y = 18
 	},
+/obj/structure/sign/painting{
+	name = "Torture Room Painting";
+	desc = "This portion of the fresco illustrates an iron door that evidently confines some sort of a horrid creature (its clawed and scaled hands grasp the bars of its small window) that can be loosed to torment prisoners.";
+	pixel_x = -32
+	},
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	path_to_trap = /obj/structure/sign/painting;
+	trap_id_to_trigger = room3_painting;
+	triggers_on_attackhand = 0
+	},
 /turf/open/floor/stone,
+/area/virtual_domain/powered)
+"XD" = (
+/obj/effect/abstract/trap/fire_projectile{
+	trap_id = "room10_1";
+	repeatable = 1
+	},
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "XS" = (
 /obj/structure/trap_levers{
@@ -473,6 +650,25 @@
 	},
 /obj/effect/mapping_helpers/archway_failure,
 /turf/open/misc/sandy_dirt,
+/area/virtual_domain/powered)
+"YN" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 10 A trigger";
+	trap_id_to_trigger = "room10_A";
+	triggers_on_crossed = 0;
+	triggers_on_attackhand = 1
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_A";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 A trap"
+	},
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/structure/mineral_door/iron/trap/a;
+	trap_id = "room10_A";
+	name = "create atom room 10 A trap"
+	},
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "ZT" = (
 /obj/structure/punji_sticks/spikes/poisoned/strong,
@@ -6115,10 +6311,10 @@ al
 al
 al
 al
-Lj
-Lj
-Lj
-Lj
+al
+al
+al
+al
 al
 al
 al
@@ -6211,16 +6407,16 @@ DQ
 DQ
 al
 Lj
-Sp
+Kj
 Lj
 Lj
 al
 al
 al
-Lj
-aH
-aH
-Lj
+al
+al
+al
+al
 al
 al
 al
@@ -6319,10 +6515,10 @@ Lj
 al
 al
 al
-Lj
-aH
-aH
-Lj
+al
+al
+al
+al
 al
 al
 al
@@ -6421,10 +6617,10 @@ Lj
 al
 al
 al
-Lj
-aH
-Lj
-Lj
+al
+al
+al
+al
 al
 al
 al
@@ -6524,7 +6720,7 @@ Lj
 Lj
 Lj
 Lj
-aH
+Lj
 Lj
 Lj
 Lj
@@ -6633,7 +6829,7 @@ aH
 aH
 aH
 aH
-pQ
+vG
 Lj
 al
 al
@@ -6827,7 +7023,7 @@ al
 Lj
 Lj
 Lj
-iF
+By
 Lj
 Lj
 Lj
@@ -7031,7 +7227,7 @@ al
 al
 al
 Lj
-iF
+Wz
 Lj
 Lj
 Lj
@@ -7136,9 +7332,9 @@ Lj
 aH
 aH
 aH
-jy
+zI
 aH
-KD
+bQ
 Lj
 sv
 aH
@@ -7235,11 +7431,11 @@ al
 al
 Lj
 KD
+NT
 Lj
 Lj
 Lj
-Lj
-iF
+Gq
 Lj
 Lj
 aH
@@ -7434,9 +7630,9 @@ Dw
 DQ
 al
 Lj
+SK
 aH
-aH
-aH
+ib
 Lj
 Lj
 Lj
@@ -7540,7 +7736,7 @@ aH
 aH
 aH
 aH
-fx
+Cs
 aH
 fx
 aH
@@ -7639,9 +7835,9 @@ DQ
 al
 Lj
 Lj
-fx
+Cs
 Lj
-fx
+Cs
 Lj
 KD
 Lj
@@ -7742,13 +7938,13 @@ al
 al
 Lj
 aH
-Lj
+XD
 aH
-iF
+YN
 aH
-iF
+sR
 aH
-iF
+AX
 aH
 Lj
 al
@@ -7842,7 +8038,7 @@ Dw
 DQ
 DQ
 al
-gt
+Lj
 aH
 Lj
 Lj
@@ -7851,7 +8047,7 @@ KD
 Lj
 KD
 Lj
-Lj
+hb
 Lj
 al
 al
@@ -8142,14 +8338,14 @@ yg
 LW
 Dw
 Dw
-JC
+ed
 Dw
 Ai
 DQ
 Lj
 Lj
 Lj
-iF
+uf
 Lj
 Lj
 Lj
@@ -8364,7 +8560,7 @@ aH
 aH
 GE
 Sw
-Xe
+Up
 Lj
 al
 al
@@ -8448,7 +8644,7 @@ yg
 LW
 Dw
 Dw
-zR
+Cq
 Dw
 Ai
 DQ
@@ -8465,7 +8661,7 @@ Lj
 Lj
 Lj
 Lj
-kH
+gt
 Lj
 Lj
 al

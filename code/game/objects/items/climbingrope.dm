@@ -23,36 +23,63 @@
 	. = ..()
 	var/list/look_binds = user.client.prefs.key_bindings["look up"]
 	. += span_notice("Firstly, look upwards by holding <b>[english_list(look_binds, nothing_text = "(nothing bound)", and_text = " or ", comma_text = ", or ")]!</b>")
-	. += span_notice("Then, click solid ground adjacent to the hole above you.")
+	. += span_notice("Then, left click solid ground adjacent to the hole above you.")
+	. += span_notice("You can also use it to grapple across and over holes on the same level as you by using right click.")
 	. += span_notice("The rope looks like you could use it [uses] times before it falls apart.")
 
 /obj/item/climbing_hook/afterattack(turf/open/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(target.z == user.z && !(target.turf_flags & RESERVATION_TURF))
-		return
-	if(!istype(target) || isopenspaceturf(target))
-		return
-	if(target.is_blocked_turf(exclude_mobs = TRUE))
-		return
-	var/turf/user_turf = get_turf(user)
-	var/turf/above = GET_TURF_ABOVE(user_turf)
-	if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
-		balloon_alert(user, "blocked!")
-		return
-	var/away_dir = get_dir(above, target)
-	user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
-	playsound(target, 'sound/effects/picaxe1.ogg', 50) //plays twice so people above and below can hear
-	playsound(user_turf, 'sound/effects/picaxe1.ogg', 50)
-	var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
-	if(do_after(user, climb_time, target))
-		user.Move(target)
-		uses--
+	var/list/modifiers = params2list(click_parameters)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(!istype(target) || isopenspaceturf(target))
+			return
+		if(target.is_blocked_turf(exclude_mobs = TRUE))
+			return
+		var/turf/user_turf = get_turf(user)
+		var/direction = get_dir(user_turf, target)
+		user.visible_message(span_notice("[user] begins grappling across with [src]."), span_notice("You get to work on properly grappling with [src] and going across."))
+		playsound(target, 'sound/effects/picaxe1.ogg', 50)
+		playsound(user_turf, 'sound/effects/picaxe1.ogg', 50)
+		var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, direction), new /obj/effect/temp_visual/climbing_hook(user_turf, direction))
+		if(do_after(user, climb_time, target))
+			var/obj/projectile/tether = new /obj/projectile/tether(user_turf)
+			tether.preparePixelProjectile(target, user)
+			tether.firer = user
+			playsound(src, 'sound/weapons/batonextend.ogg', 25, TRUE)
+			INVOKE_ASYNC(tether, TYPE_PROC_REF(/obj/projectile, fire))
+			uses--
+		if(uses <= 0)
+			user.visible_message(span_warning("[src] snaps and tears apart!"))
+			qdel(src)
 
-	if(uses <= 0)
-		user.visible_message(span_warning("[src] snaps and tears apart!"))
-		qdel(src)
+		QDEL_LIST(effects)
+	else if(LAZYACCESS(modifiers, LEFT_CLICK))
+		if(target.z == user.z && !(target.turf_flags & RESERVATION_TURF))
+			return
+		if(!istype(target) || isopenspaceturf(target))
+			return
+		if(target.is_blocked_turf(exclude_mobs = TRUE))
+			return
+		var/turf/user_turf = get_turf(user)
+		var/turf/above = GET_TURF_ABOVE(user_turf)
+		if(!isopenspaceturf(above) || !above.Adjacent(target)) //are we below a hole, is the target blocked, is the target adjacent to our hole
+			balloon_alert(user, "blocked!")
+			return
+		var/away_dir = get_dir(above, target)
+		user.visible_message(span_notice("[user] begins climbing upwards with [src]."), span_notice("You get to work on properly hooking [src] and going upwards."))
+		playsound(target, 'sound/effects/picaxe1.ogg', 50) //plays twice so people above and below can hear
+		playsound(user_turf, 'sound/effects/picaxe1.ogg', 50)
+		var/list/effects = list(new /obj/effect/temp_visual/climbing_hook(target, away_dir), new /obj/effect/temp_visual/climbing_hook(user_turf, away_dir))
+		if(do_after(user, climb_time, target))
+			user.Move(target)
+			uses--
 
-	QDEL_LIST(effects)
+		if(uses <= 0)
+			user.visible_message(span_warning("[src] snaps and tears apart!"))
+			qdel(src)
+
+		QDEL_LIST(effects)
+
 
 /obj/item/climbing_hook/emergency
 	name = "emergency climbing hook"

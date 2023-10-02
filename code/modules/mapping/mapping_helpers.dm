@@ -1100,15 +1100,34 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	trapdoor_turf_path = /turf/open/openspace/no_transparency
 
 /obj/effect/mapping_helpers/trap_trigger
-	name = "crossed trap trigger"
+	name = "turf trap trigger"
 	late = TRUE
-	icon_state = "component"
+	icon_state = "trap_trigger"
 	var/trap_id_to_trigger
-	var/triggers_on_attacked = TRUE
+	var/triggers_on_attackhand = FALSE
+	var/triggers_on_attacked = FALSE
+	var/triggers_on_crossed = TRUE
 
 /obj/effect/mapping_helpers/trap_trigger/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trap_trigger, trap_id_to_trigger = trap_id_to_trigger, triggers_on_crossed = TRUE, triggers_on_attacked = triggers_on_attacked)
+	component_target.AddComponent(/datum/component/trap_trigger, trap_id_to_trigger = trap_id_to_trigger, triggers_on_crossed = triggers_on_crossed, triggers_on_attackhand = triggers_on_attackhand, triggers_on_attacked = triggers_on_attacked)
+	qdel(src)
+
+/obj/effect/mapping_helpers/obj_mob_trap_trigger
+	name = "obj/mob trap trigger"
+	late = TRUE
+	icon_state = "trap_trigger"
+	var/trap_id_to_trigger
+	var/triggers_on_attackhand = TRUE
+	var/triggers_on_attacked = TRUE
+	var/path_to_trap // if null, traps everything on the turf, otherwise only traps the specific path on the turf
+
+/obj/effect/mapping_helpers/obj_mob_trap_trigger/LateInitialize()
+	var/turf/component_target = get_turf(src)
+	for(var/atom/movable/trapped_atom in component_target)
+		if(path_to_trap && !istype(trapped_atom, path_to_trap))
+			continue
+		trapped_atom.AddComponent(/datum/component/trap_trigger, trap_id_to_trigger = trap_id_to_trigger, triggers_on_crossed = FALSE, triggers_on_attackhand = triggers_on_attackhand, triggers_on_attacked = triggers_on_attacked)
 	qdel(src)
 
 /obj/effect/mapping_helpers/ztrait_injector
