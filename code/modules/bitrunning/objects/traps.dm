@@ -3,6 +3,10 @@ GLOBAL_LIST_EMPTY(traps_list)
 /obj/effect/abstract/trap // rocks fall, spacemen die
 	name = "generic trap"
 	desc = "You shouldn't be able to see this, tell the dungeon master to use a dice shield."
+	mouse_opacity = 0
+	max_integrity = INFINITY
+	resistance_flags = INDESTRUCTIBLE
+	anchored = TRUE
 	var/trap_id = "CHANGE ME OR SUFFER THE WRATH OF NON-FUNCTIONAL TRAPS"
 	var/repeatable = FALSE
 	var/triggered = FALSE
@@ -76,4 +80,14 @@ GLOBAL_LIST_EMPTY(traps_list)
 	var/turf/T = get_turf(src)
 	for(var/i in 1 to amount_to_spawn)
 		new path_for_atom(T)
+	T.balloon_alert_to_viewers(text_to_display)
+
+/obj/effect/abstract/trap/display_message
+	name = "display message trap"
+	var/text_to_display = "short msg here"
+
+/obj/effect/abstract/trap/display_message/trigger_trap()
+	if(!..())
+		return
+	var/turf/T = get_turf(src)
 	T.balloon_alert_to_viewers(text_to_display)

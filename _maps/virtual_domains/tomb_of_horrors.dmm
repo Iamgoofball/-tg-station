@@ -8,17 +8,6 @@
 "bi" = (
 /turf/closed/indestructible/sandstone,
 /area/virtual_domain/powered)
-"cd" = (
-/obj/effect/abstract/trap/rocks_fall_everyone_dies{
-	trap_id = "room1";
-	name = "room1 ceiling trap"
-	},
-/obj/effect/mapping_helpers/trap_trigger{
-	name = "room 1 trigger";
-	trap_id_to_trigger = "room1"
-	},
-/turf/open/floor/stone,
-/area/virtual_domain/powered)
 "df" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 9;
@@ -38,15 +27,29 @@
 /turf/open/lava,
 /area/virtual_domain/powered)
 "gl" = (
+/obj/effect/oneway{
+	dir = 1
+	},
 /turf/open/floor/stone/disguised,
 /area/virtual_domain/powered)
 "gp" = (
 /obj/structure/stairs/west,
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
+"gt" = (
+/obj/structure/sign/painting/large,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "gD" = (
-/obj/structure/falsewall/sandstone,
-/turf/open/misc/sandy_dirt,
+/obj/effect/abstract/trap/create_atom{
+	trap_id = "room7";
+	path_for_atom = /obj/structure/falsewall/sandstone
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room7";
+	path_for_turf = /turf/open/misc/sandy_dirt
+	},
+/turf/closed/indestructible/sandstone,
 /area/virtual_domain/powered)
 "in" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -67,6 +70,14 @@
 /obj/structure/falsewall/iron,
 /turf/closed/indestructible/iron/no_smooth,
 /area/virtual_domain/powered)
+"kH" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	pixel_y = 7;
+	pixel_x = -3
+	},
+/obj/structure/trap_archway,
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "mi" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 8;
@@ -78,25 +89,31 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
-"pj" = (
-/obj/effect/mapping_helpers/trap_trigger{
-	name = "room 2 trigger";
-	trap_id_to_trigger = "room2"
+"oe" = (
+/obj/effect/abstract/trap/rocks_fall_everyone_dies{
+	trap_id = "room1";
+	name = "room1 ceiling trap"
 	},
-/obj/effect/abstract/trap/ceiling_lower{
-	trap_id = "room2"
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 1 trigger";
+	trap_id_to_trigger = "room1"
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
-"pH" = (
-/obj/effect/abstract/trap/create_turf{
-	trap_id = "room2"
-	},
+"pQ" = (
+/obj/structure/trap_archway/clothing_thief,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "qT" = (
 /obj/structure/mineral_door/iron,
 /turf/closed/indestructible/iron/no_smooth,
+/area/virtual_domain/powered)
+"ry" = (
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room7";
+	path_for_turf = /turf/open/misc/sandy_dirt
+	},
+/turf/closed/indestructible/sandstone,
 /area/virtual_domain/powered)
 "sv" = (
 /turf/open/openspace/no_transparency,
@@ -123,12 +140,26 @@
 /obj/structure/stairs/south,
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
+"uG" = (
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room2";
+	path_for_turf = /turf/open/floor/stone
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "wr" = (
 /obj/effect/baseturf_helper/virtual_domain{
 	baseturf = /turf/open/water/beach
 	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
+"xT" = (
+/obj/effect/abstract/trap/rocks_fall_everyone_dies{
+	trap_id = "room1";
+	name = "room1 ceiling trap"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "yg" = (
 /turf/open/water/beach,
 /area/virtual_domain/powered)
@@ -138,6 +169,10 @@
 /area/virtual_domain/powered)
 "zn" = (
 /turf/closed/indestructible/sandstone/no_smooth,
+/area/virtual_domain/powered)
+"zR" = (
+/obj/effect/mapping_helpers/archway2_gear,
+/turf/open/misc/beach/sand,
 /area/virtual_domain/powered)
 "Ai" = (
 /turf/open/misc/sandy_dirt,
@@ -160,6 +195,12 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"BZ" = (
+/obj/effect/abstract/trap/ceiling_lower{
+	trap_id = "room2"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "CG" = (
 /obj/effect/mapping_helpers/trapdoor_placer/trap,
 /turf/open/floor/stone,
@@ -174,7 +215,10 @@
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/stone{
+	color = "#ffdede";
+	desc = "Engraved on the stone is a message: <br><br>ACERERAK CONGRATULATES YOU ON YOUR<br>POWERS OF OBSERVATION. SO MAKE OF THIS<br>WHATEVER YOU WISH, FOR YOU WILL BE MINE IN<br>THE END NO MATTER WHAT!<br>Go back to the tormentor or through the arch,<br>and the second great hall you’ll discover.<br>Shun green if you can, but night’s good color<br>is for those of great valor.<br>If shades of red stand for blood the wise<br>will not need sacrifice aught but a loop of<br>magical metal—you're well along your march.<br>Two pits along the way will be found to lead<br>to a fortuitous fall, so check the wall.<br>These keys and those are most important of all,<br>and beware of trembling hands and what will maul.<br>If you find the false you find the true<br>and into the columned hall you’ll come,<br>and there the throne that’s key and keyed.<br>The iron men of visage grim do more than<br>meets the viewer's eye.<br>You've left and left and found my Tomb<br>and now your soul will die."
+	},
 /area/virtual_domain/powered)
 "Dw" = (
 /turf/open/misc/beach/sand,
@@ -185,12 +229,6 @@
 /area/virtual_domain/powered)
 "DQ" = (
 /turf/closed/mineral/ash_rock,
-/area/virtual_domain/powered)
-"EP" = (
-/obj/effect/abstract/trap/ceiling_lower{
-	trap_id = "room2"
-	},
-/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Fh" = (
 /obj/structure/closet/crate/wooden{
@@ -224,6 +262,10 @@
 /obj/structure/closet/crate/wooden,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"JC" = (
+/obj/effect/mapping_helpers/archway2_location,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/powered)
 "KD" = (
 /turf/closed/indestructible/iron/no_smooth,
 /area/virtual_domain/powered)
@@ -234,6 +276,13 @@
 "KJ" = (
 /obj/structure/falsewall/iron,
 /turf/open/openspace/no_transparency,
+/area/virtual_domain/powered)
+"KN" = (
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room2";
+	path_for_turf = /turf/open/floor/stone
+	},
+/turf/closed/indestructible/iron/no_smooth,
 /area/virtual_domain/powered)
 "KP" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -251,6 +300,16 @@
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 6;
 	pixel_y = -8
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"KW" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 2 trigger";
+	trap_id_to_trigger = "room2"
+	},
+/obj/effect/abstract/trap/ceiling_lower{
+	trap_id = "room2"
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
@@ -274,10 +333,11 @@
 	dir = 1
 	},
 /area/virtual_domain/powered)
-"Mt" = (
-/obj/effect/abstract/trap/rocks_fall_everyone_dies{
-	trap_id = "room1";
-	name = "room1 ceiling trap"
+"Ny" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 5;
+	pixel_y = -9;
+	pixel_x = -3
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
@@ -290,6 +350,23 @@
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 10;
 	pixel_y = 18
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Qe" = (
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room2"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Sp" = (
+/obj/effect/mapping_helpers/archway_success,
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Sv" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	pixel_y = 7;
+	pixel_x = -3
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
@@ -312,12 +389,25 @@
 	},
 /turf/closed/indestructible/binary,
 /area/virtual_domain/powered)
+"TI" = (
+/obj/effect/oneway{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/powered)
 "UE" = (
 /obj/structure/chair/pew/right,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Vb" = (
 /obj/structure/fermenting_barrel,
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"VC" = (
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room7";
+	path_for_turf = /turf/open/openspace/no_transparency
+	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "WT" = (
@@ -331,12 +421,58 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"Xe" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 8;
+	pixel_y = -7;
+	pixel_x = -2
+	},
+/obj/structure/trap_gargoyle_head,
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Xi" = (
+/obj/effect/turf_decal/trimline/dark_red/line{
+	dir = 8;
+	pixel_y = -9;
+	pixel_x = 13
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "Xw" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 8;
 	pixel_y = 18
 	},
 /turf/open/floor/stone,
+/area/virtual_domain/powered)
+"XS" = (
+/obj/structure/trap_levers{
+	pixel_x = -9;
+	pixel_y = 24;
+	puzzle_id = "room7";
+	up_trap_to_trigger = "room7";
+	down_trap_to_trigger = "room7_fail"
+	},
+/obj/structure/trap_levers{
+	pixel_x = 11;
+	pixel_y = 24;
+	puzzle_id = "room7";
+	up_trap_to_trigger = "room7";
+	down_trap_to_trigger = "room7_fail"
+	},
+/obj/structure/trap_levers{
+	pixel_x = 1;
+	pixel_y = 24;
+	puzzle_id = "room7";
+	up_trap_to_trigger = "room7";
+	down_trap_to_trigger = "room7_fail"
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room7_fail";
+	path_for_turf = /turf/open/chasm/true
+	},
+/obj/effect/mapping_helpers/archway_failure,
+/turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
 "ZT" = (
 /obj/structure/punji_sticks/spikes/poisoned/strong,
@@ -1907,8 +2043,8 @@ uq
 bi
 bi
 Ai
-Ai
-Ai
+ry
+XS
 bi
 al
 al
@@ -2818,7 +2954,7 @@ al
 al
 al
 zn
-Ai
+TI
 zn
 al
 al
@@ -5586,7 +5722,7 @@ aH
 aH
 aH
 aH
-aH
+fx
 aH
 aH
 aH
@@ -6075,7 +6211,7 @@ DQ
 DQ
 al
 Lj
-aH
+Sp
 Lj
 Lj
 al
@@ -6479,9 +6615,9 @@ Dw
 Dw
 Dw
 Ai
-Mt
-Mt
-cd
+xT
+xT
+oe
 qT
 al
 Lj
@@ -6497,7 +6633,7 @@ aH
 aH
 aH
 aH
-aH
+pQ
 Lj
 al
 al
@@ -6581,9 +6717,9 @@ Dw
 Dw
 Dw
 Ai
-Mt
-Mt
-cd
+xT
+xT
+oe
 qT
 al
 Lj
@@ -6599,7 +6735,7 @@ aH
 aH
 aH
 aH
-aH
+Lj
 Lj
 al
 al
@@ -7007,7 +7143,7 @@ Lj
 sv
 aH
 IQ
-aH
+VC
 Lj
 al
 al
@@ -7706,7 +7842,7 @@ Dw
 DQ
 DQ
 al
-Lj
+gt
 aH
 Lj
 Lj
@@ -8006,7 +8142,7 @@ yg
 LW
 Dw
 Dw
-Dw
+JC
 Dw
 Ai
 DQ
@@ -8127,7 +8263,7 @@ CG
 Pt
 aH
 Lj
-al
+Lj
 al
 al
 al
@@ -8228,8 +8364,8 @@ aH
 aH
 GE
 Sw
+Xe
 Lj
-al
 al
 al
 al
@@ -8312,7 +8448,7 @@ yg
 LW
 Dw
 Dw
-Dw
+zR
 Dw
 Ai
 DQ
@@ -8329,9 +8465,9 @@ Lj
 Lj
 Lj
 Lj
+kH
 Lj
 Lj
-al
 al
 al
 al
@@ -8430,10 +8566,10 @@ al
 al
 al
 al
-al
-al
-al
-al
+Lj
+Sv
+Lj
+Lj
 al
 al
 al
@@ -8532,10 +8668,10 @@ al
 al
 al
 al
-al
-al
-al
-al
+Lj
+Ny
+Xi
+Lj
 al
 al
 al
@@ -8634,10 +8770,10 @@ al
 al
 al
 al
-al
-al
-al
-al
+Lj
+Lj
+Lj
+Lj
 al
 al
 al
@@ -9236,10 +9372,10 @@ Ai
 aH
 aH
 aH
-pH
-EP
-EP
-pj
+Qe
+BZ
+BZ
+KW
 qT
 al
 al
@@ -9338,11 +9474,11 @@ Ai
 aH
 aH
 aH
-pH
-EP
-EP
-pj
-qT
+Qe
+BZ
+BZ
+KW
+KD
 al
 al
 al
@@ -9440,7 +9576,7 @@ Ai
 DQ
 Lj
 Lj
-Lj
+uG
 Lj
 Lj
 Lj
@@ -9541,9 +9677,9 @@ Dw
 Dw
 DQ
 al
-al
-al
-al
+KD
+KN
+KD
 al
 al
 al
@@ -9642,10 +9778,10 @@ Dw
 Dw
 Dw
 DQ
-DQ
 al
-al
-al
+KD
+KD
+KD
 al
 al
 al
@@ -9744,7 +9880,7 @@ Dw
 Dw
 Dw
 DQ
-DQ
+al
 al
 al
 al

@@ -1104,11 +1104,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	late = TRUE
 	icon_state = "component"
 	var/trap_id_to_trigger
-	var/trigger_on_click = TRUE
+	var/triggers_on_attacked = TRUE
 
 /obj/effect/mapping_helpers/trap_trigger/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trap_trigger, trap_id_to_trigger = trap_id_to_trigger, triggers_on_crossed = TRUE, triggers_on_clicked = trigger_on_click)
+	component_target.AddComponent(/datum/component/trap_trigger, trap_id_to_trigger = trap_id_to_trigger, triggers_on_crossed = TRUE, triggers_on_attacked = triggers_on_attacked)
 	qdel(src)
 
 /obj/effect/mapping_helpers/ztrait_injector
