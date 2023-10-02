@@ -3251,6 +3251,7 @@
 #include "code\modules\bitrunning\objects\tomb\archway.dm"
 #include "code\modules\bitrunning\objects\tomb\gargoyle_wallmount.dm"
 #include "code\modules\bitrunning\objects\tomb\lever_trap.dm"
+#include "code\modules\bitrunning\objects\tomb\magic_sphere.dm"
 #include "code\modules\bitrunning\objects\tomb\spear_trap.dm"
 #include "code\modules\bitrunning\objects\tomb\trap_doors.dm"
 #include "code\modules\bitrunning\orders\disks.dm"

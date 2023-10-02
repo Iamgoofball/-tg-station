@@ -1,12 +1,31 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/item/coin/gold;
+	trap_id = "room14_pew2R"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "al" = (
 /turf/closed/indestructible/binary,
+/area/virtual_domain/powered)
+"ay" = (
+/obj/structure/magic_sphere/bronze,
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "aH" = (
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "bi" = (
 /turf/closed/indestructible/sandstone,
+/area/virtual_domain/powered)
+"bq" = (
+/obj/effect/abstract/trap/fire_projectile{
+	trap_id = "room9_spear";
+	repeatable = 1;
+	path_for_projectile = /obj/projectile/bullet/arrow/spear
+	},
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "bQ" = (
 /obj/effect/abstract/trap/fire_projectile{
@@ -37,6 +56,10 @@
 /area/virtual_domain/safehouse)
 "gd" = (
 /turf/open/lava,
+/area/virtual_domain/powered)
+"gh" = (
+/obj/structure/magic_sphere/pink,
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "gl" = (
 /obj/effect/oneway{
@@ -75,8 +98,20 @@
 	},
 /turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
+"hY" = (
+/obj/structure/magic_sphere/pale_violet,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "ib" = (
 /obj/structure/statue/sandstone/assistant,
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"il" = (
+/obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "s";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "in" = (
@@ -94,6 +129,15 @@
 /obj/structure/stairs/north,
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
+"kS" = (
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room9_11";
+	path_for_turf = /turf/open/openspace/no_transparency;
+	name = "create turf room 9-11 trap"
+	},
+/obj/structure/magic_sphere/gold,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "mi" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 8;
@@ -105,6 +149,19 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"mE" = (
+/obj/structure/magic_sphere/yellow,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"nZ" = (
+/obj/structure/magic_sphere/black,
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room9_14";
+	path_for_turf = /turf/open/openspace/no_transparency;
+	name = "create turf room 9-14 trap"
+	},
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "oe" = (
 /obj/effect/abstract/trap/rocks_fall_everyone_dies{
 	trap_id = "room1";
@@ -113,6 +170,30 @@
 /obj/effect/mapping_helpers/trap_trigger{
 	name = "room 1 trigger";
 	trap_id_to_trigger = "room1"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"oH" = (
+/obj/structure/chair/pew/left,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew1R";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"pk" = (
+/obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew1R";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"pH" = (
+/obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew4";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
@@ -126,6 +207,14 @@
 	path_for_turf = /turf/open/misc/sandy_dirt
 	},
 /turf/closed/indestructible/sandstone,
+/area/virtual_domain/powered)
+"rS" = (
+/obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew2R";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "sv" = (
 /turf/open/openspace/no_transparency,
@@ -167,6 +256,14 @@
 /obj/effect/decal/remains/human,
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
+"tu" = (
+/obj/structure/magic_sphere/bright_blue,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"tW" = (
+/obj/structure/magic_sphere/silver,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "uf" = (
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room3_painting";
@@ -193,6 +290,14 @@
 /obj/structure/trap_archway/clothing_thief,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"vK" = (
+/obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew2L";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "wr" = (
 /obj/effect/baseturf_helper/virtual_domain{
 	baseturf = /turf/open/water/beach
@@ -213,8 +318,35 @@
 /obj/structure/stairs/east,
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
+"yY" = (
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/item/coin/gold;
+	trap_id = "room14_pew2L"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "zn" = (
 /turf/closed/indestructible/sandstone/no_smooth,
+/area/virtual_domain/powered)
+"zr" = (
+/obj/structure/chair/pew/left,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew4";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"zx" = (
+/obj/structure/magic_sphere/white,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"zF" = (
+/obj/structure/chair/pew/left,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew3L";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "zI" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -246,8 +378,19 @@
 /obj/effect/mapping_helpers/trapdoor_placer/trap,
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"AM" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "AO" = (
 /turf/open/floor/wood/large,
+/area/virtual_domain/powered)
+"AQ" = (
+/obj/structure/magic_sphere/indigo,
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "AX" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -268,6 +411,17 @@
 	},
 /turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
+"Ba" = (
+/obj/effect/abstract/trap/chem_smoke{
+	trap_id = "room14_pew4";
+	repeatable = 1
+	},
+/turf/open/floor/vault/sandstone,
+/area/virtual_domain/powered)
+"Bt" = (
+/obj/structure/magic_sphere/green,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "By" = (
 /obj/effect/mapping_helpers/trap_trigger{
 	name = "room 10 G trigger";
@@ -275,15 +429,15 @@
 	triggers_on_crossed = 0;
 	triggers_on_attackhand = 1
 	},
-/obj/effect/abstract/trap/create_turf{
-	trap_id = "room10_G";
-	path_for_turf = /turf/open/floor/stone;
-	name = "create turf room 10 G trap"
-	},
 /obj/effect/abstract/trap/create_atom{
 	path_for_atom = /obj/structure/mineral_door/iron/trap/g;
 	trap_id = "room10_G";
 	name = "create atom room 10 G trap"
+	},
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room10_G";
+	path_for_turf = /turf/open/floor/stone;
+	name = "create turf room 10 G trap"
 	},
 /turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
@@ -299,6 +453,22 @@
 	trap_id = "room2"
 	},
 /turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Ci" = (
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_altar";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/obj/structure/fluff/divine/convertaltar{
+	density = 1
+	},
+/obj/effect/abstract/trap/fire_projectile{
+	trap_id = "room14_altar";
+	dir = 1;
+	repeatable = 1;
+	path_for_projectile = /obj/projectile/magic/aoe/lightning
+	},
+/turf/open/floor/vault/sandstone,
 /area/virtual_domain/powered)
 "Cq" = (
 /obj/effect/mapping_helpers/archway2_gear,
@@ -322,6 +492,10 @@
 	},
 /turf/open/floor/vault/sandstone,
 /area/virtual_domain/powered)
+"Db" = (
+/obj/structure/magic_sphere/pale_green,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "Dh" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 4
@@ -336,10 +510,22 @@
 /area/virtual_domain/powered)
 "DG" = (
 /obj/structure/chair/pew/left,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew2L";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "DQ" = (
 /turf/closed/mineral/ash_rock,
+/area/virtual_domain/powered)
+"Es" = (
+/obj/structure/chair/pew/left,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew2R";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Fh" = (
 /obj/structure/closet/crate/wooden{
@@ -352,8 +538,22 @@
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
 "Fz" = (
-/obj/structure/table/wood/fancy,
-/turf/open/floor/vault/sandstone,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room9_spear";
+	path_to_trap = /obj/structure/mineral_door/iron
+	},
+/obj/structure/mineral_door/iron,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"Gb" = (
+/obj/structure/magic_sphere/red,
+/obj/effect/abstract/trap/create_turf{
+	trap_id = "room9_13";
+	path_for_turf = /turf/open/openspace/no_transparency;
+	name = "create turf room 9-13 trap";
+	pixel_x = -2
+	},
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "Gq" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -388,8 +588,38 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"IE" = (
+/obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew3L";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "IQ" = (
-/obj/structure/closet/crate/wooden,
+/obj/structure/chair/pew/left,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew3R";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Jg" = (
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/item/coin/diamond;
+	trap_id = "room14_pew3L"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"JC" = (
+/obj/structure/magic_sphere/scarlet,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"JM" = (
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/item/coin/silver;
+	trap_id = "room14_pew1L"
+	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Kj" = (
@@ -404,8 +634,8 @@
 /turf/open/floor/stone/disguised,
 /area/virtual_domain/powered)
 "KJ" = (
-/obj/structure/falsewall/iron,
-/turf/open/openspace/no_transparency,
+/obj/structure/magic_sphere/orange,
+/turf/closed/indestructible/iron/no_smooth,
 /area/virtual_domain/powered)
 "KN" = (
 /obj/effect/abstract/trap/create_turf{
@@ -463,6 +693,27 @@
 	dir = 1
 	},
 /area/virtual_domain/powered)
+"Mg" = (
+/obj/effect/mapping_helpers/trap_trigger{
+	name = "room 9-11 trigger";
+	trap_id_to_trigger = "room9_11"
+	},
+/turf/open/misc/sandy_dirt,
+/area/virtual_domain/powered)
+"Mv" = (
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/item/coin/silver;
+	trap_id = "room14_pew1R"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Nf" = (
+/obj/effect/abstract/trap/create_atom{
+	path_for_atom = /obj/item/coin/diamond;
+	trap_id = "room14_pew3R"
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
 "Ny" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 5;
@@ -471,6 +722,10 @@
 	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
+"NP" = (
+/obj/structure/magic_sphere/gray,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "NT" = (
 /obj/effect/abstract/trap/fire_projectile{
 	trap_id = "room10_4";
@@ -478,6 +733,14 @@
 	repeatable = 1
 	},
 /turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
+"OD" = (
+/obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew3R";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Pm" = (
 /turf/open/water/beach{
@@ -490,6 +753,18 @@
 	pixel_y = 18
 	},
 /turf/open/floor/stone,
+/area/virtual_domain/powered)
+"Pv" = (
+/obj/structure/chair/pew/left,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew1L";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
+/turf/open/floor/stone,
+/area/virtual_domain/powered)
+"PS" = (
+/obj/structure/magic_sphere/purple,
+/turf/closed/indestructible/iron/no_smooth,
 /area/virtual_domain/powered)
 "Qe" = (
 /obj/effect/abstract/trap/create_turf{
@@ -536,6 +811,10 @@
 	},
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered)
+"Ub" = (
+/obj/structure/magic_sphere/buff,
+/turf/closed/indestructible/iron,
+/area/virtual_domain/powered)
 "Up" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 8;
@@ -547,11 +826,15 @@
 /area/virtual_domain/powered)
 "UE" = (
 /obj/structure/chair/pew/right,
+/obj/effect/mapping_helpers/obj_mob_trap_trigger{
+	trap_id_to_trigger = "room14_pew1L";
+	path_to_trap = /obj/structure/fluff/divine/convertaltar
+	},
 /turf/open/floor/stone,
 /area/virtual_domain/powered)
 "Vb" = (
-/obj/structure/fermenting_barrel,
-/turf/open/floor/stone,
+/obj/structure/magic_sphere/turqoise,
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "VC" = (
 /obj/effect/abstract/trap/create_turf{
@@ -671,8 +954,8 @@
 /turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 "ZT" = (
-/obj/structure/punji_sticks/spikes/poisoned/strong,
-/turf/open/misc/sandy_dirt,
+/obj/structure/magic_sphere/pale_blue,
+/turf/closed/indestructible/iron,
 /area/virtual_domain/powered)
 
 (1,1,1) = {"
@@ -1437,7 +1720,7 @@ al
 al
 al
 bi
-ZT
+Ai
 bi
 al
 al
@@ -1512,7 +1795,7 @@ al
 al
 bi
 bi
-Ai
+Mg
 bi
 al
 bi
@@ -1614,7 +1897,7 @@ al
 al
 al
 bi
-Ai
+yK
 bi
 al
 bi
@@ -1716,7 +1999,7 @@ al
 al
 al
 bi
-yK
+bi
 bi
 al
 bi
@@ -1743,7 +2026,7 @@ al
 al
 al
 bi
-ZT
+Ai
 bi
 al
 al
@@ -1817,9 +2100,9 @@ al
 al
 al
 al
-bi
-bi
-bi
+al
+al
+al
 al
 bi
 Ai
@@ -6407,7 +6690,7 @@ DQ
 DQ
 al
 Lj
-Kj
+ib
 Lj
 Lj
 al
@@ -6428,12 +6711,12 @@ al
 al
 Lj
 aH
-aH
-aH
-aH
+JM
+yY
+Jg
 aH
 La
-Vb
+Fh
 Lj
 Lj
 aH
@@ -6509,7 +6792,7 @@ DQ
 DQ
 al
 Lj
-aH
+Kj
 sv
 Lj
 al
@@ -6530,11 +6813,11 @@ al
 al
 Lj
 aH
+Pv
 DG
-DG
-DG
-DG
-La
+zF
+zr
+AM
 aH
 Lj
 KD
@@ -6612,9 +6895,9 @@ al
 al
 KD
 Lj
-Lj
-Lj
-al
+KD
+KD
+KD
 al
 al
 al
@@ -6633,12 +6916,12 @@ al
 Lj
 aH
 UE
-UE
-UE
-UE
-La
+vK
+IE
+pH
 aH
-Lj
+aH
+aH
 Lj
 iF
 Lj
@@ -6715,32 +6998,32 @@ Lj
 Lj
 al
 Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-Lj
-al
-al
-al
-Lj
-sO
-sO
-sO
-sO
-sO
+kS
+KJ
 Fz
-CN
+PS
+Fz
+ay
+NP
 Lj
+tu
+zx
+Vb
+JC
+Db
+Lj
+Lj
+al
+al
+Lj
+sO
+sO
+Ba
+sO
+sO
+sO
+Ci
+CN
 Lj
 aH
 Lj
@@ -6816,8 +7099,9 @@ xT
 oe
 qT
 al
-Lj
-sv
+bq
+aH
+aH
 aH
 aH
 aH
@@ -6833,16 +7117,15 @@ vG
 Lj
 al
 al
-al
 Lj
 sO
-DG
-DG
-DG
-DG
-La
+oH
+Es
+IQ
+zr
 aH
-Lj
+aH
+aH
 KD
 CG
 KD
@@ -6931,17 +7214,17 @@ aH
 aH
 aH
 aH
+aH
 Lj
 Lj
-al
 al
 Lj
 Lj
 sO
-UE
-UE
-UE
-UE
+pk
+rS
+OD
+il
 La
 aH
 Lj
@@ -7021,31 +7304,31 @@ Lj
 Lj
 al
 Lj
-Lj
-Lj
+ZT
+tW
 By
+Bt
+mE
+gh
+nZ
+hY
 Lj
+Gb
+Ub
 Lj
-Lj
-KJ
-Lj
-Lj
-KJ
-Lj
-Lj
-Lj
+AQ
 Lj
 al
 al
 Lj
 sv
 sO
-aH
-aH
-aH
+Mv
+ab
+Nf
 aH
 La
-Vb
+Fh
 Lj
 Lj
 aH
@@ -7146,7 +7429,7 @@ Lj
 Lj
 Lj
 Lj
-aH
+Lj
 Lj
 Lj
 Lj
@@ -7235,9 +7518,9 @@ Lj
 Lj
 Lj
 aH
-aH
 Id
-aH
+Id
+Fh
 Lj
 al
 al
@@ -7338,7 +7621,7 @@ bQ
 Lj
 sv
 aH
-IQ
+aH
 VC
 Lj
 al
@@ -7440,7 +7723,7 @@ Lj
 Lj
 aH
 aH
-Fh
+aH
 aH
 Lj
 al
@@ -9674,7 +9957,7 @@ Qe
 BZ
 BZ
 KW
-KD
+qT
 al
 al
 al

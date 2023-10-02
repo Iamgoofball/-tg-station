@@ -105,3 +105,15 @@ GLOBAL_LIST_EMPTY(traps_list)
 	var/obj/projectile/to_fire = new path_for_projectile()
 	to_fire.preparePixelProjectile(target_turf, starting_turf)
 	to_fire.fire()
+
+/obj/effect/abstract/trap/chem_smoke
+	name = "chemical smoke trap"
+	var/smoke_radius = 3
+	var/chem_volume = 50
+	var/reagent_to_use = /datum/reagent/toxin/amatoxin
+
+/obj/effect/abstract/trap/chem_smoke/trigger_trap()
+	if(!..())
+		return
+	var/turf/starting_turf = get_turf(src)
+	do_chem_smoke(smoke_radius, holder = src, location = starting_turf, reagent_type = reagent_to_use, reagent_volume = chem_volume)

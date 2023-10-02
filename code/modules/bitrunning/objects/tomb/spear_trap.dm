@@ -3,5 +3,5 @@
 	desc = "This is worse than the arrow!!!"
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spear_projectile"
-	damage = 100
+	damage = 75
 	shrapnel_type = /obj/item/spear/bonespear
