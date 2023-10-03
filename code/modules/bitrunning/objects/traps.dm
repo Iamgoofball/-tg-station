@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(traps_list)
 		return
 	var/turf/T = get_turf(src)
 	for(var/i in 1 to amount_to_spawn)
-		new path_for_atom(T)
+		new path_for_atom(T, dir)
 
 /obj/effect/abstract/trap/display_message
 	name = "display message trap"

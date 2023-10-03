@@ -23,6 +23,13 @@
 	static_lighting = FALSE
 	base_lighting_alpha = 255
 
+/area/virtual_domain/powered/outdoors_lighting
+	base_lighting_alpha = 128
+
+/area/virtual_domain/powered/requires_lighting
+	static_lighting = TRUE
+	base_lighting_alpha = 0
+
 /// Safehouse
 
 /area/virtual_domain/safehouse
