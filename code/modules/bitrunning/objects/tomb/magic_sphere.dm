@@ -6,7 +6,6 @@
 	max_integrity = INFINITY
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
-	color = "#FFFFFF"
 	var/color_name = "debug"
 	var/trap_to_trigger = "dud"
 
@@ -18,89 +17,89 @@
 
 // Spheres that do stuff (placed up here for ease of reading)
 /obj/structure/magic_sphere/gold
-	color = "#ffd700"
+	icon_state = "gold"
 	color_name = "gold"
 	trap_to_trigger = "room9_11" // never forget
 
 /obj/structure/magic_sphere/black
-	color = "#000000"
+	icon_state = "black"
 	color_name = "black"
 	trap_to_trigger = "room9_14"
 
 /obj/structure/magic_sphere/red
-	color = "#FF0000"
+	icon_state = "red"
 	color_name = "red"
 	trap_to_trigger = "room9_13"
 
 /obj/structure/magic_sphere/orange
-	color = "#ffa500"
+	icon_state = "orange"
 	color_name = "orange"
 	trap_to_trigger = "room9_spear"
 
 /obj/structure/magic_sphere/bronze
-	color = "#CD7F32"
+	icon_state = "bronze"
 	color_name = "bronze"
 	trap_to_trigger = "room9_spear"
 
 // Dud spheres
 
 /obj/structure/magic_sphere/purple
-	color = "#800080"
+	icon_state = "purple"
 	color_name = "purple"
 
 /obj/structure/magic_sphere/gray
-	color = "#808080"
+	icon_state = "gray"
 	color_name = "gray"
 
 /obj/structure/magic_sphere/bright_blue
-	color = "#0096FF"
-	color_name = "bright_blue"
+	icon_state = "brightblue"
+	color_name = "bright blue"
 
 /obj/structure/magic_sphere/white
-	color = "#FFFFFF"
+	icon_state = "white"
 	color_name = "white"
 
 /obj/structure/magic_sphere/turqoise
-	color = "#40e0d0"
+	icon_state = "turquioise"
 	color_name = "turqoise"
 
 /obj/structure/magic_sphere/scarlet
-	color = "#ff2400"
+	icon_state = "scarlet"
 	color_name = "scarlet"
 
 /obj/structure/magic_sphere/pale_green
-	color = "#98FB98"
-	color_name = "pale_green"
+	icon_state = "palegreen"
+	color_name = "pale green"
 
 /obj/structure/magic_sphere/pale_blue
-	color = "#afeeee"
-	color_name = "pale_blue"
+	icon_state = "paleblue"
+	color_name = "pale blue"
 
 /obj/structure/magic_sphere/silver
-	color = "#c0c0c0"
+	icon_state = "silver"
 	color_name = "silver"
 
 /obj/structure/magic_sphere/green
-	color = "#008000"
+	icon_state = "green"
 	color_name = "green"
 
 /obj/structure/magic_sphere/yellow
-	color = "#ffff00"
+	icon_state = "yellow"
 	color_name = "yellow"
 
 /obj/structure/magic_sphere/pink
-	color = "#ffc0cb"
+	icon_state = "pink"
 	color_name = "pink"
 
 /obj/structure/magic_sphere/pale_violet
-	color = "#cc99ff"
-	color_name = "pale_violet"
+	icon_state = "paleviolet"
+	color_name = "pale violet"
 
 /obj/structure/magic_sphere/indigo
-	color = "#4b0082"
+	icon_state = "indigo"
 	color_name = "indigo"
 
 /obj/structure/magic_sphere/buff
-	color = "#f0dc82"
+	icon_state = "buff"
 	color_name = "buff"
 

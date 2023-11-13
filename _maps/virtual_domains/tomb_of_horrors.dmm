@@ -17,8 +17,10 @@
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered/requires_lighting)
 "aH" = (
-/obj/structure/falsewall/iron,
-/turf/open/floor/stone,
+/obj/structure/mineral_door/dungeon,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "bi" = (
 /turf/open/lava,
@@ -28,7 +30,9 @@
 /area/virtual_domain/powered/requires_lighting)
 "bQ" = (
 /obj/structure/magic_sphere/pale_violet,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "cU" = (
 /obj/structure/chair/pew/left,
@@ -37,7 +41,7 @@
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "df" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -48,12 +52,12 @@
 	dir = 10;
 	pixel_y = -13
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "dr" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/dungeon,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "ed" = (
 /obj/structure/fake_stairs/stone,
@@ -68,13 +72,12 @@
 	trap_id = "room7";
 	path_for_turf = /turf/open/misc/sandy_dirt
 	},
-/turf/closed/indestructible/sandstone,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "eq" = (
-/obj/structure/statue/sandstone/assistant,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/stone,
+/turf/closed/indestructible/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "fx" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -82,7 +85,7 @@
 	pixel_y = 8
 	},
 /obj/effect/mapping_helpers/trapdoor_placer/trap,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "fJ" = (
 /obj/effect/landmark/bitrunning/safehouse_spawn,
@@ -91,7 +94,7 @@
 "fU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "gd" = (
 /obj/effect/abstract/trap/rocks_fall_everyone_dies{
@@ -99,11 +102,13 @@
 	name = "room1 ceiling trap"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "gh" = (
 /obj/structure/magic_sphere/bronze,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "gl" = (
 /obj/structure/chair/pew/right,
@@ -111,11 +116,13 @@
 	trap_id_to_trigger = "room14_pew1R";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "gp" = (
 /obj/structure/magic_sphere/bright_blue,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "gt" = (
 /turf/closed/indestructible/iron,
@@ -158,7 +165,7 @@
 	name = "room1 ceiling trap"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "hY" = (
 /obj/structure/trap_gargoyle_head,
@@ -168,7 +175,7 @@
 	trap_id = "room25_wind";
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "ib" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -179,10 +186,10 @@
 	dir = 6;
 	pixel_y = -8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "ic" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/dungeon,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/indestructible/iron/no_smooth,
 /area/virtual_domain/powered/requires_lighting)
@@ -192,7 +199,7 @@
 	trap_id_to_trigger = "room14_pew4";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "in" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -203,11 +210,11 @@
 	},
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room10_E";
-	path_for_turf = /turf/open/floor/stone;
+	path_for_turf = /turf/open/floor/dungeon;
 	name = "create turf room 10 E trap"
 	},
 /obj/effect/abstract/trap/create_atom{
-	path_for_atom = /obj/structure/mineral_door/iron/trap/e;
+	path_for_atom = /obj/structure/mineral_door/dungeon/trap/e;
 	trap_id = "room10_E";
 	name = "create atom room 10 E trap"
 	},
@@ -218,7 +225,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "iG" = (
 /obj/effect/abstract/trap/fire_projectile{
@@ -226,7 +233,9 @@
 	repeatable = 1;
 	path_for_projectile = /obj/projectile/bullet/arrow/spear
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "iJ" = (
 /obj/structure/stairs/south,
@@ -238,7 +247,7 @@
 	trap_id_to_trigger = "room14_pew2R";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "jo" = (
 /obj/structure/magic_sphere/black,
@@ -247,7 +256,9 @@
 	path_for_turf = /turf/open/openspace/no_transparency;
 	name = "create turf room 9-14 trap"
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "js" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -255,7 +266,7 @@
 	pixel_y = 16
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "jL" = (
 /obj/effect/abstract/trap/create_atom{
@@ -264,12 +275,12 @@
 	trap_id = "room13_wood"
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "kF" = (
 /obj/structure/trap_archway/clothing_thief,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "kS" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -277,7 +288,7 @@
 	pixel_y = 18
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "lh" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -294,7 +305,7 @@
 	trap_id_to_trigger = room3_painting;
 	triggers_on_attackhand = 0
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "mi" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -303,22 +314,26 @@
 	pixel_x = 13
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "mE" = (
 /obj/structure/magic_sphere/scarlet,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "ny" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 10;
 	pixel_y = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "nZ" = (
 /obj/structure/magic_sphere/gray,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "od" = (
 /obj/structure/chair/pew/left,
@@ -327,7 +342,7 @@
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "oe" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -335,7 +350,7 @@
 	pixel_x = -3
 	},
 /obj/structure/trap_archway,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "oH" = (
 /obj/structure/chair/pew/left,
@@ -343,7 +358,7 @@
 	trap_id_to_trigger = "room14_pew1L";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "pk" = (
 /obj/structure/chair/pew/right,
@@ -351,7 +366,7 @@
 	trap_id_to_trigger = "room14_pew1L";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "pH" = (
 /obj/effect/abstract/trap/fire_projectile{
@@ -359,7 +374,9 @@
 	dir = 8;
 	repeatable = 1
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "pX" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -369,7 +386,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "qb" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -380,25 +397,31 @@
 	},
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room10_D";
-	path_for_turf = /turf/open/floor/stone;
+	path_for_turf = /turf/open/floor/dungeon;
 	name = "create turf room 10 D trap"
 	},
 /obj/effect/abstract/trap/create_atom{
-	path_for_atom = /obj/structure/mineral_door/iron/trap/d;
+	path_for_atom = /obj/structure/mineral_door/dungeon/trap/d;
 	trap_id = "room10_D";
 	name = "create atom room 10 D trap"
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "qK" = (
 /obj/effect/oneway{
 	dir = 8
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "qT" = (
-/obj/structure/mineral_door/iron,
-/turf/closed/indestructible/iron/no_smooth,
+/obj/structure/mineral_door/dungeon,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "rr" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -411,7 +434,7 @@
 /obj/effect/mapping_helpers/archway_success,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "rS" = (
 /obj/structure/chair/pew/right,
@@ -420,7 +443,7 @@
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "sv" = (
 /obj/structure/magic_sphere/red,
@@ -430,7 +453,9 @@
 	name = "create turf room 9-13 trap";
 	pixel_x = -2
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "sJ" = (
 /turf/template_noop,
@@ -441,19 +466,19 @@
 	trap_id = "room14_pew3L"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "sR" = (
 /obj/effect/abstract/trap/rocks_fall_everyone_dies{
 	trap_id = "room1";
 	name = "room1 ceiling trap"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "ta" = (
 /obj/effect/mapping_helpers/archway2_location,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "tg" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -461,7 +486,7 @@
 	pixel_x = -3
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "tu" = (
 /obj/structure/stairs/east,
@@ -469,10 +494,12 @@
 /area/virtual_domain/powered/requires_lighting)
 "tW" = (
 /obj/structure/magic_sphere/orange,
-/turf/closed/indestructible/iron/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "uf" = (
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "uq" = (
 /obj/structure/stairs/west,
@@ -481,13 +508,15 @@
 "uG" = (
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room2";
-	path_for_turf = /turf/open/floor/stone
+	path_for_turf = /turf/open/floor/dungeon
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "uQ" = (
 /obj/effect/mist,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "vj" = (
 /obj/structure/closet/crate{
@@ -504,14 +533,14 @@
 	path_for_atom = /mob/living/basic/snake/dungeon;
 	trap_id = "room13_gold"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "vm" = (
 /obj/effect/abstract/trap/create_atom{
 	path_for_atom = /obj/item/coin/silver;
 	trap_id = "room14_pew1R"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "vG" = (
 /obj/effect/abstract/trap/fire_projectile{
@@ -519,13 +548,15 @@
 	dir = 1;
 	repeatable = 1
 	},
-/turf/closed/indestructible/iron/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "vK" = (
 /obj/structure/fake_stairs/stone{
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "wr" = (
 /obj/effect/baseturf_helper/virtual_domain{
@@ -542,22 +573,26 @@
 	},
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room10_F";
-	path_for_turf = /turf/open/floor/stone;
+	path_for_turf = /turf/open/floor/dungeon;
 	name = "create turf room 10 F trap"
 	},
 /obj/effect/abstract/trap/create_atom{
-	path_for_atom = /obj/structure/mineral_door/iron/trap/f;
+	path_for_atom = /obj/structure/mineral_door/dungeon/trap/f;
 	trap_id = "room10_F";
 	name = "create atom room 10 F trap"
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "xx" = (
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room7";
 	path_for_turf = /turf/open/misc/sandy_dirt
 	},
-/turf/closed/indestructible/sandstone,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "xT" = (
 /obj/structure/chair/bronze{
@@ -578,18 +613,20 @@
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "zc" = (
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room3_painting";
-	path_for_turf = /turf/open/floor/stone
+	path_for_turf = /turf/open/floor/dungeon
 	},
 /obj/effect/abstract/trap/create_atom{
 	trap_id = "room3_painting";
-	path_for_atom = /obj/structure/mineral_door/iron
+	path_for_atom = /obj/structure/mineral_door/dungeon
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "zn" = (
 /obj/effect/abstract/trap/create_atom{
@@ -598,7 +635,7 @@
 	trap_id = "room25_wind";
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "zr" = (
 /obj/structure/chair/pew/left,
@@ -607,11 +644,13 @@
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "zx" = (
 /obj/structure/magic_sphere/green,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "zF" = (
 /obj/effect/abstract/trap/rocks_fall_everyone_dies{
@@ -623,11 +662,13 @@
 	trap_id_to_trigger = "room1"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "zI" = (
 /obj/structure/magic_sphere/pink,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Ai" = (
 /turf/open/misc/sandy_dirt,
@@ -636,26 +677,28 @@
 /obj/structure/fake_stairs/stone{
 	dir = 4
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "AM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "AO" = (
 /turf/open/floor/wood/large,
 /area/virtual_domain/powered/outdoors_lighting)
 "AQ" = (
 /obj/structure/magic_sphere/pale_green,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "AX" = (
 /obj/structure/closet/crate/wooden{
 	pixel_y = 5
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Ba" = (
 /obj/effect/abstract/trap/create_atom{
@@ -663,7 +706,7 @@
 	trap_id = "room14_pew2L"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Bc" = (
 /obj/effect/abstract/trap/fire_projectile{
@@ -671,24 +714,30 @@
 	dir = 1;
 	repeatable = 1
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Be" = (
 /obj/effect/oneway,
 /obj/effect/turf_decal/arrows/red,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Bt" = (
 /obj/structure/magic_sphere/purple,
-/turf/closed/indestructible/iron/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "By" = (
 /obj/effect/mapping_helpers/obj_mob_trap_trigger{
 	trap_id_to_trigger = "room9_spear";
-	path_to_trap = /obj/structure/mineral_door/iron
+	path_to_trap = /obj/structure/mineral_door/dungeon
 	},
-/obj/structure/mineral_door/iron,
-/turf/closed/indestructible/iron,
+/obj/structure/mineral_door/dungeon,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "BI" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -700,37 +749,41 @@
 	trap_id_to_trigger = "room14_pew3R";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "BZ" = (
 /obj/effect/abstract/trap/ceiling_lower{
 	trap_id = "room2"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Ci" = (
 /obj/structure/closet/crate/wooden{
 	pixel_y = 5
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Cq" = (
 /obj/structure/magic_sphere/pale_blue,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Cs" = (
-/turf/closed/indestructible/iron/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "CG" = (
 /obj/effect/mapping_helpers/trapdoor_placer/trap,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "CN" = (
 /obj/effect/abstract/trap/ceiling_lower{
 	trap_id = "room2"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Db" = (
 /obj/effect/abstract/trap/create_atom{
@@ -739,7 +792,7 @@
 	trap_id = "room25_wind";
 	dir = 8
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Dh" = (
 /turf/closed/mineral/ash_rock,
@@ -764,21 +817,25 @@
 	path_for_turf = /turf/open/misc/sandy_dirt;
 	name = "create turf room 15 trap"
 	},
-/turf/closed/indestructible/sandstone,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "DQ" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/archway2_gear,
-/turf/open/floor/stone{
+/turf/open/floor/dungeon{
 	color = "#ffdede";
 	desc = "Engraved on the stone is a message: <br><br>ACERERAK CONGRATULATES YOU ON YOUR<br>POWERS OF OBSERVATION. SO MAKE OF THIS<br>WHATEVER YOU WISH, FOR YOU WILL BE MINE IN<br>THE END NO MATTER WHAT!<br>Go back to the tormentor or through the arch,<br>and the second great hall you’ll discover.<br>Shun green if you can, but night’s good color<br>is for those of great valor.<br>If shades of red stand for blood the wise<br>will not need sacrifice aught but a loop of<br>magical metal—you're well along your march.<br>Two pits along the way will be found to lead<br>to a fortuitous fall, so check the wall.<br>These keys and those are most important of all,<br>and beware of trembling hands and what will maul.<br>If you find the false you find the true<br>and into the columned hall you’ll come,<br>and there the throne that’s key and keyed.<br>The iron men of visage grim do more than<br>meets the viewer's eye.<br>You've left and left and found my Tomb<br>and now your soul will die."
 	},
 /area/virtual_domain/powered/requires_lighting)
 "Ee" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/indestructible/iron/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Es" = (
 /obj/structure/chair/pew/left,
@@ -786,7 +843,7 @@
 	trap_id_to_trigger = "room14_pew2L";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Fh" = (
 /obj/effect/mapping_helpers/obj_mob_trap_trigger{
@@ -807,18 +864,20 @@
 /area/virtual_domain/powered/requires_lighting)
 "Fp" = (
 /obj/structure/fake_stairs/stone,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Fz" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/trapdoor_placer/trap,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Gb" = (
 /obj/structure/magic_sphere/white,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Gq" = (
 /obj/structure/chair/pew/left,
@@ -826,7 +885,7 @@
 	trap_id_to_trigger = "room14_pew4";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "GE" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -834,24 +893,28 @@
 	pixel_y = 17
 	},
 /obj/effect/mapping_helpers/trapdoor_placer/trap,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Id" = (
 /obj/effect/abstract/trap/fire_projectile{
 	trap_id = "room10_1";
 	repeatable = 1
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "IE" = (
 /obj/structure/magic_sphere/yellow,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "IG" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
 	dir = 6
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "IQ" = (
 /obj/structure/chair/pew/left,
@@ -860,17 +923,19 @@
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Jg" = (
 /obj/structure/railing{
 	dir = 1
 	},
 /obj/effect/mob_spawn/corpse/human/charredskeleton,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "JC" = (
-/turf/closed/indestructible/sandstone/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "JM" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -880,7 +945,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Kj" = (
 /obj/structure/punji_sticks/spikes/poisoned,
@@ -888,25 +953,27 @@
 /area/virtual_domain/powered/requires_lighting)
 "KD" = (
 /obj/structure/trap_archway/clothing_thief,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "KI" = (
 /turf/closed/indestructible/binary,
 /area/virtual_domain/powered/requires_lighting)
 "KJ" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/dungeon,
 /obj/effect/mapping_helpers/obj_mob_trap_trigger{
 	trap_id_to_trigger = "room8";
-	path_to_trap = /obj/structure/mineral_door/iron
+	path_to_trap = /obj/structure/mineral_door/dungeon
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "KN" = (
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room2";
-	path_for_turf = /turf/open/floor/stone
+	path_for_turf = /turf/open/floor/dungeon
 	},
-/turf/closed/indestructible/iron/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "seamless"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "KP" = (
 /obj/structure/closet/crate{
@@ -916,11 +983,12 @@
 	trap_id_to_trigger = "room13_silver";
 	path_to_trap = /obj/structure/closet/crate
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "KV" = (
-/obj/effect/wind,
-/turf/closed/indestructible/binary,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/statue/sandstone/assistant,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "KW" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -930,7 +998,7 @@
 /obj/effect/abstract/trap/ceiling_lower{
 	trap_id = "room2"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "La" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -939,7 +1007,7 @@
 "Lj" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Lm" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -947,7 +1015,7 @@
 	pixel_y = -8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "LW" = (
 /turf/open/misc/beach/coast{
@@ -961,18 +1029,18 @@
 	trap_id = "room25_wind";
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Mv" = (
-/obj/structure/mineral_door/iron,
-/turf/open/floor/stone,
+/obj/structure/mineral_door/dungeon,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Nb" = (
 /obj/effect/abstract/trap/create_atom{
 	path_for_atom = /obj/item/coin/silver;
 	trap_id = "room14_pew1L"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Nf" = (
 /turf/open/floor/vault/sandstone,
@@ -988,14 +1056,14 @@
 	pixel_y = -7;
 	pixel_x = -2
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "NM" = (
 /obj/effect/abstract/trap/create_atom{
 	path_for_atom = /mob/living/basic/gargoyle;
 	trap_id = "room8"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "NP" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -1006,21 +1074,25 @@
 	},
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room10_A";
-	path_for_turf = /turf/open/floor/stone;
+	path_for_turf = /turf/open/floor/dungeon;
 	name = "create turf room 10 A trap"
 	},
 /obj/effect/abstract/trap/create_atom{
-	path_for_atom = /obj/structure/mineral_door/iron/trap/a;
+	path_for_atom = /obj/structure/mineral_door/dungeon/trap/a;
 	trap_id = "room10_A";
 	name = "create atom room 10 A trap"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "NT" = (
 /obj/structure/magic_sphere/buff,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "OD" = (
 /obj/structure/chair/pew/right,
@@ -1028,18 +1100,18 @@
 	trap_id_to_trigger = "room14_pew3L";
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "OF" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "OX" = (
 /obj/effect/abstract/trap/create_atom{
 	path_for_atom = /obj/item/coin/diamond;
 	trap_id = "room14_pew3R"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Pb" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -1050,15 +1122,17 @@
 	},
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room10_C";
-	path_for_turf = /turf/open/floor/stone;
+	path_for_turf = /turf/open/floor/dungeon;
 	name = "create turf room 10 C trap"
 	},
 /obj/effect/abstract/trap/create_atom{
-	path_for_atom = /obj/structure/mineral_door/iron/trap/c;
+	path_for_atom = /obj/structure/mineral_door/dungeon/trap/c;
 	trap_id = "room10_C";
 	name = "create atom room 10 C trap"
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Pf" = (
 /obj/effect/oneway{
@@ -1078,13 +1152,13 @@
 	path_to_trap = /obj/structure/fluff/divine/convertaltar
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Pv" = (
 /obj/effect/oneway{
 	dir = 1
 	},
-/turf/open/floor/stone/disguised,
+/turf/open/floor/dungeon/disguised,
 /area/virtual_domain/powered/requires_lighting)
 "PS" = (
 /obj/effect/abstract/trap/fire_projectile{
@@ -1093,28 +1167,31 @@
 	path_for_projectile = /obj/projectile/bullet/arrow/spear;
 	dir = 8
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Qe" = (
 /obj/effect/abstract/trap/create_turf{
-	trap_id = "room2"
+	trap_id = "room2";
+	path_for_turf = /turf/closed/indestructible/dungeon
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "QT" = (
 /obj/effect/oneway,
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/dungeon,
 /obj/effect/turf_decal/arrows/red,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Sv" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Sw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/remains/human,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "SH" = (
 /obj/structure/punji_sticks/spikes/poisoned,
@@ -1126,7 +1203,7 @@
 	path_for_atom = /obj/item/coin/gold;
 	trap_id = "room14_pew2R"
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Tp" = (
 /obj/effect/baseturf_helper/virtual_domain{
@@ -1139,26 +1216,30 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "TI" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/dungeon,
 /turf/closed/indestructible/binary,
 /area/virtual_domain/powered/requires_lighting)
 "Ub" = (
 /obj/structure/magic_sphere/turqoise,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Up" = (
 /obj/effect/oneway{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone/disguised,
+/turf/open/floor/dungeon/disguised,
 /area/virtual_domain/powered/requires_lighting)
 "UE" = (
 /obj/structure/magic_sphere/silver,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "UU" = (
 /obj/effect/turf_decal/trimline/dark_red/line{
@@ -1170,7 +1251,7 @@
 	pixel_y = -15
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Vb" = (
 /obj/effect/mist,
@@ -1178,7 +1259,9 @@
 /area/virtual_domain/powered/requires_lighting)
 "VC" = (
 /obj/structure/magic_sphere/indigo,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Wm" = (
 /obj/effect/abstract/trap/fire_projectile{
@@ -1186,13 +1269,15 @@
 	dir = 8;
 	repeatable = 1
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "Wz" = (
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "WI" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -1203,16 +1288,18 @@
 	},
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room10_B";
-	path_for_turf = /turf/open/floor/stone;
+	path_for_turf = /turf/open/floor/dungeon;
 	name = "create turf room 10 B trap"
 	},
 /obj/effect/abstract/trap/create_atom{
-	path_for_atom = /obj/structure/mineral_door/iron/trap/b;
+	path_for_atom = /obj/structure/mineral_door/dungeon/trap/b;
 	trap_id = "room10_B";
 	name = "create atom room 10 B trap"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "WL" = (
 /obj/effect/mapping_helpers/trap_trigger{
@@ -1222,16 +1309,18 @@
 	triggers_on_attackhand = 1
 	},
 /obj/effect/abstract/trap/create_atom{
-	path_for_atom = /obj/structure/mineral_door/iron/trap/g;
+	path_for_atom = /obj/structure/mineral_door/dungeon/trap/g;
 	trap_id = "room10_G";
 	name = "create atom room 10 G trap"
 	},
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room10_G";
-	path_for_turf = /turf/open/floor/stone;
+	path_for_turf = /turf/open/floor/dungeon;
 	name = "create turf room 10 G trap"
 	},
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "WT" = (
 /obj/structure/stairs/east,
@@ -1243,8 +1332,10 @@
 	pixel_y = -7;
 	pixel_x = -2
 	},
-/obj/structure/trap_gargoyle_head,
-/turf/open/floor/stone,
+/obj/structure/trap_gargoyle_head{
+	pixel_x = -10
+	},
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Xw" = (
 /obj/structure/closet/crate/wooden{
@@ -1254,35 +1345,37 @@
 	trap_id_to_trigger = "room13_wood";
 	path_to_trap = /obj/structure/closet/crate/wooden
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "XD" = (
 /obj/structure/statue/sandstone/assistant,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "XS" = (
 /obj/effect/abstract/trap/create_turf{
 	trap_id = "room7";
 	path_for_turf = /turf/open/openspace/no_transparency
 	},
-/turf/open/floor/stone,
+/turf/open/floor/dungeon,
 /area/virtual_domain/powered/requires_lighting)
 "Yd" = (
 /obj/structure/stairs/north,
 /turf/open/misc/sandy_dirt,
 /area/virtual_domain/powered/requires_lighting)
 "Yo" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/dungeon,
 /obj/effect/mapping_helpers/obj_mob_trap_trigger{
 	trap_id_to_trigger = "room9_spear";
-	path_to_trap = /obj/structure/mineral_door/iron
+	path_to_trap = /obj/structure/mineral_door/dungeon
 	},
-/turf/closed/indestructible/iron/no_smooth,
+/turf/closed/indestructible/dungeon{
+	icon_state = "horizontal"
+	},
 /area/virtual_domain/powered/requires_lighting)
 "YN" = (
-/obj/structure/mineral_door/iron,
-/turf/open/floor/stone/disguised,
+/obj/structure/mineral_door/dungeon,
+/turf/open/floor/dungeon/disguised,
 /area/virtual_domain/powered/requires_lighting)
 "ZT" = (
 /obj/effect/abstract/trap/create_turf{
@@ -1291,7 +1384,9 @@
 	name = "create turf room 9-11 trap"
 	},
 /obj/structure/magic_sphere/gold,
-/turf/closed/indestructible/iron,
+/turf/closed/indestructible/dungeon{
+	icon_state = "vertical"
+	},
 /area/virtual_domain/powered/requires_lighting)
 
 (1,1,1) = {"
@@ -1618,11 +1713,11 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -1720,11 +1815,11 @@ KI
 KI
 KI
 KI
-yK
+JC
 bi
 bi
 bi
-yK
+JC
 KI
 KI
 KI
@@ -1822,11 +1917,11 @@ KI
 KI
 KI
 KI
-yK
+JC
 bi
 bi
 bi
-yK
+JC
 KI
 KI
 KI
@@ -1924,11 +2019,11 @@ KI
 KI
 KI
 KI
-yK
+JC
 bi
 bi
 bi
-yK
+JC
 KI
 KI
 KI
@@ -1953,12 +2048,12 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+eq
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -2026,11 +2121,11 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -2055,12 +2150,12 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
 DG
 gD
 iJ
-yK
+JC
 KI
 KI
 KI
@@ -2157,12 +2252,12 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+eq
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -2231,26 +2326,24 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+eq
 KI
-yK
-yK
-yK
-yK
-yK
-KI
-KI
-KI
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+Cs
+JC
 KI
 KI
+KI
+JC
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -2259,9 +2352,11 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+KI
+KI
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -2333,24 +2428,24 @@ KI
 KI
 KI
 KI
-yK
+JC
 Yd
 gD
-yK
+JC
 KI
-yK
+JC
 gD
 gD
 gD
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+Cs
+eq
 gD
 gD
 gD
-yK
+JC
 KI
 KI
 KI
@@ -2361,9 +2456,9 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -2435,24 +2530,24 @@ KI
 KI
 KI
 KI
-yK
-yK
+eq
+JC
 rr
-yK
+JC
 KI
-yK
+JC
 gD
-yK
-gD
-gD
+eq
 gD
 gD
 gD
 gD
 gD
-yK
 gD
-yK
+gD
+eq
+gD
+JC
 KI
 KI
 KI
@@ -2463,9 +2558,9 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -2538,23 +2633,23 @@ KI
 KI
 KI
 KI
-yK
+JC
 WT
-yK
+JC
 KI
-yK
+JC
 gD
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
+JC
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -2565,9 +2660,9 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -2640,13 +2735,13 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -2654,9 +2749,9 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -2667,20 +2762,20 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -2746,22 +2841,22 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
-yK
-yK
-yK
-yK
-yK
+JC
+Cs
+eq
+eq
+Cs
+eq
 KI
 KI
-yK
+JC
 gD
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -2769,20 +2864,20 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
 KI
 KI
 KI
 KI
-yK
+JC
 gD
 gD
 gD
-yK
+JC
 KI
 KI
 KI
@@ -2848,22 +2943,22 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 uq
-yK
-yK
+JC
+JC
 uq
-yK
+JC
 KI
 KI
-yK
+JC
 gD
 gD
 gD
 iJ
-yK
+JC
 KI
 KI
 KI
@@ -2880,11 +2975,11 @@ KI
 KI
 KI
 KI
-yK
+JC
 tu
-yK
+eq
 WT
-yK
+JC
 KI
 KI
 KI
@@ -2950,25 +3045,22 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 gD
-yK
-yK
+JC
+JC
 gD
-yK
+JC
 KI
 KI
-yK
-yK
-yK
-yK
-yK
-yK
-KI
-KI
-KI
+eq
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -2982,11 +3074,14 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
+KI
+KI
+KI
+eq
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -3052,19 +3147,19 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+eq
 gD
-yK
-yK
+JC
+JC
 gD
-yK
-yK
-yK
-yK
-yK
-yK
+JC
+eq
+Cs
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -3154,19 +3249,19 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
 gD
 gD
-yK
-yK
+eq
+eq
 iJ
-yK
-yK
+eq
+JC
 gD
 xx
 gw
-yK
+JC
 KI
 KI
 KI
@@ -3256,19 +3351,19 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 gD
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -3360,7 +3455,7 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
 gD
 gD
@@ -3368,7 +3463,7 @@ gD
 gD
 gD
 gD
-yK
+JC
 KI
 KI
 KI
@@ -3462,15 +3557,15 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
-yK
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -3564,9 +3659,9 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -3577,19 +3672,19 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -3666,9 +3761,9 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -3679,7 +3774,7 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
 gD
 gD
@@ -3691,7 +3786,7 @@ gD
 gD
 gD
 gD
-yK
+JC
 KI
 KI
 KI
@@ -3768,9 +3863,9 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -3781,19 +3876,19 @@ KI
 KI
 KI
 KI
-yK
+JC
 WT
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
-yK
+JC
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -3870,9 +3965,9 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -3883,9 +3978,9 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -3893,9 +3988,9 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -3972,9 +4067,9 @@ KI
 KI
 KI
 KI
-yK
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -4167,18 +4262,18 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
-yK
+eq
 eo
-yK
+eq
 KI
 KI
 KI
@@ -4269,18 +4364,18 @@ KI
 KI
 KI
 KI
-yK
+JC
 SH
-yK
-yK
-yK
+JC
+Cs
+JC
 Kj
-yK
-yK
-yK
-yK
+JC
+Cs
+eq
+JC
 gD
-yK
+JC
 KI
 KI
 KI
@@ -4371,18 +4466,18 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+JC
 Kj
-yK
-yK
-yK
+JC
+Cs
+JC
 SH
-yK
-yK
-yK
-yK
+JC
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -4475,13 +4570,13 @@ KI
 KI
 KI
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
-yK
-yK
-yK
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -6449,12 +6544,12 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -6549,14 +6644,14 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
+eq
+Cs
+JC
 uf
 uf
 uf
 uf
-gt
+JC
 KI
 KI
 KI
@@ -6651,14 +6746,14 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
-uf
-uf
+JC
 uf
 uf
-gt
+uf
+uf
+JC
 KI
 KI
 KI
@@ -6719,54 +6814,54 @@ Dw
 KI
 KI
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
-gt
+JC
 uf
 Mv
 uf
 uf
 uf
 uf
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+JC
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -6821,7 +6916,7 @@ Dw
 Dh
 Dh
 KI
-gt
+JC
 bq
 Up
 Pv
@@ -6852,23 +6947,23 @@ Sv
 Sv
 Sv
 Sv
-gt
+JC
 KI
 KI
-gt
+JC
 uf
-gt
-uf
-uf
-uf
-uf
-gt
+JC
 uf
 uf
 uf
 uf
+JC
 uf
-gt
+uf
+uf
+uf
+uf
+JC
 KI
 KI
 KI
@@ -6923,54 +7018,54 @@ Dw
 Dh
 Dh
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 uf
-gt
+JC
 KI
 KI
-gt
+JC
 uf
-gt
-gt
-gt
-gt
-gt
+JC
 Cs
-uf
 Cs
-gt
-gt
+Cs
+Cs
+eq
 uf
-gt
+eq
+Cs
+eq
+uf
+JC
 KI
 KI
 KI
@@ -7050,29 +7145,29 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
+eq
+Cs
+eq
 KI
-gt
+JC
 Sv
-gt
+JC
+eq
 Cs
-Cs
-gt
+eq
 uf
-gt
+JC
 KI
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+eq
 KI
-gt
+JC
 bq
-gt
+JC
 KI
 KI
 KI
@@ -7152,29 +7247,29 @@ KI
 KI
 KI
 KI
-gt
+JC
 AM
-gt
+JC
 KI
-Cs
+JC
 CG
-Cs
-gt
+JC
+JC
 bq
 uf
 uf
-gt
+JC
 KI
-gt
+JC
 uf
 uf
 uf
 uf
-gt
+JC
 KI
-gt
+JC
 bq
-gt
+JC
 KI
 KI
 KI
@@ -7229,54 +7324,54 @@ Dw
 Dh
 Dh
 KI
-gt
-gt
-gt
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-gt
-gt
-gt
-gt
-gt
-gt
-kF
-gt
-gt
-gt
-aH
-gt
+eq
 Cs
-gt
-gt
-gt
-gt
+Cs
+eq
 KI
-gt
-uf
-uf
-uf
-uf
-gt
 KI
-gt
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+eq
+Cs
+Cs
+Cs
+Cs
+eq
+kF
+eq
+Cs
+JC
+uf
+JC
+eq
+Cs
+Cs
+Cs
+eq
+KI
+JC
+uf
+uf
+uf
+uf
+JC
+KI
+JC
 bq
-gt
+JC
 KI
 KI
 KI
@@ -7331,10 +7426,10 @@ Dw
 Dh
 Dh
 KI
-gt
-eq
-gt
-gt
+JC
+AM
+KV
+JC
 KI
 KI
 KI
@@ -7351,7 +7446,7 @@ KI
 KI
 KI
 KI
-gt
+JC
 AM
 Nb
 Ba
@@ -7359,26 +7454,26 @@ sO
 uf
 Ts
 Ci
-gt
-gt
+JC
+JC
 uf
-gt
+JC
 KI
-Cs
+JC
 uf
-Cs
+JC
 KI
 KI
-gt
+JC
 uf
 uf
 uf
 uf
-gt
+JC
 KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -7433,10 +7528,10 @@ Dw
 Dh
 Dh
 KI
-gt
+JC
 ry
 bq
-gt
+JC
 KI
 KI
 KI
@@ -7453,7 +7548,7 @@ KI
 KI
 KI
 KI
-gt
+JC
 Sv
 oH
 Es
@@ -7461,26 +7556,26 @@ IQ
 zr
 Jg
 Sv
-gt
-Cs
+eq
+JC
 CG
+JC
+KI
+JC
+uf
+eq
 Cs
+Cs
+JC
+uf
+uf
+uf
+uf
+JC
 KI
-gt
+JC
 uf
-gt
-gt
-gt
-gt
-uf
-uf
-uf
-uf
-gt
-KI
-gt
-uf
-gt
+JC
 KI
 KI
 KI
@@ -7535,11 +7630,11 @@ Dw
 Dh
 KI
 KI
-Cs
-gt
-Cs
+eq
 Cs
 Cs
+eq
+Cs
 KI
 KI
 KI
@@ -7555,7 +7650,7 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
 pk
 rS
@@ -7564,11 +7659,11 @@ il
 Lj
 Sv
 uf
-gt
-aH
-gt
+JC
+uf
+JC
 KI
-gt
+JC
 uf
 uf
 uf
@@ -7578,11 +7673,11 @@ uf
 uf
 uf
 uf
-gt
+JC
 KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -7635,11 +7730,11 @@ Dw
 Dw
 Ai
 Dh
-gt
-gt
-gt
+eq
+Cs
+eq
 KI
-gt
+eq
 ZT
 tW
 By
@@ -7647,17 +7742,17 @@ Bt
 By
 gh
 nZ
-gt
+Cs
 gp
 Gb
 Ub
 mE
 AQ
-gt
-gt
+Cs
+eq
 KI
 KI
-gt
+JC
 Nf
 Nf
 ab
@@ -7666,25 +7761,25 @@ Nf
 La
 Fh
 xT
-gt
+JC
 uf
-gt
+JC
 KI
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+JC
 uf
 uf
 uf
 uf
-gt
+JC
 KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -7756,10 +7851,10 @@ Sv
 Lj
 uf
 KD
-gt
+JC
 KI
 KI
-gt
+JC
 La
 cU
 od
@@ -7768,25 +7863,25 @@ Gq
 uf
 Sv
 uf
-Cs
+JC
 CG
+JC
+KI
+KI
+KI
+KI
+KI
+KI
+eq
 Cs
+Cs
+Cs
+Cs
+eq
 KI
-KI
-KI
-KI
-KI
-KI
-gt
-gt
-gt
-gt
-gt
-gt
-KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -7843,7 +7938,7 @@ sR
 zF
 qT
 KI
-gt
+JC
 fU
 uf
 Sv
@@ -7857,11 +7952,11 @@ Sv
 uf
 uf
 uf
-gt
-gt
+JC
+eq
 KI
-gt
-gt
+eq
+JC
 Nf
 gl
 iP
@@ -7869,26 +7964,26 @@ Pt
 yY
 Wz
 Sv
-gt
-gt
-aH
-gt
-KI
-KI
-KI
-KI
-KI
-KI
-Cs
-Cs
-Cs
-Cs
-Cs
-KI
-KI
-gt
+eq
+JC
 uf
-gt
+JC
+KI
+KI
+KI
+KI
+KI
+KI
+eq
+Cs
+eq
+Cs
+eq
+KI
+KI
+JC
+uf
+JC
 KI
 KI
 KI
@@ -7941,11 +8036,11 @@ Dw
 Dw
 Ai
 Dh
-gt
-gt
-gt
+eq
+Cs
+eq
 KI
-gt
+eq
 Cq
 UE
 WL
@@ -7954,15 +8049,15 @@ IE
 zI
 jo
 bQ
-gt
+Cs
 sv
 NT
-gt
+Cs
 VC
-gt
+eq
 KI
 KI
-gt
+JC
 BI
 Nf
 vm
@@ -7971,26 +8066,26 @@ OX
 uf
 Wz
 AX
-gt
-gt
+JC
+JC
 uf
-gt
+JC
 KI
 KI
 KI
 KI
 KI
 KI
-gt
+eq
 bq
-gt
+eq
 bq
-gt
-gt
+eq
 Cs
-gt
+Cs
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -8049,50 +8144,50 @@ KI
 KI
 KI
 KI
-Cs
+JC
 uf
-Cs
+JC
 KI
+eq
+Cs
+eq
+eq
 Cs
 Cs
 Cs
 Cs
-Cs
-Cs
-Cs
-Cs
-Cs
+eq
 KI
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
+Cs
+Cs
+Cs
+JC
 uf
-gt
+JC
 KI
 KI
 KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
-uf
-uf
+JC
 uf
 uf
-gt
 uf
-gt
+uf
+JC
+uf
+JC
 KI
 KI
 KI
@@ -8151,19 +8246,19 @@ KI
 KI
 KI
 KI
-gt
+eq
 wY
-gt
-gt
-gt
-gt
-gt
-gt
+Cs
+Cs
+Cs
+Cs
+eq
+JC
 AM
 vj
 KP
 uf
-gt
+JC
 KI
 KI
 KI
@@ -8172,29 +8267,29 @@ KI
 KI
 KI
 KI
-gt
+JC
 Sv
-gt
-gt
-gt
-uf
-gt
-KI
-KI
-KI
-KI
-KI
-KI
-gt
-uf
-gt
-uf
-uf
-uf
+eq
 Cs
-gt
+eq
 uf
-gt
+JC
+KI
+KI
+KI
+KI
+KI
+KI
+JC
+uf
+JC
+uf
+uf
+uf
+uf
+JC
+uf
+JC
 KI
 KI
 KI
@@ -8253,14 +8348,14 @@ KI
 KI
 KI
 KI
-gt
+JC
 fU
 Sv
 Sv
 in
 uf
 vG
-gt
+JC
 bq
 Sv
 uf
@@ -8274,29 +8369,29 @@ KI
 KI
 KI
 KI
-gt
+JC
 Sv
 Sv
 Sv
 uf
 uf
-gt
+JC
 KI
 KI
 KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
+JC
 uf
 uf
 uf
-Cs
-gt
 uf
-gt
+JC
+uf
+JC
 KI
 KI
 KI
@@ -8354,20 +8449,20 @@ KI
 KI
 KI
 KI
-gt
-Cs
+JC
+eq
 pH
-gt
-gt
-gt
+Cs
+Cs
+eq
 qb
-gt
-gt
+eq
+JC
 jL
 Sv
 Xw
 Sv
-gt
+JC
 KI
 KI
 KI
@@ -8376,29 +8471,29 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-KI
-KI
-KI
-KI
-KI
-KI
-gt
-uf
-gt
-qT
-gt
-gt
+eq
 Cs
-gt
+Cs
+Cs
+Cs
+Cs
+eq
+KI
+KI
+KI
+KI
+KI
+KI
+JC
 uf
-gt
+JC
+aH
+Cs
+Cs
+Cs
+JC
+uf
+JC
 KI
 KI
 KI
@@ -8452,24 +8547,24 @@ Dw
 Dw
 Dh
 KI
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+eq
 ic
 Sw
 dr
 AM
-gt
+JC
 uf
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+JC
+eq
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -8491,16 +8586,16 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -8554,18 +8649,18 @@ Dw
 Dw
 Dh
 KI
-gt
+JC
 NM
 uf
 XD
-gt
-gt
-gt
-gt
+Cs
+Cs
+Cs
+eq
 Mv
-gt
+JC
 Sv
-gt
+JC
 KI
 KI
 KI
@@ -8593,16 +8688,16 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
 KI
-gt
-gt
-gt
+eq
+Cs
+eq
 KI
 KI
 KI
@@ -8656,7 +8751,7 @@ Dw
 Dw
 Dh
 KI
-gt
+JC
 Sv
 Sv
 Lj
@@ -8665,9 +8760,9 @@ KJ
 Sv
 Mv
 Sv
-gt
+JC
 Sv
-gt
+JC
 KI
 KI
 KI
@@ -8695,9 +8790,9 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -8758,18 +8853,18 @@ Dw
 Dw
 Dh
 KI
-gt
-gt
-KJ
-gt
-KJ
-gt
-Ee
-gt
+eq
 Cs
-gt
+KJ
+Cs
+KJ
+eq
+Ee
+eq
+Cs
+eq
 Sv
-gt
+JC
 KI
 KI
 KI
@@ -8780,31 +8875,31 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
+eq
+Cs
+eq
 KI
 KI
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 uf
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -8861,7 +8956,7 @@ Dw
 Dh
 KI
 KI
-gt
+JC
 Sv
 Id
 Sv
@@ -8871,7 +8966,7 @@ WI
 Sv
 Pb
 Sv
-gt
+JC
 KI
 KI
 KI
@@ -8881,14 +8976,14 @@ KI
 KI
 KI
 KI
-gt
-gt
+eq
+JC
 bq
-gt
+JC
 KI
 KI
 KI
-gt
+JC
 uf
 uf
 uf
@@ -8963,17 +9058,17 @@ Dw
 Dh
 Dh
 KI
-gt
+JC
 uf
-gt
-gt
-gt
+JC
 Cs
-gt
+eq
 Cs
-gt
+eq
+Cs
+eq
 Wm
-gt
+eq
 KI
 KI
 KI
@@ -8983,32 +9078,32 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
 uf
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+JC
+eq
+Cs
+Cs
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 uf
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
 PS
-gt
+eq
 KI
 KI
 KI
@@ -9065,9 +9160,9 @@ Dw
 Dh
 Dh
 KI
-gt
+JC
 Sv
-gt
+JC
 KI
 KI
 KI
@@ -9085,27 +9180,27 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
-gt
-gt
+eq
+JC
+JC
 uf
 uf
-Cs
+JC
 uf
-Cs
+JC
 KI
+eq
 Cs
 Cs
 Cs
 Cs
 Cs
 Cs
-Cs
-gt
+JC
 uf
-gt
+JC
 KI
 KI
 KI
@@ -9167,9 +9262,9 @@ Dw
 Dh
 KI
 KI
-Cs
+JC
 Sv
-Cs
+JC
 KI
 KI
 KI
@@ -9187,18 +9282,18 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
-gt
+JC
 KI
-gt
+JC
 uf
 uf
-gt
+JC
 uf
-gt
+JC
 KI
-gt
+JC
 uf
 uf
 uf
@@ -9207,7 +9302,7 @@ uf
 uf
 QT
 uf
-gt
+JC
 KI
 KI
 KI
@@ -9267,49 +9362,49 @@ Dw
 Dw
 Ai
 Dh
-gt
-gt
-gt
+eq
+Cs
+Cs
 zc
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
 KI
 KI
 KI
-KI
-gt
+JC
 uf
-gt
+JC
 KI
-gt
-uf
-gt
-gt
-uf
-gt
-KI
-gt
-uf
-uf
-uf
-gt
-gt
-gt
-gt
+JC
 Mv
-gt
+Cs
+eq
+uf
+JC
+KI
+JC
+uf
+uf
+uf
+eq
+Cs
+Cs
+JC
+Mv
+JC
 KI
 KI
 KI
@@ -9383,26 +9478,26 @@ UU
 CG
 kS
 Sv
-gt
-gt
-KI
-KI
-KI
-KI
-KI
-KI
-gt
 uf
-gt
+JC
 KI
-gt
+KI
+KI
+KI
+KI
+KI
+JC
 uf
-uf
+JC
+KI
+JC
 uf
 uf
-gt
+uf
+uf
+JC
 KI
-gt
+JC
 uf
 uf
 uf
@@ -9411,7 +9506,7 @@ uf
 uf
 Be
 uf
-gt
+JC
 KI
 KI
 KI
@@ -9486,34 +9581,34 @@ uf
 pX
 Ny
 Xi
-gt
+JC
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-TI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-KI
-gt
-uf
-gt
-gt
-gt
+eq
 Cs
-gt
-gt
+Cs
+Cs
+Cs
+eq
+TI
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
+KI
+JC
 uf
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+JC
+uf
+JC
 yK
 yK
 yK
@@ -9573,24 +9668,24 @@ Dw
 Dw
 Ai
 Dh
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
 oe
-gt
-gt
-gt
-gt
+Cs
+eq
+Cs
+eq
 hY
 Mg
 Mg
@@ -9602,20 +9697,20 @@ Mg
 Mg
 Mg
 Mg
-gt
+eq
 KI
 KI
 KI
-gt
+JC
 uf
 uf
 uf
-gt
+Mv
 uf
 uf
-gt
+JC
 uf
-gt
+JC
 yK
 Vb
 Vb
@@ -9687,10 +9782,10 @@ KI
 KI
 KI
 KI
-gt
+JC
 tg
-gt
-gt
+JC
+JC
 uf
 Mv
 Db
@@ -9704,20 +9799,20 @@ Mg
 Db
 Mg
 Db
-gt
+JC
 KI
 KI
 KI
-gt
-gt
-gt
-uf
-gt
+eq
 Cs
-gt
-gt
+eq
 uf
-gt
+eq
+Cs
+Cs
+JC
+uf
+JC
 Vb
 Vb
 yK
@@ -9789,12 +9884,12 @@ KI
 KI
 KI
 KI
-gt
+JC
 JM
 mi
-gt
-gt
-gt
+eq
+Cs
+eq
 Db
 Db
 Mg
@@ -9806,18 +9901,18 @@ Db
 Mg
 Db
 Mg
-gt
+JC
 KI
 KI
 KI
-gt
-gt
-gt
+Cs
+Cs
+eq
 qK
-gt
-gt
-gt
-gt
+Cs
+Cs
+Cs
+eq
 uf
 uQ
 Vb
@@ -9891,12 +9986,12 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
-gt
+JC
+Cs
+Cs
+JC
 KI
-gt
+JC
 Db
 Mg
 Db
@@ -9908,20 +10003,20 @@ Mg
 AH
 AH
 AH
-gt
+JC
 KI
 KI
-gt
-gt
+Cs
+eq
 ed
-gt
+JC
 uf
 uf
 uf
 uf
-gt
-gt
-gt
+JC
+Cs
+eq
 Vb
 Vb
 yK
@@ -9993,12 +10088,12 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
 uf
-gt
-gt
-gt
+eq
+Cs
+eq
 Db
 Db
 Mg
@@ -10010,18 +10105,18 @@ Fp
 Nf
 Nf
 Nf
-gt
+JC
 Cs
-gt
-gt
+Cs
+eq
 ed
 ed
-gt
+JC
 uf
 uf
 uf
 uf
-gt
+JC
 KI
 yK
 yK
@@ -10083,19 +10178,19 @@ Dw
 Dw
 Ai
 Dh
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
 KI
 KI
-gt
+JC
 uf
 uf
 Mv
@@ -10112,7 +10207,7 @@ Fp
 Nf
 Nf
 xT
-gt
+JC
 uf
 uf
 ed
@@ -10123,7 +10218,7 @@ uf
 uf
 uf
 uf
-gt
+JC
 KI
 KI
 yK
@@ -10197,12 +10292,12 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
 uf
-gt
-gt
-gt
+eq
+Cs
+eq
 zn
 Mg
 zn
@@ -10214,18 +10309,18 @@ Fp
 Nf
 Nf
 Nf
-gt
+JC
 Cs
-gt
-gt
+Cs
+eq
 ed
 ed
-gt
+JC
 uf
 uf
 uf
 uf
-gt
+JC
 KI
 KI
 KI
@@ -10299,12 +10394,12 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+JC
 KI
-gt
+JC
 zn
 zn
 Mg
@@ -10316,18 +10411,18 @@ zn
 vK
 vK
 vK
-gt
+JC
 KI
 KI
-gt
-gt
+Cs
+eq
 ed
-gt
+JC
 uf
 uf
 uf
 uf
-gt
+JC
 KI
 KI
 KI
@@ -10389,13 +10484,13 @@ Dw
 Dw
 Ai
 Dh
-gt
-gt
+eq
+Cs
 uG
-gt
-gt
-gt
-gt
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -10404,9 +10499,9 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
+eq
+Cs
+eq
 zn
 Mg
 zn
@@ -10418,18 +10513,18 @@ Mg
 zn
 Mg
 zn
-gt
+JC
 KI
 KI
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+Cs
+Cs
+eq
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -10492,9 +10587,9 @@ Dw
 Dw
 Dh
 KI
-Cs
+JC
 KN
-Cs
+JC
 KI
 KI
 KI
@@ -10506,7 +10601,7 @@ KI
 KI
 KI
 KI
-gt
+JC
 uf
 Mv
 zn
@@ -10520,7 +10615,7 @@ zn
 Mg
 zn
 Mg
-gt
+JC
 KI
 KI
 KI
@@ -10594,23 +10689,23 @@ Dw
 Dw
 Dh
 KI
+eq
 Cs
+eq
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+KI
+eq
 Cs
-Cs
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-KI
-gt
-gt
-gt
+JC
 hY
 Mg
 Mg
@@ -10622,7 +10717,7 @@ Mg
 Mg
 Mg
 Mg
-gt
+JC
 KI
 KI
 KI
@@ -10712,19 +10807,19 @@ KI
 KI
 KI
 KI
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
-gt
+eq
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+eq
 KI
 KI
 KI
@@ -10919,7 +11014,7 @@ KI
 KI
 KI
 KI
-KV
+KI
 KI
 KI
 KI

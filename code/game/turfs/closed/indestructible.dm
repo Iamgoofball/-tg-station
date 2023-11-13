@@ -64,6 +64,12 @@
 	smoothing_groups = null
 	canSmoothWith = null
 
+/turf/closed/indestructible/dungeon
+	name = "dungeon wall"
+	desc = "Roll for perception."
+	icon = 'icons/turf/dungeon_wall.dmi'
+	icon_state = "base"
+
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 

@@ -244,6 +244,12 @@
 	sheetType = /obj/item/stack/sheet/mineral/sandstone
 	max_integrity = 100
 
+/obj/structure/mineral_door/dungeon
+	name = "dungeon door"
+	icon_state = "tomb"
+	sheetType = /obj/item/stack/sheet/mineral/sandstone // we dont have actual stone lmao
+	max_integrity = 300
+
 /obj/structure/mineral_door/transparent
 	opacity = FALSE
 	rad_insulation = RAD_VERY_LIGHT_INSULATION

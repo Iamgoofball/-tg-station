@@ -1,4 +1,4 @@
-/obj/structure/mineral_door/iron/trap
+/obj/structure/mineral_door/dungeon/trap
 	max_integrity = INFINITY
 	resistance_flags = INDESTRUCTIBLE
 	var/list/choices = list(
@@ -13,7 +13,7 @@
 	var/correct_choice = "Pull down"
 	var/trap_to_trigger_id
 
-/obj/structure/mineral_door/iron/trap/TryToSwitchState(atom/user)
+/obj/structure/mineral_door/dungeon/trap/TryToSwitchState(atom/user)
 	if(door_opened)
 		src.balloon_alert(user, "door already open!")
 		return
@@ -31,31 +31,31 @@
 		return
 	..()
 
-/obj/structure/mineral_door/iron/trap/a
+/obj/structure/mineral_door/dungeon/trap/a
 	correct_choice = "Pull down"
 	trap_to_trigger_id = "room10_1"
 
-/obj/structure/mineral_door/iron/trap/b
+/obj/structure/mineral_door/dungeon/trap/b
 	correct_choice = "Pivot centrally"
 	trap_to_trigger_id = "room10_1"
 
-/obj/structure/mineral_door/iron/trap/c
+/obj/structure/mineral_door/dungeon/trap/c
 	correct_choice = "Pull inward and up at bottom"
 	trap_to_trigger_id = "room10_1"
 
-/obj/structure/mineral_door/iron/trap/d
+/obj/structure/mineral_door/dungeon/trap/d
 	correct_choice = "Slide up"
 	trap_to_trigger_id = "room10_2"
 
-/obj/structure/mineral_door/iron/trap/e
+/obj/structure/mineral_door/dungeon/trap/e
 	correct_choice = "Pull double panels inward"
 	trap_to_trigger_id = "room10_2"
 
-/obj/structure/mineral_door/iron/trap/f
+/obj/structure/mineral_door/dungeon/trap/f
 	correct_choice = "Slide left"
 	trap_to_trigger_id = "room10_3"
 
-/obj/structure/mineral_door/iron/trap/g
+/obj/structure/mineral_door/dungeon/trap/g
 	correct_choice = "Press all studs"
 	trap_to_trigger_id = "room10_4"
 

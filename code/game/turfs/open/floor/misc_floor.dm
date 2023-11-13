@@ -272,10 +272,15 @@
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
 
-/turf/open/floor/stone/disguised
+/turf/open/floor/dungeon
+	name = "dungeon floor"
+	desc = "Watch your step."
+	icon_state = "dungeon_tile"
+
+/turf/open/floor/dungeon/disguised
 	show_wet_floor_overlay = FALSE
 
-/turf/open/floor/stone/disguised/Initialize(mapload)
+/turf/open/floor/dungeon/disguised/Initialize(mapload)
 	. = ..()
 	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
 	var/list/sound_list = list('sound/misc/slip.ogg')
