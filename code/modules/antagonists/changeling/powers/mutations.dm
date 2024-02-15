@@ -197,12 +197,16 @@
 	armour_penetration = 35
 	var/can_drop = FALSE
 	var/fake = FALSE
+	var/can_smash_walls = TRUE
 
 /obj/item/melee/arm_blade/Initialize(mapload,silent,synthetic)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc) && !silent)
 		loc.visible_message(span_warning("A grotesque blade forms around [loc.name]\'s arm!"), span_warning("Our arm twists and mutates, transforming it into a deadly blade."), span_hear("You hear organic matter ripping and tearing!"))
+		var/mob/armblade_user = loc
+		if(can_smash_walls)
+			armblade_user.AddElement(/datum/element/wall_smasher)
 	if(synthetic)
 		can_drop = TRUE
 	AddComponent(/datum/component/butchering, \
@@ -244,6 +248,8 @@
 
 /obj/item/melee/arm_blade/dropped(mob/user)
 	..()
+	if(can_smash_walls)
+		user.RemoveElement(/datum/element/wall_smasher)
 	if(can_drop)
 		new /obj/item/melee/synthetic_arm_blade(get_turf(user))
 
