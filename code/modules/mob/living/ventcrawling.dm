@@ -31,10 +31,14 @@
 			to_chat(src, span_warning("You can't vent crawl while buckled!"))
 		return
 	if(iscarbon(src) && required_nudity)
-		if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
+		if(length(get_equipped_items(include_pockets = TRUE))
 			if(provide_feedback)
 				to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
 			return
+	if(get_num_held_items())
+		if(provide_feedback)
+			to_chat(src, span_warning("You can't crawl around in the ventilation ducts without all of your hands free!"))
+		return
 	if(ventcrawl_target.welded)
 		if(provide_feedback)
 			to_chat(src, span_warning("You can't crawl around a welded vent!"))
