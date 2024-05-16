@@ -49,6 +49,7 @@
 /obj/machinery/computer/cargo/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio/headset/headset_cargo(src)
+	AddComponent(/datum/component/armament/company_imports, subtypesof(/datum/armament_entry/company_import), 0)
 
 /obj/machinery/computer/cargo/Destroy()
 	QDEL_NULL(radio)
@@ -436,6 +437,10 @@
 			. = TRUE
 		if("toggleprivate")
 			self_paid = !self_paid
+			. = TRUE
+		if("company_import_window")
+			var/datum/component/armament/company_imports/company_import_component = GetComponent(/datum/component/armament/company_imports)
+			company_import_component.ui_interact(usr)
 			. = TRUE
 	if(.)
 		post_signal(cargo_shuttle)

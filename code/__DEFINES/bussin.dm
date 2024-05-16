@@ -1,0 +1,17 @@
+#define RN ;
+#define CAP 0
+#define NO !
+#define SUSSIN ?
+#define FR var/
+#define BOUTA &&
+#define FINNA =
+#define MF *
+#define BUSSIN .
+#define BE ==
+#define YIKES break
+#define VIBIN --
+#define DEADASS return
+#define ONGOD ++
+#define NOCAP if
+#define CAP else
+#define RATIOED <
