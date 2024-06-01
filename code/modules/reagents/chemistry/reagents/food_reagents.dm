@@ -18,6 +18,8 @@
 	var/nutriment_factor = 1
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
 	var/quality = 0
+	/// did this go in the face hole?
+	var/eaten = TRUE
 
 /datum/reagent/consumable/New()
 	. = ..()
@@ -30,12 +32,23 @@
 		return
 
 	var/mob/living/carbon/human/affected_human = affected_mob
-	affected_human.adjust_nutrition(get_nutriment_factor(affected_mob) * REM * seconds_per_tick)
+	affected_human.adjust_nutrition(eaten ? get_nutriment_factor(affected_mob) * REM * seconds_per_tick : (get_nutriment_factor(affected_mob) * REM * seconds_per_tick) * 0.5)
 
 /datum/reagent/consumable/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
+	if(nutriment_factor)
+		if(!HAS_TRAIT(exposed_mob, TRAIT_NUTRIMENT_PASTE_FAN))
+			if((methods & EATEN_FOOD) != EATEN_FOOD)
+				exposed_mob.add_mood_event("nutriment_paste", /datum/mood_event/ate_event/nutriment_paste)
+				eaten = FALSE
+		else
+			if((methods & EATEN_FOOD) == EATEN_FOOD)
+				exposed_mob.add_mood_event("nutriment_paste", /datum/mood_event/ate_event/not_nutriment_paste)
+				eaten = FALSE
+
 	if(!(methods & INGEST) || !quality || HAS_TRAIT(exposed_mob, TRAIT_AGEUSIA))
 		return
+
 	switch(quality)
 		if (DRINK_REVOLTING)
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_revolting)
@@ -280,13 +293,18 @@
 	reagent_state = SOLID
 	color = COLOR_WHITE // rgb: 255, 255, 255
 	taste_mult = 1.5 // stop sugar drowning out other flavours
-	nutriment_factor = 2
+	nutriment_factor = 0
 	metabolization_rate = 5 * REAGENTS_METABOLISM
 	creation_purity = 1 // impure base reagents are a big no-no
 	overdose_threshold = 120 // Hyperglycaemic shock
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	default_container = /obj/item/reagent_containers/condiment/sugar
+
+
+/datum/reagent/consumable/sugar/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	affected_mob.satiety = max(affected_mob.satiety - (30 * REM * seconds_per_tick), 30)
+	. = ..()
 
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)

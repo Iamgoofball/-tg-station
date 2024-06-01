@@ -25,7 +25,7 @@
 // Reagent exposure methods.
 /// Used for splashing.
 #define TOUCH (1<<0)
-/// Used for ingesting the reagents. Food, drinks, inhaling smoke.
+/// Used for ingesting the reagents. Drinks, inhaling smoke, pills.
 #define INGEST (1<<1)
 /// Used by foams, sprays, and blob attacks.
 #define VAPOR (1<<2)
@@ -33,6 +33,10 @@
 #define PATCH (1<<3)
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
+/// Used for eating reagents via food items.
+#define FOOD (1<<5)
+/// Used to check if something was eaten.
+#define EATEN_FOOD (INGEST | FOOD)
 
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1

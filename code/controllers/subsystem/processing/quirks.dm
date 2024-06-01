@@ -25,6 +25,7 @@ GLOBAL_LIST_INIT_TYPED(quirk_blacklist, /list/datum/quirk, list(
 	list(/datum/quirk/photophobia, /datum/quirk/nyctophobia),
 	list(/datum/quirk/item_quirk/settler, /datum/quirk/freerunning),
 	list(/datum/quirk/numb, /datum/quirk/selfaware),
+	list(/datum/quirk/nutriment_paste, /datum/quirk/no_taste),
 ))
 
 GLOBAL_LIST_INIT(quirk_string_blacklist, generate_quirk_string_blacklist())

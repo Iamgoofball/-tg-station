@@ -475,7 +475,7 @@ Behavior that's still missing from this component that original food items had t
 		apply_buff(eater)
 
 	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-	owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = INGEST)
+	owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = EATEN_FOOD)
 	bitecount++
 
 	checkLiked(fraction, eater)

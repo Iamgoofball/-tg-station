@@ -124,3 +124,15 @@
 /datum/mood_event/completely_organic
 	description = "I'm completely organic, this is miserable!!"
 	mood_change = -8
+
+//nutrition
+/datum/mood_event/ate_event
+	timeout = 10 MINUTES
+
+/datum/mood_event/ate_event/nutriment_paste
+	description = "I hate nutrient paste! It's gross!"
+	mood_change = -6
+
+/datum/mood_event/ate_event/not_nutriment_paste
+	description = "<b>This isn't nutrient paste, what the fuck!? I hate this, I want my NUTRIENT PASTE!!!</b>"
+	mood_change = -10
