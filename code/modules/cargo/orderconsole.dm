@@ -324,7 +324,7 @@
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
-				say("The supply shuttle is departing.")
+				radio.talk_into(src, "The supply shuttle is departing due to [user].", RADIO_CHANNEL_SUPPLY)
 				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
@@ -353,7 +353,7 @@
 					requisition_paper.update_appearance()
 
 				ui.user.investigate_log("called the supply shuttle.", INVESTIGATE_CARGO)
-				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
+				radio.talk_into(src, "The supply shuttle has been called by [user] and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.", RADIO_CHANNEL_SUPPLY)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_home, TRUE)
 
 			. = TRUE
@@ -371,7 +371,7 @@
 				return
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
-				say("The supply shuttle has been loaned to CentCom.")
+				radio.talk_into(src, "The supply shuttle has been loaned to Central Command by [user].", RADIO_CHANNEL_SUPPLY)
 				ui.user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				ui.user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
