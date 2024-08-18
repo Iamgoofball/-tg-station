@@ -2,10 +2,11 @@
 #define ELECTROLYZER_MODE_WORKING "working"
 
 /obj/machinery/electrolyzer
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
-	icon = 'icons/obj/atmospherics/atmos.dmi'
+	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "electrolyzer-off"
 	name = "space electrolyzer"
 	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
@@ -15,7 +16,7 @@
 	/// We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///used to check if there is a cell in the machine
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///check if the machine is on or off
 	var/on = FALSE
 	///check what mode the machine should be (WORKING, STANDBY)
@@ -38,29 +39,26 @@
 		cell = new cell(src)
 	SSair.start_processing_machine(src)
 	update_appearance()
+	register_context()
 
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		rmb_text = "Toggle power", \
-	)
-
-	var/static/list/tool_behaviors = list(
-		TOOL_SCREWDRIVER = list(
-			SCREENTIP_CONTEXT_LMB = "Open hatch",
-		),
-
-		TOOL_WRENCH = list(
-			SCREENTIP_CONTEXT_LMB = "Anchor",
-		),
-	)
-	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+/obj/machinery/electrolyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Turn [on ? "off" : "on"]"
+	if(!held_item)
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
 	return ..()
 
-/obj/machinery/electrolyzer/on_deconstruction()
+/obj/machinery/electrolyzer/on_deconstruction(disassembled)
 	if(cell)
 		LAZYADD(component_parts, cell)
 		cell = null
@@ -68,14 +66,15 @@
 
 /obj/machinery/electrolyzer/examine(mob/user)
 	. = ..()
-	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+	. += "\The [src] is [on ? "on" : "off"], and the panel is [panel_open ? "open" : "closed"]."
 
 	if(cell)
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
+		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
 	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
 
 
@@ -127,7 +126,7 @@
 
 	var/power_to_use = (5 * (3 * working_power) * working_power) / (efficiency + working_power)
 	if(anchored)
-		use_power(power_to_use)
+		use_energy(power_to_use)
 	else
 		cell.use(power_to_use)
 
@@ -146,8 +145,8 @@
 	. = ..()
 	var/power = 0
 	var/cap = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		power += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		power += servo.tier
 	for(var/datum/stock_part/capacitor/capacitor in component_parts)
 		cap += capacitor.tier
 
@@ -158,50 +157,52 @@
 /obj/machinery/electrolyzer/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
 	toggle_panel_open()
-	user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
+	balloon_alert(user, "[panel_open ? "opened" : "closed"] panel")
 	update_appearance()
 	return TRUE
 
 /obj/machinery/electrolyzer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/power_store/cell))
 		if(!panel_open)
-			to_chat(user, span_warning("The hatch must be open to insert a power cell!"))
+			balloon_alert(user, "open panel!")
 			return
 		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
+			balloon_alert(user, "cell inside!")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
 		I.add_fingerprint(usr)
-
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
+		balloon_alert(user, "inserted cell")
 		SStgui.update_uis(src)
 
 		return
 	return ..()
 
-/obj/machinery/electrolyzer/attack_hand_secondary(mob/user, list/modifiers)
-	if(!can_interact(user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/machinery/electrolyzer/click_alt(mob/user)
+	if(panel_open)
+		balloon_alert(user, "close panel!")
+		return CLICK_ACTION_BLOCKING
 	toggle_power(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/electrolyzer/proc/toggle_power(user)
+/obj/machinery/electrolyzer/proc/toggle_power(mob/user)
+	if(!anchored && !cell)
+		balloon_alert(user, "insert cell or anchor!")
+		return
 	on = !on
 	mode = ELECTROLYZER_MODE_STANDBY
-	if(!isnull(user))
-		balloon_alert(user, "turned [on ? "on" : "off"]")
 	update_appearance()
+	balloon_alert(user, "turned [on ? "on" : "off"]")
 	if(on)
 		SSair.start_processing_machine(src)
 
@@ -224,13 +225,13 @@
 		data["powerLevel"] = round(cell.percent(), 1)
 	return data
 
-/obj/machinery/electrolyzer/ui_act(action, params)
+/obj/machinery/electrolyzer/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("power")
-			toggle_power()
+			toggle_power(ui.user)
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)

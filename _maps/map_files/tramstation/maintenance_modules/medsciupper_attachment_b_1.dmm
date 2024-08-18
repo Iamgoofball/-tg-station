@@ -2,8 +2,12 @@
 "a" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
-/obj/item/storage/box/bodybags,
-/obj/item/clothing/gloves/latex,
+/obj/item/storage/box/bodybags{
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/medical)
 "b" = (
@@ -57,9 +61,9 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
 	},
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /obj/structure/closet/body_bag,
-/mob/living/simple_animal/hostile/skeleton{
+/mob/living/basic/skeleton{
 	name = "Jim";
 	desc = "Left to rot in maintenance, a poor soul whose green light was never noticed by the doctor..."
 	},

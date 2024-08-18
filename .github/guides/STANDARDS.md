@@ -100,11 +100,11 @@ While we normally encourage (and in some cases, even require) bringing out of da
 ### RegisterSignal()
 
 #### PROC_REF Macros
-When referencing procs in RegisterSignal, Callback and other procs you should use PROC_REF,TYPE_PROC_REF and GLOBAL_PROC_REF macros. 
+When referencing procs in RegisterSignal, Callback and other procs you should use PROC_REF, TYPE_PROC_REF and GLOBAL_PROC_REF macros.
 They ensure compilation fails if the reffered to procs change names or get removed.
 The macro to be used depends on how the proc you're in relates to the proc you want to use:
 
-PROC_REF if the proc you want to use is defined on the current proc type or any of it's ancestor types.
+PROC_REF if the proc you want to use is defined on the current proc type or any of its ancestor types.
 Example:
 ```
 /mob/proc/funny()
@@ -129,7 +129,7 @@ Example:
 /mob/subtype/proc/do_something()
 	var/obj/thing/x = new()
 	// we're referring to /obj/thing proc inside /mob/subtype proc
-	RegisterSignal(x, COMSIG_FAKE, TYPE_PROC_REF(/obj/thing, funny)) 
+	RegisterSignal(x, COMSIG_FAKE, TYPE_PROC_REF(/obj/thing, funny))
 ```
 
 GLOBAL_PROC_REF if the proc you want to use is a global proc.
@@ -142,6 +142,7 @@ Example:
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(funny)), 100))
 ```
 
+Note that the same rules go for verbs too! We have VERB_REF() and TYPE_VERB_REF() as you need it in these same cases. GLOBAL_VERB_REF() isn't a thing however, as verbs are not global.
 
 #### Signal Handlers
 
@@ -153,7 +154,7 @@ All procs that are registered to listen for signals using `RegisterSignal()` mus
 ```
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
-Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
+Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously.
 
 #### `override`
 
@@ -213,7 +214,7 @@ In a lot of our older code, `process()` is frame dependent. Here's some example 
 	var/health = 100
 	var/health_loss = 4 //We want to lose 2 health per second, so 4 per SSmobs process
 
-/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
+/mob/testmob/process(seconds_per_tick) //SSmobs runs once every 2 seconds
 	health -= health_loss
 ```
 
@@ -228,11 +229,11 @@ How do we solve this? By using delta-time. Delta-time is the amount of seconds y
 	var/health = 100
 	var/health_loss = 2 //Health loss every second
 
-/mob/testmob/process(delta_time) //SSmobs runs once every 2 seconds
-	health -= health_loss * delta_time
+/mob/testmob/process(seconds_per_tick) //SSmobs runs once every 2 seconds
+	health -= health_loss * seconds_per_tick
 ```
 
-In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * delta_time, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
+In the above example, we made our health_loss variable a per second value rather than per process. In the actual process() proc we then make use of deltatime. Because SSmobs runs once every  2 seconds. Delta_time would have a value of 2. This means that by doing health_loss * seconds_per_tick, you end up with the correct amount of health_loss per process, but if for some reason the SSmobs subsystem gets changed to be faster or slower in a PR, your health_loss variable will work the same.
 
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
@@ -279,7 +280,7 @@ Good:
 		off_overlay = iconstate2appearance(icon, "off")
 		broken_overlay = icon2appearance(broken_icon)
 	if (stat & broken)
-		add_overlay(broken_overlay) 
+		add_overlay(broken_overlay)
 		return
 	if (is_on)
 		add_overlay(on_overlay)
@@ -303,7 +304,7 @@ Bad:
 	if (isnull(our_overlays))
 		our_overlays = list("on" = iconstate2appearance(overlay_icon, "on"), "off" = iconstate2appearance(overlay_icon, "off"), "broken" = iconstate2appearance(overlay_icon, "broken"))
 	if (stat & broken)
-		add_overlay(our_overlays["broken"]) 
+		add_overlay(our_overlays["broken"])
 		return
 	...
 ```
@@ -390,7 +391,7 @@ At its best, it can make some very common patterns easy to use, and harder to me
 		some_code()
 		if (do_something_else())
 			. = TRUE // Uh oh, what's going on!
-	
+
 	// even
 	// more
 	// code
@@ -467,7 +468,7 @@ Meaning:
 	to_chat(world, uh_oh())
 ```
 
-...will print `woah!`. 
+...will print `woah!`.
 
 For this reason, it is acceptable for `.` to be used in places where consumers can reasonably continue in the event of a runtime.
 
@@ -493,7 +494,7 @@ If you are using `.` in this case (or for another case that might be acceptable,
 	. = ..()
 	if (. == BIGGER_SUPER_ATTACK)
 		return BIGGER_SUPER_ATTACK // More readable than `.`
-	
+
 	// Due to how common it is, most uses of `. = ..()` do not need a trailing `return .`
 ```
 

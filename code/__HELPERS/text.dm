@@ -121,7 +121,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
@@ -140,7 +140,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length)
 
@@ -191,7 +191,7 @@
 
 			// 0  .. 9
 			if(48 to 57) //Numbers
-				if(last_char_group == NO_CHARS_DETECTED || !allow_numbers) //suppress at start of string
+				if(!allow_numbers) //allow name to start with number if AI/Borg
 					if(strict)
 						return
 					continue
@@ -241,12 +241,7 @@
 	if(last_char_group == SPACES_DETECTED)
 		t_out = copytext_char(t_out, 1, -1) //removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai")) //prevents these common metagamey names
-		if(cmptext(t_out,bad_name))
-			return //(not case sensitive)
-
-	// Protects against names containing IC chat prohibited words.
-	if(is_ic_filtered(t_out) || is_soft_ic_filtered(t_out))
+	if(!filter_name_ic(t_out))
 		return
 
 	return t_out
@@ -256,6 +251,39 @@
 #undef NUMBERS_DETECTED
 #undef LETTERS_DETECTED
 
+
+/// Much more permissive version of reject_bad_name().
+/// Returns a trimmed string or null if the name is invalid.
+/// Allows most characters except for IC chat prohibited words.
+/proc/permissive_sanitize_name(value)
+	if(!istext(value)) // Not a string
+		return
+
+	var/name_length = length(value)
+	if(name_length < 3) // Too short
+		return
+
+	if(name_length > 3 * MAX_NAME_LEN) // Bad input
+		return
+
+	var/trimmed = trim(value, MAX_NAME_LEN)
+	if(!filter_name_ic(trimmed)) // Contains IC chat prohibited words
+		return
+
+	return trim_reduced(trimmed)
+
+
+/// Helper proc to check if a name is valid for the IC filter
+/proc/filter_name_ic(name)
+	for(var/bad_name in list("space", "floor", "wall", "r-wall", "monkey", "unknown", "inactive ai")) //prevents these common metagamey names
+		if(cmptext(name, bad_name))
+			return FALSE //(not case sensitive)
+
+	// Protects against names containing IC chat prohibited words.
+	if(is_ic_filtered(name) || is_soft_ic_filtered(name))
+		return FALSE
+
+	return TRUE
 
 
 //html_encode helper proc that returns the smallest non null of two numbers
@@ -340,7 +368,7 @@
  */
 /proc/truncate(text, max_length)
 	if(length(text) > max_length)
-		return copytext(text, 1, max_length)
+		return copytext_char(text, 1, max_length)
 	return text
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
@@ -355,6 +383,11 @@
 	if(t)
 		. = t[1]
 		return uppertext(.) + copytext(t, 1 + length(.))
+
+///Returns a string with the first letter of each word capitialized
+/proc/full_capitalize(input)
+	var/regex/first_letter = new(@"[^A-z]*?([A-z]*)", "g")
+	return replacetext(input, first_letter, /proc/capitalize)
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
@@ -429,6 +462,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /proc/random_color()
 	return random_string(6, GLOB.hex_characters)
+
+/proc/ready_random_color()
+	return "#" + random_string(6, GLOB.hex_characters)
 
 //merges non-null characters (3rd argument) from "from" into "into". Returns result
 //e.g. into = "Hello World"
@@ -780,41 +816,41 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return string
 
 	var/base = next_backslash == 1 ? "" : copytext(string, 1, next_backslash)
-	var/macro = lowertext(copytext(string, next_backslash + length(string[next_backslash]), next_space))
+	var/macro = LOWER_TEXT(copytext(string, next_backslash + length(string[next_backslash]), next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + length(string[next_space]))
 
 	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
 	switch(macro)
 		//prefixes/agnostic
 		if("the")
-			rest = text("\the []", rest)
+			rest = "\the [rest]"
 		if("a")
-			rest = text("\a []", rest)
+			rest = "\a [rest]"
 		if("an")
-			rest = text("\an []", rest)
+			rest = "\an [rest]"
 		if("proper")
-			rest = text("\proper []", rest)
+			rest = "\proper [rest]"
 		if("improper")
-			rest = text("\improper []", rest)
+			rest = "\improper [rest]"
 		if("roman")
-			rest = text("\roman []", rest)
+			rest = "\roman [rest]"
 		//postfixes
 		if("th")
-			base = text("[]\th", rest)
+			base = "[rest]\th"
 		if("s")
-			base = text("[]\s", rest)
+			base = "[rest]\s"
 		if("he")
-			base = text("[]\he", rest)
+			base = "[rest]\he"
 		if("she")
-			base = text("[]\she", rest)
+			base = "[rest]\she"
 		if("his")
-			base = text("[]\his", rest)
+			base = "[rest]\his"
 		if("himself")
-			base = text("[]\himself", rest)
+			base = "[rest]\himself"
 		if("herself")
-			base = text("[]\herself", rest)
+			base = "[rest]\herself"
 		if("hers")
-			base = text("[]\hers", rest)
+			base = "[rest]\hers"
 		else // Someone fucked up, if you're not a macro just go home yeah?
 			// This does technically break parsing, but at least it's better then what it used to do
 			return base
@@ -1043,27 +1079,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
  * * For pressure conversion, use proc/siunit_pressure() below
  */
 /proc/siunit(value, unit, maxdecimals=1)
-	var/static/list/prefixes = list("f","p","n","μ","m","","k","M","G","T","P")
-
-	// We don't have prefixes beyond this point
-	// and this also captures value = 0 which you can't compute the logarithm for
-	// and also byond numbers are floats and doesn't have much precision beyond this point anyway
-	if(abs(value) <= 1e-18)
-		return "0 [unit]"
-
-	var/exponent = clamp(log(10, abs(value)), -15, 15) // Calculate the exponent and clamp it so we don't go outside the prefix list bounds
-	var/divider = 10 ** (round(exponent / 3) * 3) // Rounds the exponent to nearest SI unit and power it back to the full form
-	var/coefficient = round(value / divider, 10 ** -maxdecimals) // Calculate the coefficient and round it to desired decimals
-	var/prefix_index = round(exponent / 3) + 6 // Calculate the index in the prefixes list for this exponent
-
-	// An edge case which happens if we round 999.9 to 0 decimals for example, which gets rounded to 1000
-	// In that case, we manually swap up to the next prefix if there is one available
-	if(coefficient >= 1000 && prefix_index < 11)
-		coefficient /= 1e3
-		prefix_index++
-
-	var/prefix = prefixes[prefix_index]
-	return "[coefficient] [prefix][unit]"
+	var/si_isolated = siunit_isolated(value, unit, maxdecimals)
+	return "[si_isolated[SI_COEFFICIENT]][si_isolated[SI_UNIT]]"
 
 
 /** The game code never uses Pa, but kPa, since 1 Pa is too small to reasonably handle
@@ -1096,7 +1113,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/text_length = length(text)
 
 	//remove caps since words will be shuffled
-	text = lowertext(text)
+	text = LOWER_TEXT(text)
 	//remove punctuation for same reasons as above
 	var/punctuation = ""
 	var/punctuation_hit_list = list("!","?",".","-")
@@ -1125,8 +1142,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word
 	var/first_letter = copytext(word, 1, 2)
 	var/first_two_letters = copytext(word, 1, 3)
-	var/first_word_is_vowel = (first_letter in list("a", "e", "i", "o", "u"))
-	var/second_word_is_vowel = (copytext(word, 2, 3) in list("a", "e", "i", "o", "u"))
+	var/first_word_is_vowel = (first_letter in VOWELS)
+	var/second_word_is_vowel = (copytext(word, 2, 3) in VOWELS)
 	//If a word starts with a vowel add the word "way" at the end of the word.
 	if(first_word_is_vowel)
 		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable
@@ -1193,3 +1210,34 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/sanitize_css_class_name(name)
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
 	return replacetext(name, regex, "")
+
+/// Converts a semver string into a list of numbers
+/proc/semver_to_list(semver_string)
+	var/static/regex/semver_regex = regex(@"(\d+)\.(\d+)\.(\d+)", "")
+	if(!semver_regex.Find(semver_string))
+		return null
+
+	return list(
+		text2num(semver_regex.group[1]),
+		text2num(semver_regex.group[2]),
+		text2num(semver_regex.group[3]),
+	)
+
+/// Returns TRUE if the input_text ends with the ending
+/proc/endswith(input_text, ending)
+	var/input_length = LAZYLEN(ending)
+	return !!findtext(input_text, ending, -input_length)
+
+/// Returns TRUE if the input_text starts with any of the beginnings
+/proc/starts_with_any(input_text, list/beginnings)
+	for(var/beginning in beginnings)
+		if(!!findtext(input_text, beginning, 1, LAZYLEN(beginning)+1))
+			return TRUE
+	return FALSE
+
+/// Generate a grawlix string of length of the text argument.
+/proc/grawlix(text)
+	var/grawlix = ""
+	for(var/iteration in 1 to length_char(text))
+		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
+	return grawlix

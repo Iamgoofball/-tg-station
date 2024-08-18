@@ -30,17 +30,15 @@
 	. = ..()
 	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
 
-/obj/item/ammo_box/magazine/plastikov9mm
-	name = "PP-95 magazine (9mm)"
-	icon_state = "9x19-50"
-	base_icon_state = "9x19"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = CALIBER_9MM
+/obj/item/ammo_box/magazine/smartgun
+	name = "Abielle magazine (.160 Smart)"
+	icon_state = "smartgun"
+	base_icon_state = "smartgun"
+	ammo_type = /obj/item/ammo_casing/c160smart
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiple_sprite_use_base = TRUE
+	caliber = CALIBER_160SMART
 	max_ammo = 50
-
-/obj/item/ammo_box/magazine/plastikov9mm/update_icon_state()
-	. = ..()
-	icon_state = "[base_icon_state]-[ammo_count() ? 50 : 0]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
@@ -56,7 +54,7 @@
 
 /obj/item/ammo_box/magazine/smgm9mm
 	name = "SMG magazine (9mm)"
-	icon_state = "smg9mm-42"
+	icon_state = "smg9mm"
 	base_icon_state = "smg9mm"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = CALIBER_9MM
@@ -64,7 +62,7 @@
 
 /obj/item/ammo_box/magazine/smgm9mm/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state]-[ammo_count() ? 42 : 0]"
+	icon_state = "[base_icon_state]-[LAZYLEN(stored_ammo) ? "full" : "empty"]"
 
 /obj/item/ammo_box/magazine/smgm9mm/ap
 	name = "SMG magazine (Armour Piercing 9mm)"
@@ -76,7 +74,7 @@
 
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
-	icon_state = "c20r45-24"
+	icon_state = "c20r45"
 	base_icon_state = "c20r45"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = CALIBER_45
@@ -89,6 +87,10 @@
 /obj/item/ammo_box/magazine/smgm45/ap
 	name = "SMG magazine (Armour Piercing .45)"
 	ammo_type = /obj/item/ammo_casing/c45/ap
+
+/obj/item/ammo_box/magazine/smgm45/hp
+	name = "SMG magazine (Hollow Point .45)"
+	ammo_type = /obj/item/ammo_casing/c45/hp
 
 /obj/item/ammo_box/magazine/smgm45/incen
 	name = "SMG magazine (Incendiary .45)"

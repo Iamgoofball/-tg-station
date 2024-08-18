@@ -4,7 +4,7 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	max_integrity = 100
 	armor_type = /datum/armor/structure_sign
 	resistance_flags = FLAMMABLE
@@ -14,15 +14,30 @@
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
+	///Callback to the knock down proc for wallmounting behavior.
+	var/knock_down_callback
 
 /datum/armor/structure_sign
 	melee = 50
 	fire = 50
 	acid = 50
 
+/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
+	icon_state = "backing"
+	name = "sign backing"
+	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
+	is_editable = TRUE
+	sign_change_name = "Blank Sign"
+
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
+	knock_down_callback = CALLBACK(src, PROC_REF(knock_down))
+	find_and_hang_on_wall(custom_drop_callback = knock_down_callback)
+
+/obj/structure/sign/Destroy()
+	. = ..()
+	knock_down_callback = null
 
 /obj/structure/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -55,18 +70,7 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
-	var/obj/item/sign/unwrenched_sign = new (get_turf(user))
-	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
-		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
-		unwrenched_sign.desc = "[desc] It can be placed on a wall."
-		unwrenched_sign.icon = icon
-		unwrenched_sign.icon_state = icon_state
-		unwrenched_sign.sign_path = type
-		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
-		unwrenched_sign.is_editable = is_editable
-	unwrenched_sign.update_integrity(get_integrity()) //Transfer how damaged it is.
-	unwrenched_sign.setDir(dir)
-	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
+	knock_down(user)
 	return TRUE
 
 /obj/structure/sign/welder_act(mob/living/user, obj/item/I)
@@ -76,7 +80,7 @@
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 	user.visible_message(span_notice("[user] starts repairing [src]..."), \
 		span_notice("You start repairing [src]."))
@@ -88,7 +92,7 @@
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
@@ -114,6 +118,29 @@
 			span_notice("You finish changing the sign."))
 		return
 	return ..()
+
+/**
+ * This is called when a sign is removed from a wall, either through deconstruction or being knocked down.
+ * @param mob/living/user The user who removed the sign, if it was knocked down by a mob.
+ */
+/obj/structure/sign/proc/knock_down(mob/living/user)
+	var/turf/drop_turf
+	if(user)
+		drop_turf = get_turf(user)
+	else
+		drop_turf = drop_location()
+	var/obj/item/sign/unwrenched_sign = new (drop_turf)
+	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
+		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
+		unwrenched_sign.desc = "[desc] It can be placed on a wall."
+		unwrenched_sign.icon = icon
+		unwrenched_sign.icon_state = icon_state
+		unwrenched_sign.sign_path = type
+		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
+		unwrenched_sign.is_editable = is_editable
+	unwrenched_sign.update_integrity(get_integrity()) //Transfer how damaged it is.
+	unwrenched_sign.setDir(dir)
+	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 
 /obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
 	icon_state = "backing"
@@ -144,7 +171,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	armor_type = /datum/armor/item_sign
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
@@ -167,12 +194,12 @@
 
 /obj/item/sign/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(is_editable && istype(held_item, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/sign/attackby(obj/item/I, mob/user, params)
-	if(is_editable && istype(I, /obj/item/pen))
+	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
@@ -189,29 +216,22 @@
 		return
 	return ..()
 
-/obj/item/sign/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!iswallturf(target) || !proximity)
-		return
-	var/turf/target_turf = target
+/obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iswallturf(interacting_with))
+		return NONE
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(user_turf, target_turf)
-	if(dir & NORTH)
-		placed_sign.pixel_y = 32
-	else if(dir & SOUTH)
-		placed_sign.pixel_y = -32
-	if(dir & EAST)
-		placed_sign.pixel_x = 32
-	else if(dir & WEST)
-		placed_sign.pixel_x = -32
 	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
 		span_notice("You attach the sign to [target_turf]."))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	placed_sign.update_integrity(get_integrity())
 	placed_sign.setDir(dir)
+	placed_sign.find_and_hang_on_wall(TRUE, placed_sign.knock_down_callback)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -220,7 +240,7 @@
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("This sign is already in perfect condition."))
 		return TRUE
-	if(!I.tool_start_check(user, amount=0))
+	if(!I.tool_start_check(user, amount=1))
 		return TRUE
 	user.visible_message(span_notice("[user] starts repairing [src]..."), \
 		span_notice("You start repairing [src]."))

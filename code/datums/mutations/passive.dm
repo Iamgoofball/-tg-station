@@ -2,7 +2,7 @@
 	name = "Biotech Compatibility"
 	desc = "Subject is more compatibile with biotechnology such as skillchips."
 	quality = POSITIVE
-	instability = 5
+	instability = POSITIVE_INSTABILITY_MINI
 
 /datum/mutation/human/biotechcompat/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
@@ -16,18 +16,16 @@
 	name = "Clever"
 	desc = "Causes the subject to feel just a little bit smarter. Most effective in specimens with low levels of intelligence."
 	quality = POSITIVE
-	instability = 20
-	text_gain_indication = "<span class='danger'>You feel a little bit smarter.</span>"
-	text_lose_indication = "<span class='danger'>Your mind feels a little bit foggy.</span>"
+	instability = POSITIVE_INSTABILITY_MODERATE // literally makes you on par with station equipment
+	text_gain_indication = span_danger("You feel a little bit smarter.")
+	text_lose_indication = span_danger("Your mind feels a little bit foggy.")
 
 /datum/mutation/human/clever/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	ADD_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER, GENETIC_MUTATION)
-	ADD_TRAIT(owner, TRAIT_LITERATE, GENETIC_MUTATION)
+	owner.add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
 
 /datum/mutation/human/clever/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER, GENETIC_MUTATION)
-	REMOVE_TRAIT(owner, TRAIT_LITERATE, GENETIC_MUTATION)
+	owner.remove_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)

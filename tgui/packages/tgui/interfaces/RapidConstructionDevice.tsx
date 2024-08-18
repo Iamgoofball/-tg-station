@@ -1,8 +1,18 @@
-import { Window } from '../layouts';
 import { BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
+import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
@@ -14,6 +24,7 @@ type Data = {
   categories: Category[];
   selected_category: string;
   selected_design: string;
+  selected_direction: string;
   display_tabs: BooleanLike;
 };
 
@@ -25,10 +36,11 @@ type Category = {
 type Design = {
   title: string;
   icon: string;
+  icon_id: string;
 };
 
-export const MatterItem = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const MatterItem = (props) => {
+  const { data } = useBackend<Data>();
   const { matterLeft } = data;
   return (
     <LabeledList.Item label="Units Left">
@@ -37,8 +49,73 @@ export const MatterItem = (props, context) => {
   );
 };
 
-export const SiloItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const DirectionsList = (props) => {
+  const { data, act } = useBackend<Data>();
+  const { matterLeft, selected_direction } = data;
+  return (
+    <Flex>
+      <Flex.Item mt={2}>
+        <Button
+          selected={selected_direction === 'west'}
+          color="transparent"
+          icon="arrow-left"
+          width="20px"
+          onClick={() =>
+            act('select_direction', {
+              selected_direction: 'west',
+            })
+          }
+        />
+      </Flex.Item>
+      <Flex.Item>
+        <Stack vertical>
+          <Stack.Item>
+            <Button
+              selected={selected_direction === 'north'}
+              color="transparent"
+              icon="arrow-up"
+              width="20px"
+              onClick={() =>
+                act('select_direction', {
+                  selected_direction: 'north',
+                })
+              }
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              selected={selected_direction === 'south'}
+              color="transparent"
+              width="20px"
+              icon="arrow-down"
+              onClick={() =>
+                act('select_direction', {
+                  selected_direction: 'south',
+                })
+              }
+            />
+          </Stack.Item>
+        </Stack>
+      </Flex.Item>
+      <Flex.Item mt={2}>
+        <Button
+          selected={selected_direction === 'east'}
+          color="transparent"
+          icon="arrow-right"
+          width="20px"
+          onClick={() =>
+            act('select_direction', {
+              selected_direction: 'east',
+            })
+          }
+        />
+      </Flex.Item>
+    </Flex>
+  );
+};
+
+export const SiloItem = (props) => {
+  const { act, data } = useBackend<Data>();
   const { silo_enabled } = data;
   return (
     <LabeledList.Item label="Silo Link">
@@ -52,8 +129,8 @@ export const SiloItem = (props, context) => {
   );
 };
 
-const CategoryItem = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CategoryItem = (props) => {
+  const { act, data } = useBackend<Data>();
   const { root_categories = [], selected_root } = data;
   return (
     <LabeledList.Item label="Category">
@@ -70,85 +147,85 @@ const CategoryItem = (props, context) => {
   );
 };
 
-export const InfoSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const InfoSection = (props) => {
+  const { data } = useBackend<Data>();
   const { silo_upgraded } = data;
 
   return (
     <Section>
-      <LabeledList>
-        <MatterItem />
-        {silo_upgraded ? <SiloItem /> : ''}
-        <CategoryItem />
-      </LabeledList>
+      <Flex>
+        <Flex.Item>
+          <LabeledList>
+            <MatterItem />
+            {silo_upgraded ? <SiloItem /> : ''}
+            <CategoryItem />
+          </LabeledList>
+        </Flex.Item>
+        <Flex.Item mt={-1}>
+          <DirectionsList />
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };
 
-const DesignSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const DesignSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_design } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    context,
-    'categoryName',
-    selected_category
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
       </Tabs>
-      {shownCategory?.designs.map((design, i) => (
-        <Button
-          key={i + 1}
-          fluid
-          ellipsis
-          height="31px"
-          color="transparent"
-          selected={
-            design.title === selected_design &&
-            shownCategory.cat_name === selected_category
-          }
-          onClick={() =>
-            act('design', {
-              category: shownCategory.cat_name,
-              index: i + 1,
-            })
-          }>
-          <Box
-            inline
-            verticalAlign="middle"
-            mr="10px"
-            className={classes(['rcd-tgui32x32', design.icon])}
-            style={{
-              transform:
-                design.icon === 'window0' ||
-                design.icon === 'rwindow0' ||
-                design.icon === 'catwalk0'
-                  ? 'scale(0.7)'
-                  : 'scale(1.0)',
-            }}
-          />
-          <span>{capitalizeAll(design.title)}</span>
-        </Button>
-      ))}
+      <Stack vertical>
+        {shownCategory?.designs.map((design, i) => (
+          <Stack.Item key={i}>
+            <Button
+              fluid
+              height="64px"
+              color="transparent"
+              selected={
+                design.title === selected_design &&
+                shownCategory.cat_name === selected_category
+              }
+              onClick={() =>
+                act('design', {
+                  category: shownCategory.cat_name,
+                  index: i + 1,
+                })
+              }
+            >
+              <Box
+                mt={design.icon_id.includes('32x32') ? 3 : 0}
+                inline
+                verticalAlign="middle"
+                mr="10px"
+                className={classes([design.icon_id, design.icon])}
+              />
+              <span>{capitalizeAll(design.title)}</span>
+            </Button>
+          </Stack.Item>
+        ))}
+      </Stack>
     </Section>
   );
 };
 
-const ConfigureSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const ConfigureSection = (props) => {
+  const { data } = useBackend<Data>();
   const { selected_root } = data;
 
   return (
@@ -162,7 +239,7 @@ const ConfigureSection = (props, context) => {
   );
 };
 
-export const RapidConstructionDevice = (props, context) => {
+export const RapidConstructionDevice = (props) => {
   return (
     <Window width={450} height={590}>
       <Window.Content>

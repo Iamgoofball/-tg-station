@@ -1,6 +1,7 @@
 /obj/effect/decal/cleanable
 	gender = PLURAL
-	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = GAME_PLANE
+	layer = FLOOR_CLEAN_LAYER
 	var/list/random_icon_states = null
 	///I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/blood_state = ""
@@ -15,6 +16,16 @@
 	var/datum/reagent/decal_reagent
 	///The amount of reagent this decal holds, if decal_reagent is defined
 	var/reagent_amount = 0
+
+/// Creates a cleanable decal on a turf
+/// Use this if your decal is one of one, and thus we should not spawn it if it's there already
+/// Returns either the existing cleanable, the one we created, or null if we can't spawn on that turf
+/turf/proc/spawn_unique_cleanable(obj/effect/decal/cleanable/cleanable_type)
+	// There is no need to spam unique cleanables, they don't stack and it just chews cpu
+	var/obj/effect/decal/cleanable/existing = locate(cleanable_type) in src
+	if(existing)
+		return existing
+	return new cleanable_type(src)
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -69,12 +80,12 @@
 				to_chat(user, span_notice("[W] is full!"))
 				return
 			to_chat(user, span_notice("You scoop up [src] into [W]!"))
-			reagents.trans_to(W, reagents.total_volume, transfered_by = user)
+			reagents.trans_to(W, reagents.total_volume, transferred_by = user)
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return
 	if(W.get_temperature()) //todo: make heating a reagent holder proc
-		if(istype(W, /obj/item/clothing/mask/cigarette))
+		if(istype(W, /obj/item/cigarette))
 			return
 		else
 			var/hotness = W.get_temperature()

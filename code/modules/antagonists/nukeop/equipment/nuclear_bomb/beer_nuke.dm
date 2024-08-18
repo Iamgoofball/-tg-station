@@ -29,7 +29,7 @@
 
 /obj/machinery/nuclearbomb/beer/attackby(obj/item/weapon, mob/user, params)
 	if(weapon.is_refillable())
-		weapon.afterattack(keg, user, TRUE) // redirect refillable containers to the keg, allowing them to be filled
+		weapon.interact_with_atom(keg, user) // redirect refillable containers to the keg, allowing them to be filled
 		return TRUE // pretend we handled the attack, too.
 
 	if(istype(weapon, /obj/item/nuke_core_container))
@@ -70,7 +70,7 @@
 	//if it's always hooked in it'll override admin choices
 	RegisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT, PROC_REF(on_created_round_event))
 	disarm_nuke()
-	overflow_control.runEvent()
+	overflow_control.run_event(event_cause = "a beer nuke")
 
 /// signal sent from overflow control when it fires an event
 /obj/machinery/nuclearbomb/beer/proc/on_created_round_event(datum/round_event_control/source_event_control, datum/round_event/scrubber_overflow/every_vent/created_event)

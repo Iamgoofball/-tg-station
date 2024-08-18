@@ -2,9 +2,6 @@
 //
 // The datum containing all the chunks.
 
-#define CHUNK_SIZE 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
-/// Takes a position, transforms it into a chunk bounded position. Indexes at 1 so it'll land on actual turfs always
-#define GET_CHUNK_COORD(v) (max((FLOOR(v, CHUNK_SIZE)), 1))
 GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 /datum/cameranet
@@ -59,7 +56,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	if(!.)
 		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
 
-/// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
+/// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or its location is set.
 /datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
 	if(!islist(moved_eyes))
 		moved_eyes = moved_eyes ? list(moved_eyes) : list()
@@ -70,7 +67,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 	for(var/mob/camera/ai_eye/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
-		//Get the eye's turf in case it's located in an object like a mecha
+		//Get the eye's turf in case its located in an object like a mecha
 		var/turf/eye_turf = get_turf(eye)
 		if(eye.loc)
 			var/static_range = eye.static_visibility_range
@@ -168,8 +165,9 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 /datum/cameranet/proc/checkCameraVis(mob/living/target)
 	var/turf/position = get_turf(target)
+	if(!position)
+		return
 	return checkTurfVis(position)
-
 
 /datum/cameranet/proc/checkTurfVis(turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
@@ -179,6 +177,16 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		if(chunk.visibleTurfs[position])
 			return TRUE
 	return FALSE
+
+/datum/cameranet/proc/getTurfVis(turf/position)
+	RETURN_TYPE(/datum/camerachunk)
+	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
+	if(!chunk)
+		return FALSE
+	if(chunk.changed)
+		chunk.hasChanged(1) // Update now, no matter if it's visible or not.
+	if(chunk.visibleTurfs[position])
+		return chunk
 
 /obj/effect/overlay/camera_static
 	name = "static"

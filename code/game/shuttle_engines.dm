@@ -7,9 +7,8 @@
 /obj/machinery/power/shuttle_engine
 	name = "engine"
 	desc = "A bluespace engine used to make shuttles move."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/turf/engines.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS
 	armor_type = /datum/armor/power_shuttle_engine
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	max_integrity = 500
@@ -33,6 +32,10 @@
 	fire = 50
 	acid = 70
 
+/obj/machinery/power/shuttle_engine/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/machinery/power/shuttle_engine/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(!port)
@@ -48,6 +51,27 @@
 		alter_engine_power(-engine_power)
 	unsync_ship()
 	return ..()
+
+/obj/machinery/power/shuttle_engine/examine(mob/user)
+	. = ..()
+	switch(engine_state)
+		if(ENGINE_UNWRENCHED)
+			. += span_notice("\The [src] is unbolted from the floor. It needs to be wrenched to the floor to be installed.")
+		if(ENGINE_WRENCHED)
+			. += span_notice("\The [src] is bolted to the floor and can be unbolted with a wrench. It needs to be welded to the floor to finish installation.")
+		if(ENGINE_WELDED)
+			. += span_notice("\The [src] is welded to the floor and can be unwelded. It is currently fully installed.")
+
+/obj/machinery/power/shuttle_engine/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item?.tool_behaviour == TOOL_WELDER && engine_state == ENGINE_WRENCHED)
+		context[SCREENTIP_CONTEXT_LMB] = "Weld to Floor"
+	if(held_item?.tool_behaviour == TOOL_WELDER && engine_state == ENGINE_WELDED)
+		context[SCREENTIP_CONTEXT_LMB] = "Unweld from Floor"
+	if(held_item?.tool_behaviour == TOOL_WRENCH && engine_state == ENGINE_UNWRENCHED)
+		context[SCREENTIP_CONTEXT_LMB] = "Wrench to Floor"
+	if(held_item?.tool_behaviour == TOOL_WRENCH && engine_state == ENGINE_WRENCHED)
+		context[SCREENTIP_CONTEXT_LMB] = "Unwrench from Floor"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Called on destroy and when we need to unsync an engine from their ship.
@@ -80,7 +104,7 @@
 /obj/machinery/power/shuttle_engine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/shuttle_engine/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -88,7 +112,7 @@
 		if(ENGINE_UNWRENCHED)
 			to_chat(user, span_warning("The [src.name] needs to be wrenched to the floor!"))
 		if(ENGINE_WRENCHED)
-			if(!tool.tool_start_check(user, amount=0))
+			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5)))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
@@ -101,7 +125,7 @@
 				alter_engine_power(engine_power)
 
 		if(ENGINE_WELDED)
-			if(!tool.tool_start_check(user, amount=0))
+			if(!tool.tool_start_check(user, amount=round(ENGINE_WELDTIME / 5)))
 				return TRUE
 
 			user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
@@ -125,6 +149,7 @@
 /obj/machinery/power/shuttle_engine/heater
 	name = "engine heater"
 	desc = "Directs energy into compressed particles in order to power engines."
+	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "heater"
 	circuit = /obj/item/circuitboard/machine/engine/heater
 	engine_power = 0 // todo make these into 2x1 parts
@@ -162,7 +187,7 @@
 
 /obj/machinery/power/shuttle_engine/large
 	name = "engine"
-	icon = 'icons/obj/2x2.dmi'
+	icon = 'icons/obj/fluff/2x2.dmi'
 	icon_state = "large_engine"
 	desc = "A very large bluespace engine used to propel very large ships."
 	circuit = null
@@ -173,7 +198,7 @@
 
 /obj/machinery/power/shuttle_engine/huge
 	name = "engine"
-	icon = 'icons/obj/3x3.dmi'
+	icon = 'icons/obj/fluff/3x3.dmi'
 	icon_state = "huge_engine"
 	desc = "An extremely large bluespace engine used to propel extremely large ships."
 	circuit = null

@@ -1,6 +1,5 @@
 #define IMPORTANT_ACTION_COOLDOWN (60 SECONDS)
 #define EMERGENCY_ACCESS_COOLDOWN (30 SECONDS)
-#define MAX_STATUS_LINE_LENGTH 40
 
 #define STATE_BUYING_SHUTTLE "buying_shuttle"
 #define STATE_CHANGING_STATUS "changing_status"
@@ -68,7 +67,7 @@
 	syndicate = TRUE
 
 /obj/machinery/computer/communications/syndicate/emag_act(mob/user, obj/item/card/emag/emag_card)
-	return
+	return FALSE
 
 /obj/machinery/computer/communications/syndicate/can_buy_shuttles(mob/user)
 	return FALSE
@@ -88,24 +87,26 @@
 
 /obj/machinery/computer/communications/Initialize(mapload)
 	. = ..()
+	// All maps should have at least 1 comms console
+	REGISTER_REQUIRED_MAP_ITEM(1, INFINITY)
+
 	GLOB.shuttle_caller_list += src
-	AddComponent(/datum/component/gps, "Secured Communications Signal")
 
 /// Are we NOT a silicon, AND we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_non_silicon_captain(mob/user)
-	if (issilicon(user))
+	if (HAS_SILICON_ACCESS(user))
 		return FALSE
 	return ACCESS_CAPTAIN in authorize_access
 
 /// Are we a silicon, OR we're logged in as the captain?
 /obj/machinery/computer/communications/proc/authenticated_as_silicon_or_captain(mob/user)
-	if (issilicon(user))
+	if (HAS_SILICON_ACCESS(user))
 		return TRUE
 	return ACCESS_CAPTAIN in authorize_access
 
 /// Are we a silicon, OR logged in?
 /obj/machinery/computer/communications/proc/authenticated(mob/user)
-	if (issilicon(user))
+	if (HAS_SILICON_ACCESS(user))
 		return TRUE
 	return authenticated
 
@@ -117,26 +118,29 @@
 
 /obj/machinery/computer/communications/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(istype(emag_card, /obj/item/card/emag/battlecruiser))
-		if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
-			to_chat(user, span_danger("You get the feeling this is a bad idea."))
-			return
 		var/obj/item/card/emag/battlecruiser/caller_card = emag_card
+		if (user)
+			if(!IS_TRAITOR(user))
+				to_chat(user, span_danger("You get the feeling this is a bad idea."))
+				return FALSE
 		if(battlecruiser_called)
-			to_chat(user, span_danger("The card reports a long-range message already sent to the Syndicate fleet...?"))
-			return
+			if (user)
+				to_chat(user, span_danger("The card reports a long-range message already sent to the Syndicate fleet...?"))
+			return FALSE
 		battlecruiser_called = TRUE
 		caller_card.use_charge(user)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(summon_battlecruiser), caller_card.team), rand(20 SECONDS, 1 MINUTES))
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
-		return
+		return TRUE
 
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	if (authenticated)
 		authorize_access = SSid_access.get_region_access_list(list(REGION_ALL_STATION))
-	to_chat(user, span_danger("You scramble the communication routing circuits!"))
+	balloon_alert(user, "routing circuits scrambled")
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	return TRUE
 
 /obj/machinery/computer/communications/ui_act(action, list/params)
 	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
@@ -183,7 +187,7 @@
 				return
 
 			// Check if they have
-			if (!issilicon(usr))
+			if (!HAS_SILICON_ACCESS(usr))
 				var/obj/item/held_item = usr.get_active_held_item()
 				var/obj/item/card/id/id_card = held_item?.GetID()
 				if (!istype(id_card))
@@ -219,12 +223,6 @@
 			if (!message_index)
 				return
 			LAZYREMOVE(messages, LAZYACCESS(messages, message_index))
-		if ("emergency_meeting")
-			if(!check_holidays(APRIL_FOOLS))
-				return
-			if (!authenticated_as_silicon_or_captain(usr))
-				return
-			emergency_meeting(usr)
 		if ("makePriorityAnnouncement")
 			if (!authenticated_as_silicon_or_captain(usr) && !syndicate)
 				return
@@ -288,7 +286,7 @@
 			state = STATE_MAIN
 		if ("recallShuttle")
 			// AIs cannot recall the shuttle
-			if (!authenticated(usr) || issilicon(usr) || syndicate)
+			if (!authenticated(usr) || HAS_SILICON_ACCESS(usr) || syndicate)
 				return
 			SSshuttle.cancelEvac(usr)
 		if ("requestNukeCodes")
@@ -323,7 +321,7 @@
 			if (!message)
 				return
 
-			SScommunications.soft_filtering = FALSE
+			GLOB.communications_controller.soft_filtering = FALSE
 			var/list/hard_filter_result = is_ic_filtered(message)
 			if(hard_filter_result)
 				tgui_alert(usr, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
@@ -335,7 +333,7 @@
 					return
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
 				log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
-				SScommunications.soft_filtering = TRUE
+				GLOB.communications_controller.soft_filtering = TRUE
 
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
@@ -346,13 +344,13 @@
 				GLOB.admins,
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(usr)] is about to send \
-					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
 					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
 
-			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), usr, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, PROC_REF(send_cross_comms_message), usr, destination, message), GLOB.communications_controller.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -381,7 +379,11 @@
 			if(picture in GLOB.status_display_state_pictures)
 				post_status(picture)
 			else
-				post_status("alert", picture)
+				if(picture == "currentalert") // You cannot set Code Blue display during Code Red and similiar
+					post_status("alert", SSsecurity_level?.current_security_level?.status_display_icon_state || "greenalert")
+				else
+					post_status("alert", picture)
+
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 		if ("toggleAuthentication")
 			// Log out if we're logged in
@@ -408,6 +410,8 @@
 
 			state = STATE_MAIN
 			playsound(src, 'sound/machines/terminal_on.ogg', 50, FALSE)
+			imprint_gps(gps_tag = "Encrypted Communications Channel")
+
 		if ("toggleEmergencyAccess")
 			if(emergency_access_cooldown(usr)) //if were in cooldown, dont allow the following code
 				return
@@ -475,7 +479,7 @@
 	var/network_name = CONFIG_GET(string/cross_comms_network)
 	if(network_name)
 		payload["network"] = network_name
-	if(SScommunications.soft_filtering)
+	if(GLOB.communications_controller.soft_filtering)
 		payload["is_filtered"] = TRUE
 
 	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
@@ -483,7 +487,7 @@
 	usr.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type = DEADCHAT_ANNOUNCEMENT)
-	SScommunications.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
+	GLOB.communications_controller.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -492,7 +496,7 @@
 		"syndicate" = syndicate,
 	)
 
-	var/ui_state = issilicon(user) ? cyborg_state : state
+	var/ui_state = HAS_SILICON_ACCESS(user) ? cyborg_state : state
 
 	var/has_connection = has_communication()
 	data["hasConnection"] = has_connection
@@ -509,9 +513,9 @@
 			data["safeCodeDeliveryWait"] = 0
 			data["safeCodeDeliveryArea"] = null
 
-	if (authenticated || issilicon(user))
+	if (authenticated || HAS_SILICON_ACCESS(user))
 		data["authenticated"] = TRUE
-		data["canLogOut"] = !issilicon(user)
+		data["canLogOut"] = !HAS_SILICON_ACCESS(user)
 		data["page"] = ui_state
 
 		if ((obj_flags & EMAGGED) || syndicate)
@@ -522,7 +526,7 @@
 				data["canBuyShuttles"] = can_buy_shuttles(user)
 				data["canMakeAnnouncement"] = FALSE
 				data["canMessageAssociates"] = FALSE
-				data["canRecallShuttles"] = !issilicon(user)
+				data["canRecallShuttles"] = !HAS_SILICON_ACCESS(user)
 				data["canRequestNuke"] = FALSE
 				data["canSendToSectors"] = FALSE
 				data["canSetAlertLevel"] = FALSE
@@ -533,7 +537,7 @@
 				data["aprilFools"] = check_holidays(APRIL_FOOLS)
 				data["alertLevel"] = SSsecurity_level.get_current_level_as_text()
 				data["authorizeName"] = authorize_name
-				data["canLogOut"] = !issilicon(user)
+				data["canLogOut"] = !HAS_SILICON_ACCESS(user)
 				data["shuttleCanEvacOrFailReason"] = SSshuttle.canEvac()
 				if(syndicate)
 					data["shuttleCanEvacOrFailReason"] = "You cannot summon the shuttle from this console!"
@@ -561,7 +565,7 @@
 
 					data["alertLevelTick"] = alert_level_tick
 					data["canMakeAnnouncement"] = TRUE
-					data["canSetAlertLevel"] = issilicon(user) ? "NO_SWIPE_NEEDED" : "SWIPE_NEEDED"
+					data["canSetAlertLevel"] = HAS_SILICON_ACCESS(user) ? "NO_SWIPE_NEEDED" : "SWIPE_NEEDED"
 				else if(syndicate)
 					data["canMakeAnnouncement"] = TRUE
 
@@ -601,7 +605,9 @@
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
+						"occupancy_limit" = shuttle_template.occupancy_limit,
 						"creditCost" = shuttle_template.credit_cost,
+						"initial_cost" = initial(shuttle_template.credit_cost),
 						"emagOnly" = shuttle_template.emag_only,
 						"prerequisites" = shuttle_template.prerequisites,
 						"ref" = REF(shuttle_template),
@@ -641,7 +647,7 @@
 			return
 
 		deltimer(send_cross_comms_message_timer)
-		SScommunications.soft_filtering = FALSE
+		GLOB.communications_controller.soft_filtering = FALSE
 		send_cross_comms_message_timer = null
 
 		log_admin("[key_name(usr)] has cancelled the outgoing cross-comms message.")
@@ -660,7 +666,7 @@
 	return is_station_level(z_level) || is_centcom_level(z_level)
 
 /obj/machinery/computer/communications/proc/set_state(mob/user, new_state)
-	if (issilicon(user))
+	if (HAS_SILICON_ACCESS(user))
 		cyborg_state = new_state
 	else
 		state = new_state
@@ -670,7 +676,7 @@
 /obj/machinery/computer/communications/proc/can_buy_shuttles(mob/user)
 	if (!SSmapping.config.allow_custom_shuttles)
 		return FALSE
-	if (issilicon(user))
+	if (HAS_SILICON_ACCESS(user))
 		return FALSE
 
 	var/has_access = FALSE
@@ -712,26 +718,9 @@
 
 	return length(CONFIG_GET(keyed_list/cross_server)) > 0
 
-/**
- * Call an emergency meeting
- *
- * Comm Console wrapper for the Communications subsystem wrapper for the call_emergency_meeting world proc.
- * Checks to make sure the proc can be called, and handles relevant feedback, logging and timing.
- * See the SScommunications proc definition for more detail, in short, teleports the entire crew to
- * the bridge for a meetup. Should only really happen during april fools.
- * Arguments:
- * * user - Mob who called the meeting
- */
-/obj/machinery/computer/communications/proc/emergency_meeting(mob/living/user)
-	if(!SScommunications.can_make_emergency_meeting(user))
-		to_chat(user, span_alert("The emergency meeting button doesn't seem to work right now. Please stand by."))
-		return
-	SScommunications.emergency_meeting(user)
-	deadchat_broadcast(" called an emergency meeting from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
-
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
-	var/is_ai = issilicon(user)
-	if(!SScommunications.can_announce(user, is_ai))
+	var/is_ai = HAS_SILICON_ACCESS(user)
+	if(!GLOB.communications_controller.can_announce(user, is_ai))
 		to_chat(user, span_alert("Intercomms recharging. Please stand by."))
 		return
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
@@ -739,19 +728,20 @@
 		return
 	if(user.try_speak(input))
 		//Adds slurs and so on. Someone should make this use languages too.
-		input = user.treat_message(input)
+		var/list/input_data = user.treat_message(input)
+		input = input_data["message"]
 	else
 		//No cheating, mime/random mute guy!
 		input = "..."
 		user.visible_message(
-			span_notice("You leave the mic on in awkward silence..."),
 			span_notice("[user] holds down [src]'s announcement button, leaving the mic on in awkward silence."),
+			span_notice("You leave the mic on in awkward silence..."),
 			span_hear("You hear an awkward silence, somehow."),
 			vision_distance = 4,
 		)
 
 	var/list/players = get_communication_players()
-	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
+	GLOB.communications_controller.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/get_communication_players()
@@ -864,15 +854,15 @@
 	hacker.log_message("hacked a communications console, resulting in: [picked_option].", LOG_GAME, log_globally = TRUE)
 	switch(picked_option)
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
+			var/list/pirate_rulesets = list(
+				/datum/dynamic_ruleset/midround/pirates,
+				/datum/dynamic_ruleset/midround/dangerous_pirates,
+			)
 			priority_announce(
 				"Attention crew: sector monitoring reports a massive jump-trace from an enemy vessel destined for your system. Prepare for imminent hostile contact.",
 				"[command_name()] High-Priority Update",
 			)
-
-			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
-			if(!pirate_event)
-				CRASH("hack_console() attempted to run pirates, but could not find an event controller!")
-			addtimer(CALLBACK(pirate_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), rand(20 SECONDS, 1 MINUTES))
+			SSdynamic.picking_specific_rule(pick(pirate_rulesets), forced = TRUE, ignore_cost = TRUE)
 
 		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
 			priority_announce(
@@ -880,10 +870,7 @@
 				"[command_name()] High-Priority Update",
 			)
 
-			var/datum/round_event_control/fugitives/fugitive_event = locate() in SSevents.control
-			if(!fugitive_event)
-				CRASH("hack_console() attempted to run fugitives, but could not find an event controller!")
-			addtimer(CALLBACK(fugitive_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)), rand(20 SECONDS, 1 MINUTES))
+			force_event_after(/datum/round_event_control/fugitives, "[hacker] hacking a communications console", rand(20 SECONDS, 1 MINUTES))
 
 		if(HACK_THREAT) // Force an unfavorable situation on the crew
 			priority_announce(
@@ -896,22 +883,20 @@
 					continue
 				shake_camera(crew_member, 15, 1)
 
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			dynamic.unfavorable_situation()
+			SSdynamic.unfavorable_situation()
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/from_living/autotraitor
-			var/datum/game_mode/dynamic/dynamic = SSticker.mode
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 20), 1, 3)
 			var/num_agents_created = 0
 			for(var/num_agents in 1 to rand(1, max_number_of_sleepers))
-				if(!dynamic.picking_specific_rule(sleeper_agent_type, forced = TRUE, ignore_cost = TRUE))
+				if(!SSdynamic.picking_specific_rule(sleeper_agent_type, forced = TRUE, ignore_cost = TRUE))
 					break
 				num_agents_created++
 
 			if(num_agents_created <= 0)
 				// We failed to run any midround sleeper agents, so let's be patient and run latejoin traitor
-				dynamic.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator, forced = TRUE, ignore_cost = TRUE)
+				SSdynamic.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator, forced = TRUE, ignore_cost = TRUE)
 
 			else
 				// We spawned some sleeper agents, nice - give them a report to kickstart the paranoia
@@ -944,6 +929,10 @@
 		content = new_content
 	if(new_possible_answers)
 		possible_answers = new_possible_answers
+
+/datum/comm_message/Destroy()
+	answer_callback = null
+	return ..()
 
 #undef IMPORTANT_ACTION_COOLDOWN
 #undef EMERGENCY_ACCESS_COOLDOWN

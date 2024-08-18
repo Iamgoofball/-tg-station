@@ -1,7 +1,11 @@
 /mob/living/simple_animal/bot/secbot/ed209
+	SET_BASE_VISUAL_PIXEL(0, 9)
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot. He looks less than thrilled."
 	icon_state = "ed209"
+	shadow_type = SHADOW_LARGE
+	shadow_offset_y = 1
+	light_color = "#f84e4e"
 	density = TRUE
 	health = 100
 	maxHealth = 100
@@ -11,6 +15,8 @@
 
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"
+
+	automated_announcements = list(ED209_VOICED_DOWN_WEAPONS = 'sound/voice/ed209_20sec.ogg')
 
 	var/lastfired = 0
 	var/shot_delay = 15
@@ -26,10 +32,13 @@
 	..()
 	set_weapon()
 
-/mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	icon_state = "ed209[get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 	set_weapon()
+	balloon_alert(user, "safeties disabled")
+	audible_message(span_bolddanger("[src] buzzes menacingly!"))
+	return TRUE
 
 /mob/living/simple_animal/bot/secbot/ed209/handle_automated_action()
 	var/judgement_criteria = judgement_criteria()
@@ -38,8 +47,8 @@
 		var/threatlevel = 0
 		if(nearby_carbon.incapacitated())
 			continue
-		threatlevel = nearby_carbon.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, PROC_REF(check_for_weapons)))
-		if(threatlevel < 4 )
+		threatlevel = nearby_carbon.assess_threat(judgement_criteria)
+		if(threatlevel < THREAT_ASSESS_DANGEROUS)
 			continue
 		var/dst = get_dist(src, nearby_carbon)
 		if(dst <= 1 || dst > 7)
@@ -50,6 +59,10 @@
 		if(all_targets.stat != DEAD && !all_targets.handcuffed) //we don't shoot people who are dead, cuffed or lying down.
 			shoot_at(all_targets)
 	..()
+
+/mob/living/simple_animal/bot/secbot/ed209/threat_react(threatlevel)
+	speak("Level [threatlevel] infraction alert!")
+	playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'

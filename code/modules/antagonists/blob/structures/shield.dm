@@ -1,6 +1,6 @@
 /obj/structure/blob/shield
 	name = "strong blob"
-	icon = 'icons/mob/nonhuman-player/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob_tall.dmi'
 	icon_state = "blob_shield"
 	desc = "A solid wall of slightly twitching tendrils."
 	var/damaged_desc = "A wall of twitching tendrils."
@@ -15,6 +15,7 @@
 /datum/armor/blob_shield
 	fire = 90
 	acid = 90
+	laser = 25
 
 /obj/structure/blob/shield/Initialize(mapload, owner_overmind)
 	AddElement(/datum/element/blocks_explosives)

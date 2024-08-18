@@ -9,18 +9,16 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
 	name = "Shuttle turret control";
-	pixel_x = 32;
-	pixel_y = -28;
 	req_access = list("syndicate")
 	},
 /obj/structure/cable,
-/mob/living/basic/syndicate/ranged/smg/pilot{
+/mob/living/basic/trooper/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -90,10 +88,9 @@
 /turf/open/floor/plating,
 /area/shuttle/ruin/caravan/syndicate1)
 "YY" = (
-/obj/machinery/power/apc/highcap/ten_k/directional/west{
-	name = "Syndicate Fighter Power Controller";
-	req_access = list("syndicate")
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/apc/syndicate_access,
+/obj/effect/mapping_helpers/apc/cell_10k,
 /obj/machinery/computer/security{
 	dir = 1;
 	network = list("caravansyndicate1")

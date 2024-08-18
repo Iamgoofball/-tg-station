@@ -1,5 +1,7 @@
 /// For all of the items that are really just the user's hand used in different ways, mostly (all, really) from emotes
 /obj/item/hand_item
+	icon = 'icons/obj/weapons/hand.dmi'
+	icon_state = "latexballoon"
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
@@ -20,16 +22,16 @@
 	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(ownerExamined))
+	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(ownerExamined))
 
 /obj/item/hand_item/circlegame/Destroy()
 	var/mob/owner = loc
 	if(istype(owner))
-		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+		UnregisterSignal(owner, COMSIG_ATOM_EXAMINE)
 	return ..()
 
 /obj/item/hand_item/circlegame/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_PARENT_EXAMINE) //loc will have changed by the time this is called, so Destroy() can't catch it
+	UnregisterSignal(user, COMSIG_ATOM_EXAMINE) //loc will have changed by the time this is called, so Destroy() can't catch it
 	// this is a dropdel item.
 	return ..()
 
@@ -39,7 +41,7 @@
 
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 4)
+	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 0.4 SECONDS)
 
 /// Stage 2: Fear sets in
 /obj/item/hand_item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
@@ -48,10 +50,10 @@
 
 	if(owner == sucker) // big mood
 		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
-		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 1 SECONDS)
 	else
 		to_chat(sucker, span_danger("Wait a second... was that a-"))
-		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)
+		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 0.6 SECONDS)
 
 /// Stage 3A: We face our own failures
 /obj/item/hand_item/circlegame/proc/selfGottem(mob/living/owner)
@@ -111,7 +113,6 @@
 /obj/item/hand_item/noogie
 	name = "noogie"
 	desc = "Get someone in an aggressive grab then use this on them to ruin their day."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 
 /obj/item/hand_item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
@@ -127,7 +128,7 @@
 		return FALSE
 
 	var/obj/item/bodypart/head/the_head = target.get_bodypart(BODY_ZONE_HEAD)
-	if(!(the_head.biological_state & BIO_FLESH) || !IS_ORGANIC_LIMB(the_head))
+	if(!(the_head.biological_state & BIO_FLESH))
 		to_chat(user, span_warning("You can't noogie [target], [target.p_they()] [target.p_have()] no skin on [target.p_their()] head!"))
 		return
 
@@ -142,7 +143,7 @@
 		affix_desc = "on [target.p_their()] sensitive antennae"
 		affix_desc_target = "on your highly sensitive antennae"
 		brutal_noogie = TRUE
-	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
+	if(HAS_TRAIT(user, TRAIT_HULK))
 		prefix_desc = "sickeningly brutal"
 		brutal_noogie = TRUE
 
@@ -177,7 +178,7 @@
 	var/damage = rand(1, 5)
 	if(HAS_TRAIT(target, TRAIT_ANTENNAE))
 		damage += rand(3,7)
-	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
+	if(HAS_TRAIT(user, TRAIT_HULK))
 		damage += rand(3,7)
 
 	if(damage >= 5)
@@ -204,7 +205,6 @@
 /obj/item/hand_item/slapper
 	name = "slapper"
 	desc = "This is how real men fight."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
@@ -219,9 +219,9 @@
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
 
-	if(ishuman(slapped))
-		var/mob/living/carbon/human/human_slapped = slapped
-		SEND_SIGNAL(human_slapped, COMSIG_ORGAN_WAG_TAIL, FALSE)
+	if(iscarbon(slapped))
+		var/mob/living/carbon/potential_tailed = slapped
+		potential_tailed.unwag_tail()
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50
@@ -266,6 +266,12 @@
 					span_notice("You slap [slapped] in the face!"),
 					span_hear("You hear a slap."),
 				)
+	else if(user.zone_selected == BODY_ZONE_L_ARM || user.zone_selected == BODY_ZONE_R_ARM)
+		user.visible_message(
+			span_danger("[user] gives [slapped] a slap on the wrist!"),
+			span_notice("You give [slapped] a slap on the wrist!"),
+			span_hear("You hear a slap."),
+		)
 	else
 		user.visible_message(
 			span_danger("[user] slaps [slapped]!"),
@@ -329,9 +335,7 @@
 /obj/item/hand_item/hand
 	name = "hand"
 	desc = "Sometimes, you just want to act gentlemanly."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-
 
 /obj/item/hand_item/hand/pre_attack(mob/living/carbon/help_target, mob/living/carbon/helper, params)
 	if(!loc.Adjacent(help_target) || !istype(helper) || !istype(help_target))
@@ -431,7 +435,6 @@
 /obj/item/hand_item/stealer
 	name = "steal"
 	desc = "Your filthy little fingers are ready to commit crimes."
-	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
 	attack_verb_continuous = list("steals")
 	attack_verb_simple = list("steal")
@@ -472,9 +475,10 @@
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
 	var/cheek_kiss
 
-/obj/item/hand_item/kisser/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/hand_item/kisser/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return ranged_interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_item/kisser/ranged_interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
 
@@ -488,10 +492,11 @@
 	blown_kiss.original = target
 	blown_kiss.fired_from = user
 	blown_kiss.firer = user // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(user = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(WEAKREF(user) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.preparePixelProjectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/hand_item/kisser/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
 	if(!(locate(/mob/living/carbon) in orange(1, offerer)))
@@ -514,7 +519,7 @@
 	blown_kiss.original = taker
 	blown_kiss.fired_from = offerer
 	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(offerer = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(WEAKREF(offerer) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.preparePixelProjectile(taker, offerer)
 	blown_kiss.suppressed = SUPPRESSED_VERY // this also means it's a direct offer
 	blown_kiss.fire()
@@ -527,6 +532,12 @@
 	color = COLOR_BLACK
 	kiss_type = /obj/projectile/kiss/death
 
+/obj/item/hand_item/kisser/syndie
+	name = "syndie kiss"
+	desc = "oooooo you like syndicate ur a syndiekisser"
+	color = COLOR_SYNDIE_RED
+	kiss_type = /obj/projectile/kiss/syndie
+
 /obj/projectile/kiss
 	name = "kiss"
 	icon = 'icons/mob/simple/animal.dmi'
@@ -536,17 +547,24 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	speed = 1.6
 	damage_type = BRUTE
-	damage = 0
-	nodamage = TRUE // love can't actually hurt you
+	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
+	var/silent_blown = FALSE
+
+/obj/projectile/kiss/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
-	if(firer)
+	if(firer && !silent_blown)
 		name = "[name] blown by [firer]"
+
 	return ..()
 
 /obj/projectile/kiss/Impact(atom/A)
-	if(!nodamage || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
+	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
+
+	if(damage > 0 || !isliving(A)) // if we do damage or we hit a nonliving thing, we don't have to worry about a harmless hit because we can't wrongly do damage anyway
 		return ..()
 
 	harmless_on_hit(A)
@@ -599,7 +617,6 @@
 	living_target.visible_message("<b>[living_target]</b> [other_msg]", span_userdanger("Whoa! [self_msg]"))
 
 /obj/projectile/kiss/on_hit(atom/target, blocked, pierce_hit)
-	def_zone = BODY_ZONE_HEAD // let's keep it PG, people
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living_target = target
@@ -608,8 +625,7 @@
 
 /obj/projectile/kiss/death
 	name = "kiss of death"
-	nodamage = FALSE // okay i kinda lied about love not being able to hurt you
-	damage = 35
+	damage = 35 // okay i kinda lied about love not being able to hurt you
 	wound_bonus = 0
 	sharpness = SHARP_POINTY
 	color = COLOR_BLACK
@@ -619,9 +635,21 @@
 	if(!iscarbon(target))
 		return
 	var/mob/living/carbon/heartbreakee = target
-	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.getorganslot(ORGAN_SLOT_HEART)
-	dont_go_breakin_my_heart.applyOrganDamage(999)
+	var/obj/item/organ/internal/heart/dont_go_breakin_my_heart = heartbreakee.get_organ_slot(ORGAN_SLOT_HEART)
+	dont_go_breakin_my_heart.apply_organ_damage(999)
 
+// Based on energy gun characteristics
+/obj/projectile/kiss/syndie
+	name = "syndie kiss"
+	color = COLOR_SYNDIE_RED
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
+	damage_type = BURN
+	armor_flag = LASER
+	armour_penetration = 0
+	damage = 25
+	wound_bonus = -20
+	bare_wound_bonus = 40
+	silent_blown = TRUE
 
 /obj/projectile/kiss/french
 	name = "french kiss (is that a hint of garlic?)"
@@ -659,7 +687,7 @@
 		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
 		return
 
-	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	var/amount_nutriment = target.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE)
 	if(amount_nutriment <= 0)
 		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
 		return

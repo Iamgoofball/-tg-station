@@ -10,7 +10,7 @@
 	. = ..()
 	if(!isliving(target) || (target in attached_mobs))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 	var/image/img = image(loc = target)
 	img.override = TRUE
@@ -19,7 +19,7 @@
 
 /datum/element/digitalcamo/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_PARENT_EXAMINE, COMSIG_LIVING_CAN_TRACK))
+	UnregisterSignal(target, list(COMSIG_ATOM_EXAMINE, COMSIG_LIVING_CAN_TRACK))
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		AI.client.images -= attached_mobs[target]
 	attached_mobs -= target
@@ -27,17 +27,15 @@
 
 /datum/element/digitalcamo/proc/HideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		var/datum/atom_hud/M = GLOB.huds[AI.med_hud]
-		M.hide_single_atomhud_from(AI,target)
-		var/datum/atom_hud/S = GLOB.huds[AI.sec_hud]
-		S.hide_single_atomhud_from(AI,target)
+		for (var/hud_type in AI.silicon_huds)
+			var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+			silicon_hud.hide_single_atomhud_from(AI,target)
 
 /datum/element/digitalcamo/proc/UnhideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in GLOB.ai_list)
-		var/datum/atom_hud/M = GLOB.huds[AI.med_hud]
-		M.unhide_single_atomhud_from(AI,target)
-		var/datum/atom_hud/S = GLOB.huds[AI.sec_hud]
-		S.unhide_single_atomhud_from(AI,target)
+		for (var/hud_type in AI.silicon_huds)
+			var/datum/atom_hud/silicon_hud = GLOB.huds[hud_type]
+			silicon_hud.unhide_single_atomhud_from(AI,target)
 
 /datum/element/digitalcamo/proc/on_examine(datum/source, mob/M)
 	SIGNAL_HANDLER

@@ -21,8 +21,18 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
 	bare_wound_bonus = 10
-	embedding = list(embed_chance=25, fall_chance=2, jostle_chance=2, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=3, jostle_pain_mult=5, rip_time=1 SECONDS)
+	embed_type = /datum/embed_data/bullet_c38
 	embed_falloff_tile = -4
+
+/datum/embed_data/bullet_c38
+	embed_chance=25
+	fall_chance=2
+	jostle_chance=2
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=3
+	jostle_pain_mult=5
+	rip_time=1 SECONDS
 
 /obj/projectile/bullet/c38/match
 	name = ".38 Match bullet"
@@ -45,7 +55,7 @@
 	ricochet_decay_damage = 0.8
 	shrapnel_type = null
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
@@ -56,16 +66,26 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
 	bare_wound_bonus = 20
-	embedding = list(embed_chance=75, fall_chance=3, jostle_chance=4, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=1 SECONDS)
+	embed_type = /datum/embed_data/bullet_c38_dumdum
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15
+
+/datum/embed_data/bullet_c38_dumdum
+	embed_chance=75
+	fall_chance=3
+	jostle_chance=4
+	ignore_throwspeed_threshold=TRUE
+	pain_stam_pct=0.4
+	pain_mult=5
+	jostle_pain_mult=6
+	rip_time=1 SECONDS
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"
 	damage = 10
 	ricochets_max = 0
 
-/obj/projectile/bullet/c38/trac/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c38/trac/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/mob/living/carbon/M = target
 	if(!istype(M))
@@ -83,7 +103,7 @@
 	damage = 20
 	ricochets_max = 0
 
-/obj/projectile/bullet/c38/hotshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c38/hotshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -96,7 +116,7 @@
 	var/temperature = 100
 	ricochets_max = 0
 
-/obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/M = target
@@ -108,6 +128,20 @@
 	name = ".357 bullet"
 	damage = 60
 	wound_bonus = -30
+
+/obj/projectile/bullet/a357/phasic
+	name = ".357 phasic bullet"
+	icon_state = "gaussphase"
+	damage = 35
+	armour_penetration = 100
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+
+/obj/projectile/bullet/a357/heartseeker
+	name = ".357 heartseeker bullet"
+	icon_state = "gauss"
+	damage = 50
+	homing = TRUE
+	homing_turn_speed = 120
 
 // admin only really, for ocelot memes
 /obj/projectile/bullet/a357/match

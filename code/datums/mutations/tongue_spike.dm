@@ -3,7 +3,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can throw your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINI // worthless. also serves as a bit of a hint that it's not good
 	power_path = /datum/action/cooldown/spell/tongue_spike
 
 	energy_coeff = 1
@@ -15,7 +15,7 @@
 	button_icon = 'icons/mob/actions/actions_genetic.dmi'
 	button_icon_state = "spike"
 
-	cooldown_time = 10 SECONDS
+	cooldown_time = 1 SECONDS
 	spell_requirements = SPELL_REQUIRES_HUMAN
 
 	/// The type-path to what projectile we spawn to throw at someone.
@@ -30,7 +30,7 @@
 		to_chat(cast_on, span_notice("You concentrate really hard, but nothing happens."))
 		return
 
-	var/obj/item/organ/internal/tongue/to_fire = locate() in cast_on.internal_organs
+	var/obj/item/organ/internal/tongue/to_fire = locate() in cast_on.organs
 	if(!to_fire)
 		to_chat(cast_on, span_notice("You don't have a tongue to shoot!"))
 		return
@@ -43,23 +43,26 @@
 /obj/item/hardened_spike
 	name = "biomass spike"
 	desc = "Hardened biomass, shaped into a spike. Very pointy!"
+	icon = 'icons/obj/weapons/thrown.dmi'
 	icon_state = "tonguespike"
 	force = 2
-	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
+	throwforce = 25
 	throw_speed = 4
-	embedding = list(
-		"embedded_pain_multiplier" = 4,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,
-	)
+	embed_type = /datum/embed_data/tongue_spike
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
-	custom_materials = list(/datum/material/biomass = 500)
+	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
 	/// What mob "fired" our tongue
 	var/datum/weakref/fired_by_ref
 	/// if we missed our target
 	var/missed = TRUE
+
+/datum/embed_data/tongue_spike
+	impact_pain_mult = 0
+	pain_mult = 15
+	embed_chance = 100
+	fall_chance = 0
+	ignore_throwspeed_threshold = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
@@ -71,6 +74,7 @@
 		unembedded()
 
 /obj/item/hardened_spike/embedded(atom/target)
+	. = ..()
 	if(isbodypart(target))
 		missed = FALSE
 
@@ -86,7 +90,7 @@
 	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can really connect with people by throwing your voice.")
-	instability = 15
+	instability = POSITIVE_INSTABILITY_MINOR // slightly less worthless. slightly.
 	locked = TRUE
 	power_path = /datum/action/cooldown/spell/tongue_spike/chem
 	energy_coeff = 1
@@ -106,18 +110,17 @@
 	name = "chem spike"
 	desc = "Hardened biomass, shaped into... something."
 	icon_state = "tonguespikechem"
-	throwforce = 2 //2 + 2 (WEIGHT_CLASS_SMALL) * 0 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math again but very low or smthin
-	embedding = list(
-		"embedded_pain_multiplier" = 0,
-		"embed_chance" = 100,
-		"embedded_fall_chance" = 0,
-		"embedded_pain_chance" = 0,
-		"embedded_ignore_throwspeed_threshold" = TRUE,  //never hurts once it's in you
-	)
+	throwforce = 2
+	embed_type = /datum/embed_data/tongue_spike/chem
 	/// Whether the tongue's already embedded in a target once before
 	var/embedded_once_alread = FALSE
 
+/datum/embed_data/tongue_spike/chem
+	pain_mult = 0
+	pain_chance = 0
+
 /obj/item/hardened_spike/chem/embedded(mob/living/carbon/human/embedded_mob)
+	. = ..()
 	if(embedded_once_alread)
 		return
 	embedded_once_alread = TRUE
@@ -127,7 +130,7 @@
 		return
 
 	var/datum/action/send_chems/chem_action = new(src)
-	chem_action.transfered_ref = WEAKREF(embedded_mob)
+	chem_action.transferred_ref = WEAKREF(embedded_mob)
 	chem_action.Grant(fired_by)
 
 	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability \
@@ -151,7 +154,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 
 	/// Weakref to the mob target that we transfer chemicals to on activation
-	var/datum/weakref/transfered_ref
+	var/datum/weakref/transferred_ref
 
 /datum/action/send_chems/New(Target)
 	. = ..()
@@ -165,12 +168,12 @@
 	if(!ishuman(owner) || !owner.reagents)
 		return FALSE
 	var/mob/living/carbon/human/transferer = owner
-	var/mob/living/carbon/human/transfered = transfered_ref?.resolve()
-	if(!ishuman(transfered))
+	var/mob/living/carbon/human/transferred = transferred_ref?.resolve()
+	if(!ishuman(transferred))
 		return FALSE
 
-	to_chat(transfered, span_warning("You feel a tiny prick!"))
-	transferer.reagents.trans_to(transfered, transferer.reagents.total_volume, 1, 1, 0, transfered_by = transferer)
+	to_chat(transferred, span_warning("You feel a tiny prick!"))
+	transferer.reagents.trans_to(transferred, transferer.reagents.total_volume, transferred_by = transferer)
 
 	var/obj/item/hardened_spike/chem/chem_spike = target
 	var/obj/item/bodypart/spike_location = chem_spike.check_embedded()

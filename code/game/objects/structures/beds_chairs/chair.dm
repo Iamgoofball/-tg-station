@@ -1,7 +1,8 @@
 /obj/structure/chair
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/structures/chairs.dmi'
 	icon_state = "chair"
 	anchored = TRUE
 	can_buckle = TRUE
@@ -9,8 +10,10 @@
 	resistance_flags = NONE
 	max_integrity = 250
 	integrity_failure = 0.1
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	layer = OBJ_LAYER
+	interaction_flags_mouse_drop = ALLOW_RESTING
+
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
@@ -36,16 +39,12 @@
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
 	return ..()
 
-/obj/structure/chair/deconstruct(disassembled)
-	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
-	..()
+/obj/structure/chair/atom_deconstruct(disassembled)
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/datum/material/mat as anything in custom_materials)
+			new mat.sheet_type(loc, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/chair/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -56,15 +55,11 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(flags_1 & NODECONSTRUCT_1)
-		return . = ..()
 	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
 		electrify_self(W, user)
 		return
 	. = ..()
 
-/obj/structure/chair/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
@@ -72,7 +67,7 @@
 	if(!user.temporarilyRemoveItemFromInventory(input_shock_kit))
 		return
 	if(!overlays_from_child_procs || overlays_from_child_procs.len == 0)
-		var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
+		var/image/echair_over_overlay = image('icons/obj/structures/chairs.dmi', loc, "echair_over")
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
 	else
 		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
@@ -85,8 +80,6 @@
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1&NODECONSTRUCT_1)
-		return TRUE
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
@@ -109,10 +102,8 @@
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER_FOV_HIDDEN)
 	else
 		layer = OBJ_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -156,7 +147,7 @@
 	name = "comfy chair"
 	desc = "It looks comfy."
 	icon_state = "comfychair"
-	color = rgb(255,255,255)
+	color = rgb(255, 255, 255)
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstackamount = 2
@@ -168,18 +159,9 @@
 	gen_armrest()
 	return ..()
 
-/obj/structure/chair/comfy/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
-	if(same_z_layer)
-		return ..()
-	cut_overlay(armrest)
-	QDEL_NULL(armrest)
-	gen_armrest()
-	return ..()
-
 /obj/structure/chair/comfy/proc/gen_armrest()
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE_EXPLICIT(armrest, GAME_PLANE_UPPER, src)
 	update_armrest()
 
 /obj/structure/chair/comfy/proc/GetArmrest()
@@ -204,19 +186,19 @@
 	update_armrest()
 
 /obj/structure/chair/comfy/brown
-	color = rgb(255,113,0)
+	color = rgb(70, 47, 28)
 
 /obj/structure/chair/comfy/beige
-	color = rgb(255,253,195)
+	color = rgb(240, 238, 198)
 
 /obj/structure/chair/comfy/teal
-	color = rgb(0,255,255)
+	color = rgb(117, 214, 214)
 
 /obj/structure/chair/comfy/black
-	color = rgb(167,164,153)
+	color = rgb(61, 60, 56)
 
 /obj/structure/chair/comfy/lime
-	color = rgb(255,251,0)
+	color = rgb(193, 248, 104)
 
 /obj/structure/chair/comfy/shuttle
 	name = "shuttle seat"
@@ -226,7 +208,7 @@
 
 /obj/structure/chair/comfy/shuttle/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
 /obj/structure/chair/comfy/shuttle/tactical
@@ -244,15 +226,13 @@
 	item_chair = null
 	icon_state = "officechair_dark"
 
-
-/obj/structure/chair/office/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+/obj/structure/chair/office/Initialize(mapload)
 	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+	AddElement(/datum/element/noisy_movement)
 
 /obj/structure/chair/office/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
 	. = ..()
 
 /obj/structure/chair/office/tactical
@@ -271,24 +251,22 @@
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool)
 
 /obj/structure/chair/stool/narsie_act()
 	return
 
-/obj/structure/chair/MouseDrop(over_object, src_location, over_location)
-	. = ..()
-	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
-			return
-		if(!usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-			return
-		usr.visible_message(span_notice("[usr] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
-		var/obj/item/C = new item_chair(loc)
-		C.set_custom_materials(custom_materials)
-		TransferComponents(C)
-		usr.put_in_hands(C)
-		qdel(src)
+/obj/structure/chair/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
+	if(!isliving(user) || over_object != user)
+		return
+	if(!item_chair || has_buckled_mobs())
+		return
+	user.visible_message(span_notice("[user] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
+	var/obj/item/C = new item_chair(loc)
+	C.set_custom_materials(custom_materials)
+	TransferComponents(C)
+	user.put_in_hands(C)
+	qdel(src)
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
 	return ..()
@@ -298,8 +276,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
+	can_buckle = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
+/obj/structure/chair/stool/bar/post_buckle_mob(mob/living/M)
+	M.pixel_y += 4
+
+/obj/structure/chair/stool/bar/post_unbuckle_mob(mob/living/M)
+	M.pixel_y -= 4
+
+MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 
 /obj/structure/chair/stool/bamboo
 	name = "bamboo stool"
@@ -314,7 +299,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair
 	name = "chair"
 	desc = "Bar brawl essential."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/structures/chairs.dmi'
 	icon_state = "chair_toppled"
 	inhand_icon_state = "chair"
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
@@ -326,7 +311,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	custom_materials = list(/datum/material/iron = 2000)
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
+	item_flags = SKIP_FANTASY_ON_SPAWN
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -376,26 +362,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
-
-
-
-/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
+/obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance) || attack_type == LEAP_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
 		return TRUE
 	return FALSE
 
-/obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
-	. = ..()
-	if(!proximity)
+/obj/item/chair/afterattack(atom/target, mob/user, click_parameters)
+	if(!prob(break_chance))
 		return
-	if(prob(break_chance))
-		user.visible_message(span_danger("[user] smashes \the [src] to pieces against \the [target]"))
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
-			if(C.health < C.maxHealth*0.5)
-				C.Paralyze(20)
-		smash(user)
+	user.visible_message(span_danger("[user] smashes [src] to pieces against [target]"))
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(C.health < C.maxHealth*0.5)
+			C.Paralyze(20)
+	smash(user)
 
 /obj/item/chair/greyscale
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
@@ -444,6 +425,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	origin_type = /obj/structure/chair/wood/wings
 
 /obj/structure/chair/old
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "strange chair"
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
@@ -457,7 +439,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	buildstacktype = /obj/item/stack/sheet/bronze
 	buildstackamount = 1
 	item_chair = null
+	/// Total rotations made
 	var/turns = 0
+
+/obj/structure/chair/bronze/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noisy_movement, 'sound/machines/clockcult/integration_cog_install.ogg', 50)
 
 /obj/structure/chair/bronze/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -470,15 +457,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	if(turns >= 8)
 		STOP_PROCESSING(SSfastprocess, src)
 
-/obj/structure/chair/bronze/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
-	. = ..()
-	if(has_gravity())
-		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
-
-/obj/structure/chair/bronze/AltClick(mob/user)
+/obj/structure/chair/bronze/click_alt(mob/user)
 	turns = 0
-	if(!user.can_perform_action(src, NEED_DEXTERITY))
-		return
 	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message(span_notice("[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER."), \
 		span_notice("Automated spinny chairs. The pinnacle of ancient Ratvarian technology."))
@@ -487,6 +467,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 		user.visible_message(span_notice("[user] stops [src]'s uncontrollable spinning."), \
 		span_notice("You grab [src] and stop its wild spinning."))
 		STOP_PROCESSING(SSfastprocess, src)
+	return CLICK_ACTION_SUCCESS
 
 /obj/structure/chair/mime
 	name = "invisible chair"
@@ -495,8 +476,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DEBRIS_AFTER_DECONSTRUCTION
 	alpha = 0
+
+/obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	return NONE
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5
@@ -511,7 +495,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	desc = "No matter how much you squirm, it'll still be uncomfortable."
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	buildstacktype = /obj/item/stack/sheet/plastic
 	buildstackamount = 2
 	item_chair = /obj/item/chair/plastic
@@ -536,7 +520,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/plastic
 	name = "folding plastic chair"
 	desc = "Somehow, you can always find one under the wrestling ring."
-	icon = 'icons/obj/chairs.dmi'
+	icon = 'icons/obj/structures/chairs.dmi'
 	icon_state = "folded_chair"
 	inhand_icon_state = "folded_chair"
 	lefthand_file = 'icons/mob/inhands/items/chairs_lefthand.dmi'
@@ -544,7 +528,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 7
 	throw_range = 5 //Lighter Weight --> Flies Farther.
-	custom_materials = list(/datum/material/plastic = 2000)
+	custom_materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	break_chance = 25
 	origin_type = /obj/structure/chair/plastic
 

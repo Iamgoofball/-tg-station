@@ -5,6 +5,18 @@
 	puzzle_id = "library"
 	open_message = "The door opens with a loud creak."
 
+/obj/machinery/door/puzzle/keycard/library/animation_length(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			return 0.5 SECONDS
+
+/obj/machinery/door/puzzle/keycard/library/animation_segment_delay(animation)
+	switch(animation)
+		if(DOOR_OPENING_PASSABLE)
+			return 0.5 SECONDS
+		if(DOOR_OPENING_FINISHED)
+			return 0.5 SECONDS
+
 /obj/item/keycard/library
 	name = "golden key"
 	desc = "A dull, golden key."
@@ -26,7 +38,7 @@
 /obj/item/feather
 	name = "feather"
 	desc = "A dark, wilting feather. It seems as old as time."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "feather"
 	force = 0
 	throwforce = 0

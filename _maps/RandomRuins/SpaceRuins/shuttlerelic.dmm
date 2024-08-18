@@ -32,6 +32,8 @@
 /area/ruin/space/has_grav/powered)
 "i" = (
 /obj/structure/closet{
+	base_pixel_x = 0;
+	base_pixel_y = 0;
 	icon_state = "oldcloset";
 	name = "strange closet";
 	enable_door_overlay = 0
@@ -45,7 +47,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/powered)
 "k" = (
-/mob/living/simple_animal/hostile/retaliate/spaceman,
+/mob/living/basic/spaceman,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "l" = (
@@ -70,11 +72,11 @@
 /obj/structure/chair/old{
 	dir = 1
 	},
-/mob/living/simple_animal/hostile/retaliate/spaceman,
+/mob/living/basic/spaceman,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "t" = (
-/obj/machinery/power/generator,
+/obj/machinery/power/thermoelectric_generator,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "u" = (

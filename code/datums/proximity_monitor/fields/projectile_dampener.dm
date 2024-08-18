@@ -18,14 +18,18 @@
 
 /datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	..()
-	RegisterSignal(projector, COMSIG_PARENT_QDELETING, PROC_REF(on_projector_del))
-	recalculate_field()
+	RegisterSignal(projector, COMSIG_QDELETING, PROC_REF(on_projector_del))
+	recalculate_field(full_recalc = TRUE)
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/projectile_dampener/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	for(var/obj/projectile/projectile in tracked)
 		release_projectile(projectile)
+	return ..()
+
+/datum/proximity_monitor/advanced/projectile_dampener/recalculate_field(full_recalc)
+	full_recalc = TRUE // We always perform a full recalc because we need to update ALL the sprites
 	return ..()
 
 /datum/proximity_monitor/advanced/projectile_dampener/process()
@@ -35,7 +39,6 @@
 	for(var/obj/projectile/projectile in tracked)
 		if(!(projectile in ranged) || !projectile.loc)
 			release_projectile(projectile)
-	..()
 
 /datum/proximity_monitor/advanced/projectile_dampener/setup_edge_turf(turf/target)
 	. = ..()
@@ -45,11 +48,10 @@
 	effect.icon_state = overlay.icon_state
 	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	effect.layer = ABOVE_ALL_MOB_LAYER
-	SET_PLANE(effect, ABOVE_GAME_PLANE, target)
 	LAZYSET(edgeturf_effects, target, effect)
 
 /datum/proximity_monitor/advanced/projectile_dampener/on_z_change(datum/source)
-	recalculate_field()
+	recalculate_field(full_recalc = TRUE)
 
 /datum/proximity_monitor/advanced/projectile_dampener/cleanup_edge_turf(turf/target)
 	. = ..()
@@ -91,19 +93,18 @@
 
 /datum/proximity_monitor/advanced/projectile_dampener/proc/on_projector_del(datum/source)
 	SIGNAL_HANDLER
-
 	qdel(src)
 
-/datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/old_location, turf/new_location)
 	if(isprojectile(movable) && get_dist(movable, host) > current_range)
 		if(movable in tracked)
 			release_projectile(movable)
 
-/datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location)
-	if(isprojectile(movable) && !(movable in tracked))
+/datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location, turf/old_location)
+	if(isprojectile(movable))
 		capture_projectile(movable)
 
-/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(delta_time)
+/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(seconds_per_tick)
 	for(var/mob/living/silicon/robot/borg in range(current_range, get_turf(host)))
 		if(!borg.has_buckled_mobs())
 			continue

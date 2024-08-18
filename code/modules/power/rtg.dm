@@ -2,9 +2,10 @@
 // Simple power generator that would replace "magic SMES" on various derelicts.
 
 /obj/machinery/power/rtg
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "radioisotope thermoelectric generator"
 	desc = "A simple nuclear power generator, used in small outposts to reliably provide power for decades."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "rtg"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -22,8 +23,7 @@
 	connect_to_network()
 
 /obj/machinery/power/rtg/process()
-	..()
-	add_avail(power_gen)
+	add_avail(power_to_energy(power_gen))
 
 /obj/machinery/power/rtg/RefreshParts()
 	. = ..()
@@ -36,7 +36,7 @@
 /obj/machinery/power/rtg/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Power generation now at <b>[power_gen*0.001]</b>kW.")
+		. += span_notice("The status display reads: Power generation at <b>[display_power(power_gen, convert = FALSE)]</b>.")
 
 /obj/machinery/power/rtg/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-open", initial(icon_state), I))
@@ -55,7 +55,7 @@
 
 /obj/machinery/power/rtg/abductor
 	name = "Void Core"
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "core"
 	desc = "An alien power source that produces energy seemingly out of nowhere."
 	circuit = /obj/item/circuitboard/machine/abductor/core
@@ -71,12 +71,12 @@
 	visible_message(span_danger("\The [src] lets out a shower of sparks as it starts to lose stability!"),\
 		span_hear("You hear a loud electrical crack!"))
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-	tesla_zap(src, 5, power_gen * 0.05)
+	tesla_zap(source = src, zap_range = 5, power = power_gen * 20)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(explosion), src, 2, 3, 4, null, 8), 10 SECONDS) // Not a normal explosion.
 
 /obj/machinery/power/rtg/abductor/bullet_act(obj/projectile/Proj)
 	. = ..()
-	if(!going_kaboom && istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
+	if(!going_kaboom && istype(Proj) && Proj.damage > 0 && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
 		log_bomber(Proj.firer, "triggered a", src, "explosion via projectile")
 		overload()
 
@@ -88,6 +88,8 @@
 		qdel(src)
 	else
 		overload()
+
+	return TRUE
 
 /obj/machinery/power/rtg/abductor/fire_act(exposed_temperature, exposed_volume)
 	overload()

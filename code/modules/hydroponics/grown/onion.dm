@@ -1,5 +1,5 @@
 /obj/item/seeds/onion
-	name = "pack of onion seeds"
+	name = "onion seed pack"
 	desc = "These seeds grow into onions."
 	icon_state = "seed-onion"
 	species = "onion"
@@ -13,8 +13,8 @@
 	instability = 10
 	growthstages = 3
 	weed_chance = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.5)
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.25)
 	mutatelist = list(/obj/item/seeds/onion/red)
 
 /obj/item/food/grown/onion
@@ -29,7 +29,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice, 2, 15, screentip_verb = "Cut")
 
 /obj/item/seeds/onion/red
-	name = "pack of red onion seeds"
+	name = "red onion seed pack"
 	desc = "For growing exceptionally potent onions."
 	icon_state = "seed-onionred"
 	species = "onion_red"
@@ -58,11 +58,10 @@
 	return ..()
 
 /obj/item/food/onion_slice
-	name = "onion slices"
-	desc = "Rings, not for wearing."
+	name = "onion slice"
+	desc = "Ring, not for wearing."
 	icon_state = "onionslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
-	gender = PLURAL
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/onion_slice/make_bakeable()
@@ -72,7 +71,7 @@
 	AddElement(/datum/element/microwavable, /obj/item/food/onionrings)
 
 /obj/item/food/onion_slice/red
-	name = "red onion slices"
-	desc = "They shine like exceptionally low quality amethyst."
+	name = "red onion slice"
+	desc = "It shines like an exceptionally low quality amethyst."
 	icon_state = "onionslice_red"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/tearjuice = 2.5)

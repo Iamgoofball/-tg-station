@@ -5,13 +5,15 @@
 	icon_state = "scanner"
 	base_icon_state = "scanner"
 	density = TRUE
-	obj_flags = NO_BUILD // Becomes undense when the door is open
+	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/internal/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
+
 	var/locked = FALSE
-	var/damage_coeff
+	var/damage_coeff = 1
 	var/scan_level
-	var/precision_coeff
+	var/precision_coeff = 1
 	var/message_cooldown
 	var/breakout_time = 1200
 	var/obj/machinery/computer/scan_consolenew/linked_console = null
@@ -91,7 +93,7 @@
 			return C
 	return null
 
-/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user)
+/obj/machinery/dna_scannernew/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	if(!state_open)
 		return FALSE
 
@@ -104,7 +106,7 @@
 
 	return TRUE
 
-/obj/machinery/dna_scannernew/open_machine()
+/obj/machinery/dna_scannernew/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(state_open)
 		return FALSE
 
@@ -129,7 +131,7 @@
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I))
+	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
 	if(default_deconstruction_crowbar(I))
@@ -140,18 +142,18 @@
 /obj/machinery/dna_scannernew/interact(mob/user)
 	toggle_open(user)
 
-/obj/machinery/dna_scannernew/MouseDrop_T(mob/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/dna_scannernew/mouse_drop_receive(atom/target, mob/user, params)
+	if(!iscarbon(target))
 		return
 	close_machine(target)
 
 //This is only called by the scanner. if you ever want to use this outside of that context you'll need to refactor things a bit
 /obj/machinery/dna_scannernew/proc/set_linked_console(new_console)
 	if(linked_console)
-		UnregisterSignal(linked_console, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(linked_console, COMSIG_QDELETING)
 	linked_console = new_console
 	if(linked_console)
-		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, PROC_REF(react_to_console_del))
+		RegisterSignal(linked_console, COMSIG_QDELETING, PROC_REF(react_to_console_del))
 
 /obj/machinery/dna_scannernew/proc/react_to_console_del(datum/source)
 	SIGNAL_HANDLER

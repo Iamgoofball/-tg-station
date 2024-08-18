@@ -21,10 +21,12 @@
 	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(on_spell_projectile))
 	RegisterSignal(parent, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(on_before_spell_cast))
 	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
+	ADD_TRAIT(parent, TRAIT_SPLATTERCASTER, REF(src))
 
 /datum/component/splattercasting/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(COMSIG_SPECIES_LOSS, COMSIG_MOB_SPELL_PROJECTILE, COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_AFTER_SPELL_CAST))
+	REMOVE_TRAIT(parent, TRAIT_SPLATTERCASTER, REF(src))
 
 ///signal sent when a spell casts a projectile
 /datum/component/splattercasting/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
@@ -42,7 +44,7 @@
 	playsound(source, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
 	to_fire.color = "#ff7070"
 	to_fire.name = "blood-[to_fire.name]"
-	to_fire.set_light(2, 2, LIGHT_COLOR_BLOOD_MAGIC, TRUE)
+	to_fire.set_light(2, 2, LIGHT_COLOR_BLOOD_MAGIC, l_on = TRUE)
 
 ///signal sent before parent casts a spell
 /datum/component/splattercasting/proc/on_before_spell_cast(mob/living/carbon/source, datum/action/cooldown/spell/spell, atom/cast_on)
@@ -95,3 +97,5 @@
 			cost_desc = "torrent"
 
 	to_chat(source, span_danger("You feel a [cost_desc] of your blood drained into the spell you just cast."))
+
+#undef COOLDOWN_TO_BLOOD_RATIO

@@ -5,7 +5,7 @@
 	base_icon_state = "durand"
 	movedelay = 4
 	max_integrity = 400
-	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
+	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_durand
 	max_temperature = 30000
 	force = 40
@@ -14,7 +14,9 @@
 	wreckage = /obj/structure/mecha_wreckage/durand
 	mech_type = EXOSUIT_MODULE_DURAND
 	max_equip_by_category = list(
-		MECHA_UTILITY = 1,
+		MECHA_L_ARM = 1,
+		MECHA_R_ARM = 1,
+		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 3,
 	)
@@ -48,7 +50,7 @@
 
 /obj/vehicle/sealed/mecha/durand/process()
 	. = ..()
-	if(defense_mode && !use_power(100)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
+	if(defense_mode && !use_energy(0.01 * STANDARD_CELL_CHARGE)) //Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
 		for(var/O in occupants)
 			var/mob/living/occupant = O
 			var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
@@ -80,7 +82,6 @@
 		stack_trace("Durand triggered relay without a shield")
 		shield = new /obj/durand_shield(loc, src, layer)
 	shield.setDir(dir)
-	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_TRIGGER, owner, signal_args)
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
 /obj/vehicle/sealed/mecha/durand/proc/prehit(obj/projectile/source, list/signal_args)
@@ -142,6 +143,8 @@ Expects a turf. Returns true if the attack should be blocked, false if not.*/
 	button_icon_state = "mech_defense_mode_off"
 
 /datum/action/vehicle/sealed/mecha/mech_defense_mode/Trigger(trigger_flags, forced_state = FALSE)
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
 	SEND_SIGNAL(chassis, COMSIG_MECHA_ACTION_TRIGGER, owner, args) //Signal sent to the mech, to be handed to the shield. See durand.dm for more details
 
 ////////////////////////////
@@ -156,16 +159,16 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 
 /obj/durand_shield //projectiles get passed to this when defense mode is enabled
 	name = "defense grid"
-	icon = 'icons/mecha/durand_shield.dmi'
+	icon = 'icons/mob/effects/durand_shield.dmi'
 	icon_state = "shield_null"
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	pixel_y = 4
 	max_integrity = 10000
 	anchored = TRUE
-	light_system = MOVABLE_LIGHT
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
-	light_power = 5
-	light_color = LIGHT_COLOR_ELECTRIC_CYAN
+	light_system = OVERLAY_LIGHT
+	light_range = 2.8
+	light_power = 1
+	light_color = LIGHT_COLOR_FAINT_CYAN
 	light_on = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF //The shield should not take damage from fire,  lava, or acid; that's the mech's job.
 	///Our link back to the durand
@@ -179,7 +182,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	src.layer = ABOVE_MOB_LAYER
 	SET_PLANE_IMPLICIT(src, plane)
 	setDir(dir)
-	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(activate))
+	RegisterSignal(chassis, COMSIG_MECHA_ACTION_TRIGGER, PROC_REF(activate))
 	RegisterSignal(chassis, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(shield_glide_size_update))
 
 /obj/durand_shield/Destroy()
@@ -231,7 +234,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	set_light_on(chassis.defense_mode)
 
 	if(chassis.defense_mode)
-		invisibility = 0
+		SetInvisibility(INVISIBILITY_NONE, id=type)
 		flick("shield_raise", src)
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		icon_state = "shield"
@@ -254,14 +257,14 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
  */
 /obj/durand_shield/proc/make_invisible()
 	if(!chassis.defense_mode)
-		invisibility = INVISIBILITY_MAXIMUM
+		RemoveInvisibility(type)
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)
 	SIGNAL_HANDLER
 
 	setDir(newdir)
 
-/obj/durand_shield/take_damage()
+/obj/durand_shield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	if(!chassis)
 		qdel(src)
 		return
@@ -269,7 +272,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		return
 	. = ..()
 	flick("shield_impact", src)
-	if(!chassis.use_power((max_integrity - atom_integrity) * 100))
+	if(!.)
+		return
+	if(!chassis.use_energy(. * (STANDARD_CELL_CHARGE / 15)))
 		chassis.cell?.charge = 0
 		for(var/O in chassis.occupants)
 			var/mob/living/occupant = O

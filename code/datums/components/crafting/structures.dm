@@ -11,33 +11,33 @@
 
 /datum/crafting_recipe/rib
 	name = "Colossal Rib"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 10,
 		/datum/reagent/fuel/oil = 5,
 	)
 	result = /obj/structure/statue/bone/rib
 	category = CAT_STRUCTURE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/skull
 	name = "Skull Carving"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 6,
 		/datum/reagent/fuel/oil = 5,
 	)
 	result = /obj/structure/statue/bone/skull
 	category = CAT_STRUCTURE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/halfskull
 	name = "Cracked Skull Carving"
-	always_available = FALSE
 	reqs = list(
 		/obj/item/stack/sheet/bone = 3,
 		/datum/reagent/fuel/oil = 5,
 	)
 	result = /obj/structure/statue/bone/skull/half
 	category = CAT_STRUCTURE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/firecabinet
 	name = "Fire Axe Cabinet"
@@ -60,3 +60,17 @@
 		/obj/item/stack/cable_coil = 10,
 	)
 	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/syndicate_uplink_beacon
+	name = "Syndicate Uplink Beacon"
+	result = /obj/structure/syndicate_uplink_beacon
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 6 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/beacon = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
+	)
+	category = CAT_STRUCTURE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED

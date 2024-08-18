@@ -3,12 +3,15 @@
 #define TRANSIT_PIPEDISPENSER 2
 
 /obj/machinery/pipedispenser
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "pipe dispenser"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "pipe_d"
 	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OFFLINE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	///color of pipe
@@ -177,22 +180,18 @@
 
 /obj/machinery/pipedispenser/disposal
 	name = "disposal pipe dispenser"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "pipe_d"
 	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = TRUE
 	category = DISPOSAL_PIPEDISPENSER
 
-
 //Allow you to drag-drop disposal pipes and transit tubes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
-	if(!usr.incapacitated())
-		return
-
+/obj/machinery/pipedispenser/disposal/mouse_drop_receive(obj/structure/pipe, mob/user, params)
 	if (!istype(pipe, /obj/structure/disposalconstruct) && !istype(pipe, /obj/structure/c_transit_tube) && !istype(pipe, /obj/structure/c_transit_tube_pod))
 		return
 
-	if (get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (get_dist(user, src) > 1 || get_dist(src, pipe) > 1 )
 		return
 
 	if (pipe.anchored)
@@ -200,12 +199,11 @@
 
 	qdel(pipe)
 
-
 //transit tube dispenser
 //inherit disposal for the dragging proc
 /obj/machinery/pipedispenser/disposal/transit_tube
 	name = "transit tube dispenser"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "pipe_d"
 	density = TRUE
 	desc = "Dispenses pipes that will move beings around."

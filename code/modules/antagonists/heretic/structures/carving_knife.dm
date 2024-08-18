@@ -3,9 +3,9 @@
 	name = "carving knife"
 	desc = "A small knife made of cold steel, pure and perfect. Its sharpness can carve into titanium itself - \
 		but only few can evoke the dangers that lurk beneath reality."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "rune_carver"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 	wound_bonus = 20
@@ -15,15 +15,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	actions_types = list(/datum/action/item_action/rune_shatter)
-	embedding = list(
-		ignore_throwspeed_threshold = TRUE,
-		embed_chance = 75,
-		jostle_chance = 2,
-		jostle_pain_mult = 5,
-		pain_stam_pct = 0.4,
-		pain_mult = 3,
-		rip_time = 15,
-	)
+	embed_type = /datum/embed_data/rune_carver
 
 	/// Whether we're currently drawing a rune
 	var/drawing = FALSE
@@ -33,6 +25,15 @@
 	var/list/datum/weakref/current_runes = list()
 	/// Turfs that you cannot draw carvings on
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava))
+
+/datum/embed_data/rune_carver
+	ignore_throwspeed_threshold = TRUE
+	embed_chance = 75
+	jostle_chance = 2
+	jostle_pain_mult = 5
+	pain_stam_pct = 0.4
+	pain_mult = 3
+	rip_time = 15
 
 /obj/item/melee/rune_carver/examine(mob/user)
 	. = ..()
@@ -45,21 +46,14 @@
 		var/potion_string = span_info("\tThe " + initial(trap.name) + " - " + initial(trap.carver_tip))
 		. += potion_string
 
-/obj/item/melee/rune_carver/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(!proximity_flag)
-		return
-
+/obj/item/melee/rune_carver/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!IS_HERETIC_OR_MONSTER(user))
-		return
+		return NONE
+	if(!isopenturf(interacting_with) || is_type_in_typecache(interacting_with, blacklisted_turfs))
+		return NONE
 
-	if(!isopenturf(target))
-		return
-
-	if(is_type_in_typecache(target, blacklisted_turfs))
-		return
-
-	INVOKE_ASYNC(src, PROC_REF(try_carve_rune), target, user)
+	INVOKE_ASYNC(src, PROC_REF(try_carve_rune), interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
 
 /*
  * Begin trying to carve a rune. Go through a few checks, then call do_carve_rune if successful.
@@ -168,7 +162,7 @@
 /obj/structure/trap/eldritch
 	name = "elder carving"
 	desc = "Collection of unknown symbols, they remind you of days long gone..."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	/// A tip displayed to heretics who examine the rune carver. Explains what the rune does.
 	var/carver_tip
 	/// Reference to trap owner mob

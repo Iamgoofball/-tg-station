@@ -1,6 +1,6 @@
 // Peanuts!
 /obj/item/seeds/peanut
-	name = "pack of peanut seeds"
+	name = "peanut seed pack"
 	desc = "These seeds grow into peanut plants."
 	icon_state = "seed-peanut"
 	species = "peanut"
@@ -9,7 +9,7 @@
 	lifespan = 55
 	endurance = 35
 	yield = 5
-	growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing.dmi'
 	icon_grow = "peanut-grow"
 	icon_dead = "peanut-dead"
 	genes = list(/datum/plant_gene/trait/one_bite)

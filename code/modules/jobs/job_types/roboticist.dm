@@ -26,12 +26,13 @@
 	mail_goodies = list(
 		/obj/item/storage/box/flashes = 20,
 		/obj/item/stack/sheet/iron/twenty = 15,
-		/obj/item/modular_computer/laptop = 5
+		/obj/item/modular_computer/laptop = 5,
+		/obj/item/mmi/posibrain/sphere = 5,
 	)
 
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 	rpg_title = "Necromancer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+	job_flags = STATION_JOB_FLAGS
 
 
 /datum/job/roboticist/New()

@@ -6,10 +6,13 @@
 	show_in_antagpanel = FALSE
 	job_rank = ROLE_BLOB
 	ui_name = "AntagInfoBlob"
+	stinger_sound = 'sound/ambience/antag/blobalert.ogg'
 	/// Action to release a blob infection
 	var/datum/action/innate/blobpop/pop_action
 	/// Initial points for a human blob
 	var/starting_points_human_blob = OVERMIND_STARTING_POINTS
+	/// Has the blob already popped inside of the round? This is here to prevent blobs from "respawning"
+	var/has_already_popped = FALSE
 
 /datum/antagonist/blob/roundend_report()
 	var/basic_report = ..()
@@ -26,8 +29,8 @@
 	owner.announce_objectives()
 	if(!isovermind(owner.current))
 		to_chat(owner.current, span_notice("Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!"))
-
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/blobalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	else
+		has_already_popped = TRUE
 
 /datum/antagonist/blob/on_gain()
 	create_objectives()
@@ -40,9 +43,9 @@
 /datum/antagonist/blob/get_preview_icon()
 	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
 
-	var/icon/icon = icon('icons/mob/nonhuman-player/blob.dmi', "blob_core")
+	var/icon/icon = icon('icons/mob/nonhuman-player/blob_tall.dmi', "blob_core")
 	icon.Blend(initial(reactive_spines.color), ICON_MULTIPLY)
-	icon.Blend(icon('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
+	icon.Blend(icon('icons/mob/nonhuman-player/blob_tall.dmi', "blob_core_overlay"), ICON_OVERLAY)
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
@@ -74,7 +77,7 @@
 	objectives += main
 
 /datum/antagonist/blob/apply_innate_effects(mob/living/mob_override)
-	if(isovermind(owner.current))
+	if(isovermind(owner.current) || has_already_popped)
 		return FALSE
 	if(!pop_action)
 		pop_action = new
@@ -131,6 +134,15 @@
 	old_body.gib()
 	blob_cam.place_blob_core(placement_override, pop_override = TRUE)
 	playsound(get_turf(blob_cam), 'sound/ambience/antag/blobalert.ogg', 50, FALSE)
+	blobtag.has_already_popped = TRUE
+
+	notify_ghosts(
+		"A Blob host has burst in [get_area_name(blob_cam.blob_core)]",
+		source = blob_cam.blob_core,
+		ghost_sound = 'sound/ambience/antag/blobalert.ogg',
+		header = "Blob Awakening!",
+		notify_volume = 75,
+	)
 
 /datum/antagonist/blob/antag_listing_status()
 	. = ..()

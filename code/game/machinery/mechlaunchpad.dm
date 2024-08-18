@@ -1,7 +1,7 @@
 /obj/machinery/mechpad
 	name = "orbital mech pad"
 	desc = "A slab of heavy plating designed to withstand orbital-drop impacts. Through some sort of advanced bluespace tech, this one seems able to send and receive Mechs. Requires linking to a console to function."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "mechpad"
 	circuit = /obj/item/circuitboard/machine/mechpad
 	///ID of the console, used for linking up
@@ -14,11 +14,6 @@
 /obj/machinery/mechpad/Initialize(mapload)
 	. = ..()
 	display_name = "Orbital Pad - [get_area_name(src)]"
-	GLOB.mechpad_list += src
-
-/obj/machinery/mechpad/Destroy()
-	GLOB.mechpad_list -= src
-	return ..()
 
 /obj/machinery/mechpad/examine(mob/user)
 	. = ..()
@@ -35,15 +30,14 @@
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/tool)
+/obj/machinery/mechpad/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	. = NONE
 	if(!panel_open)
 		return
-	if(!multitool_check_buffer(user, tool))
-		return
-	var/obj/item/multitool/multitool = tool
-	multitool.buffer = src
-	to_chat(user, span_notice("You save the data in the [multitool.name]'s buffer."))
-	return TRUE
+
+	multitool.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mechpad/wirecutter_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
@@ -62,13 +56,13 @@
 	podspawn(list(
 		"target" = get_turf(src),
 		"path" = /obj/structure/closet/supplypod/mechpod,
-		"style" = STYLE_SEETHROUGH,
+		"style" = /datum/pod_style/seethrough,
 		"reverse_dropoff_coords" = list(reverse_turf.x, reverse_turf.y, reverse_turf.z)
 	))
-	use_power(active_power_usage)
+	use_energy(active_power_usage)
 
 /obj/structure/closet/supplypod/mechpod
-	style = STYLE_SEETHROUGH
+	style = /datum/pod_style/seethrough
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
 	reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=TRUE)

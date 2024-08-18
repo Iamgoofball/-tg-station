@@ -75,10 +75,10 @@
 		// Multiz is shitcode welcome home
 		var/turf/current_turf = (direction & (UP|DOWN)) ? \
 			(direction & UP) ? \
-				(z_traits["16"]) ? \
+				(z_traits[Z_LEVEL_UP]) ? \
 					(get_step(locate(x, y, z + 1), NONE)) : \
 				(null) : \
-				(z_traits["32"]) ? \
+				(z_traits[Z_LEVEL_DOWN]) ? \
 					(get_step(locate(x, y, z - 1), NONE)) : \
 				(null) : \
 			(get_step(src, direction))
@@ -133,6 +133,7 @@
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
 	SEND_SIGNAL(src, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
+	rebuild_atmos_smoothing()
 
 /**
  * returns a list of adjacent turfs that can share air with this one.
@@ -172,6 +173,8 @@
 	return adjacent_turfs
 
 /atom/proc/air_update_turf(update = FALSE, remove = FALSE)
+	if(!SSair.initialized) // I'm sorry for polutting user code, I'll do 10 hail giacom's
+		return
 	var/turf/local_turf = get_turf(loc)
 	if(!local_turf)
 		return
@@ -187,6 +190,8 @@
  * * remove - Are you removing an active turf (Read wall), or adding one
 */
 /turf/air_update_turf(update = FALSE, remove = FALSE)
+	if(!SSair.initialized) // I'm sorry for polutting user code, I'll do 10 hail giacom's
+		return
 	if(update)
 		immediate_calculate_adjacent_turfs()
 	if(remove)

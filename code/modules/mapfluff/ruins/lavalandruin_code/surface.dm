@@ -9,12 +9,11 @@
 /obj/structure/dead_ratvar
 	name = "hulking wreck"
 	desc = "The remains of a monstrous war machine."
-	icon = 'icons/obj/lavaland/dead_ratvar.dmi'
+	icon = 'icons/obj/mining_zones/dead_ratvar.dmi'
 	icon_state = "dead_ratvar"
 	flags_1 = ON_BORDER_1
 	appearance_flags = LONG_GLIDE
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	density = TRUE
 	bound_width = 416

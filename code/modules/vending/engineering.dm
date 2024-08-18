@@ -20,7 +20,8 @@
 		/obj/item/multitool = 12,
 		/obj/item/wrench = 12,
 		/obj/item/t_scanner = 12,
-		/obj/item/stock_parts/cell = 8,
+		/obj/item/stock_parts/power_store/cell = 8,
+		/obj/item/stock_parts/power_store/battery = 8,
 		/obj/item/weldingtool = 8,
 		/obj/item/clothing/head/utility/welding = 8,
 		/obj/item/light/tube = 10,
@@ -28,7 +29,7 @@
 		/obj/item/stock_parts/scanning_module = 5,
 		/obj/item/stock_parts/micro_laser = 5,
 		/obj/item/stock_parts/matter_bin = 5,
-		/obj/item/stock_parts/manipulator = 5,
+		/obj/item/stock_parts/servo = 5,
 		)
 	refill_canister = /obj/item/vending_refill/engineering
 	default_price = PAYCHECK_CREW

@@ -7,7 +7,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
-	icon = 'icons/obj/lighting.dmi'
+	icon = 'icons/turf/overlays.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
 	max_integrity = GLOWSHROOM_BASE_INTEGRITY
@@ -38,6 +38,8 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		/turf/open/water,
 	))
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom)
+
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
 	desc = "Mycena Ruthenia, a species of mushroom that, while it does glow in the dark, is not actually bioluminescent."
@@ -49,6 +51,15 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	desc = "Mycena Umbra, a species of mushroom that emits shadow instead of light."
 	icon_state = "shadowshroom"
 	myseed = /obj/item/seeds/glowshroom/shadowshroom
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/glowshroom/single)
+
+/// Mapping object, a glowshroom that doesn't spread or die
+/obj/structure/glowshroom/single
+
+/obj/structure/glowshroom/single/Initialize(mapload, obj/item/seeds/newseed)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/glowshroom/single/Spread()
 	return
@@ -87,15 +98,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	setDir(calc_dir())
 	base_icon_state = initial(icon_state)
 	if(!floor)
-		switch(dir) //offset to make it be on the wall rather than on the floor
-			if(NORTH)
-				pixel_y = 32
-			if(SOUTH)
-				pixel_y = -32
-			if(EAST)
-				pixel_x = 32
-			if(WEST)
-				pixel_x = -32
+		find_and_hang_on_wall()
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
@@ -125,12 +128,12 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
  * Causes glowshroom spreading across the floor/walls.
  */
 
-/obj/structure/glowshroom/process(delta_time)
+/obj/structure/glowshroom/process(seconds_per_tick)
 	if(COOLDOWN_FINISHED(src, spread_cooldown))
 		COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
 		Spread()
 
-	Decay(rand(idle_decay_min, idle_decay_max) * delta_time)
+	Decay(rand(idle_decay_min, idle_decay_max) * seconds_per_tick)
 
 
 

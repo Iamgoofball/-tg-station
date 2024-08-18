@@ -41,19 +41,17 @@
 "y" = (
 /obj/machinery/computer/security{
 	dir = 8;
-	network = list("SBC_Fighter2")
+	network = list("SBC_Fighter3")
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
 "E" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/directional/south{
 	ailock = 1;
 	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
 	icon_state = "control_kill";
 	lethal = 1;
 	name = "Ship Turret Control";
-	pixel_x = -32;
-	pixel_y = 26;
 	req_access = list("syndicate")
 	},
 /obj/structure/chair/comfy/shuttle{
@@ -87,6 +85,13 @@
 /obj/machinery/computer/shuttle/starfury/fighter/fighter_three,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_fighter3)
+"N" = (
+/obj/machinery/camera/directional/west{
+	network = list("SBC_Fighter3");
+	c_tag = "Fighter 3 - Starboard"
+	},
+/turf/template_noop,
+/area/shuttle/sbc_fighter3)
 "Q" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark/end,
 /turf/open/floor/mineral/plastitanium/red,
@@ -96,6 +101,13 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
+/area/shuttle/sbc_fighter3)
+"Y" = (
+/obj/machinery/camera/directional/east{
+	network = list("SBC_Fighter3");
+	c_tag = "Fighter 3 - Port"
+	},
+/turf/template_noop,
 /area/shuttle/sbc_fighter3)
 "Z" = (
 /obj/structure/rack,
@@ -107,7 +119,7 @@
 
 (1,1,1) = {"
 a
-a
+Y
 F
 n
 n
@@ -143,7 +155,7 @@ g
 "}
 (5,1,1) = {"
 a
-a
+N
 H
 n
 n

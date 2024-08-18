@@ -68,13 +68,15 @@
 
 /area/shuttle/hunter
 	name = "Hunter Shuttle"
-	static_lighting = FALSE
-	base_lighting_alpha = 255
 
 /area/shuttle/hunter/russian
 	name = "Russian Cargo Hauler"
 	requires_power = TRUE
-	static_lighting = TRUE
+
+/area/shuttle/hunter/mi13_foodtruck
+	name = "Perfectly Ordinary Food Truck"
+	requires_power = TRUE
+	ambience_index = AMBIENCE_DANGER
 
 ////////////////////////////White Ship////////////////////////////
 

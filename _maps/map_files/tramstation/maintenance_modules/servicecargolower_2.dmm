@@ -151,7 +151,9 @@
 "pJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/decoration/ornament,
+/obj/effect/spawner/random/decoration/ornament{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "rw" = (
@@ -197,7 +199,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/four,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "xv" = (
@@ -271,14 +275,14 @@
 /area/station/maintenance/starboard/greater)
 "Hy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/vacuum/external/directional/north,
+/obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "HQ" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/end,
-/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "Ip" = (
@@ -347,7 +351,9 @@
 /area/station/asteroid)
 "RQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "ST" = (
@@ -442,8 +448,8 @@ fX
 VQ
 Ip
 sj
-Rk
-Rk
+fX
+fX
 fX
 fX
 fX
@@ -468,8 +474,8 @@ fX
 VQ
 Ip
 sj
-Rk
-Rk
+fX
+fX
 fX
 fX
 fX
@@ -602,9 +608,9 @@ sj
 Ip
 sj
 sj
-Rk
-Rk
-Rk
+fX
+fX
+fX
 fX
 fX
 fX
@@ -628,9 +634,9 @@ sj
 Ip
 LM
 sj
-Rk
-Rk
-Rk
+fX
+fX
+fX
 fX
 fX
 fX
@@ -654,9 +660,9 @@ sj
 Ip
 Ex
 sj
-Rk
-Rk
-Rk
+fX
+fX
+fX
 fX
 fX
 fX
@@ -681,8 +687,8 @@ hD
 dN
 sj
 sj
-Rk
-Rk
+fX
+fX
 fX
 fX
 fX
@@ -707,8 +713,8 @@ Ip
 VQ
 oV
 sj
-Rk
-Rk
+fX
+fX
 fX
 fX
 fX
@@ -733,8 +739,8 @@ Ip
 VQ
 VQ
 sj
-Rk
-Rk
+fX
+fX
 fX
 fX
 fX

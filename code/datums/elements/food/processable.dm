@@ -32,11 +32,11 @@
 
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), PROC_REF(try_process))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(OnExamine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(OnExamine))
 
 /datum/element/processable/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ATOM_TOOL_ACT(tool_behaviour), COMSIG_PARENT_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
+	UnregisterSignal(target, list(COMSIG_ATOM_TOOL_ACT(tool_behaviour), COMSIG_ATOM_EXAMINE, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM))
 
 /datum/element/processable/proc/try_process(datum/source, mob/living/user, obj/item/I, list/mutable_recipes)
 	SIGNAL_HANDLER
@@ -46,7 +46,7 @@
 		var/found_location = found_item.loc
 		var/found_turf = isturf(found_location)
 		var/found_table = locate(/obj/structure/table) in found_location
-		var/found_tray = locate(/obj/item/storage/bag/tray) in found_location
+		var/found_tray = locate(/obj/item/storage/bag/tray) in found_location || locate(/obj/item/plate/oven_tray) in found_location
 		if(!found_turf && !istype(found_location, /obj/item/storage/bag/tray) || found_turf && !(found_table || found_tray))
 			to_chat(user, span_notice("You cannot make [initial(result_atom_type.name)] here! You need a table or at least a tray."))
 			return
@@ -57,10 +57,23 @@
 /datum/element/processable/proc/OnExamine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
+	var/result_name = initial(result_atom_type.name)
+	var/result_gender = initial(result_atom_type.gender)
+	var/tool_desc = tool_behaviour_name(tool_behaviour)
+
+	// I admit, this is a lot of lines for very minor changes in the strings
+	// but at least it's readable?
 	if(amount_created > 1)
-		examine_list += span_notice("It can be turned into [amount_created] [initial(result_atom_type.name)]s with <b>[tool_behaviour_name(tool_behaviour)]</b>!")
+		if(result_gender == PLURAL)
+			examine_list += span_notice("It can be turned into [amount_created] [result_name] with [span_bold(tool_desc)]!")
+		else
+			examine_list += span_notice("It can be turned into [amount_created] [result_name][plural_s(result_name)] with [span_bold(tool_desc)]!")
+
 	else
-		examine_list += span_notice("It can be turned into \a [initial(result_atom_type.name)] with <b>[tool_behaviour_name(tool_behaviour)]</b>!")
+		if(result_gender == PLURAL)
+			examine_list += span_notice("It can be turned into some [result_name] with [span_bold(tool_desc)]!")
+		else
+			examine_list += span_notice("It can be turned into \a [result_name] with [span_bold(tool_desc)]!")
 
 /**
  * Adds context sensitivy directly to the processable file for screentips

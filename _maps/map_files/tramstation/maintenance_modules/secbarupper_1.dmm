@@ -60,7 +60,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
 "he" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/security)
 "hC" = (
@@ -114,8 +116,17 @@
 /obj/machinery/plumbing/synthesizer{
 	reagent_id = /datum/reagent/water
 	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"oW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/cardboard,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "pF" = (
 /obj/structure/lattice/catwalk,
@@ -196,13 +207,6 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/maintenance/department/security)
-"Bv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/cardboard,
-/obj/effect/spawner/random/maintenance/four,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "Cg" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -231,6 +235,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
+/area/station/maintenance/department/security)
+"DU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	location = "Law Office";
+	name = "navigation beacon (Law Office Delivery)"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "lawyerdropoff"
+	},
+/turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "Ed" = (
 /obj/effect/decal/cleanable/dirt,
@@ -306,30 +326,14 @@
 /obj/effect/spawner/random/engineering/material_cheap,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
-"Td" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	dir = 1;
-	freq = 1400;
-	location = "Law Office";
-	name = "navigation beacon (Law Office Delivery)"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "lawyerdropoff"
-	},
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/security)
 "Tt" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "Tx" = (
@@ -350,8 +354,7 @@
 /obj/machinery/duct,
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
-	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_y = 32
+	name = "MULE CROSSING - LOOK BOTH WAYS"
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
@@ -413,6 +416,7 @@
 "YF" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "YY" = (
@@ -430,9 +434,6 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bucket,
-/obj/structure/sign/poster/official/nanotrasen_logo{
-	pixel_y = 32
-	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "ZA" = (
@@ -1750,7 +1751,7 @@ Zs
 Ed
 Nq
 vr
-Bv
+oW
 eg
 eg
 eg
@@ -1867,7 +1868,7 @@ ZA
 ZA
 bW
 vE
-Td
+DU
 Dy
 vr
 eg

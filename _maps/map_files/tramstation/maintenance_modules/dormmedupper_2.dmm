@@ -7,11 +7,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"dS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/xeno_spawn,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/department/crew_quarters/dorms)
 "dU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
@@ -38,22 +33,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/station/maintenance/department/crew_quarters/dorms)
-"hd" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	dir = 1;
-	freq = 1400;
-	location = "Engineering";
-	name = "navigation beacon (Engineering Delivery)"
-	},
-/obj/machinery/conveyor{
-	id = "engineeringchute"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "hn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -105,6 +84,20 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
+"nu" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Engineering";
+	name = "navigation beacon (Engineering Delivery)"
+	},
+/obj/machinery/conveyor{
+	id = "engineeringchute"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "nz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -117,7 +110,9 @@
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/medical/minor_healing,
 /obj/effect/spawner/random/medical/supplies,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "nW" = (
@@ -212,7 +207,9 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "zX" = (
@@ -224,6 +221,11 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Ba" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "BZ" = (
@@ -317,8 +319,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/sign/warning/secure_area{
 	desc = "A warning sign which reads 'MULE CROSSING - LOOK BOTH WAYS";
-	name = "MULE CROSSING - LOOK BOTH WAYS";
-	pixel_y = -32
+	name = "MULE CROSSING - LOOK BOTH WAYS"
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
@@ -356,8 +357,8 @@
 "Oe" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Oi" = (
@@ -418,7 +419,9 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Wu" = (
@@ -656,7 +659,7 @@ BZ
 BZ
 BZ
 BZ
-dS
+Ba
 Uk
 CH
 Me
@@ -1427,7 +1430,7 @@ BZ
 BZ
 BZ
 qB
-Jn
+Uk
 CH
 CH
 CH
@@ -1542,7 +1545,7 @@ zN
 hn
 Cz
 ql
-hd
+nu
 FK
 lC
 CH

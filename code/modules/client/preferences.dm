@@ -33,7 +33,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/key_bindings_by_key = list()
 
 	var/toggles = TOGGLES_DEFAULT
-	var/db_flags
+	var/db_flags = NONE
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 
@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
 
-/datum/preferences/Destroy(force, ...)
+/datum/preferences/Destroy(force)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
@@ -211,22 +211,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if ("change_slot")
 			// Save existing character
 			save_character()
-
-			// SAFETY: `load_character` performs sanitization the slot number
-			if (!load_character(params["slot"]))
-				tainted_character_profiles = TRUE
-				randomise_appearance_prefs()
-				save_character()
-
-			for (var/datum/preference_middleware/preference_middleware as anything in middleware)
-				preference_middleware.on_new_character(usr)
-
-			character_preview_view.update_body()
-
+			// SAFETY: `switch_to_slot` performs sanitization on the slot number
+			switch_to_slot(params["slot"])
+			return TRUE
+		if ("remove_current_slot")
+			remove_current_slot()
 			return TRUE
 		if ("rotate")
-			character_preview_view.dir = turn(character_preview_view.dir, -90)
-
+			character_preview_view.setDir(turn(character_preview_view.dir, -90))
 			return TRUE
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
@@ -314,12 +306,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if (!preference.is_accessible(src))
 			continue
 
-		LAZYINITLIST(preferences[preference.category])
-
 		var/value = read_preference(preference.type)
 		var/data = preference.compile_ui_data(user, value)
 
+		LAZYINITLIST(preferences[preference.category])
 		preferences[preference.category][preference.savefile_key] = data
+
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		var/list/append_character_preferences = preference_middleware.get_character_preferences(user)
@@ -351,6 +343,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/mob/living/carbon/human/dummy/body
 	/// The preferences this refers to
 	var/datum/preferences/preferences
+	/// Whether we show current job clothes or nude/loadout only
+	var/show_job_clothes = TRUE
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
@@ -368,15 +362,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		create_body()
 	else
 		body.wipe_state()
-	appearance = preferences.render_new_preview_appearance(body)
+
+	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
 
 	body = new
-
-	// Without this, it doesn't show up in the menu
-	body.appearance_flags &= ~KEEP_TOGETHER
 
 /datum/preferences/proc/create_character_profiles()
 	var/list/profiles = list()
@@ -436,8 +428,59 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			.++
 
 /datum/preferences/proc/validate_quirks()
+	if(CONFIG_GET(flag/disable_quirk_points))
+		return
 	if(GetQuirkBalance() < 0)
 		all_quirks = list()
+
+/**
+ * Safely read a given preference datum from a given client.
+ *
+ * Reads the given preference datum from the given client, and guards against null client and null prefs.
+ * The client object is fickle and can go null at times, so use this instead of read_preference() if you
+ * want to ensure no runtimes.
+ *
+ * returns client.prefs.read_preference(prefs_to_read) or FALSE if something went wrong.
+ *
+ * Arguments:
+ * * client/prefs_holder - the client to read the pref from
+ * * datum/preference/pref_to_read - the type of preference datum to read.
+ */
+/proc/safe_read_pref(client/prefs_holder, datum/preference/pref_to_read)
+	if(!prefs_holder)
+		return FALSE
+	if(prefs_holder && !prefs_holder?.prefs)
+		stack_trace("[prefs_holder?.mob] ([prefs_holder?.ckey]) had null prefs, which shouldn't be possible!")
+		return FALSE
+
+	return prefs_holder?.prefs.read_preference(pref_to_read)
+
+/**
+ * Get the given client's chat toggle prefs.
+ *
+ * Getter function for prefs.chat_toggles which guards against null client and null prefs.
+ * The client object is fickle and can go null at times, so use this instead of directly accessing the var
+ * if you want to ensure no runtimes.
+ *
+ * returns client.prefs.chat_toggles or FALSE if something went wrong.
+ *
+ * Arguments:
+ * * client/prefs_holder - the client to get the chat_toggles pref from.
+ */
+/proc/get_chat_toggles(client/target)
+	if(ismob(target))
+		var/mob/target_mob = target
+		target = target_mob.client
+
+	if(isnull(target))
+		return NONE
+
+	var/datum/preferences/preferences = target.prefs
+	if(isnull(preferences))
+		stack_trace("[key_name(target)] preference datum was null")
+		return NONE
+
+	return preferences.chat_toggles
 
 /// Sanitizes the preferences, applies the randomization prefs, and then applies the preference to the human mob.
 /datum/preferences/proc/safe_transfer_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, is_antag = FALSE)
@@ -460,12 +503,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.icon_render_keys = list()
 		character.update_body(is_creating = TRUE)
 
+	SEND_SIGNAL(character, COMSIG_HUMAN_PREFS_APPLIED)
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
 /datum/preferences/proc/should_be_random_hardcore(datum/job/job, datum/mind/mind)
 	if(!read_preference(/datum/preference/toggle/random_hardcore))
 		return FALSE
-	if(job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND) //No command staff
+	if(job.job_flags & JOB_HEAD_OF_STAFF) //No heads of staff
 		return FALSE
 	for(var/datum/antagonist/antag as anything in mind.antag_datums)
 		if(antag.get_team()) //No team antags

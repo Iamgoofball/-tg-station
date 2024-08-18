@@ -1,6 +1,6 @@
 // Potato
 /obj/item/seeds/potato
-	name = "pack of potato seeds"
+	name = "potato seed pack"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "seed-potato"
 	species = "potato"
@@ -11,7 +11,7 @@
 	production = 1
 	yield = 4
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "potato-grow"
 	icon_dead = "potato-dead"
 	genes = list(/datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)
@@ -25,7 +25,7 @@
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
 	icon_state = "potato"
 	foodtypes = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
+	juice_typepath = /datum/reagent/consumable/potato_juice
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
 
 /obj/item/food/grown/potato/make_bakeable()
@@ -50,7 +50,7 @@
 
 // Sweet Potato
 /obj/item/seeds/potato/sweet
-	name = "pack of sweet potato seeds"
+	name = "sweet potato seed pack"
 	desc = "These seeds grow into sweet potato plants."
 	icon_state = "seed-sweetpotato"
 	species = "sweetpotato"

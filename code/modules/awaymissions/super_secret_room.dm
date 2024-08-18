@@ -2,10 +2,9 @@
 	name = "strange tile"
 	desc = "A weird tile that beckons you towards it. Maybe it can help you get out of this mess..."
 	verb_say = "intones"
-	icon = 'icons/obj/structures.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "speaking_tile"
 	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
 	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
@@ -28,7 +27,7 @@
 		if(0)
 			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
 			for(var/obj/structure/signpost/salvation/sign in orange(7))
-				sign.invisibility = 0
+				sign.SetInvisibility(INVISIBILITY_NONE)
 				var/datum/effect_system/fluid_spread/smoke/smoke = new
 				smoke.set_up(1, holder = src, location = sign.loc)
 				smoke.start()
@@ -105,8 +104,6 @@
 /obj/structure/speaking_tile/attack_ai(mob/user)
 	return interact(user)
 
-/obj/structure/speaking_tile/attack_slime(mob/user, list/modifiers)
-	return interact(user)
 
 /obj/structure/speaking_tile/attack_animal(mob/user, list/modifiers)
 	return interact(user)
@@ -123,7 +120,7 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/glass = 500)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/rupee/Initialize(mapload)
 	. = ..()

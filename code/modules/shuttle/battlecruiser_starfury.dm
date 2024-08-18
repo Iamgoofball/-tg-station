@@ -135,7 +135,7 @@
  */
 /proc/summon_battlecruiser(datum/team/battlecruiser/team)
 
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for battlecruiser crew?", ROLE_TRAITOR)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for [span_notice("battlecruiser crew")]?", check_jobban = ROLE_TRAITOR, alert_pic = /obj/machinery/sleeper/syndie, role_name_text = "battlecruiser crew")
 	shuffle_inplace(candidates)
 
 	var/datum/map_template/ship = SSmapping.map_templates["battlecruiser_starfury.dmm"]
@@ -154,7 +154,7 @@
 
 	if(!team)
 		team = new()
-		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+		var/obj/machinery/nuclearbomb/selfdestruct/nuke = SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/selfdestruct)[1]
 		if(nuke.r_code == NUKE_CODE_UNSET)
 			nuke.r_code = random_nukecode()
 		team.nuke = nuke
@@ -165,21 +165,17 @@
 			spawner.antag_team = team
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
-				spawner.create(our_candidate)
+				spawner.create_from_ghost(our_candidate)
 				spawner.antag_team.players_spawned += (our_candidate.ckey)
 				candidates.Splice(1, 2)
 				notify_ghosts(
 					"The battlecruiser has an object of interest: [our_candidate]!",
 					source = our_candidate,
-					action = NOTIFY_ORBIT,
-					header = "Something's Interesting!"
-					)
+				)
 			else
 				notify_ghosts(
 					"The battlecruiser has an object of interest: [spawner]!",
 					source = spawner,
-					action = NOTIFY_ORBIT,
-					header="Something's Interesting!"
-					)
+				)
 
 	priority_announce("Unidentified armed ship detected near the station.")

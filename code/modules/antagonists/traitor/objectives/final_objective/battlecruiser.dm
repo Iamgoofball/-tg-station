@@ -19,7 +19,7 @@
 /datum/traitor_objective/ultimate/battlecruiser/on_objective_taken(mob/user)
 	. = ..()
 	team = new()
-	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/selfdestruct)
 	if(nuke.r_code == NUKE_CODE_UNSET)
 		nuke.r_code = random_nukecode()
 	team.nuke = nuke
@@ -44,6 +44,6 @@
 			emag_card.team = team
 			podspawn(list(
 				"target" = get_turf(user),
-				"style" = STYLE_SYNDICATE,
+				"style" = /datum/pod_style/syndicate,
 				"spawn" = emag_card,
 			))

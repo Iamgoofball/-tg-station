@@ -24,11 +24,19 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	var/list/gas_filters
 	///Type of filter that spawns on roundstart
 	var/starting_filter_type = /obj/item/gas_filter
+	///Cigarette in the mask
+	var/obj/item/cigarette/cig
 	///Does the mask have an FOV?
 	var/has_fov = TRUE
+	voice_filter = "lowpass=f=750,volume=2"
 
 /datum/armor/mask_gas
 	bio = 100
+
+/obj/item/clothing/mask/gas/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	if(!isinhands && cig)
+		. += cig.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi')
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
@@ -45,15 +53,64 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	QDEL_LAZYLIST(gas_filters)
 	return..()
 
+/obj/item/clothing/mask/gas/equipped(mob/equipee, slot)
+	cig?.equipped(equipee, slot)
+	return ..()
+
+/obj/item/clothing/mask/gas/adjust_visor(mob/living/user)
+	if(!isnull(cig))
+		balloon_alert(user, "cig in the way!")
+		return FALSE
+	return ..()
+
 /obj/item/clothing/mask/gas/examine(mob/user)
 	. = ..()
-	if(max_filters > 0)
-		. += "<span class='notice'>[src] has [max_filters] slot\s for filters.</span>"
+	if(cig)
+		. += span_notice("There is a [cig.name] jammed into the filter slot.")
+	if(max_filters > 0 && !cig)
+		. += span_notice("[src] has [max_filters] slot\s for filters.")
 	if(LAZYLEN(gas_filters) > 0)
-		. += "<span class='notice'>Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.</span>"
-		. += "<span class='notice'>The filters can be removed by right-clicking with an empty hand on [src].</span>"
+		. += span_notice("Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.")
+		. += span_notice("The filters can be removed by right-clicking with an empty hand on [src].")
+
+/obj/item/clothing/mask/gas/Exited(atom/movable/gone)
+	. = ..()
+	if(gone == cig)
+		cig = null
+		if(ismob(loc))
+			var/mob/wearer = loc
+			wearer.update_worn_mask()
 
 /obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
+	var/valid_wearer = ismob(loc)
+	var/mob/wearer = loc
+	if(istype(tool, /obj/item/cigarette))
+		if(flags_cover & MASKCOVERSMOUTH)
+			balloon_alert(user, "mask's mouth is covered!")
+			return ..()
+
+		if(max_filters <= 0 || cig)
+			balloon_alert(user, "can't hold that!")
+			return ..()
+
+		if(has_filter)
+			balloon_alert(user, "filters in the mask!")
+			return ..()
+
+		cig = tool
+		if(valid_wearer)
+			cig.equipped(loc, wearer.get_slot_by_item(cig))
+
+		cig.forceMove(src)
+		if(valid_wearer)
+			wearer.update_worn_mask()
+		return TRUE
+
+	if(cig)
+		var/cig_attackby = cig.attackby(tool, user)
+		if(valid_wearer)
+			wearer.update_worn_mask()
+		return cig_attackby
 	if(!istype(tool, /obj/item/gas_filter))
 		return ..()
 	if(LAZYLEN(gas_filters) >= max_filters)
@@ -65,6 +122,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	return TRUE
 
 /obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
+	if(cig)
+		user.put_in_hands(cig)
+		cig = null
+		if(ismob(loc))
+			var/mob/wearer = loc
+			wearer.update_worn_mask()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!has_filter || !max_filters)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	for(var/i in 1 to max_filters)
@@ -120,6 +184,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	fire = 20
 	acid = 10
 
+/obj/item/clothing/mask/gas/atmos/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
+
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
 	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
@@ -144,7 +211,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
 	flash_protect = FLASH_PROTECTION_WELDER
-	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2, /datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	tint = 2
 	armor_type = /datum/armor/gas_welding
 	actions_types = list(/datum/action/item_action/toggle)
@@ -152,7 +219,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
+	clothing_flags = parent_type::clothing_flags | INTERNALS_ADJUST_EXEMPT
 
 /datum/armor/gas_welding
 	melee = 10
@@ -161,9 +230,16 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	acid = 55
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+	adjust_visor(user)
 
-/obj/item/clothing/mask/gas/welding/up
+/obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
+	. = ..()
+	if(.)
+		playsound(src, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+
+/obj/item/clothing/mask/gas/welding/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "up" : ""]"
 
 /obj/item/clothing/mask/gas/welding/up/Initialize(mapload)
 	. = ..()
@@ -174,12 +250,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 //Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor
 	name = "plague doctor mask"
-	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
+	desc = "A modernised version of the classic design, this mask will not only protect you from exposure to the Pestilence but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
 	inhand_icon_state = "gas_mask"
 	has_fov = FALSE
-	flags_cover = MASKCOVERSEYES
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -202,12 +278,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	dye_color = DYE_CLOWN
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
+	clothing_traits = list(TRAIT_PERCEIVED_AS_CLOWN)
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
-	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
 	var/list/clownmask_designs = list()
+	voice_filter = null // performer masks expect to be talked through
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -249,7 +326,6 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
-	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
@@ -351,14 +427,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	desc = "A creepy wooden mask. Surprisingly expressive for a poorly carved bit of wood."
 	icon_state = "tiki_eyebrow"
 	inhand_icon_state = null
-	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.25)
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 1.25)
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
-	species_exception = list(/datum/species/golem/wood)
 	var/list/tikimask_designs = list()
 
 /obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)

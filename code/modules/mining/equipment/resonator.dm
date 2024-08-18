@@ -2,7 +2,7 @@
 
 /obj/item/resonator
 	name = "resonator"
-	icon = 'icons/obj/mining.dmi'
+	icon = 'icons/obj/mining_zones/equipment.dmi'
 	icon_state = "resonator"
 	inhand_icon_state = "resonator"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -53,14 +53,13 @@
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	duration = 60 SECONDS
 	/// the amount of damage living beings will take whilst inside the field during its burst
 	var/resonance_damage = 20
 	/// the modifier to resonance_damage; affected by the quick_burst_mod from the resonator
 	var/damage_multiplier = 1
 	/// the parent creator (user) of this field
-	var/creator
+	var/mob/creator
 	/// the parent resonator of this field
 	var/obj/item/resonator/parent_resonator
 	/// whether the field is rupturing currently or not (to prevent recursion)
@@ -127,6 +126,7 @@
 	for(var/mob/living/attacked_living in src_turf)
 		if(creator)
 			log_combat(creator, attacked_living, "used a resonator field on", "resonator")
+			SEND_SIGNAL(creator, COMSIG_LIVING_RESONATOR_BURST, creator, attacked_living)
 		to_chat(attacked_living, span_userdanger("[src] ruptured with you in it!"))
 		attacked_living.apply_damage(resonance_damage, BRUTE)
 		attacked_living.add_movespeed_modifier(/datum/movespeed_modifier/resonance)
@@ -146,7 +146,6 @@
 /obj/effect/temp_visual/resonance_crush
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/resonance_crush/Initialize(mapload)

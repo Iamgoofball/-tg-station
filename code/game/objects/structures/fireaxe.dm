@@ -1,7 +1,7 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/cabinet.dmi'
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
@@ -21,7 +21,7 @@
 	/// Whether we should populate our own contents on Initialize()
 	var/populate_contents = TRUE
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 
 /datum/armor/structure_fireaxecabinet
 	melee = 50
@@ -36,6 +36,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(populate_contents)
 		held_item = new item_path(src)
 	update_appearance()
+	find_and_hang_on_wall()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(held_item)
@@ -107,19 +108,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken)
 		update_appearance()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		new /obj/item/shard(loc)
 		new /obj/item/shard(loc)
 
-/obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(held_item && loc)
-			held_item.forceMove(loc)
-		new /obj/item/wallframe/fireaxecabinet(loc)
-	qdel(src)
+/obj/structure/fireaxecabinet/atom_deconstruct(disassembled = TRUE)
+	if(held_item && loc)
+		held_item.forceMove(loc)
+	new /obj/item/wallframe/fireaxecabinet(loc)
 
 /obj/structure/fireaxecabinet/blob_act(obj/structure/blob/B)
 	if(held_item)
@@ -156,10 +155,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	. = ..()
 	if(held_item)
 		. += item_overlay
+	var/hp_percent = (atom_integrity/max_integrity) * 100
+
 	if(open)
-		. += "glass_raised"
+		if(broken)
+			. += "glass4_raised"
+			return
+
+		switch(hp_percent)
+			if(-INFINITY to 40)
+				. += "glass3_raised"
+			if(40 to 60)
+				. += "glass2_raised"
+			if(60 to 80)
+				. += "glass1_raised"
+			if(80 to INFINITY)
+				. += "glass_raised"
 		return
-	var/hp_percent = atom_integrity/max_integrity * 100
+
 	if(broken)
 		. += "glass4"
 	else
@@ -196,13 +209,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 /obj/structure/fireaxecabinet/empty
 	populate_contents = FALSE
 
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty)
+
 /obj/item/wallframe/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "Home to a window's greatest nightmare. Apply to wall to use."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/structures/cabinet.dmi'
 	icon_state = "fireaxe"
 	result_path = /obj/structure/fireaxecabinet/empty
-	pixel_shift = 32
 
 /obj/structure/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"
@@ -211,17 +225,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	item_path = /obj/item/crowbar/mechremoval
 	item_overlay = "crowbar"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval)
 
-/obj/structure/fireaxecabinet/mechremoval/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(held_item && loc)
-			held_item.forceMove(loc)
-		new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
-	qdel(src)
+/obj/structure/fireaxecabinet/mechremoval/atom_deconstruct(disassembled = TRUE)
+	if(held_item && loc)
+		held_item.forceMove(loc)
+	new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
 
 /obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE
+
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty)
 
 /obj/item/wallframe/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"

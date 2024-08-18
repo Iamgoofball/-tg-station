@@ -16,11 +16,15 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
+	research_tree_icon_state = "eldritch_armor"
+	research_tree_icon_frame = 12
+	depth = 4
 
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
 	desc = "Allows you to transmute a portable water tank and a table to create a Mawed Crucible. \
-		The Mawed Crubile can brew powerful potions for combat and utility, but must be fed bodyparts and organs between uses."
+		The Mawed Crucible can brew powerful potions for combat and utility, but must be fed bodyparts and organs between uses."
 	gain_text = "This is pure agony. I wasn't able to summon the figure of the Aristocrat, \
 		but with the Priest's attention I stumbled upon a different recipe..."
 	next_knowledge = list(
@@ -34,6 +38,9 @@
 	result_atoms = list(/obj/structure/destructible/eldritch_crucible)
 	cost = 1
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
+	research_tree_icon_state = "crucible"
+	depth = 8
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
@@ -43,11 +50,11 @@
 		These shots function as normal, albeit weak high caliber mutitions when fired from \
 		close range or at inanimate objects. You can aim the rifle at distant foes, \
 		causing the shot to deal massively increased damage and hone in on them."
-	gain_text = "I met an old man in an anique shop who wielded a very unusual weapon. \
+	gain_text = "I met an old man in an antique shop who wielded a very unusual weapon. \
 		I could not purchase it at the time, but they showed me how they made it ages ago."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/furious_steel,
-		/datum/heretic_knowledge/spell/entropic_plume,
+		/datum/heretic_knowledge/duel_stance,
+		/datum/heretic_knowledge/spell/area_conversion,
 		/datum/heretic_knowledge/rifle_ammo,
 	)
 	required_atoms = list(
@@ -59,6 +66,9 @@
 	result_atoms = list(/obj/item/gun/ballistic/rifle/lionhunter)
 	cost = 1
 	route = PATH_SIDE
+	depth = 8
+	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
+	research_tree_icon_state = "goldrevolver"
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"
@@ -71,9 +81,12 @@
 		/obj/item/stack/sheet/animalhide = 1,
 		/obj/item/ammo_casing = 3,
 	)
-	result_atoms = list(/obj/item/ammo_box/a762/lionhunter)
-	cost = 1
+	result_atoms = list(/obj/item/ammo_box/strilka310/lionhunter)
+	cost = 0
 	route = PATH_SIDE
+	research_tree_icon_path = 'icons/obj/weapons/guns/ammo.dmi'
+	research_tree_icon_state = "310_strip"
+	depth = 8
 	/// A list of calibers that the ritual will deny. Only ballistic calibers are allowed.
 	var/static/list/caliber_blacklist = list(
 		CALIBER_LASER,
@@ -95,3 +108,16 @@
 	// We removed any invalid casings from the atoms list,
 	// return to allow the ritual to fill out selected atoms with the new list
 	return TRUE
+
+/datum/heretic_knowledge/spell/rust_charge
+	name = "Rust Charge"
+	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
+	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/furious_steel,
+		/datum/heretic_knowledge/spell/entropic_plume,
+	)
+	spell_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
+	cost = 1
+	route = PATH_SIDE
+	depth = 10

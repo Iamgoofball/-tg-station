@@ -3,15 +3,11 @@
 
 /obj/machinery/ticket_machine
 	name = "ticket machine"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "ticketmachine"
 	base_icon_state = "ticketmachine"
 	desc = "A marvel of bureaucratic engineering encased in an efficient plastic shell. It can be refilled with a hand labeler refill roll and linked to buttons with a multitool."
 	density = FALSE
-	maptext_height = 26
-	maptext_width = 32
-	maptext_x = 7
-	maptext_y = 10
 	layer = HIGH_OBJ_LAYER
 	///Increment the ticket number whenever the HOP presses his button
 	var/ticket_number = 0
@@ -31,6 +27,7 @@
 /obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	find_and_hang_on_wall()
 
 /obj/machinery/ticket_machine/Destroy()
 	for(var/obj/item/ticket_machine_ticket/ticket in tickets)
@@ -38,30 +35,25 @@
 	tickets.Cut()
 	return ..()
 
-/obj/machinery/ticket_machine/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		new /obj/item/wallframe/ticket_machine(loc)
-	qdel(src)
+/obj/machinery/ticket_machine/on_deconstruction(disassembled = TRUE)
+	new /obj/item/wallframe/ticket_machine(loc)
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
+WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine)
 
 /obj/machinery/ticket_machine/examine(mob/user)
 	. = ..()
 	. += span_notice("The ticket machine shows that ticket #[current_number] is currently being served.")
 	. += span_notice("You can take a ticket out with <b>Left-Click</b> to be number [ticket_number + 1] in queue.")
 
-/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
-	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
-		return
-	var/obj/item/multitool/M = I
-	M.buffer = src
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
-	return TRUE
+/obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/multitool/M)
+	M.set_buffer(src)
+	balloon_alert(user, "saved to multitool buffer")
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/ticket_machine/emag_act(mob/user) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
+/obj/machinery/ticket_machine/emag_act(mob/user, obj/item/card/emag/emag_card) //Emag the ticket machine to dispense burning tickets, as well as randomize its number to destroy the HoP's mind.
 	if(obj_flags & EMAGGED)
-		return
-	to_chat(user, span_warning("You overload [src]'s bureaucratic logic circuitry to its MAXIMUM setting."))
+		return FALSE
+	balloon_alert(user, "bureaucratic nightmare engaged")
 	ticket_number = rand(0,max_number)
 	current_number = ticket_number
 	obj_flags |= EMAGGED
@@ -71,14 +63,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			qdel(ticket)
 		tickets.Cut()
 	update_appearance()
+	return TRUE
 
 /obj/item/wallframe/ticket_machine
 	name = "ticket machine frame"
 	desc = "An unmounted ticket machine. Attach it to a wall to use."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "ticketmachine_off"
 	result_path = /obj/machinery/ticket_machine
-	pixel_shift = 32
 
 ///Increments the counter by one, if there is a ticket after the current one we are serving.
 ///If we have a current ticket, remove it from the top of our tickets list and replace it with the next one if applicable
@@ -121,6 +113,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		controller.id = null
 		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
 
+BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ticket_machine)
+
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HoP's ticket machine."
@@ -136,7 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /// Locate the ticket machine to which we're linked by our ID
 /obj/item/assembly/control/ticket_machine/proc/find_machine()
-	for(var/obj/machinery/ticket_machine/ticketsplease in GLOB.machines)
+	for(var/obj/machinery/ticket_machine/ticketsplease as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ticket_machine))
 		if(ticketsplease.id == id)
 			ticket_machine_ref = WEAKREF(ticketsplease)
 	if(ticket_machine_ref)
@@ -156,29 +150,33 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	machine.increment()
 	if(isnull(machine.current_ticket))
 		to_chat(activator, span_notice("The button light indicates that there are no more tickets to be processed."))
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
-
-/obj/machinery/ticket_machine/update_icon()
-	. = ..()
-	handle_maptext()
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 1 SECONDS)
 
 /obj/machinery/ticket_machine/update_icon_state()
-	switch(ticket_number) //Gives you an idea of how many tickets are left
-		if(0 to 99)
-			icon_state = "[base_icon_state]"
-		if(100)
-			icon_state = "[base_icon_state]_empty"
+	if(machine_stat & (NOPOWER|BROKEN))
+		icon_state = "ticketmachine_off"
+	else if(ticket_number == max_number)
+		icon_state = "ticketmachine_nopaper"
+	else
+		icon_state = "ticketmachine"
 	return ..()
 
-/obj/machinery/ticket_machine/proc/handle_maptext()
-	switch(current_number) //This is here to handle maptext offsets so that the numbers align.
-		if(0 to 9)
-			maptext_x = 9
-		if(10 to 99)
-			maptext_x = 6
-		if(100)
-			maptext_x = 4
-	maptext = MAPTEXT(current_number) //Finally, apply the maptext
+/obj/machinery/ticket_machine/update_overlays()
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
+
+	var/number_string = "[current_number]"
+	var/text_len = length(number_string)
+	var/start_x = 12 - (2*text_len)
+
+	for(var/i=1; i <= text_len, i++)
+		var/mutable_appearance/number_overlay = mutable_appearance('icons/testing/Font_Minimal.dmi', number_string[i])
+		number_overlay.blend_mode = BLEND_SUBTRACT
+		number_overlay.pixel_x = start_x
+		number_overlay.pixel_y = -14
+		. += number_overlay
+		start_x = start_x + 4
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
@@ -187,7 +185,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			to_chat(user, span_notice("[src] refuses [I]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
 			return
 		to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
-		if(do_after(user, 30, target = src))
+		if(do_after(user, 3 SECONDS, target = src))
 			to_chat(user, span_notice("You insert [I] into [src] as it whirs nondescriptly."))
 			qdel(I)
 			ticket_number = 0
@@ -237,7 +235,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/ticket_machine_ticket
 	name = "\improper ticket"
 	desc = "A ticket which shows your place in the Head of Personnel's line. Made from Nanotrasen patented NanoPaper®. Though solid, its form seems to shimmer slightly. Feels (and burns) just like the real thing."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "ticket"
 	maptext_x = 7
 	maptext_y = 10

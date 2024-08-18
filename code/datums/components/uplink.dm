@@ -3,7 +3,7 @@
 /**
  * Uplinks
  *
- * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in it's contents). Then add 'uses.'
+ * All /obj/item(s) have a hidden_uplink var. By default it's null. Give the item one with 'new(src') (it must be in its contents). Then add 'uses.'
  * Use whatever conditionals you want to check that the user has an uplink, and then call interact() on their uplink.
  * You might also want the uplink menu to open if active. Check if the uplink is 'active' and then interact() with it.
 **/
@@ -48,23 +48,26 @@
 	has_progression = FALSE,
 	datum/uplink_handler/uplink_handler_override,
 )
+
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(OnAttackBy))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(OnAttackBy))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
 	if(istype(parent, /obj/item/implant))
 		RegisterSignal(parent, COMSIG_IMPLANT_ACTIVATED, PROC_REF(implant_activation))
 		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, PROC_REF(implanting))
 		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, PROC_REF(old_implant))
 		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, PROC_REF(new_implant))
-	else if(istype(parent, /obj/item/modular_computer/pda))
+	else if(istype(parent, /obj/item/modular_computer))
 		RegisterSignal(parent, COMSIG_TABLET_CHANGE_ID, PROC_REF(new_ringtone))
 		RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(check_detonate))
 	else if(istype(parent, /obj/item/radio))
 		RegisterSignal(parent, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(new_message))
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, PROC_REF(pen_rotation))
+	else if(istype(parent, /obj/item/uplink/replacement))
+		RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(on_heard))
 
 	if(owner)
 		src.owner = owner
@@ -73,7 +76,7 @@
 			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
 		else
 			purchase_log = new(owner, src)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	src.lockable = lockable
 	src.active = enabled
 	if(!uplink_handler_override)
@@ -86,6 +89,7 @@
 	else
 		uplink_handler = uplink_handler_override
 	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, PROC_REF(handle_uplink_handler_update))
+	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_REPLACEMENT_ORDERED, PROC_REF(handle_uplink_replaced))
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
@@ -96,13 +100,18 @@
 	SIGNAL_HANDLER
 	SStgui.update_uis(src)
 
-/// Adds telecrystals to the uplink. It is bad practice to use this outside of the component itself.
-/datum/component/uplink/proc/add_telecrystals(telecrystals_added)
-	set_telecrystals(uplink_handler.telecrystals + telecrystals_added)
-
-/// Sets the telecrystals of the uplink. It is bad practice to use this outside of the component itself.
-/datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
-	uplink_handler.telecrystals = new_telecrystal_amount
+/// When a new uplink is made via the syndicate beacon it locks all lockable uplinks and destroys replacement uplinks
+/datum/component/uplink/proc/handle_uplink_replaced()
+	SIGNAL_HANDLER
+	if(lockable)
+		lock_uplink()
+	if(!istype(parent, /obj/item/uplink/replacement))
+		return
+	var/obj/item/uplink_item = parent
+	do_sparks(number = 3, cardinal_only = FALSE, source = uplink_item)
+	uplink_item.visible_message(span_warning("The [uplink_item] suddenly combusts!"), vision_distance = COMBAT_MESSAGE_RANGE)
+	new /obj/effect/decal/cleanable/ash(get_turf(uplink_item))
+	qdel(uplink_item)
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
@@ -117,7 +126,7 @@
 	if(!silent)
 		to_chat(user, span_notice("You slot [telecrystals] into [parent] and charge its internal uplink."))
 	var/amt = telecrystals.amount
-	uplink_handler.telecrystals += amt
+	uplink_handler.add_telecrystals(amt)
 	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
@@ -128,6 +137,11 @@
 
 	if(istype(item, /obj/item/stack/telecrystal))
 		load_tc(user, item)
+
+	if(!istype(item))
+		return
+
+	SEND_SIGNAL(item, COMSIG_ITEM_ATTEMPT_TC_REIMBURSE, user, src)
 
 /datum/component/uplink/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -211,12 +225,14 @@
 	var/list/extra_purchasable_stock = list()
 	var/list/extra_purchasable = list()
 	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
-		if(item in stock_list)
-			extra_purchasable_stock[REF(item)] = stock_list[item]
-			stock_list -= item
+		if(item.stock_key in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item.stock_key]
+		var/atom/actual_item = item.item
 		extra_purchasable += list(list(
 			"id" = item.type,
 			"name" = item.name,
+			"icon" = actual_item.icon,
+			"icon_state" = actual_item.icon_state,
 			"cost" = item.cost,
 			"desc" = item.desc,
 			"category" = item.category ? initial(item.category.name) : null,
@@ -235,6 +251,9 @@
 	data["extra_purchasable"] = extra_purchasable
 	data["extra_purchasable_stock"] = extra_purchasable_stock
 	data["current_stock"] = remaining_stock
+	data["shop_locked"] = uplink_handler.shop_locked
+	data["purchased_items"] = length(uplink_handler.purchase_log?.purchase_log)
+	data["can_renegotiate"] = user.mind == uplink_handler.owner && uplink_handler.can_replace_objectives?.Invoke() == TRUE
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -250,7 +269,7 @@
 
 /datum/component/uplink/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/json/uplink)
+		get_asset_datum(/datum/asset/json/uplink),
 	)
 
 /datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -272,12 +291,20 @@
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item, parent)
+		if("buy_raw_tc")
+			if (uplink_handler.telecrystals <= 0)
+				return
+			var/desired_amount = tgui_input_number(ui.user, "How many raw telecrystals to buy?", "Buy Raw TC", default = uplink_handler.telecrystals, max_value = uplink_handler.telecrystals)
+			if(!desired_amount || desired_amount < 1)
+				return
+			uplink_handler.purchase_raw_tc(ui.user, desired_amount, parent)
 		if("lock")
 			if(!lockable)
 				return TRUE
-			active = FALSE
-			locked = TRUE
-			SStgui.close_uis(src)
+			lock_uplink()
+		if("renegotiate_objectives")
+			uplink_handler.replace_objectives?.Invoke()
+			SStgui.update_uis(src)
 
 	if(!uplink_handler.has_objectives)
 		return TRUE
@@ -319,6 +346,12 @@
 			uplink_handler.abort_objective(objective)
 	return TRUE
 
+/// Proc that locks uplinks
+/datum/component/uplink/proc/lock_uplink()
+	active = FALSE
+	locked = TRUE
+	SStgui.close_uis(src)
+
 // Implant signal responses
 /datum/component/uplink/proc/implant_activation()
 	SIGNAL_HANDLER
@@ -355,14 +388,15 @@
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	SIGNAL_HANDLER
 
-	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
-		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
+	if(trim(LOWER_TEXT(new_ring_text)) != trim(LOWER_TEXT(unlock_code)))
+		if(trim(LOWER_TEXT(new_ring_text)) == trim(LOWER_TEXT(failsafe_code)))
 			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
-	interact(null, user)
-	to_chat(user, span_hear("The computer softly beeps."))
+	if(ismob(user))
+		interact(null, user)
+		to_chat(user, span_hear("The computer softly beeps."))
 	return COMPONENT_STOP_RINGTONE_CHANGE
 
 /datum/component/uplink/proc/check_detonate()
@@ -391,8 +425,8 @@
 	if(channel != RADIO_CHANNEL_UPLINK)
 		return
 
-	if(!findtext(lowertext(message), lowertext(unlock_code)))
-		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
+	if(!findtext(LOWER_TEXT(message), LOWER_TEXT(unlock_code)))
+		if(failsafe_code && findtext(LOWER_TEXT(message), LOWER_TEXT(failsafe_code)))
 			failsafe(user)  // no point returning cannot radio, youre probably ded
 		return
 	locked = FALSE
@@ -423,7 +457,7 @@
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
 	var/obj/item/P = parent
-	if(istype(parent,/obj/item/modular_computer/pda))
+	if(istype(parent,/obj/item/modular_computer))
 		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
 	else if(istype(parent,/obj/item/radio))
 		unlock_note = "<B>Radio Passcode:</B> [unlock_code] ([P.name], [RADIO_TOKEN_UPLINK] channel)."
@@ -433,7 +467,7 @@
 /datum/component/uplink/proc/generate_code()
 	var/returnable_code = ""
 
-	if(istype(parent, /obj/item/modular_computer/pda))
+	if(istype(parent, /obj/item/modular_computer))
 		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 
 	else if(istype(parent, /obj/item/radio))
@@ -457,14 +491,35 @@
 
 	return returnable_code
 
-/datum/component/uplink/proc/failsafe(mob/living/carbon/user)
+/// Proc that unlocks a locked replacement uplink when it hears the unlock code from their datum
+/datum/component/uplink/proc/on_heard(datum/source, list/hearing_args)
+	SIGNAL_HANDLER
+	if(!locked)
+		return
+	if(!findtext(hearing_args[HEARING_RAW_MESSAGE], unlock_code))
+		return
+	var/atom/replacement_uplink = parent
+	locked = FALSE
+	replacement_uplink.balloon_alert_to_viewers("beep", vision_distance = COMBAT_MESSAGE_RANGE)
+
+/datum/component/uplink/proc/failsafe(atom/source)
 	if(!parent)
 		return
 	var/turf/T = get_turf(parent)
 	if(!T)
 		return
-	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
-	user.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	var/user_deets = "an uplink failsafe explosion has been triggered"
+	if(ismob(source))
+		user_deets = "[ADMIN_LOOKUPFLW(source)] has triggered an uplink failsafe explosion"
+		source.log_message("triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	else if(istype(source, /obj/item/circuit_component))
+		var/obj/item/circuit_component/circuit = source
+		user_deets = "[circuit.parent.get_creator_admin()] has triggered an uplink failsafe explosion"
+	else
+		source?.log_message("somehow triggered an uplink failsafe explosion. Uplink owner: [key_name(owner)].", LOG_ATTACK)
+	message_admins("[user_deets] at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
 
 	explosion(parent, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 	qdel(parent) //Alternatively could brick the uplink.
+
+#undef PEN_ROTATIONS

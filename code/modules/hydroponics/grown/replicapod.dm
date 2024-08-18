@@ -1,8 +1,8 @@
-// A very special plant, deserving it's own file.
+// A very special plant, deserving its own file.
 
 // Yes, i'm talking about cabbage, baby! No, just kidding, but cabbages are the precursor to replica pods, so they are here as well.
 /obj/item/seeds/cabbage
-	name = "pack of cabbage seeds"
+	name = "cabbage seed pack"
 	desc = "These seeds grow into cabbages."
 	icon_state = "seed-cabbage"
 	species = "cabbage"
@@ -15,7 +15,7 @@
 	yield = 4
 	instability = 10
 	growthstages = 1
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
@@ -31,13 +31,13 @@
 
 ///The actual replica pods themselves!
 /obj/item/seeds/replicapod
-	name = "pack of replica pod seeds"
+	name = "replica pod seed pack"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
 	icon_state = "seed-replicapod"
 	plant_icon_offset = 2
 	species = "replicapod"
 	plantname = "Replica Pod"
-	product = /mob/living/carbon/human //verrry special -- Urist
+	product = null // the human mob is spawned in harvest()
 	lifespan = 50
 	endurance = 8
 	maturation = 10
@@ -67,12 +67,12 @@
 	. = ..()
 	RegisterSignals(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), PROC_REF(on_reagent_add))
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del))
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
+	RegisterSignal(reagents, COMSIG_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles the seeds' reagents datum getting deleted.
 /obj/item/seeds/replicapod/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_QDELETING))
 	return NONE
 
 /// Handles reagents getting added to this seed.
@@ -136,12 +136,12 @@
 						make_podman = TRUE
 						break
 				else
-					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
+					if(M.ckey == ckey && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED) && !HAS_TRAIT(M, TRAIT_MIND_TEMPORARILY_GONE))
 						make_podman = TRUE
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in GLOB.player_list)
-				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !M.suiciding)
+				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == DEAD && !HAS_TRAIT(M, TRAIT_SUICIDED))
 					if(isobserver(M))
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
@@ -155,7 +155,7 @@
 		// Prevent accidental harvesting. Make sure the user REALLY wants to do this if there's a chance of this coming from a living creature.
 		if(mind || ckey)
 			var/choice = tgui_alert(usr,"The pod is currently devoid of soul. There is a possibility that a soul could claim this creature, or you could harvest it for seeds.", "Harvest Seeds?", list("Harvest Seeds", "Cancel"))
-			if(choice == "Cancel")
+			if(choice != "Harvest Seeds")
 				return result
 
 		// If this plant has already been harvested, return early.
@@ -197,7 +197,7 @@
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
 	if(!features["pod_hair"])
-		features["pod_hair"] = pick(GLOB.pod_hair_list)
+		features["pod_hair"] = pick(SSaccessories.pod_hair_list)
 
 	for(var/V in quirks)
 		new V(podman)

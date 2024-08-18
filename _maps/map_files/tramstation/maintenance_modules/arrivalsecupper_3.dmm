@@ -9,13 +9,15 @@
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/flashlight,
 /obj/effect/spawner/random/engineering/tool,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "d" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/girder,
-/obj/structure/window/spawner/east,
+/obj/structure/window/spawner/directional/east,
 /obj/structure/grille,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
@@ -31,6 +33,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/department/eva)
+"h" = (
+/turf/closed/wall/r_wall,
 /area/station/maintenance/department/eva)
 "k" = (
 /obj/effect/turf_decal/sand,
@@ -108,6 +113,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/eva)
+"X" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Security Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
+/turf/open/floor/plating,
+/area/station/maintenance/department/eva)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -116,12 +128,16 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/obj/item/restraints/handcuffs/cable/zipties,
+/obj/item/restraints/handcuffs/cable/zipties{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "Z" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 
@@ -276,7 +292,7 @@ N
 N
 "}
 (11,1,1) = {"
-t
+h
 t
 L
 t
@@ -291,7 +307,7 @@ a
 a
 "}
 (12,1,1) = {"
-t
+h
 r
 k
 t
@@ -306,7 +322,7 @@ a
 a
 "}
 (13,1,1) = {"
-t
+h
 d
 d
 t
@@ -321,7 +337,7 @@ a
 a
 "}
 (14,1,1) = {"
-t
+X
 e
 e
 K
@@ -336,7 +352,7 @@ a
 a
 "}
 (15,1,1) = {"
-t
+h
 Y
 e
 t

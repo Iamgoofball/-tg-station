@@ -2,7 +2,7 @@
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
-	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*5, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -63,10 +63,13 @@
 		timing = TRUE
 	update_appearance()
 
-/obj/item/assembly/timer/process(delta_time)
+/obj/item/assembly/timer/process(seconds_per_tick)
 	if(!timing)
 		return
-	time -= delta_time
+	time -= seconds_per_tick
+	if (time ==	9 || time == 19 || time == 29)
+		update_appearance()
+
 	if(time <= 0)
 		timing = FALSE
 		timer_end()
@@ -79,11 +82,16 @@
 /obj/item/assembly/timer/update_overlays()
 	. = ..()
 	attached_overlays = list()
-	if(timing)
-		. += "timer_timing"
-		attached_overlays += "timer_timing"
+	if(!timing)
+		return
 
-/obj/item/assembly/timer/ui_status(mob/user)
+	attached_overlays += "timer_timing"
+	for (var/i in 1 to clamp(ceil(time / 10), 1, 3))
+		var/mutable_appearance/timer_light = mutable_appearance(icon, "timer_light", layer, src)
+		timer_light.pixel_x = (i - 1) * 2
+		. += timer_light
+
+/obj/item/assembly/timer/ui_status(mob/user, datum/ui_state/state)
 	if(is_secured(user))
 		return ..()
 	return UI_CLOSE

@@ -23,7 +23,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/greater)
 "cz" = (
@@ -77,7 +77,6 @@
 	dir = 4
 	},
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/sign/warning/electric_shock/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
@@ -97,6 +96,7 @@
 "hz" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "im" = (
@@ -255,14 +255,14 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bucket{
-	pixel_x = -9;
-	pixel_y = 12
+	pixel_x = -6;
+	pixel_y = 19
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "tZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/spawner/north,
+/obj/structure/window/spawner/directional/north,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -419,7 +419,9 @@
 "Hl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/effect/spawner/random/entertainment/cigarette_pack{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "HW" = (
@@ -454,7 +456,7 @@
 /area/station/maintenance/port/central)
 "LA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/central)
 "LV" = (
@@ -485,8 +487,12 @@
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/cable_coil,
-/obj/item/multitool,
+/obj/item/stack/cable_coil{
+	pixel_y = 11
+	},
+/obj/item/multitool{
+	pixel_y = 11
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/central/greater)
 "NE" = (

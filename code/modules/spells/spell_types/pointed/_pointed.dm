@@ -16,7 +16,7 @@
 	var/deactive_msg
 	/// The casting range of our spell
 	var/cast_range = 7
-	/// Variable dictating if the spell will use turf based aim assist
+	/// If aim asisst is used. Disable to disable
 	var/aim_assist = TRUE
 
 /datum/action/cooldown/spell/pointed/New(Target)
@@ -64,17 +64,18 @@
 	build_all_button_icons()
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/click_target)
-
+/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
 	var/atom/aim_assist_target
-	if(aim_assist && isturf(click_target))
-		// Find any human in the list. We aren't picky, it's aim assist after all
-		aim_assist_target = locate(/mob/living/carbon/human) in click_target
-		if(!aim_assist_target)
-			// If we didn't find a human, we settle for any living at all
-			aim_assist_target = locate(/mob/living) in click_target
+	if(aim_assist)
+		aim_assist_target = aim_assist(caller, target)
+	return ..(caller, params, aim_assist_target || target)
 
-	return ..(caller, params, aim_assist_target || click_target)
+/datum/action/cooldown/spell/pointed/proc/aim_assist(mob/living/caller, atom/target)
+	if(!isturf(target))
+		return
+
+	// Find any human, or if that fails, any living target
+	return locate(/mob/living/carbon/human) in target || locate(/mob/living) in target
 
 /datum/action/cooldown/spell/pointed/is_valid_target(atom/cast_on)
 	if(cast_on == owner)
@@ -133,10 +134,11 @@
 // cast_on is a turf, or atom target, that we clicked on to fire at.
 /datum/action/cooldown/spell/pointed/projectile/cast(atom/cast_on)
 	. = ..()
-	if(!isturf(owner.loc))
+	var/atom/caster = get_caster_from_target(owner)
+	if(!isturf(caster.loc))
 		return FALSE
 
-	var/turf/caster_turf = get_turf(owner)
+	var/turf/caster_turf = caster.loc
 	// Get the tile infront of the caster, based on their direction
 	var/turf/caster_front_turf = get_step(owner, owner.dir)
 

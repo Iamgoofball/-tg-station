@@ -1,5 +1,5 @@
 /obj/item/seeds/garlic
-	name = "pack of garlic seeds"
+	name = "garlic seed pack"
 	desc = "A packet of extremely pungent seeds."
 	icon_state = "seed-garlic"
 	species = "garlic"
@@ -8,7 +8,7 @@
 	yield = 6
 	potency = 25
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	reagents_add = list(/datum/reagent/consumable/garlic = 0.15, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/garlic

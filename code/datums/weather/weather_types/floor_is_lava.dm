@@ -20,6 +20,7 @@
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	overlay_plane = FLOOR_PLANE
+	has_frills = FALSE
 	immunity_type = TRAIT_LAVA_IMMUNE
 	/// We don't draw on walls, so this ends up lookin weird
 	/// Can't really use like, the emissive system here because I am not about to make
@@ -39,7 +40,7 @@
 	for(var/obj/structure/structure_to_check in mob_turf)
 		if(structure_to_check.density)
 			return FALSE
-	if(mob_to_check.movement_type & (FLYING|FLOATING))
+	if(mob_to_check.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 
 /datum/weather/floor_is_lava/weather_act(mob/living/victim)

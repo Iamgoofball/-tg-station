@@ -1,7 +1,7 @@
 /obj/machinery/quantumpad
 	name = "quantum pad"
 	desc = "A bluespace quantum-linked telepad used for teleporting objects to other quantum pads."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/machines/telepad.dmi'
 	icon_state = "qpad-idle"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
@@ -46,53 +46,47 @@
 		E += capacitor.tier
 	power_efficiency = E
 	E = 0
-	for(var/datum/stock_part/manipulator/manipulator in component_parts)
-		E += manipulator.tier
+	for(var/datum/stock_part/servo/servo in component_parts)
+		E += servo.tier
 	teleport_speed = initial(teleport_speed)
 	teleport_speed -= (E*10)
 	teleport_cooldown = initial(teleport_cooldown)
 	teleport_cooldown -= (E * 100)
 
-/obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
+/obj/machinery/quantumpad/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	if(panel_open)
+		multi_tool.set_buffer(src)
+		balloon_alert(user, "saved to multitool buffer")
+		to_chat(user, span_notice("You save the data in [multi_tool] buffer. It can now be saved to pads with closed panels."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(multi_tool.buffer, /obj/machinery/quantumpad))
+		if(multi_tool.buffer == src)
+			balloon_alert(user, "cannot link to self!")
+			return ITEM_INTERACT_BLOCKING
+		linked_pad = multi_tool.buffer
+		balloon_alert(user, "data uploaded from buffer")
+		return ITEM_INTERACT_SUCCESS
+
+	balloon_alert(user, "no quantum pad data found!")
+	return NONE
+
+/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", weapon))
 		return
 
-	if(panel_open)
-		if(I.tool_behaviour == TOOL_MULTITOOL)
-			if(!multitool_check_buffer(user, I))
-				return
-			var/obj/item/multitool/M = I
-			M.buffer = src
-			to_chat(user, span_notice("You save the data in [I]'s buffer. It can now be saved to pads with closed panels."))
-			return TRUE
-	else if(I.tool_behaviour == TOOL_MULTITOOL)
-		if(!multitool_check_buffer(user, I))
-			return
-		var/obj/item/multitool/M = I
-		if(istype(M.buffer, /obj/machinery/quantumpad))
-			if(M.buffer == src)
-				to_chat(user, span_warning("You cannot link a pad to itself!"))
-				return TRUE
-			else
-				linked_pad = M.buffer
-				to_chat(user, span_notice("You link [src] to the one in [I]'s buffer."))
-				return TRUE
-		else
-			to_chat(user, span_warning("There is no quantum pad data saved in [I]'s buffer!"))
-			return TRUE
-
-	else if(istype(I, /obj/item/quantum_keycard))
-		var/obj/item/quantum_keycard/K = I
+	if(istype(weapon, /obj/item/quantum_keycard))
+		var/obj/item/quantum_keycard/K = weapon
 		if(K.qpad)
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, activating it."))
 			interact(user, K.qpad)
 		else
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, initiating the link procedure."))
-			if(do_after(user, 40, target = src))
+			if(do_after(user, 4 SECONDS, target = src))
 				to_chat(user, span_notice("You complete the link between [K] and [src]."))
 				K.set_pad(src)
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(weapon))
 		return
 
 	return ..()
@@ -157,7 +151,7 @@
 	last_teleport = world.time
 
 	// use a lot of power
-	use_power(active_power_usage / power_efficiency)
+	use_energy(active_power_usage / power_efficiency)
 	sparks()
 	target_pad.sparks()
 

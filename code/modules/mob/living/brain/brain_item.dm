@@ -6,10 +6,9 @@
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
-	organ_flags = ORGAN_VITAL
+	organ_flags = ORGAN_ORGANIC | ORGAN_VITAL
 	attack_verb_continuous = list("attacks", "slaps", "whacks")
 	attack_verb_simple = list("attack", "slap", "whack")
 
@@ -39,61 +38,91 @@
 	/// Maximum skillchip slots available. Do not reference this var directly and instead call get_max_skillchip_slots()
 	var/max_skillchip_slots = 5
 
-/obj/item/organ/internal/brain/Insert(mob/living/carbon/C, special = FALSE, drop_if_replaced = TRUE, no_id_transfer = FALSE)
+	/// Size modifier for the sprite
+	var/brain_size = 1
+	/// Can this brain become smooth after it gets washed
+	var/can_smoothen_out = TRUE
+	/// We got smooth from being washed
+	var/smooth_brain = FALSE
+
+/obj/item/organ/internal/brain/Initialize(mapload)
 	. = ..()
+	// Brain size logic
+	transform = transform.Scale(brain_size)
+
+/obj/item/organ/internal/brain/examine()
+	. = ..()
+	if (smooth_brain)
+		. += span_notice("All the pesky wrinkles are gone. Now it just needs a good drying...")
+	if(brain_size < 1)
+		. += span_notice("It is a bit on the smaller side...")
+	if(brain_size > 1)
+		. += span_notice("It is bigger than average...")
+
+/obj/item/organ/internal/brain/mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
+	. = ..()
+	if(!.)
+		return
 
 	name = initial(name)
 
-	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
-		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
+	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
+	if(IS_CHANGELING(brain_owner) && !(movement_flags & NO_ID_TRANSFER))
+		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
-		forceMove(C)
-		C.update_body_parts()
+		forceMove(brain_owner)
+		brain_owner.update_body_parts()
 		return
 
 	if(brainmob)
-		if(C.key)
-			C.ghostize()
+		// If it's a ling decoy brain, nothing to transfer, just throw it out
+		if(decoy_override)
+			if(brainmob?.key)
+				stack_trace("Decoy override brain with a key assigned - This should never happen.")
 
-		if(brainmob.mind)
-			brainmob.mind.transfer_to(C)
+		// Not a ling - assume direct control
 		else
-			C.key = brainmob.key
+			if(brain_owner.key)
+				brain_owner.ghostize()
 
-		C.set_suicide(brainmob.suiciding)
+			if(brainmob.mind)
+				brainmob.mind.transfer_to(brain_owner)
+			else
+				brain_owner.key = brainmob.key
+
+			brain_owner.set_suicide(HAS_TRAIT(brainmob, TRAIT_SUICIDED))
 
 		QDEL_NULL(brainmob)
-
 	else
-		C.set_suicide(suicided)
+		brain_owner.set_suicide(suicided)
 
 	for(var/datum/brain_trauma/trauma as anything in traumas)
 		if(trauma.owner)
-			if(trauma.owner == owner)
+			if(trauma.owner == brain_owner)
 				// if we're being special replaced, the trauma is already applied, so this is expected
 				// but if we're not... this is likely a bug, and should be reported
 				if(!special)
-					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([owner])!")
+					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([brain_owner])!")
 				continue
 
-			stack_trace("A brain trauma ([trauma]) is being applied to a new mob ([owner]) when it's owned by someone else ([trauma.owner])!")
+			stack_trace("A brain trauma ([trauma]) is being applied to a new mob ([brain_owner]) when it's owned by someone else ([trauma.owner])!")
 			continue
 
-		trauma.owner = owner
+		trauma.owner = brain_owner
 		trauma.on_gain()
 
 	//Update the body's icon so it doesnt appear debrained anymore
-	C.update_body_parts()
+	brain_owner.update_body_parts()
 
-/obj/item/organ/internal/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
+/obj/item/organ/internal/brain/mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
-	if(!QDELETED(C) && length(skillchips))
+	if(!QDELETED(organ_owner) && length(skillchips))
 		if(!special)
-			to_chat(C, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
-		for(var/chip in skillchips)
-			var/obj/item/skillchip/skillchip = chip
-			// Run the try_ proc with force = TRUE.
-			skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
+			to_chat(organ_owner, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
+			for(var/chip in skillchips)
+				var/obj/item/skillchip/skillchip = chip
+				// Run the try_ proc with force = TRUE.
+				skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
 
 	. = ..()
 
@@ -102,59 +131,59 @@
 		BT.on_lose(TRUE)
 		BT.owner = null
 
-	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
-		transfer_identity(C)
-	C.update_body_parts()
-	C.clear_mood_event("brain_damage")
+	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !(movement_flags & NO_ID_TRANSFER))
+		transfer_identity(organ_owner)
+	if(!special)
+		organ_owner.update_body_parts()
+		organ_owner.clear_mood_event("brain_damage")
+
+/obj/item/organ/internal/brain/update_icon_state()
+	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth_brain" : ""]"
+	return ..()
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s [initial(name)]"
-	if(brainmob || decoy_override)
-		return
+	if(brainmob)
+		if(!decoy_override)
+			return
+
+		// it's just a dummy, throw it out
+		QDEL_NULL(brainmob)
+
 	if(!L.mind)
 		return
 	brainmob = new(src)
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
-	brainmob.timeofhostdeath = L.timeofdeath
-	brainmob.suiciding = suicided
+	brainmob.timeofdeath = L.timeofdeath
+
+	if(suicided)
+		ADD_TRAIT(brainmob, TRAIT_SUICIDED, REF(src))
+
 	if(L.has_dna())
 		var/mob/living/carbon/C = L
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(HAS_TRAIT(L, TRAIT_BADDNA))
-			LAZYSET(brainmob.status_traits, TRAIT_BADDNA, L.status_traits[TRAIT_BADDNA])
-	if(L.mind && L.mind.current)
-		L.mind.transfer_to(brainmob)
-	to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
+		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
+		for(var/source in GET_TRAIT_SOURCES(L, TRAIT_BADDNA))
+			ADD_TRAIT(brainmob, TRAIT_BADDNA, source)
 
-/obj/item/organ/internal/brain/attackby(obj/item/O, mob/user, params)
+	if(L.mind && L.mind.current && !decoy_override)
+		L.mind.transfer_to(brainmob)
+		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
+
+/obj/item/organ/internal/brain/attackby(obj/item/item, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 
-	if(istype(O, /obj/item/borg/apparatus/organ_storage))
+	if(istype(item, /obj/item/borg/apparatus/organ_storage))
 		return //Borg organ bags shouldn't be killing brains
 
-	if(damage && O.is_drainable() && O.reagents.has_reagent(/datum/reagent/medicine/mannitol)) //attempt to heal the brain
-		. = TRUE //don't do attack animation.
-		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
-			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
-			return
-
-		user.visible_message(span_notice("[user] starts to slowly pour the contents of [O] onto [src]."), span_notice("You start to slowly pour the contents of [O] onto [src]."))
-		if(!do_after(user, 3 SECONDS, src))
-			to_chat(user, span_warning("You failed to pour the contents of [O] onto [src]!"))
-			return
-
-		user.visible_message(span_notice("[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
-		var/amount = O.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
-		var/healto = max(0, damage - amount * 2)
-		O.reagents.remove_all(ROUND_UP(O.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
-		setOrganDamage(healto) //heals 2 damage per unit of mannitol, and by using "setorgandamage", we clear the failing variable if that was up
-		return
+	if (check_for_repair(item, user))
+		return TRUE
 
 	// Cutting out skill chips.
-	if(length(skillchips) && O.get_sharpness() == SHARP_EDGED)
+	if(length(skillchips) && item.get_sharpness() == SHARP_EDGED)
 		to_chat(user,span_notice("You begin to excise skillchips from [src]."))
 		if(do_after(user, 15 SECONDS, target = src))
 			for(var/chip in skillchips)
@@ -177,31 +206,57 @@
 		return
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
-		O.attack(brainmob, user) //Oh noooeeeee
+		item.attack(brainmob, user) //Oh noooeeeee
 
-	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
+	if(item.force != 0 && !(item.item_flags & NOBLUDGEON))
 		user.do_attack_animation(src)
 		playsound(loc, 'sound/effects/meatslap.ogg', 50)
-		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
-		visible_message(span_danger("[user] hits [src] with [O]!"))
-		to_chat(user, span_danger("You hit [src] with [O]!"))
+		set_organ_damage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
+		visible_message(span_danger("[user] hits [src] with [item]!"))
+		to_chat(user, span_danger("You hit [src] with [item]!"))
+
+/obj/item/organ/internal/brain/proc/check_for_repair(obj/item/item, mob/user)
+	if(damage && item.is_drainable() && item.reagents.has_reagent(/datum/reagent/medicine/mannitol) && (organ_flags & ORGAN_ORGANIC)) //attempt to heal the brain
+		if(brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
+			to_chat(user, span_warning("[src] is far too damaged, there's nothing else we can do for it!"))
+			return TRUE
+
+		user.visible_message(span_notice("[user] starts to slowly pour the contents of [item] onto [src]."), span_notice("You start to slowly pour the contents of [item] onto [src]."))
+		if(!do_after(user, 3 SECONDS, src))
+			to_chat(user, span_warning("You failed to pour the contents of [item] onto [src]!"))
+			return TRUE
+
+		user.visible_message(span_notice("[user] pours the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."), span_notice("You pour the contents of [item] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink."))
+		var/amount = item.reagents.get_reagent_amount(/datum/reagent/medicine/mannitol)
+		var/healto = max(0, damage - amount * 2)
+		item.reagents.remove_all(ROUND_UP(item.reagents.total_volume / amount * (damage - healto) * 0.5)) //only removes however much solution is needed while also taking into account how much of the solution is mannitol
+		set_organ_damage(healto) //heals 2 damage per unit of mannitol, and by using "set_organ_damage", we clear the failing variable if that was up
+		return TRUE
+	return FALSE
 
 /obj/item/organ/internal/brain/examine(mob/user)
 	. = ..()
 	if(length(skillchips))
 		. += span_info("It has a skillchip embedded in it.")
+	. += brain_damage_examine()
+	if(brain_size < 1)
+		. += span_notice("It is a bit on the smaller side...")
+	if(brain_size > 1)
+		. += span_notice("It is bigger than average...")
+
+/// Needed so subtypes can override examine text while still calling parent
+/obj/item/organ/internal/brain/proc/brain_damage_examine()
 	if(suicided)
-		. += span_info("It's started turning slightly grey. They must not have been able to handle the stress of it all.")
-		return
-	if((brainmob && (brainmob.client || brainmob.get_ghost())) || decoy_override)
+		return span_info("It's started turning slightly grey. They must not have been able to handle the stress of it all.")
+	if(brainmob && (decoy_override || brainmob.client || brainmob.get_ghost()))
 		if(organ_flags & ORGAN_FAILING)
-			. += span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.")
+			return span_info("It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.")
 		else if(damage >= BRAIN_DAMAGE_DEATH*0.5)
-			. += span_info("You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.")
+			return span_info("You can feel the small spark of life still left in this one, but it's got some bruises. You may be able to restore it with some <b>mannitol</b>.")
 		else
-			. += span_info("You can feel the small spark of life still left in this one.")
+			return span_info("You can feel the small spark of life still left in this one.")
 	else
-		. += span_info("This one is completely devoid of life.")
+		return span_info("This one is completely devoid of life.")
 
 /obj/item/organ/internal/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))
@@ -212,7 +267,7 @@
 	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
-	var/target_has_brain = C.getorgan(/obj/item/organ/internal/brain)
+	var/target_has_brain = C.get_organ_by_type(/obj/item/organ/internal/brain)
 
 	if(!target_has_brain && C.is_eyes_covered())
 		to_chat(user, span_warning("You're going to need to remove [C.p_their()] head cover first!"))
@@ -241,16 +296,14 @@
 		..()
 
 /obj/item/organ/internal/brain/Destroy() //copypasted from MMIs.
-	if(brainmob)
-		QDEL_NULL(brainmob)
+	QDEL_NULL(brainmob)
 	QDEL_LIST(traumas)
 
 	destroy_all_skillchips()
-	if(owner?.mind) //You aren't allowed to return to brains that don't exist
-		owner.mind.set_current(null)
+	owner?.mind?.set_current(null) //You aren't allowed to return to brains that don't exist
 	return ..()
 
-/obj/item/organ/internal/brain/on_life(delta_time, times_fired)
+/obj/item/organ/internal/brain/on_life(seconds_per_tick, times_fired)
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
@@ -330,11 +383,15 @@
 
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
+	if (can_smoothen_out && !smooth_brain)
+		smooth_brain = TRUE
+		update_appearance()
+
 	if(HAS_TRAIT(brainwasher, TRAIT_BRAINWASHING))
-		setOrganDamage(0)
+		set_organ_damage(0)
 		cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	else
-		setOrganDamage(BRAIN_DAMAGE_DEATH)
+		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
 /obj/item/organ/internal/brain/zombie
 	name = "zombie brain"
@@ -351,7 +408,56 @@
 /obj/item/organ/internal/brain/primitive //No like books and stompy metal men
 	name = "primitive brain"
 	desc = "This juicy piece of meat has a clearly underdeveloped frontal lobe."
-	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy
+	organ_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_PRIMITIVE, // No literacy
+		TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION,
+		TRAIT_EXPERT_FISHER, // live off land, fish from river
+		TRAIT_ROUGHRIDER, // ride beast, chase down prey, flee from danger
+		TRAIT_BEAST_EMPATHY, // know the way of beast, calm with food
+	)
+
+/obj/item/organ/internal/brain/golem
+	name = "crystalline matrix"
+	desc = "This collection of sparkling gems somehow allows a golem to think."
+	icon_state = "adamantine_resonator"
+	can_smoothen_out = FALSE
+	color = COLOR_GOLEM_GRAY
+	organ_flags = ORGAN_MINERAL
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ROCK_METAMORPHIC)
+
+/obj/item/organ/internal/brain/lustrous
+	name = "lustrous brain"
+	desc = "This is your brain on bluespace dust. Not even once."
+	icon_state = "random_fly_4"
+	can_smoothen_out = FALSE
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP)
+
+/obj/item/organ/internal/brain/lustrous/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.cure_trauma_type(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+	organ_owner.RemoveElement(/datum/element/tenacious)
+
+/obj/item/organ/internal/brain/lustrous/on_mob_insert(mob/living/carbon/organ_owner, special)
+	. = ..()
+	organ_owner.gain_trauma(/datum/brain_trauma/special/bluespace_prophet, TRAUMA_RESILIENCE_ABSOLUTE)
+	organ_owner.AddElement(/datum/element/tenacious)
+
+/obj/item/organ/internal/brain/felinid //A bit smaller than average
+	brain_size = 0.8
+
+/obj/item/organ/internal/brain/lizard //A bit smaller than average
+	name = "lizard brain"
+	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect it's owner to be pretty cold blooded."
+	organ_traits = list(TRAIT_TACKLING_TAILED_DEFENDER)
+
+/obj/item/organ/internal/brain/abductor
+	name = "grey brain"
+	desc = "A piece of juicy meat found in an ayy lmao's head."
+	icon_state = "brain-x"
+	brain_size = 1.3
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE, TRAIT_REMOTE_TASTING)
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 
@@ -410,6 +516,11 @@
 		arguments = args.Copy(3)
 	. = brain_gain_trauma(trauma, resilience, arguments)
 
+/obj/item/organ/internal/brain/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, smooth_brain))
+		update_appearance()
+
 //Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
 /obj/item/organ/internal/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
@@ -433,6 +544,7 @@
 		actual_trauma.owner = owner
 		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
 		actual_trauma.on_gain()
+		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
@@ -478,10 +590,10 @@
 		amount_cured++
 	return amount_cured
 
-/obj/item/organ/internal/brain/applyOrganDamage(damage_amount, maximum, required_organtype)
+/obj/item/organ/internal/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	if(!owner)
-		return
+		return FALSE
 	if(damage >= 60)
 		owner.add_mood_event("brain_damage", /datum/mood_event/brain_damage)
 	else
@@ -494,3 +606,10 @@
 		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
 		return found_bodypart || active_hand
 	return active_hand
+
+/// Brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
+/obj/item/organ/internal/brain/replace_into(mob/living/carbon/new_owner)
+	var/obj/item/organ/internal/brain/old_brain = new_owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	old_brain.Remove(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER)
+	qdel(old_brain)
+	return Insert(new_owner, special = TRUE, movement_flags = NO_ID_TRANSFER | DELETE_IF_REPLACED)

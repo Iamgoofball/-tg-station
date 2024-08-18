@@ -83,7 +83,7 @@
 		to_convert.ChangeTurf(replace_wall)
 
 	if (material)
-		var/list/custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
+		var/list/custom_materials = list(GET_MATERIAL_REF(material) = SHEET_MATERIAL_AMOUNT)
 		to_convert.set_custom_materials(custom_materials)
 
 /**
@@ -103,7 +103,7 @@
 	var/to_place = rand(MIN_BARRIERS, MAX_BARRIERS)
 	var/list/custom_materials = list()
 	if (material)
-		custom_materials = list(GET_MATERIAL_REF(material) = MINERAL_MATERIAL_AMOUNT)
+		custom_materials = list(GET_MATERIAL_REF(material) = SHEET_MATERIAL_AMOUNT)
 
 	while (target_area.len > 0 && to_place > 0)
 		var/turf/place_turf = pick(target_area)
@@ -155,21 +155,25 @@
 	barricade = /obj/structure/holosign/barrier
 
 /datum/armour_dimensional_theme/safe/meat
+	replace_wall = /turf/closed/wall/mineral/meat
 	material = /datum/material/meat
 
 /// Dangerous themes can potentially impede the user as much as people pursuing them
 /datum/armour_dimensional_theme/dangerous
 
 /datum/armour_dimensional_theme/dangerous/clown
+	replace_wall = /turf/closed/wall/mineral/bananium
 	material = /datum/material/bananium
 	barricade = /obj/item/restraints/legcuffs/beartrap/prearmed
 	barricade_anchored = FALSE
 
 /datum/armour_dimensional_theme/dangerous/radioactive
+	replace_wall = /turf/closed/wall/mineral/uranium
 	material = /datum/material/uranium
 	barricade = /obj/structure/statue/uranium/nuke
 
 /datum/armour_dimensional_theme/dangerous/plasma
+	replace_wall = /turf/closed/wall/mineral/plasma
 	material = /datum/material/plasma
 	barricade = /obj/structure/statue/plasma/xeno
 

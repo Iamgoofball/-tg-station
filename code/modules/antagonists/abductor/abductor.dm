@@ -1,5 +1,3 @@
-#define ABDUCTOR_MAX_TEAMS 4
-
 /datum/antagonist/abductor
 	name = "\improper Abductor"
 	roundend_category = "abductors"
@@ -9,6 +7,7 @@
 	show_in_antagpanel = FALSE //should only show subtypes
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE MOTHERSHIP!!" // They can't even talk but y'know
+	stinger_sound = 'sound/ambience/antag/ayylien.ogg'
 	var/datum/team/abductor_team/team
 	var/sub_role
 	var/outfit
@@ -75,12 +74,13 @@
 	owner.special_role = ROLE_ABDUCTOR
 	objectives += team.objectives
 	finalize_abductor()
-	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
+	// We don't want abductors to be converted by other antagonists
+	owner.add_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
 	owner.special_role = null
-	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
+	owner.remove_traits(list(TRAIT_ABDUCTOR_TRAINING, TRAIT_UNCONVERTABLE), ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/greet()
@@ -91,31 +91,29 @@
 
 /datum/antagonist/abductor/proc/finalize_abductor()
 	//Equip
-	var/mob/living/carbon/human/H = owner.current
-	H.set_species(/datum/species/abductor)
-	var/obj/item/organ/internal/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
-	T.mothership = "[team.name]"
+	var/mob/living/carbon/human/new_abductor = owner.current
+	new_abductor.set_species(/datum/species/abductor)
+	var/obj/item/organ/internal/tongue/abductor/abductor_tongue = new_abductor.get_organ_slot(ORGAN_SLOT_TONGUE)
+	abductor_tongue.mothership = "[team.name]"
 
-	H.real_name = "[team.name] [sub_role]"
-	H.equipOutfit(outfit)
+	new_abductor.real_name = "[team.name] [sub_role]"
+	new_abductor.equipOutfit(outfit)
 
 	// We require that the template be loaded here, so call it in a blocking manner, if its already done loading, this won't block
 	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	//Teleport to ship
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)
 		if(istype(LM, landmark_type) && LM.team_number == team.team_number)
-			H.forceMove(LM.loc)
+			new_abductor.forceMove(LM.loc)
 			break
 
 /datum/antagonist/abductor/scientist/on_gain()
-	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
-	ADD_TRAIT(owner, TRAIT_SURGEON, ABDUCTOR_ANTAGONIST)
-	. = ..()
+	owner.add_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
+	return ..()
 
 /datum/antagonist/abductor/scientist/on_removal()
-	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
-	REMOVE_TRAIT(owner, TRAIT_SURGEON, ABDUCTOR_ANTAGONIST)
-	. = ..()
+	owner.remove_traits(list(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON), ABDUCTOR_ANTAGONIST)
+	return ..()
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
 	var/list/current_teams = list()
@@ -140,13 +138,13 @@
 	if(!ishuman(owner.current))
 		to_chat(admin, span_warning("This only works on humans!"))
 		return
-	var/mob/living/carbon/human/H = owner.current
+	var/mob/living/carbon/human/new_abductor = owner.current
 	var/gear = tgui_alert(admin,"Agent or Scientist Gear", "Gear", list("Agent", "Scientist"))
 	if(gear)
 		if(gear == "Agent")
-			H.equipOutfit(/datum/outfit/abductor/agent)
+			new_abductor.equipOutfit(/datum/outfit/abductor/agent)
 		else
-			H.equipOutfit(/datum/outfit/abductor/scientist)
+			new_abductor.equipOutfit(/datum/outfit/abductor/scientist)
 
 /datum/team/abductor_team
 	member_name = "\improper Abductor"
@@ -197,7 +195,7 @@
 	explanation_text = "Experiment on [target_amount] humans."
 
 /datum/objective/experiment/check_completion()
-	for(var/obj/machinery/abductor/experiment/E in GLOB.machines)
+	for(var/obj/machinery/abductor/experiment/E as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/abductor/experiment))
 		if(!istype(team, /datum/team/abductor_team))
 			return FALSE
 		var/datum/team/abductor_team/T = team

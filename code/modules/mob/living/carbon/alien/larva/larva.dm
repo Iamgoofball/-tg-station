@@ -1,4 +1,5 @@
 /mob/living/carbon/alien/larva
+	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "alien larva"
 	real_name = "alien larva"
 	icon_state = "larva0"
@@ -18,11 +19,13 @@
 	num_legs = 1 //Alien larvas always have a movable apendage.
 	usable_legs = 1 //Alien larvas always have a movable apendage.
 	default_num_hands = 0
+	shadow_offset_y = 5
 
 	bodyparts = list(
 		/obj/item/bodypart/chest/larva,
 		/obj/item/bodypart/head/larva,
 	)
+	shadow_type = SHADOW_SMALL
 
 	var/amount_grown = 0
 	var/max_grown = 100
@@ -31,14 +34,16 @@
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/Initialize(mapload)
-	var/datum/action/cooldown/alien/larva_evolve/evolution = new(src)
-	evolution.Grant(src)
-	var/datum/action/cooldown/alien/hide/hide = new(src)
-	hide.Grant(src)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/alien/hide,
+		/datum/action/cooldown/alien/larva_evolve,
+	)
+	grant_actions_by_list(innate_actions)
+
 	return ..()
 
 /mob/living/carbon/alien/larva/create_internal_organs()
-	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
+	organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
 	..()
 
 //This needs to be fixed
@@ -73,4 +78,8 @@
 	return
 
 /mob/living/carbon/alien/larva/canBeHandcuffed()
+	return TRUE
+
+/// Don't scramble a larva's body parts, it doesn't have any
+/mob/living/carbon/alien/larva/bioscramble(scramble_source)
 	return TRUE

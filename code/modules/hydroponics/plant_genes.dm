@@ -23,7 +23,8 @@
  * Returns TRUE if the seed can take the gene, and FALSE otherwise.
  */
 /datum/plant_gene/proc/can_add(obj/item/seeds/our_seed)
-	return !istype(our_seed, /obj/item/seeds/sample) // Samples can't accept new genes.
+	SHOULD_CALL_PARENT(TRUE)
+	return TRUE
 
 /// Copies over vars and information about our current gene to a new gene and returns the new instance of gene.
 /datum/plant_gene/proc/Copy()
@@ -151,9 +152,8 @@
 	if(!.)
 		return FALSE
 
-	for(var/obj/item/seeds/found_seed as anything in seed_blacklist)
-		if(istype(source_seed, found_seed))
-			return FALSE
+	if(is_type_in_list(source_seed, seed_blacklist))
+		return FALSE
 
 	for(var/datum/plant_gene/trait/trait in source_seed.genes)
 		if(trait_ids & trait.trait_ids)
@@ -178,7 +178,7 @@
 
 	// Add on any bonus lines on examine
 	if(description)
-		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
+		RegisterSignal(our_plant, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 	return TRUE
 
 /// Add on any unique examine text to the plant's examine text.
@@ -330,7 +330,7 @@
 	to_chat(eater, span_notice("You feel energized as you bite into [our_plant]."))
 	var/batteries_recharged = FALSE
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	for(var/obj/item/stock_parts/cell/found_cell in eater.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/found_cell in eater.get_all_contents())
 		var/newcharge = min(our_seed.potency * 0.01 * found_cell.maxcharge, found_cell.maxcharge)
 		if(found_cell.charge < newcharge)
 			found_cell.charge = newcharge
@@ -353,8 +353,8 @@
 	description = "It emits a soft glow."
 	trait_ids = GLOW_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
-	/// The color of our bioluminesence.
-	var/glow_color = "#C3E381"
+	/// The color of our bioluminescence.
+	var/glow_color = COLOR_BIOLUMINESCENCE_STANDARD
 
 /datum/plant_gene/trait/glow/proc/glow_range(obj/item/seeds/seed)
 	return 1.4 + seed.potency * rate
@@ -368,7 +368,7 @@
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	our_plant.light_system = MOVABLE_LIGHT
+	our_plant.light_system = OVERLAY_LIGHT
 	our_plant.AddComponent(/datum/component/overlay_lighting, glow_range(our_seed), glow_power(our_seed), glow_color)
 
 /*
@@ -379,7 +379,7 @@
 	name = "Shadow Emission"
 	icon = "lightbulb-o"
 	rate = 0.04
-	glow_color = "#AAD84B"
+	glow_color = COLOR_BIOLUMINESCENCE_SHADOW
 
 /datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/seed)
 	return -max(seed.potency*(rate*0.2), 0.2)
@@ -389,37 +389,37 @@
 /// White
 /datum/plant_gene/trait/glow/white
 	name = "White Bioluminescence"
-	glow_color = "#FFFFFF"
+	glow_color = COLOR_WHITE
 
 /// Red
 /datum/plant_gene/trait/glow/red
 	name = "Red Bioluminescence"
-	glow_color = "#FF3333"
+	glow_color = COLOR_RED_LIGHT
 
 /// Yellow (not the disgusting glowshroom yellow hopefully)
 /datum/plant_gene/trait/glow/yellow
 	name = "Yellow Bioluminescence"
-	glow_color = "#FFFF66"
+	glow_color = COLOR_BIOLUMINESCENCE_YELLOW
 
 /// Green (oh no, now i'm radioactive)
 /datum/plant_gene/trait/glow/green
 	name = "Green Bioluminescence"
-	glow_color = "#99FF99"
+	glow_color = COLOR_BIOLUMINESCENCE_GREEN
 
 /// Blue (the best one)
 /datum/plant_gene/trait/glow/blue
 	name = "Blue Bioluminescence"
-	glow_color = "#6699FF"
+	glow_color = COLOR_BIOLUMINESCENCE_BLUE
 
 /// Purple (did you know that notepad++ doesnt think bioluminescence is a word) (was the person who wrote this using notepad++ for dm?)
 /datum/plant_gene/trait/glow/purple
 	name = "Purple Bioluminescence"
-	glow_color = "#D966FF"
+	glow_color = COLOR_BIOLUMINESCENCE_PURPLE
 
 // Pink (gay tide station pride)
 /datum/plant_gene/trait/glow/pink
 	name = "Pink Bioluminescence"
-	glow_color = "#FFB3DA"
+	glow_color = COLOR_BIOLUMINESCENCE_PINK
 
 /*
  * Makes plant teleport people when squashed or slipped on.
@@ -487,7 +487,7 @@
 /**
  * A plant trait that causes the plant's capacity to double.
  *
- * When harvested, the plant's individual capacity is set to double it's default.
+ * When harvested, the plant's individual capacity is set to double its default.
  * However, the plant's maximum yield is also halved, only up to 5.
  */
 /datum/plant_gene/trait/maxchem
@@ -517,7 +517,10 @@
 	description = "It may be harvested multiple times from the same plant."
 	icon = "cubes-stacked"
 	/// Don't allow replica pods to be multi harvested, please.
-	seed_blacklist = list(/obj/item/seeds/replicapod)
+	seed_blacklist = list(
+		/obj/item/seeds/replicapod,
+		/obj/item/seeds/seedling/evil,
+	)
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /*
@@ -540,7 +543,7 @@
 
 	our_plant.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 	RegisterSignal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
-	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, PROC_REF(make_battery))
+	RegisterSignal(our_plant, COMSIG_ATOM_ATTACKBY, PROC_REF(make_battery))
 
 /*
  * Signal proc for [COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM] to add context to plant batteries.
@@ -583,10 +586,10 @@
 		return
 
 	to_chat(user, span_notice("You add some cable to [our_plant] and slide it inside the battery encasing."))
-	var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
+	var/obj/item/stock_parts/power_store/cell/potato/pocell = new /obj/item/stock_parts/power_store/cell/potato(user.loc)
 	pocell.icon = our_plant.icon // Just in case the plant icons get spread out in different files eventually, this trait won't cause error sprites (also yay downstreams)
 	pocell.icon_state = our_plant.icon_state
-	pocell.maxcharge = our_seed.potency * 20
+	pocell.maxcharge = our_seed.potency * 0.02 * STANDARD_CELL_CHARGE
 
 	// The secret of potato supercells!
 	var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
@@ -760,7 +763,7 @@
 /**
  * A plant trait that causes the plant's food reagents to ferment instead.
  *
- * In practice, it replaces the plant's nutriment and vitamins with half as much of it's fermented reagent.
+ * In practice, it replaces the plant's nutriment and vitamins with half as much of its fermented reagent.
  * This exception is executed in seeds.dm under 'prepare_result'.
  *
  * Incompatible with auto-juicing composition.
@@ -838,7 +841,7 @@
 	if(!.)
 		return
 
-	googly = mutable_appearance('icons/obj/hydroponics/harvest.dmi', "eyes")
+	googly = mutable_appearance('icons/obj/service/hydroponics/harvest.dmi', "eyes")
 	googly.appearance_flags = RESET_COLOR
 	our_plant.add_overlay(googly)
 
@@ -856,12 +859,15 @@
 		return
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
-	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
-		our_plant.embedding = EMBED_POINTY
-	else
-		our_plant.embedding = EMBED_HARMLESS
-	our_plant.updateEmbedding()
 	our_plant.throwforce = (our_seed.potency/20)
+	if (!our_plant.get_embed())
+		return
+
+	if(our_seed.get_gene(/datum/plant_gene/trait/stinging))
+		our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE))
+		return
+
+	our_plant.set_embed(our_plant.get_embed().generate_with_values(ignore_throwspeed_threshold = TRUE, pain_mult = 0, jostle_pain_mult = 0))
 
 /**
  * This trait automatically heats up the plant's chemical contents when harvested.

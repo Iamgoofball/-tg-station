@@ -1,12 +1,11 @@
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/mob/rideables/vehicles.dmi'
 	icon_state = "error"
 	max_integrity = 300
 	armor_type = /datum/armor/obj_vehicle
 	layer = VEHICLE_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	density = TRUE
 	anchored = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
@@ -31,7 +30,7 @@
 	var/canmove = TRUE
 	var/list/autogrant_actions_passenger //plain list of typepaths
 	var/list/autogrant_actions_controller //assoc list "[bitflag]" = list(typepaths)
-	var/list/mob/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
+	var/list/list/datum/action/occupant_actions //assoc list mob = list(type = action datum assigned to mob)
 	///This vehicle will follow us when we move (like atrailer duh)
 	var/obj/vehicle/trailer
 	var/are_legs_exposed = FALSE
@@ -51,6 +50,7 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
+	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
 /obj/vehicle/Destroy(force)
 	QDEL_NULL(trailer)
@@ -64,8 +64,6 @@
 
 /obj/vehicle/examine(mob/user)
 	. = ..()
-	if(resistance_flags & ON_FIRE)
-		. += span_warning("It's on fire!")
 	. += generate_integrity_message()
 
 /// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.
@@ -177,12 +175,12 @@
 /// To add a trailer to the vehicle in a manner that allows safe qdels
 /obj/vehicle/proc/add_trailer(obj/vehicle/added_vehicle)
 	trailer = added_vehicle
-	RegisterSignal(trailer, COMSIG_PARENT_QDELETING, PROC_REF(remove_trailer))
+	RegisterSignal(trailer, COMSIG_QDELETING, PROC_REF(remove_trailer))
 
 /// To remove a trailer from the vehicle in a manner that allows safe qdels
 /obj/vehicle/proc/remove_trailer()
 	SIGNAL_HANDLER
-	UnregisterSignal(trailer, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(trailer, COMSIG_QDELETING)
 	trailer = null
 
 /obj/vehicle/Move(newloc, dir)

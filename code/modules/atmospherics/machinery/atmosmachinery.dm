@@ -21,6 +21,7 @@
 	max_integrity = 200
 	obj_flags = CAN_BE_HIT
 	armor_type = /datum/armor/machinery_atmospherics
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
@@ -53,6 +54,10 @@
 
 	///Whether it can be painted
 	var/paintable = TRUE
+	///Whether it will generate cap sprites when hidden
+	var/has_cap_visuals = FALSE
+	///Cap overlay that is being added to turf's `vis_contents`, `null` if pipe was never hidden or has no valid connections
+	var/obj/effect/overlay/cap_visual/cap_overlay
 
 	///Is the thing being rebuilt by SSair or not. Prevents list bloat
 	var/rebuilding = FALSE
@@ -76,7 +81,7 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/LateInitialize()
+/obj/machinery/atmospherics/post_machine_initialize()
 	. = ..()
 	update_name()
 
@@ -105,6 +110,10 @@
 	if(isturf(loc))
 		turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
+
+	if(hide)
+		setup_hiding()
+
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	if(init_processing)
@@ -118,11 +127,51 @@
 	SSair.stop_processing_machine(src)
 	SSair.rebuild_queue -= src
 
-	if(pipe_vision_img)
-		qdel(pipe_vision_img)
+	QDEL_NULL(pipe_vision_img)
+	QDEL_NULL(cap_overlay)
 
 	return ..()
-	//return QDEL_HINT_FINDREFERENCE
+
+/**
+ * Sets up our pipe hiding logic, consolidated in one place so subtypes may override it.
+ * This lets subtypes implement their own hiding logic without needing to worry about conflicts with the parent hiding logic.
+ */
+/obj/machinery/atmospherics/proc/setup_hiding()
+	// Register pipe cap updating when hidden/unhidden
+	RegisterSignal(src, COMSIG_OBJ_HIDE, PROC_REF(on_hide))
+
+/**
+ * Signal handler. Updates both our pipe cap visuals and those of adjacent nodes.
+ * We update adjacent nodes as their pipe caps are based partially on our state, so they need updating as well.
+ */
+/obj/machinery/atmospherics/proc/on_hide(datum/source)
+	SHOULD_CALL_PARENT(TRUE)
+	SIGNAL_HANDLER
+
+	for(var/obj/machinery/atmospherics/node in nodes)
+		node.update_cap_visuals()
+
+	update_cap_visuals()
+
+/**
+ * Run when you update the conditions in which an /atom might want to start reacting to its turf's air
+ */
+/atom/proc/atmos_conditions_changed()
+	return
+
+/atom/movable/atmos_conditions_changed()
+	var/turf/open/open_loc = loc
+	if(!isopenturf(open_loc))
+		return
+	var/datum/gas_mixture/turf_gas = open_loc.air
+	if(isnull(turf_gas))
+		return
+	check_atmos_process(open_loc, turf_gas, turf_gas.temperature)
+
+/turf/open/atmos_conditions_changed()
+	if(isnull(air))
+		return
+	check_atmos_process(src, air, air.temperature)
 
 /**
  * Called by the machinery disconnect(), custom for each type
@@ -184,8 +233,9 @@
 	update_appearance()
 
 /obj/machinery/atmospherics/update_icon()
-	. = ..()
 	update_layer()
+	update_cap_visuals()
+	return ..()
 
 /**
  * Find a connecting /obj/machinery/atmospherics in specified direction, called by relaymove()
@@ -286,7 +336,10 @@
 		return FALSE
 
 	//if the target is not in the same piping layer & it does not have the all layer connection flag[which allows it to be connected regardless of layer] then we are out
-	if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
+	if(target.pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS)
+		if(ISODD(given_layer))
+			return FALSE
+	else if(target.piping_layer != given_layer && !(target.pipe_flags & PIPING_ALL_LAYER))
 		return FALSE
 
 	//if the target does not have the same color and it does not have all color connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing for connection regardless] then we are out
@@ -332,9 +385,9 @@
 	return
 
 /**
- * Similar to set_pipenet() but instead of setting a network to a pipeline, it replaces the old pipeline with a new one, called by Merge() in datum_pipeline.dm
+ * Replaces the connection to the old_pipenet with the new_pipenet
  */
-/obj/machinery/atmospherics/proc/replace_pipenet()
+/obj/machinery/atmospherics/proc/replace_pipenet(datum/pipeline/old_pipenet, datum/pipeline/new_pipenet)
 	return
 
 /**
@@ -362,22 +415,38 @@
 
 /obj/machinery/atmospherics/wrench_act(mob/living/user, obj/item/I)
 	if(!can_unwrench(user))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	add_fingerprint(user)
 
 	var/unsafe_wrenching = FALSE
-	var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+	var/internal_pressure = int_air.return_pressure() - env_air.return_pressure()
+	var/empty_pipe = FALSE
+	if(istype(src, /obj/machinery/atmospherics/components))
+		var/list/datum/gas_mixture/all_gas_mixes = return_analyzable_air()
+		var/empty_mixes = 0
+		for(var/gas_mix_number in 1 to device_type)
+			var/datum/gas_mixture/gas_mix = all_gas_mixes[gas_mix_number]
+			if(!gas_mix.total_moles())
+				empty_mixes++
+			if(!nodes[gas_mix_number] || (istype(nodes[gas_mix_number], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(gas_mix_number)))
+				var/pressure_delta = all_gas_mixes[gas_mix_number].return_pressure() - env_air.return_pressure()
+				internal_pressure = internal_pressure > pressure_delta ? internal_pressure : pressure_delta
+		if(empty_mixes == device_type)
+			empty_pipe = TRUE
+	if(!int_air.total_moles())
+		empty_pipe = TRUE
 
-	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+	if(!empty_pipe)
+		to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
-	if (internal_pressure > 2*ONE_ATMOSPHERE)
+	if (internal_pressure > 2 * ONE_ATMOSPHERE)
 		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
-	if(I.use_tool(src, user, 20, volume=50))
+	if(I.use_tool(src, user, empty_pipe ? 0 : 2 SECONDS, volume = 50))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			span_notice("You unfasten \the [src]."), \
@@ -387,8 +456,10 @@
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
-		return deconstruct(TRUE)
-	return TRUE
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
 
 /**
  * Getter for can_unwrench
@@ -430,23 +501,23 @@
  *
  * Called by wrench_act(), create a pipe fitting and remove the pipe
  */
-/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(can_unwrench)
-			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
-			stored.set_piping_layer(piping_layer)
-			if(!disassembled)
-				stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
-			transfer_fingerprints_to(stored)
-			. = stored
-	..()
+/obj/machinery/atmospherics/on_deconstruction(disassembled = TRUE)
+	if(!can_unwrench)
+		return
+
+	var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
+	stored.set_piping_layer(piping_layer)
+	if(!disassembled)
+		stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
+	transfer_fingerprints_to(stored)
+	. = stored
 
 /**
  * Getter for piping layer shifted, pipe colored overlays
  *
  * Creates the image for the pipe underlay that all components use, called by get_pipe_underlay() in components_base.dm
  * Arguments:
- * * iconfile  - path of the iconstate we are using (ex: 'icons/obj/atmospherics/components/thermomachine.dmi')
+ * * iconfile  - path of the iconstate we are using (ex: 'icons/obj/machines/atmospherics/thermomachine.dmi')
  * * iconstate - the image we are using inside the file
  * * direction - the direction of our device
  * * color - the color (in hex value, like #559900) that the pipe should have
@@ -461,7 +532,7 @@
 		PIPING_FORWARD_SHIFT(pipe_overlay, piping_layer, 2)
 	return pipe_overlay
 
-/obj/machinery/atmospherics/on_construction(obj_color, set_layer = PIPING_LAYER_DEFAULT)
+/obj/machinery/atmospherics/on_construction(mob/user, obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		set_pipe_color(obj_color)
@@ -548,11 +619,6 @@
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 
-/obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
-		L.handle_ventcrawl(src)
-		return
-	return ..()
 
 /**
  * Getter of a list of pipenets
@@ -578,14 +644,76 @@
 	return
 
 /**
- * Called by the RPD.dm pre_attack(), overriden by pipes.dm
+ * Handles cap overlay addition and removal, won't do anything if `has_cap_visuals` is set to `FALSE`
+ */
+/obj/machinery/atmospherics/proc/update_cap_visuals()
+	if(!has_cap_visuals)
+		return
+
+	cap_overlay?.moveToNullspace()
+
+	if(!HAS_TRAIT(src, TRAIT_UNDERFLOOR))
+		return
+
+	var/connections = NONE
+	for(var/obj/machinery/atmospherics/node in nodes)
+		if(HAS_TRAIT(node, TRAIT_UNDERFLOOR))
+			continue
+
+		var/turf/node_turf = get_turf(node)
+		if(isplatingturf(node_turf) || iscatwalkturf(node_turf))
+			continue
+
+		var/connected_dir = get_dir(src, node)
+		connections |= connected_dir
+
+	if(connections == NONE)
+		return
+
+	var/bitfield = CARDINAL_TO_PIPECAPS(connections) | (~connections) & ALL_CARDINALS
+	var/turf/our_turf = get_turf(src)
+
+	if(isnull(cap_overlay))
+		cap_overlay = new
+
+	SET_PLANE_EXPLICIT(cap_overlay, initial(plane), our_turf)
+
+	cap_overlay.color = pipe_color
+	cap_overlay.layer = initial(layer)
+	cap_overlay.icon_state = "[bitfield]_[piping_layer]"
+
+	cap_overlay.forceMove(our_turf)
+
+/obj/effect/overlay/cap_visual
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	icon = 'icons/obj/pipes_n_cables/!pipes_bitmask.dmi'
+	vis_flags = NONE
+	anchored = TRUE
+
+/**
+ * Called by the RPD.dm pre_attack()
  * Arguments:
  * * paint_color - color that the pipe will be painted in (colors in hex like #4f4f4f)
  */
 /obj/machinery/atmospherics/proc/paint(paint_color)
-	return FALSE
+	if(paintable)
+		add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+		set_pipe_color(paint_color)
+		update_node_icon()
+	return paintable
 
 /// Setter for pipe color, so we can ensure it's all uniform and save cpu time
 /obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
 	src.pipe_color = uppertext(pipe_colour)
 	update_name()
+
+/// Return TRUE if there is device connected to portables_connector
+/obj/machinery/atmospherics/proc/portable_device_connected(node)
+	var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = nodes[node]
+	if(portable_devices_connector.connected_device)
+		return TRUE
+	return FALSE
+
+#undef PIPE_VISIBLE_LEVEL
+#undef PIPE_HIDDEN_LEVEL
+#undef VENT_SOUND_DELAY

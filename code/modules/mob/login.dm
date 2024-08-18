@@ -8,7 +8,7 @@
  * * sets lastKnownIP
  * * sets computer_id
  * * logs the login
- * * tells the world to update it's status (for player count)
+ * * tells the world to update its status (for player count)
  * * create mob huds for the mob if needed
  * * reset next_move to 1
  * * Set statobj to our mob
@@ -29,11 +29,12 @@
 /mob/Login()
 	if(!client)
 		return FALSE
+
 	canon_client = client
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
-	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
+	log_access("Mob Login: [key_name(src)] was assigned to a [type] ([tag])")
 	world.update_status()
 	client.clear_screen() //remove hud items just in case
 	client.images = list()
@@ -96,8 +97,20 @@
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
 
+	frill_mask = image('icons/effects/frill_mask.dmi', src, "primary", pixel_x = -64, pixel_y = -44)
+	frill_mask.alpha = 200 // (to leave a bit of what's below for vision reasons)
+	SET_PLANE_EXPLICIT(frill_mask, FRILL_MASK_PLANE, src)
+	frill_mask.appearance_flags = RESET_TRANSFORM
+	LAZYADD(update_on_z, frill_mask)
+	client.images |= frill_mask
+
 	update_client_colour()
 	update_mouse_pointer()
+	update_ambience_area(get_area(src))
+
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+
 	if(client)
 		if(client.view_size)
 			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
@@ -111,11 +124,17 @@
 		for(var/foo in client.player_details.post_login_callbacks)
 			var/datum/callback/CB = foo
 			CB.Invoke()
-		log_played_names(client.ckey,name,real_name)
+		log_played_names(
+			client.ckey,
+			list(
+				"[name]" = tag,
+				"[real_name]" = tag,
+			),
+		)
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
-	log_mob_tag("NEW OWNER: [key_name(src)]")
+	log_mob_tag("TAG: [tag] NEW OWNER: [key_name(src)]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 	SEND_SIGNAL(client, COMSIG_CLIENT_MOB_LOGIN, src)
 	client.init_verbs()

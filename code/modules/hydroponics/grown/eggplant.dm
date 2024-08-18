@@ -1,6 +1,6 @@
 // Eggplant
 /obj/item/seeds/eggplant
-	name = "pack of eggplant seeds"
+	name = "eggplant seed pack"
 	desc = "These seeds grow to produce berries that look nothing like eggs."
 	icon_state = "seed-eggplant"
 	species = "eggplant"
@@ -8,7 +8,7 @@
 	product = /obj/item/food/grown/eggplant
 	yield = 2
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "eggplant-grow"
 	icon_dead = "eggplant-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -25,7 +25,7 @@
 
 // Egg-Plant
 /obj/item/seeds/eggplant/eggy
-	name = "pack of egg-plant seeds"
+	name = "egg-plant seed pack"
 	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	species = "eggy"

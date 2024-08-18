@@ -3,6 +3,9 @@
 
 /area/ruin/powered/beach
 
+/area/ruin/powered/lavaland_phone_booth
+	name = "\improper Phone Booth"
+
 /area/ruin/powered/clownplanet
 	name = "\improper Clown Biodome"
 	ambientsounds = list('sound/ambience/clown.ogg')
@@ -41,6 +44,12 @@
 	name = "\improper Cult Altar"
 	area_flags = CULT_PERMITTED
 	ambience_index = AMBIENCE_SPOOKY
+
+/area/ruin/thelizardsgas_lavaland
+	name = "\improper The Lizard's Gas"
+	icon_state = "lizardgas"
+	sound_environment = SOUND_ENVIRONMENT_ROOM
+	ambient_buzz = 'sound/ambience/magma.ogg'
 
 //Syndicate lavaland base
 

@@ -11,15 +11,20 @@
 	src.gas_amount = initialize_gas_amount
 	src.temp_amount = initialize_temp_amount
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
+// Any item made of plasma is going to have this component, making it extremely difficult to blacklist fire hazards during create_and_destroy.
+// So let's just completely neuter them during unit tests so we don't burn down the testing area and cause spurious runtimes.
+#ifndef UNIT_TESTS
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby_react))
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
+	RegisterSignal(parent, COMSIG_ATOM_TOUCHED_SPARKS, PROC_REF(sparks_react))
 	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react))
 	if(isturf(parent))
 		RegisterSignal(parent, COMSIG_TURF_EXPOSE, PROC_REF(hotspots_react))
+#endif
 
 /datum/component/combustible_flooder/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
 	UnregisterSignal(parent, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER))
@@ -37,7 +42,7 @@
 		flooded_turf = parent_turf.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
 		delete_parent = FALSE
 
-	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];TEMP=[temp_amount || trigger_temperature]")
+	flooded_turf.atmos_spawn_air("[gas_id]=[gas_amount];[TURF_TEMPERATURE((temp_amount || trigger_temperature))]")
 
 	// Logging-related
 	var/admin_message = "[flooded_turf] ignited in [ADMIN_VERBOSEJMP(flooded_turf)]"
@@ -46,9 +51,8 @@
 		admin_message += " by [ADMIN_LOOKUPFLW(user)]"
 		user.log_message(log_message, LOG_ATTACK, log_globally = FALSE)//only individual log
 	else
-		log_message = "[key_name(user)] " + log_message
+		log_message = "[key_name(user)] " + log_message + " by fire"
 		admin_message += " by fire"
-		log_message += " by fire"
 		log_attack(log_message)
 	message_admins(admin_message)
 
@@ -62,6 +66,13 @@
 
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		flood(null, exposed_temperature)
+
+/// sparks_touched reaction.
+/datum/component/combustible_flooder/proc/sparks_react(datum/source, obj/effect/particle_effect/sparks/sparks)
+	SIGNAL_HANDLER
+
+	if(sparks) // this shouldn't ever be false but existence is mysterious
+		flood(null, FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
 
 /// Hotspot reaction.
 /datum/component/combustible_flooder/proc/hotspots_react(datum/source, air, exposed_temperature)
@@ -81,7 +92,7 @@
 /datum/component/combustible_flooder/proc/projectile_react(datum/source, obj/projectile/shot)
 	SIGNAL_HANDLER
 
-	if(shot.damage_type == BURN && !shot.nodamage)
+	if(shot.damage_type == BURN && shot.damage > 0)
 		flood(shot.firer, 2500)
 
 /// Welder check. Here because tool_act is higher priority than attackby.
@@ -90,4 +101,4 @@
 
 	if(tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		flood(user, tool.get_temperature())
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING

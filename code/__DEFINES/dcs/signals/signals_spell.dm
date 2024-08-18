@@ -14,6 +14,13 @@
 	/// Return from before cast signals to prevent the spell from going on cooldown before aftercast.
 	#define SPELL_NO_IMMEDIATE_COOLDOWN (1 << 2)
 
+/// Sent to an mob when a [/datum/action/cooldown/spell] calls try_invoke() to the caster: (datum/action/cooldown/spell/spell, feedback)
+#define COMSIG_MOB_TRY_INVOKE_SPELL "try_invoke_spell"
+	/// The spell gets canceled
+	#define SPELL_INVOCATION_FAIL SPELL_CANCEL_CAST
+	/// The spell always succeeds to invoke regardless of following checks
+	#define SPELL_INVOCATION_ALWAYS_SUCCEED (1 << 1)
+
 /// Sent from /datum/action/cooldown/spell/set_click_ability() to the caster: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_SPELL_ACTIVATED "mob_spell_active"
 	/// Same as spell_cancel_cast, as they're able to be used interchangeably
@@ -29,6 +36,14 @@
 #define COMSIG_SPELL_AFTER_CAST "spell_after_cast"
 /// Sent from /datum/action/cooldown/spell/reset_spell_cooldown() to the spell: ()
 #define COMSIG_SPELL_CAST_RESET "spell_cast_reset"
+/// Sent from /datum/action/cooldown/spell/proc/invocation() to the mob: (datum/source, /datum/action/cooldown/spell/spell, list/invocation)
+#define COMSIG_MOB_PRE_INVOCATION "spell_pre_invocation"
+	///index for the invocation message string
+	#define INVOCATION_MESSAGE 1
+	///index for the invocation type string
+	#define INVOCATION_TYPE 2
+	///index for the invocation garble probability number
+	#define INVOCATION_GARBLE_PROB 3
 
 // Spell type signals
 
@@ -59,6 +74,10 @@
 #define COMSIG_MOB_EJECTED_FROM_JAUNT "spell_mob_eject_jaunt"
 /// Sent from datum/action/cooldown/spell/jaunt/exit_jaunt, after the mob exited jaunt: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_AFTER_EXIT_JAUNT "spell_mob_after_exit_jaunt"
+/// Sent from /obj/effect/dummy/phased_mob/proc/phased_check when moving to the holder object: (/obj/effect/dummy/phased_mob, mob/living/phaser, turf/newloc)
+#define COMSIG_MOB_PHASED_CHECK "mob_phased_check"
+	/// Return this to cancel the phased move
+	#define COMPONENT_BLOCK_PHASED_MOVE (1 << 0)
 
 /// Sent from/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/try_enter_jaunt,
 /// to any unconscious / critical mobs being dragged when the jaunter enters blood:

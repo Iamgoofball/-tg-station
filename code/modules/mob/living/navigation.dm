@@ -41,8 +41,8 @@
 		balloon_alert(src, "no navigation signals!")
 		return
 
-	var/destination_id = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
-	var/navigate_target = destination_list[destination_id]
+	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
+	var/navigate_target = destination_list[platform_code]
 
 	if(isnull(navigate_target))
 		return
@@ -63,7 +63,7 @@
 		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
 		return
 
-	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, id = get_idcard(), skip_first = FALSE)
+	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE)
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
@@ -77,15 +77,15 @@
 		var/dir_1 = 0
 		var/dir_2 = 0
 		if(i == 1)
-			dir_2 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
+			dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i+1], current_turf)))
 		else if(i == length(path))
-			dir_2 = turn(angle2dir(get_angle(path[i-1], current_turf)), 180)
+			dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i-1], current_turf)))
 		else
-			dir_1 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
-			dir_2 = turn(angle2dir(get_angle(path[i-1], current_turf)), 180)
+			dir_1 = REVERSE_DIR(angle2dir(get_angle(path[i+1], current_turf)))
+			dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i-1], current_turf)))
 			if(dir_1 > dir_2)
 				dir_1 = dir_2
-				dir_2 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
+				dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i+1], current_turf)))
 		path_image.icon_state = "[dir_1]-[dir_2]"
 		client.images += path_image
 		client.navigation_images += path_image
@@ -132,7 +132,7 @@
 		if(!target)
 			target = lad
 			continue
-		if(get_dist_euclidian(lad, src) > get_dist_euclidian(target, src))
+		if(get_dist_euclidean(lad, src) > get_dist_euclidean(target, src))
 			continue
 		target = lad
 
@@ -144,7 +144,7 @@
 		if(!target)
 			target = stairs_bro.z == z ? stairs_bro : get_step_multiz(stairs_bro, UP) //if the stairs aren't on our z level, get the turf above them (on our zlevel) to path to instead
 			continue
-		if(get_dist_euclidian(stairs_bro, src) > get_dist_euclidian(target, src))
+		if(get_dist_euclidean(stairs_bro, src) > get_dist_euclidean(target, src))
 			continue
 		target = stairs_bro.z == z ? stairs_bro : get_step_multiz(stairs_bro, UP)
 

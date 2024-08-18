@@ -6,7 +6,7 @@
 	name = "malfunctioning cryostasis sleeper"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
 	prompt_name = "a stranded hermit"
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	outfit = /datum/outfit/hermit
 	you_are_text = "You've been stranded in this godless prison of a planet for longer than you can remember."
@@ -34,7 +34,7 @@
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
 			to a literal one, you find yourself nonetheless missing the recycled air and warm floors of what you left behind... but you'd still rather be here than there."
-			outfit.uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+			outfit.uniform = /obj/item/clothing/under/rank/medical/doctor
 			outfit.suit = /obj/item/clothing/suit/toggle/labcoat
 			outfit.back = /obj/item/storage/backpack/medic
 		if(4)
@@ -60,7 +60,7 @@
 	name = "cryostasis bed"
 	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
 	prompt_name = "a grumpy old man"
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	outfit = /datum/outfit/hermit
 	you_are_text = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
@@ -124,7 +124,8 @@
 	name = "Space Bartender"
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/space_bartender
-	uniform = /obj/item/clothing/under/rank/civilian/bartender
+	neck = /obj/item/clothing/neck/bowtie
+	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/armor/vest
 	back = /obj/item/storage/backpack
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
@@ -142,7 +143,7 @@
 	name = "preserved terrarium"
 	desc = "An ancient machine that seems to be used for storing plant matter. The glass is obstructed by a mat of vines."
 	prompt_name = "lifebringer"
-	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon = 'icons/obj/mining_zones/spawners.dmi'
 	icon_state = "terrarium"
 	density = TRUE
 	mob_species = /datum/species/pod
@@ -193,13 +194,13 @@
 /obj/structure/ash_walker_eggshell/Destroy()
 	if(!egg)
 		return ..()
-	var/mob/living/carbon/human/yolk = new /mob/living/carbon/human/(get_turf(src))
-	yolk.fully_replace_character_name(null,random_unique_lizard_name(gender))
+	var/mob/living/carbon/human/yolk = new(get_turf(src))
 	yolk.set_species(/datum/species/lizard/ashwalker)
+	yolk.fully_replace_character_name(null, yolk.generate_random_mob_name(TRUE))
 	yolk.underwear = "Nude"
 	yolk.equipOutfit(/datum/outfit/ashwalker)//this is an authentic mess we're making
 	yolk.update_body()
-	yolk.gib()
+	yolk.gib(DROP_ALL_REMAINS)
 	QDEL_NULL(egg)
 	return ..()
 
@@ -226,7 +227,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/ash_walker/allow_spawn(mob/user, silent = FALSE)
-	if(!(user.key in team.players_spawned))//one per person unless you get a bonus spawn
+	if(!(user.ckey in team.players_spawned))//one per person unless you get a bonus spawn
 		return TRUE
 	if(!silent)
 		to_chat(user, span_warning("You have exhausted your usefulness to the Necropolis."))
@@ -234,13 +235,13 @@
 
 /obj/effect/mob_spawn/ghost_role/human/ash_walker/special(mob/living/carbon/human/spawned_human)
 	. = ..()
-	spawned_human.fully_replace_character_name(null,random_unique_lizard_name(gender))
+	spawned_human.fully_replace_character_name(null, spawned_human.generate_random_mob_name(TRUE))
 	to_chat(spawned_human, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Invade the strange structure of the outsiders if you must. Do not cause unnecessary destruction, as littering the wastes with ugly wreckage is certain to not gain you favor. Glory to the Necropolis!</b>")
 
 	spawned_human.mind.add_antag_datum(/datum/antagonist/ashwalker, team)
 
 	spawned_human.remove_language(/datum/language/common)
-	team.players_spawned += (spawned_human.key)
+	team.players_spawned += (spawned_human.ckey)
 	eggshell.egg = null
 	QDEL_NULL(eggshell)
 
@@ -252,7 +253,14 @@
 	eggshell.egg = src
 	src.forceMove(eggshell)
 	if(spawner_area)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [spawner_area.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
+		notify_ghosts(
+			"An ash walker egg is ready to hatch in \the [spawner_area.name].",
+			source = src,
+			header = "Ash Walker Egg",
+			click_interact = TRUE,
+			ignore_key = POLL_IGNORE_ASHWALKER,
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 
 /datum/outfit/ashwalker
 	name = "Ash Walker"
@@ -275,10 +283,11 @@
 	important_text = "The base is rigged with explosives, DO NOT abandon it or let it fall into enemy hands!"
 	outfit = /datum/outfit/lavaland_syndicate
 	spawner_job_path = /datum/job/lavaland_syndicate
+	deletes_on_zero_uses_left = FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.grant_language(/datum/language/codespeak, source = LANGUAGE_MIND)
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
@@ -299,7 +308,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	shoes = /obj/item/clothing/shoes/combat
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	r_hand = /obj/item/gun/ballistic/automatic/sniper_rifle
+	r_hand = /obj/item/gun/ballistic/rifle/sniper_rifle
 
 	implants = list(/obj/item/implant/weapons_auth)
 
@@ -312,6 +321,21 @@
 	mask = /obj/item/clothing/mask/chameleon/gps
 	r_hand = /obj/item/melee/energy/sword/saber
 
+/datum/outfit/lavaland_syndicate/comms/icemoon
+	name = "Icemoon Syndicate Comms Agent"
+	mask = /obj/item/clothing/mask/chameleon
+	shoes = /obj/item/clothing/shoes/winterboots/ice_boots/eva
+
 /obj/item/clothing/mask/chameleon/gps/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Encrypted Signal")
+
+///Icemoon Syndicate Comms Agent
+
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon
+	name = "Icemoon Comms Agent"
+	prompt_name = "a syndicate comms agent"
+	you_are_text = "You are a syndicate comms agent, assigned in an underground secret listening post close to your enemy's facility."
+	flavour_text = "Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the outpost fall into enemy hands!"
+	important_text = "Do NOT let the outpost fall into enemy hands"
+	outfit = /datum/outfit/lavaland_syndicate/comms/icemoon

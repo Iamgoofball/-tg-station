@@ -17,22 +17,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
-"dL" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	dir = 1;
-	freq = 1400;
-	location = "Engineering";
-	name = "navigation beacon (Engineering Delivery)"
-	},
-/obj/machinery/conveyor{
-	id = "engineeringchute"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/crew_quarters/dorms)
 "ea" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/east,
@@ -41,8 +25,8 @@
 "ee" = (
 /obj/effect/turf_decal/stripes/end,
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "ge" = (
@@ -54,10 +38,6 @@
 	id = "engineeringchute"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/department/crew_quarters/dorms)
-"gR" = (
-/obj/effect/landmark/xeno_spawn,
-/turf/open/misc/asteroid,
 /area/station/maintenance/department/crew_quarters/dorms)
 "hz" = (
 /obj/machinery/door/airlock/external{
@@ -76,7 +56,6 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "ii" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -84,7 +63,9 @@
 "jQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/dice,
+/obj/effect/spawner/random/entertainment/dice{
+	pixel_y = 7
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "kt" = (
@@ -112,6 +93,20 @@
 	dir = 1
 	},
 /turf/open/openspace,
+/area/station/maintenance/department/crew_quarters/dorms)
+"lk" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Engineering";
+	name = "navigation beacon (Engineering Delivery)"
+	},
+/obj/machinery/conveyor{
+	id = "engineeringchute"
+	},
+/turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "lA" = (
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -142,7 +137,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/blobstart,
 /obj/structure/table,
-/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/spawner/random/entertainment/deck{
+	pixel_y = 12
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "uH" = (
@@ -182,7 +179,9 @@
 "yF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/steam_vent,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "zp" = (
@@ -250,6 +249,10 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/station/asteroid)
+"FO" = (
+/obj/effect/landmark/generic_maintenance_landmark,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/crew_quarters/dorms)
 "GM" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -274,6 +277,9 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
 /obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/decal/cleanable/cobweb/cobweb2{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "LS" = (
@@ -353,7 +359,9 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "Sp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb{
+	pixel_y = 24
+	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
 "SD" = (
@@ -384,10 +392,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/crew_quarters/dorms)
-"Wp" = (
-/obj/machinery/newscaster/directional/south,
-/turf/closed/wall,
-/area/station/maintenance/department/crew_quarters/dorms)
 
 (1,1,1) = {"
 LS
@@ -412,7 +416,7 @@ ac
 SD
 NW
 Vh
-gR
+FO
 TW
 ea
 SD
@@ -553,7 +557,7 @@ SD
 vL
 PV
 uH
-Wp
+SD
 Oi
 Oi
 Oi
@@ -1503,7 +1507,7 @@ RT
 NW
 NW
 gl
-dL
+lk
 mU
 nf
 SD

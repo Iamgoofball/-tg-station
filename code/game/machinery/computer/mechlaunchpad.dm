@@ -28,14 +28,15 @@
 		return
 	connected_mechpad = pad
 	connected_mechpad.id = id
-	RegisterSignal(connected_mechpad, COMSIG_PARENT_QDELETING, PROC_REF(unconnect_launchpad))
+	RegisterSignal(connected_mechpad, COMSIG_QDELETING, PROC_REF(unconnect_launchpad))
 
 /obj/machinery/computer/mechpad/proc/unconnect_launchpad(obj/machinery/mechpad/pad)
 	SIGNAL_HANDLER
 	connected_mechpad = null
 
-/obj/machinery/computer/mechpad/LateInitialize()
-	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
+/obj/machinery/computer/mechpad/post_machine_initialize()
+	. = ..()
+	for(var/obj/machinery/mechpad/pad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/mechpad))
 		if(pad == connected_mechpad)
 			continue
 		if(pad.id != id)
@@ -85,37 +86,41 @@
 			continue
 		return found_mechpad
 
-/obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/tool)
-	if(!multitool_check_buffer(user, tool))
+/obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	. = NONE
+	if(!istype(multitool.buffer, /obj/machinery/mechpad))
 		return
-	var/obj/item/multitool/multitool = tool
-	if(istype(multitool.buffer, /obj/machinery/mechpad))
-		var/obj/machinery/mechpad/buffered_pad = multitool.buffer
-		if(!(mechpads.len < maximum_pads))
-			to_chat(user, span_warning("[src] cannot handle any more connections!"))
-			return TRUE
-		if(buffered_pad == connected_mechpad)
-			to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
-		else if(!connected_mechpad && buffered_pad == find_pad())
-			if(buffered_pad in mechpads)
-				remove_pad(buffered_pad)
-			connect_launchpad(buffered_pad)
-			multitool.buffer = null
-			to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
-		else
-			add_pad(buffered_pad)
-			multitool.buffer = null
-			to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
-	return TRUE
+
+	var/obj/machinery/mechpad/buffered_pad = multitool.buffer
+	if(!(mechpads.len < maximum_pads))
+		to_chat(user, span_warning("[src] cannot handle any more connections!"))
+		return ITEM_INTERACT_SUCCESS
+
+	if(buffered_pad == connected_mechpad)
+		to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!connected_mechpad && buffered_pad == find_pad())
+		if(buffered_pad in mechpads)
+			remove_pad(buffered_pad)
+		connect_launchpad(buffered_pad)
+		multitool.set_buffer(null)
+		to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
+		return ITEM_INTERACT_SUCCESS
+
+	add_pad(buffered_pad)
+	multitool.set_buffer(null)
+	to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/mechpad/proc/add_pad(obj/machinery/mechpad/pad)
 	mechpads += pad
-	RegisterSignal(pad, COMSIG_PARENT_QDELETING, PROC_REF(remove_pad))
+	RegisterSignal(pad, COMSIG_QDELETING, PROC_REF(remove_pad))
 
 /obj/machinery/computer/mechpad/proc/remove_pad(obj/machinery/mechpad/pad)
 	SIGNAL_HANDLER
 	mechpads -= pad
-	UnregisterSignal(pad, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(pad, COMSIG_QDELETING)
 
 /**
  * Tries to call the launch proc on the connected mechpad, returns if unavailable

@@ -7,9 +7,9 @@
  * Has a lot of the creature game world logic, such as health etc
  */
 /mob
+	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	density = TRUE
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
@@ -20,14 +20,15 @@
 	// we never want to hide a turf because it's not lit
 	// We can rely on the lighting plane to handle that for us
 	see_in_dark = 1e6
+	// A list of factions that this mob is currently in, for hostile mob targeting, amongst other things
+	faction = list(FACTION_NEUTRAL)
+	var/shift_to_open_context_menu = TRUE
 	/// The current client inhabiting this mob. Managed by login/logout
 	/// This exists so we can do cleanup in logout for occasions where a client was transfere rather then destroyed
 	/// We need to do this because the mob on logout never actually has a reference to client
 	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
-
-	var/shift_to_open_context_menu = TRUE
 
 	/// Percentage of how much rgb to max the lighting plane at
 	/// This lets us brighten it without washing out color
@@ -59,14 +60,8 @@
 	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
 	var/list/datum/action/actions
-	/// A list of chameleon actions we have specifically
-	/// This can be unified with the actions list
-	var/list/datum/action/item_action/chameleon/chameleon_item_actions
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
-
-	///Whether this mob has or is in the middle of committing suicide.
-	var/suiciding = FALSE
 
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
 	var/stat = CONSCIOUS
@@ -84,31 +79,12 @@
 	var/computer_id = null
 	var/list/logging = list()
 
-	/// The machine the mob is interacting with (this is very bad old code btw)
-	var/obj/machinery/machine = null
-
 	/// Tick time the mob can next move
 	var/next_move = null
-
-	/**
-	  * Magic var that stops you moving and interacting with anything
-	  *
-	  * Set when you're being turned into something else and also used in a bunch of places
-	  * it probably shouldn't really be
-	  */
-	var/notransform = null //Carbon
 
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
-	/**
-	  * back up of the real name during admin possession
-	  *
-	  * If an admin possesses an object it's real name is set to the admin name and this
-	  * stores whatever the real name was previously. When possession ends, the real name
-	  * is reset to this value
-	  */
-	var/name_archive //For admin things like possession
 
 	/// Default body temperature
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
@@ -122,9 +98,6 @@
 
 	/// How many ticks this mob has been over reating
 	var/overeatduration = 0 // How long this guy is overeating //Carbon
-
-	/// The movement intent of the mob (run/wal)
-	var/m_intent = MOVE_INTENT_RUN//Living
 
 	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null
@@ -161,23 +134,11 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// A list of factions that this mob is currently in, for hostile mob targetting, amongst other things
-	var/list/faction = list(FACTION_NEUTRAL)
-
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
-
-	///A weakref to the last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
-	var/datum/weakref/LAssailant = null
-
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
 
 	/// Can they interact with station electronics
 	var/has_unlimited_silicon_privilege = FALSE
-
-	///Used by admins to possess objects. All mobs should have this var
-	var/obj/control_object
 
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control
@@ -197,7 +158,7 @@
 	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
-	///THe z level this mob is currently registered in
+	///The z level this mob is currently registered in
 	var/registered_z = null
 
 	var/memory_throttle_time = 0
@@ -221,8 +182,14 @@
 	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
 	var/sound_environment_override = SOUND_ENVIRONMENT_NONE
 
+	///Mask for when a client posseses a mob to mask out a section of the wall frill
+	var/image/frill_mask
+
 	/// A mock client, provided by tests and friends
 	var/datum/client_interface/mock_client
+
+	///Decides how to handle clicks on turfs
+	var/turf_click_type = TURF_CLICK_FLAT
 
 	var/interaction_range = 0 //how far a mob has to be to interact with something without caring about obsctruction, defaulted to 0 tiles
 
@@ -230,8 +197,13 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
-	/// User is thinking in character. Used to revert to thinking state after stop_typing
-	var/thinking_IC = FALSE
 
-	///how much gravity is slowing us down
-	var/gravity_slowdown = 0
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area
+
+	/// What kind of underlay shadow do we use?
+	var/shadow_type = SHADOW_MEDIUM
+	/// Additional horizontal offset to apply to shadow underlay
+	var/shadow_offset_x = 0
+	/// Additional vertical offset to apply to shadow underlay
+	var/shadow_offset_y = 0

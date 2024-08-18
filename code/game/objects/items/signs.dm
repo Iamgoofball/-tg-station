@@ -1,4 +1,5 @@
 /obj/item/picket_sign
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "picket"
 	inhand_icon_state = "picket"
 	name = "blank picket sign"
@@ -29,7 +30,7 @@
 		desc = "It reads: [label]"
 
 /obj/item/picket_sign/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
+	if(IS_WRITING_UTENSIL(W))
 		retext(user, W)
 	else
 		return ..()

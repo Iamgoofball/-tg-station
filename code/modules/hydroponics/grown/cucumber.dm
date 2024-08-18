@@ -1,6 +1,6 @@
 // CUCUMBERS YEAH
 /obj/item/seeds/cucumber
-	name = "pack of cucumber seeds"
+	name = "cucumber seed pack"
 	desc = "These seeds grow into cucumber plants."
 	icon_state = "seed-cucumber"
 	species = "cucumber"
@@ -10,7 +10,7 @@
 	production = 1
 	yield = 5
 	instability = 15
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "cucumber-grow"
 	icon_dead = "cucumber-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -22,5 +22,5 @@
 	desc = "Oblong and green, with pimples, the standard of salads."
 	icon_state = "cucumber"
 	foodtypes = VEGETABLES
-	juice_results = list(/datum/reagent/consumable/cucumberjuice = 0)
+	juice_typepath = /datum/reagent/consumable/cucumberjuice
 	tastes = list("cucumber" = 1)
