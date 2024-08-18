@@ -236,7 +236,8 @@ SUBSYSTEM_DEF(ticker)
 	can_continue = SSdynamic.pre_setup() //Choose antagonists
 	CHECK_TICK
 	SSstories.execute_roundstart_story()
-	CHECK_TICK	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_JOBS_ASSIGNED, src)
+	CHECK_TICK
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_JOBS_ASSIGNED, src)
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
 
