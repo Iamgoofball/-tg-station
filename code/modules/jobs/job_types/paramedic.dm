@@ -38,6 +38,14 @@
 	rpg_title = "Corpse Runner"
 	job_flags = STATION_JOB_FLAGS
 
+/datum/job/paramedic/after_spawn(mob/living/spawned, client/player_client)
+	..()
+	var/obj/item/bodypart/leg/right = target.get_bodypart(BODY_ZONE_R_LEG)
+	qdel(right)
+	var/obj/item/bodypart/leg/left = target.get_bodypart(BODY_ZONE_L_LEG)
+	qdel(left)
+	var/obj/vehicle/ridden/wheelchair/wheels = new(get_turf(spawned))
+	wheels.buckle_mob(spawned)
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"
