@@ -395,7 +395,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_horn
 	slot = ORGAN_SLOT_EXTERNAL_PONY_HORN
 	zone = BODY_ZONE_HEAD
-	var/grab_range = 3
+	var/grab_range = 7
 	var/hit_cooldown_time = 1 SECONDS
 	var/atom/movable/grabbed_atom
 	var/mutable_appearance/kinesis_icon
@@ -886,9 +886,18 @@
 		to_chat(caster, span_danger("You rear up and kick [victim]!"))
 		caster.do_attack_animation(living_victim)
 		playsound(caster.loc, SFX_SWING_HIT, 50, TRUE)
+		var/rolled_damage = rand(10,20)
+		if(living_victim.check_block(hand, rolled_damage, "the kick", attack_type = UNARMED_ATTACK))
+			return
 		living_victim.apply_damage(
-			damage = rand(10,20),
+			damage = caster,
 			damagetype = BRUTE,
+			blocked = living_victim.run_armor_check(
+				def_zone = BODY_ZONE_CHEST,
+				attack_flag = MELEE,
+				absorb_text = span_notice("Your armor has protected you from the kick!"),
+				soften_text = span_warning("Your armor has softened the kick!")
+			),
 			def_zone = BODY_ZONE_CHEST,
 			attacking_item = hand,
 			attack_direction = get_dir(caster, living_victim)
