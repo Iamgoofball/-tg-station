@@ -139,6 +139,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/board/robotcrewconsole
+	name = "Robot Distress Beacon Monitoring Computer Board"
+	desc = "Allows for the construction of circuit boards used to build a Robot Distress Beacon monitoring computer."
+	id = "robotcrewconsole"
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/crew_robot
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/secdata
 	name = "Security Records Console Board"
 	desc = "Allows for the construction of circuit boards used to build a security records console."

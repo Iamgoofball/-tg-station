@@ -78,6 +78,7 @@
 		"Blood Filter" = image(icon = 'icons/obj/medical/surgery_tools.dmi', icon_state = "bloodfilter"),
 		"Rolling Pin" = image(icon = 'icons/obj/service/kitchen.dmi', icon_state = "rolling_pin"),
 		"Wire Brush" = image(icon = 'icons/obj/tools.dmi', icon_state = "wirebrush"),
+		"Duct Tape" = image(icon = 'icons/obj/tapes.dmi', icon_state = "tape"),
 		)
 	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -123,6 +124,8 @@
 			tool_behaviour = TOOL_ROLLINGPIN
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
+		if("Duct Tape")
+			tool_behaviour = TOOL_DUCTTAPE
 
 /obj/item/debug/omnitool/item_spawner
 	name = "spawntool"

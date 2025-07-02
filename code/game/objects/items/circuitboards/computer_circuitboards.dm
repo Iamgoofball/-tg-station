@@ -438,6 +438,11 @@
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/mecha
 
+/obj/item/circuitboard/computer/crew_robot
+	name = "Robot Distress Beacon Monitoring Console"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/crew/robot
+
 /obj/item/circuitboard/computer/rdconsole
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE

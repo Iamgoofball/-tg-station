@@ -80,6 +80,10 @@
 	QDEL_NULL(eyelid_right)
 	return ..()
 
+/obj/item/organ/eyes/proc/damage_threshold_crossed(new_damage)
+	owner.adjust_temp_blindness(new_damage * 2 SECONDS)
+	owner.set_eye_blur_if_lower(new_damage * rand(6 SECONDS, 12 SECONDS))
+
 /obj/item/organ/eyes/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.cure_blind(NO_EYES)

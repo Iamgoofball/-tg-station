@@ -19,6 +19,16 @@
 		"cybernetic_stomach",
 		"cybernetic_liver",
 		"cybernetic_heart",
+		"robotifier",
+		"robotcrewconsole",
+		"robot_oil_pump",
+		"robot_fuel_generator",
+		"robot_cooling_fans",
+		"robot_microphone",
+		"robot_speaker",
+		"robot_cleaning_filter",
+		"robot_random_number_database",
+		"robot_camera",
 	)
 	experiments_to_unlock = list(
 		/datum/experiment/scanning/people/android,
@@ -206,11 +216,6 @@
 	design_ids = list(
 		"cybernetic_eyes_improved",
 		"cybernetic_eyes_improved_moth",
-		"cybernetic_ears_u",
-		"cybernetic_lungs_tier2",
-		"cybernetic_stomach_tier2",
-		"cybernetic_liver_tier2",
-		"cybernetic_heart_tier2",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
@@ -226,10 +231,6 @@
 		"ci-gloweyes-moth",
 		"ci-welding-moth",
 		"cybernetic_ears_whisper",
-		"cybernetic_lungs_tier3",
-		"cybernetic_stomach_tier3",
-		"cybernetic_liver_tier3",
-		"cybernetic_heart_tier3",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/people/augmented_organs)

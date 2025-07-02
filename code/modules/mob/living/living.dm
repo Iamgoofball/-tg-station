@@ -889,7 +889,10 @@
 	if(full_heal_flags)
 		fully_heal(full_heal_flags)
 
-	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
+	var/can_be_revived = can_be_revived()
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_REVIVE, src))
+		can_be_revived = TRUE
+	if(stat == DEAD && can_be_revived) //in some cases you can't revive (e.g. no brain)
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.

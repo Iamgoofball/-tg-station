@@ -146,7 +146,7 @@
 
 /mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
 	. = ..()
-	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
+	if((maxHealth - current_level) <= crit_threshold && stat != DEAD && !(HAS_TRAIT(src, TRAIT_NOSTAMCRIT)))
 		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**

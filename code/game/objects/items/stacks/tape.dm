@@ -20,6 +20,8 @@
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
 	greyscale_config = /datum/greyscale_config/tape
 	greyscale_colors = "#B2B2B2#BD6A62"
+	tool_behaviour = TOOL_DUCTTAPE
+	toolspeed = 2
 
 /datum/embedding/sticky_tape
 	pain_mult = 0
@@ -93,6 +95,8 @@
 	merge_type = /obj/item/stack/sticky_tape/super
 	greyscale_colors = "#4D4D4D#75433F"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/super
+	tool_behaviour = TOOL_DUCTTAPE
+	toolspeed = 2
 
 /datum/embedding/sticky_tape/super
 	embed_chance = 100
@@ -111,6 +115,8 @@
 	greyscale_config = /datum/greyscale_config/tape/spikes
 	greyscale_colors = "#E64539#808080#AD2F45"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy
+	tool_behaviour = TOOL_DUCTTAPE
+	toolspeed = 2
 
 /datum/embedding/pointy_tape
 	ignore_throwspeed_threshold = TRUE
@@ -139,6 +145,8 @@
 	merge_type = /obj/item/stack/sticky_tape/surgical
 	greyscale_colors = "#70BAE7#BD6A62"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/surgical
+	tool_behaviour = TOOL_DUCTTAPE
+	toolspeed = 2
 
 /datum/embedding/sticky_tape/surgical
 	embed_chance = 30
@@ -153,9 +161,11 @@
 	prefix = "duct taped"
 	conferred_embed = /datum/embedding/sticky_tape/duct
 	merge_type = /obj/item/stack/sticky_tape/duct
-	var/object_repair_value = 30
 	amount = 10
 	max_amount = 10
+	tool_behaviour = TOOL_DUCTTAPE
+	toolspeed = 1
+	var/object_repair_value = 30
 
 /datum/embedding/sticky_tape/duct
 	embed_chance = 0 //Wrapping something in duct tape is basically ensuring it never embeds.

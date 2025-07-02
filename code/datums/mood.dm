@@ -315,6 +315,20 @@
 		hud.infodisplay -= mood_screen_object
 	QDEL_NULL(mood_screen_object)
 
+/datum/mood/proc/hide_hud()
+	if(!mood_screen_object)
+		return
+	var/datum/hud/hud = mob_parent.hud_used
+	if(hud?.infodisplay)
+		hud.infodisplay -= mood_screen_object
+
+/datum/mood/proc/show_hud()
+	if(!mood_screen_object)
+		return
+	var/datum/hud/hud = mob_parent.hud_used
+	if(hud?.infodisplay)
+		hud.infodisplay += mood_screen_object
+
 /// Handles clicking on the mood HUD object
 /datum/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	SIGNAL_HANDLER

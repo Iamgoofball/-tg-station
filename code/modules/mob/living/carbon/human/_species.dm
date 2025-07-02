@@ -1079,6 +1079,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+	if(SEND_SIGNAL(humi, COMSIG_SPECIES_HANDLE_TEMPERATURE, src, seconds_per_tick, times_fired))
+		return
 	//when in a cryo unit we suspend all natural body regulation
 	if(istype(humi.loc, /obj/machinery/cryo_cell))
 		return

@@ -326,3 +326,13 @@
 
 /// From /obj/item/book/bible/attack() : (mob/living/user, obj/item/book/bible/bible, bless_result)
 #define COMSIG_LIVING_BLESSED "living_blessed"
+
+/// from base of mob/living/med_hud_set_status()
+#define COMSIG_LIVING_MED_HUD_SET_STATUS "living_med_hud_set_status"
+	#define COMSIG_LIVING_MED_HUD_SET_STATUS_OVERRIDE (1<<0)
+/// from base of mob/living/med_hud_set_health()
+#define COMSIG_LIVING_MED_HUD_SET_HEALTH "living_med_hud_set_health"
+	#define COMSIG_LIVING_MED_HUD_SET_HEALTH_OVERRIDE (1<<0)
+/// from base of mob/living/revive()
+#define COMSIG_LIVING_CAN_REVIVE "living_can_revive"
+	#define COMSIG_LIVING_CAN_REVIVE_OVERRIDE (1<<0)

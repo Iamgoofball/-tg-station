@@ -19,6 +19,7 @@
 #define TOOL_KNIFE "knife"
 #define TOOL_BLOODFILTER "bloodfilter"
 #define TOOL_ROLLINGPIN "rolling pin"
+#define TOOL_DUCTTAPE "duct tape"
 /// Can be used to scrape rust off an any atom; which will result in the Rust Component being qdel'd
 #define TOOL_RUSTSCRAPER "rustscraper"
 

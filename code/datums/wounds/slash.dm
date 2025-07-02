@@ -8,19 +8,28 @@
 	undiagnosed_name = "Cut"
 	sound_effect = 'sound/items/weapons/slice.ogg'
 
+/datum/wound/slash/proc/get_blood_noun()
+	var/noun_blood = "blood"
+	if(ishuman(victim))
+		var/mob/living/carbon/human/human_victim = victim
+		if(human_victim.dna.blood_type.reagent_type)
+			var/datum/reagent/blood_reagent = human_victim.dna.blood_type.reagent_type
+			noun_blood = initial(lowertext(blood_reagent.name))
+	return noun_blood
+
 /datum/wound/slash/get_self_check_description(self_aware)
 	if(!limb.can_bleed())
 		return ..()
-
+	var/blood_noun = get_blood_noun()
 	switch(severity)
 		if(WOUND_SEVERITY_TRIVIAL)
-			return span_danger("It's leaking blood from a small [LOWER_TEXT(undiagnosed_name || name)].")
+			return span_danger("It's leaking [blood_noun] from a small [LOWER_TEXT(undiagnosed_name || name)].")
 		if(WOUND_SEVERITY_MODERATE)
-			return span_warning("It's leaking blood from a [LOWER_TEXT(undiagnosed_name || name)].")
+			return span_warning("It's leaking [blood_noun] from a [LOWER_TEXT(undiagnosed_name || name)].")
 		if(WOUND_SEVERITY_SEVERE)
-			return span_boldwarning("It's leaking blood from a serious [LOWER_TEXT(undiagnosed_name || name)]!")
+			return span_boldwarning("It's leaking [blood_noun] from a serious [LOWER_TEXT(undiagnosed_name || name)]!")
 		if(WOUND_SEVERITY_CRITICAL)
-			return span_boldwarning("It's leaking blood from a major [LOWER_TEXT(undiagnosed_name || name)]!!")
+			return span_boldwarning("It's leaking [blood_noun] from a major [LOWER_TEXT(undiagnosed_name || name)]!!")
 
 /datum/wound_pregen_data/flesh_slash
 	abstract = TRUE

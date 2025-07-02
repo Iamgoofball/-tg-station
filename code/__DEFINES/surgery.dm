@@ -36,6 +36,8 @@
 #define ORGAN_GHOST (1<<14)
 /// This is a mutant organ, having this makes you a -derived mutant to health analyzers.
 #define ORGAN_MUTANT (1<<15)
+/// This is an organ that requires power and has been depowered.
+#define ORGAN_DEPOWERED (1<<16)
 
 /// Scarring on the right eye
 #define RIGHT_EYE_SCAR (1<<0)

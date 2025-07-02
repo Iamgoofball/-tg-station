@@ -39,6 +39,11 @@
 	/// Have we been cut open with a scalpel? If so, how much damage from it we still have from it and can be recovered with a cauterizing tool.
 	/// All healing goes towards recovering this.
 	var/cut_open_damage = 0
+	///Disables base stomach behavior; used by the liquid fuel generator
+	var/disable_base_stomach_behavior = FALSE
+
+	///Can this stomach process solids?
+	var/can_process_solids = TRUE
 
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
@@ -54,7 +59,8 @@
 
 /obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
-
+	if(disable_base_stomach_behavior)
+		return .
 	//Manage species digestion
 	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
@@ -264,6 +270,8 @@
 
 /obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
 	. = ..()
+	if(disable_base_stomach_behavior)
+		return .
 	if (!owner || SSmobs.times_fired % 3 != 0)
 		return
 
@@ -385,16 +393,19 @@
 /obj/item/organ/stomach/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.hud_used?.hunger?.update_hunger_bar()
+	if(disable_base_stomach_behavior)
+		return .
 	RegisterSignal(receiver, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
 	RegisterSignal(receiver, COMSIG_HUMAN_GOT_PUNCHED, PROC_REF(on_punched))
 
 /obj/item/organ/stomach/on_mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
-	if(ishuman(stomach_owner))
-		var/mob/living/carbon/human/human_owner = stomach_owner
-		human_owner.clear_alert(ALERT_DISGUST)
-		human_owner.clear_mood_event("disgust")
+	if(!disable_base_stomach_behavior)
+		if(ishuman(stomach_owner))
+			var/mob/living/carbon/human/human_owner = stomach_owner
+			human_owner.clear_alert(ALERT_DISGUST)
+			human_owner.clear_mood_event("disgust")
+		UnregisterSignal(stomach_owner, list(COMSIG_CARBON_VOMITED, COMSIG_HUMAN_GOT_PUNCHED))
 	stomach_owner.hud_used?.hunger?.update_hunger_bar()
-	UnregisterSignal(stomach_owner, list(COMSIG_CARBON_VOMITED, COMSIG_HUMAN_GOT_PUNCHED))
 	return ..()
 
 /obj/item/organ/stomach/feel_for_damage(self_aware)

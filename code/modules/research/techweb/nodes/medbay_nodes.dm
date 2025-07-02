@@ -32,6 +32,7 @@
 		"jerrycan",
 		"reflex_hammer",
 		"blood_scanner",
+		"organ_fixer",
 	)
 	experiments_to_unlock = list(
 		/datum/experiment/autopsy/human,

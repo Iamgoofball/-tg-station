@@ -177,3 +177,8 @@
 
 /// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
 #define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"
+
+///from base of /mob/living/carbon/update_stat(): (stat_mob) allows you to block normal stat processing
+#define COMSIG_CARBON_UPDATE_STAT "carbon_update_stat"
+	#define COMSIG_CARBON_UPDATE_STAT_NO_UPDATE (1<<0)
+

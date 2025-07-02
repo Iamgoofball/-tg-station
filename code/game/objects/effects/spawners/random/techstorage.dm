@@ -73,6 +73,7 @@
 		/obj/item/circuitboard/computer/scan_consolenew,
 		/obj/item/circuitboard/machine/dnascanner,
 		/obj/item/circuitboard/machine/dna_infuser,
+		/obj/item/circuitboard/computer/crew_robot,
 	)
 
 /obj/effect/spawner/random/techstorage/security_all

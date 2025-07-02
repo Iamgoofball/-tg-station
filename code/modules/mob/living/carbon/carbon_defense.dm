@@ -478,8 +478,7 @@
 				eyes.apply_organ_damage(rand(12, 16))
 
 		if(eyes.damage > 10)
-			adjust_temp_blindness(damage * 2 SECONDS)
-			set_eye_blur_if_lower(damage * rand(6 SECONDS, 12 SECONDS))
+			eyes.damage_threshold_crossed(damage)
 
 			if(eyes.damage > eyes.low_threshold)
 				if(!is_nearsighted_from(EYE_DAMAGE) && prob(eyes.damage - eyes.low_threshold))
