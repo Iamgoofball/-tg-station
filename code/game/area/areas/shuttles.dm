@@ -15,6 +15,7 @@
 	flags_1 = CAN_BE_DIRTY_1
 	area_limited_icon_smoothing = /area/shuttle
 	sound_environment = SOUND_ENVIRONMENT_ROOM
+	minimap_color = MINIMAP_AREA_DEFAULT
 
 
 /area/shuttle/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)

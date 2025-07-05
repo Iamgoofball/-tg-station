@@ -7,6 +7,7 @@
 	forced_ambience = TRUE
 	ambient_buzz = 'sound/ambience/maintenance/source_corridor2.ogg'
 	ambient_buzz_vol = 20
+	minimap_color = MINIMAP_AREA_MAINT
 
 /*
 * Departmental Maintenance

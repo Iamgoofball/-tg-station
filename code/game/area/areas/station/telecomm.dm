@@ -15,6 +15,7 @@
 		'sound/ambience/misc/ambimystery.ogg',
 		)
 	airlock_wires = /datum/wires/airlock/engineering
+	minimap_color = MINIMAP_AREA_ENGI
 
 /area/station/tcommsat/computer
 	name = "\improper Telecomms Control Room"

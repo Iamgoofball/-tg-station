@@ -513,3 +513,34 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define LUMA_R 0.213
 #define LUMA_G 0.715
 #define LUMA_B 0.072
+
+//Drawing tool colors
+#define MINIMAP_DRAWING_RED "#ff0000"
+#define MINIMAP_DRAWING_YELLOW "#FFFF00"
+#define MINIMAP_DRAWING_PURPLE "#A020F0"
+#define MINIMAP_DRAWING_BLUE "#0000FF"
+
+//Turf colours
+#define MINIMAP_BLACK "#111111d0"
+#define MINIMAP_SOLID "#ebe5e5ee"
+#define MINIMAP_DOOR "#451e5eee"
+#define MINIMAP_FENCE "#8c2294ee"
+#define MINIMAP_LAVA "#db4206d0"
+#define MINIMAP_DIRT "#9c906dd0"
+#define MINIMAP_SNOW "#c4e3e9d0"
+#define MINIMAP_ICE "#93cae0d0"
+#define MINIMAP_WATER "#94b0d59c"
+
+//Area colours
+#define MINIMAP_AREA_ENGI "#c19504d0"
+#define MINIMAP_AREA_MEDBAY "#5b92e5d0"
+#define MINIMAP_AREA_SEC "#a22d2dd0"
+#define MINIMAP_AREA_RESEARCH "#812da2d0"
+#define MINIMAP_AREA_COMMAND "#2d3fa2d0"
+#define MINIMAP_AREA_LAVALAND "#3f3c3cd0"
+#define MINIMAP_AREA_JUNGLE "#2b5b2bd0"
+#define MINIMAP_AREA_ICEBOX "#6c6767d0"
+#define MINIMAP_AREA_CARGO "#936824d0"
+#define MINIMAP_AREA_DEFAULT "#314a68d0"
+#define MINIMAP_AREA_MAINT "#182331d0"
+#define MINIMAP_AREA_SERVICE "#2a9201d0"

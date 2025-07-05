@@ -1,6 +1,7 @@
 /area/station/hallway
 	icon_state = "hall"
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	minimap_color = MINIMAP_AREA_DEFAULT
 
 /area/station/hallway/primary
 	name = "\improper Primary Hallway"

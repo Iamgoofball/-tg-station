@@ -23,7 +23,7 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
-
+	minimap_color = MINIMAP_DOOR
 	/// The animation we're currently playing, if any
 	var/animation
 	var/visible = TRUE

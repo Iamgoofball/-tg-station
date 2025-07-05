@@ -44,6 +44,8 @@
 #define ACCOUNT_CAR_NAME "Cargo Budget"
 #define ACCOUNT_SEC "SEC"
 #define ACCOUNT_SEC_NAME "Defense Budget"
+#define ACCOUNT_SYN "SYN"
+#define ACCOUNT_SYN_NAME "Syndicate Slush Fund" // Used by antags being financed by the Syndicate; intended to be a shared pool they can utilize.
 
 #define IS_DEPARTMENTAL_CARD(card) (card in SSeconomy.dep_cards)
 #define IS_DEPARTMENTAL_ACCOUNT(account) (account in SSeconomy.departmental_accounts)

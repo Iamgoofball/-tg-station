@@ -1,5 +1,6 @@
 /area/station/service
 	airlock_wires = /datum/wires/airlock/service
+	minimap_color = MINIMAP_AREA_SERVICE
 
 /*
 * Bar/Kitchen Areas

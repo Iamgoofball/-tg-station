@@ -5,6 +5,7 @@
 	default_gravity = STANDARD_GRAVITY
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED | CULT_PERMITTED
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	minimap_color = MINIMAP_AREA_CARGO
 
 /area/mine/lobby
 	name = "Mining Station"
@@ -136,6 +137,7 @@
 	sound_environment = SOUND_AREA_LAVALAND
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 	allow_shuttle_docking = TRUE
+	minimap_color = MINIMAP_AREA_LAVALAND
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -194,6 +196,7 @@
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
 	allow_shuttle_docking = TRUE
+	minimap_color = MINIMAP_AREA_ICEBOX
 
 /area/icemoon/surface
 	name = "Icemoon"

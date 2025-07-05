@@ -23,6 +23,9 @@
 	/// How many random books to generate.
 	var/books_to_load = 0
 
+/obj/structure/bookcase/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_PAPER, -40, 5)
+
 /datum/armor/structure_bookcase
 	fire = 50
 

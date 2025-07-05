@@ -3,6 +3,7 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+	minimap_color = MINIMAP_AREA_ENGI
 
 /area/station/engineering/engine_smes
 	name = "\improper Engineering SMES"

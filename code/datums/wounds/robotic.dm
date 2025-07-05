@@ -170,7 +170,7 @@
 /datum/wound_pregen_data/robot_pierce_slash/critical
 	abstract = FALSE
 
-	wound_path_to_generate = /datum/wound/pierce/bleed/critical
+	wound_path_to_generate = /datum/wound/robotic_bleed/critical
 
 	threshold_minimum = 100
 

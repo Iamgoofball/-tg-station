@@ -12,6 +12,9 @@
 	paint_jobs = null
 	cutting_tool = /obj/item/crowbar
 
+/obj/structure/closet/crate/wooden/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_WOOD, -40, 5)
+
 /obj/structure/closet/crate/wooden/toy
 	name = "toy box"
 	desc = "It has the words \"Clown + Mime\" written underneath of it with marker."

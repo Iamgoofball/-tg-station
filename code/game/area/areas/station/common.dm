@@ -3,6 +3,7 @@
 	icon_state = "commons"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	minimap_color = MINIMAP_AREA_DEFAULT
 
 /*
 * Dorm Areas

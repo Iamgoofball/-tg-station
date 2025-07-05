@@ -300,6 +300,9 @@
 	delete_on_harvest = TRUE
 	flora_flags = FLORA_HERBAL | FLORA_WOODEN
 
+/obj/structure/flora/tree/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_WOOD, -40, 5)
+
 /obj/structure/flora/tree/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seethrough, get_seethrough_map())
@@ -545,6 +548,9 @@
 	harvest_message_high = "You gather up a handful grass."
 	can_uproot = TRUE
 	flora_flags = FLORA_HERBAL
+
+/obj/structure/flora/tree/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_LEAF, -40, 5)
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -1014,6 +1020,9 @@
 	flora_flags = FLORA_STONE
 	can_uproot = FALSE
 	delete_on_harvest = TRUE
+
+/obj/structure/flora/rock/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_ROCK, -40, 5, 1)
 
 /obj/structure/flora/rock/style_2
 	icon_state = "basalt2"

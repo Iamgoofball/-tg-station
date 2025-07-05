@@ -227,3 +227,28 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_rejected = "FOOLISH DECISION, I'LL MAKE AN EXAMPLE OUT OF YOUR CARCASS!! (does anyone remember how to pilot our ship?)"
 	response_too_late = "YOU ARE ALREADY UNDER SIEGE YOU BUFFON, ARE YOU BRAINSICK OR IGNORANT?!!"
 	response_not_enough = "DO THINK OF ME AS A JESTER? YOU ARE DEAD MEAT!! (i forgot how to fly the ship, tarnation.)"
+
+/// Honorably discharged for injuries sustained in the line of duty, these veterans are out to pay their substantial medical bills.
+/datum/pirate_gang/veterans
+	name = "Abused Veterans"
+	is_heavy_threat = TRUE
+	ship_template_id = "thank_you_for_your_service"
+	ship_name_pool = "tgmc_ship_names"
+
+	threat_title = "The Left Behind"
+	threat_content = "ATTENTION NANOTRASEN: This is %CAPTAIN, commanding officer of the Left Behind, a group of disabled veterans abandoned \
+	by our country. Your corporate masters engaged in a concerted, multi-year campaign to deprive us of our disability benefits, and continues \
+	to do so to many other veterans. We are unable to work. We will never recover, but we are 'cured' anyway. We are here seeking restitution from you, \
+	that is, we are here for credits. Pay us %PAYOFF and we'll leave you be, otherwise: we will have to come aboard to take it. \
+	This is your one and only notice."
+	arrival_announcement = "Your corporate masters took everything from us. We gave you a chance to make it right, you chose not to. \
+	We are coming aboard. Surrender now and you won't be harmed."
+	possible_answers = list(
+		"I'm so terribly sorry, I'm wiring the credits now.",
+		"I can't authorize credit transfers to outside vessels, sorry."
+	)
+	response_received = "Thank you. This helps more than I can express in the Commmon language. Hopefully, one day soon, \
+	we can get the Senate to reconsider and make this all stop. I'm sorry to have to threaten you. %CAPTAIN out. Be safe, %STATION_NAME."
+	response_rejected = "If you won't give it to us, we're coming aboard to take it. Do not stand in our way."
+	response_too_late = "We can't wait all day out here. We are going to board and pull credits from your corporate accounts. Comply with my men's orders."
+	response_not_enough = "I'm sorry, this isn't enough for even a month's expenses. Prepare to be boarded, please look for more."

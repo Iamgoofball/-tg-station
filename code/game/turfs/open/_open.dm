@@ -1,6 +1,7 @@
 /turf/open
 	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
+	minimap_color = MINIMAP_AREA_DEFAULT
 	///negative for faster, positive for slower
 	var/slowdown = 0
 

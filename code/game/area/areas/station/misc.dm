@@ -12,6 +12,7 @@
 	name = "Station Areas"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
+	minimap_color = MINIMAP_AREA_DEFAULT
 
 /*
 * Tramstation unique areas

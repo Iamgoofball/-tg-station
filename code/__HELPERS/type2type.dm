@@ -192,6 +192,31 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		if(BODY_ZONE_R_LEG)
 			return LEG_RIGHT|FOOT_RIGHT
 
+#define MAX_BITFIELD_BITS 24
+//Converts a bitfield to a list of numbers
+/proc/bitfield2list(bitfield = 0, list/L)
+	var/list/r = list()
+	if(islist(L))
+		var/max = min(length(L), MAX_BITFIELD_BITS)
+		for(var/i in 0 to max-1)
+			if(bitfield & (1 << i))
+				r += L[i+1]
+	else
+		for(var/i in 0 to MAX_BITFIELD_BITS-1)
+			if(bitfield & (1 << i))
+				r += (1 << i)
+
+	return r
+
+///Converts a screen loc param to a x,y coordinate pixel on the screen
+/proc/params2screenpixel(scr_loc)
+	var/list/x_and_y = splittext(scr_loc, ",")
+	var/list/x_dirty = splittext(x_and_y[1], ":")
+	var/list/y_dirty = splittext(x_and_y[2], ":")
+	var/x = (text2num(x_dirty[1])-1)*32 + text2num(x_dirty[2])
+	var/y = (text2num(y_dirty[1])-1)*32 + text2num(y_dirty[2])
+	return list(x, y)
+
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
 //(I challenge you to find a use for this) -I found a use for it!! | So did I!.
 /proc/cover_flags2body_zones(bpc)

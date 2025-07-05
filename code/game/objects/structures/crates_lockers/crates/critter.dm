@@ -21,6 +21,9 @@
 
 	var/obj/item/tank/internals/emergency_oxygen/tank
 
+/obj/structure/closet/crate/critter/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_WOOD, -40, 5)
+
 /obj/structure/closet/crate/critter/Initialize(mapload)
 	. = ..()
 	tank = new

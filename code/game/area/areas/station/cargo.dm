@@ -3,6 +3,7 @@
 	icon_state = "quart"
 	airlock_wires = /datum/wires/airlock/cargo
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	minimap_color = MINIMAP_AREA_CARGO
 
 /area/station/cargo/sorting
 	name = "\improper Delivery Office"

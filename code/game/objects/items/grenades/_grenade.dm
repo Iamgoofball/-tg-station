@@ -58,6 +58,8 @@
 	var/shrapnel_initialized
 	///Possible timers that can be assigned for detonation. Values are strings in SECONDS
 	var/list/possible_fuse_time = list("Instant", "3", "4", "5")
+	///Should we delete on detonation?
+	var/delete_on_detonation = FALSE
 
 /obj/item/grenade/Initialize(mapload)
 	. = ..()
@@ -186,10 +188,15 @@
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 
 	SEND_SIGNAL(src, COMSIG_GRENADE_DETONATE, lanced_by)
+	on_detonation()
 	if(ex_dev || ex_heavy || ex_light || ex_flame)
 		explosion(src, ex_dev, ex_heavy, ex_light, ex_flame)
-
+	if(delete_on_detonation)
+		qdel(src)
 	return TRUE
+
+/obj/item/grenade/proc/on_detonation()
+	return
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))

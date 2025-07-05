@@ -12,7 +12,8 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_MED = ACCOUNT_MED_NAME,
 										ACCOUNT_SRV = ACCOUNT_SRV_NAME,
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
-										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
+										ACCOUNT_SEC = ACCOUNT_SEC_NAME,
+										ACCOUNT_SYN = ACCOUNT_SYN_NAME)
 	var/list/departmental_accounts = list()
 	/**
 	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
@@ -76,6 +77,9 @@ SUBSYSTEM_DEF(economy)
 	for(var/dep_id in department_accounts)
 		if(dep_id == ACCOUNT_CAR) //cargo starts with NOTHING
 			new /datum/bank_account/department(dep_id, 0, player_account = FALSE)
+			continue
+		if(dep_id == ACCOUNT_SYN) //syndie slush fund starts with 50 grand
+			new /datum/bank_account/department(dep_id, 50000, player_account = FALSE)
 			continue
 		new /datum/bank_account/department(dep_id, budget_to_hand_out, player_account = FALSE)
 	return SS_INIT_SUCCESS

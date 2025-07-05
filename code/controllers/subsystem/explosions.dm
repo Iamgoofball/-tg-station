@@ -296,7 +296,7 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
  * - explosion_direction: The angle in which the explosion is pointed (for directional explosions.)
  * - explosion_arc: The angle of the arc covered by a directional explosion (if 360 the explosion is non-directional.)
  */
-/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, protect_epicenter, atom/explosion_cause, explosion_direction, explosion_arc)
+/datum/controller/subsystem/explosions/proc/propagate_blastwave(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, adminlog, ignorecap, silent, smoke, protect_epicenter, atom/explosion_cause, explosion_direction, explosion_arc, color = LIGHT_COLOR_LAVA, tiny = FALSE)
 	epicenter = get_turf(epicenter)
 	if(!epicenter)
 		return
@@ -381,14 +381,15 @@ ADMIN_VERB(check_bomb_impacts, R_DEBUG, "Check Bomb Impact", "See what the effec
 	if(!silent)
 		shake_the_room(epicenter, orig_max_distance, far_dist, devastation_range, heavy_impact_range)
 
-	if(heavy_impact_range > 1)
-		var/datum/effect_system/explosion/E
-		if(smoke)
-			E = new /datum/effect_system/explosion/smoke
+	if(devastation_range > 0)
+		new /obj/effect/temp_visual/explosion(epicenter, max_range, color, FALSE, TRUE)
+	else if(heavy_impact_range > 0)
+		new /obj/effect/temp_visual/explosion(epicenter, max_range, color, FALSE, FALSE)
+	else if(light_impact_range > 0)
+		if(tiny)
+			new /obj/effect/temp_visual/explosion(epicenter, max_range, color, FALSE, FALSE, TRUE)
 		else
-			E = new
-		E.set_up(epicenter)
-		E.start()
+			new /obj/effect/temp_visual/explosion(epicenter, max_range, color, TRUE, FALSE)
 
 	//flash mobs
 	if(flash_range)

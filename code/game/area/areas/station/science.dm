@@ -3,6 +3,7 @@
 	icon_state = "science"
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	minimap_color = MINIMAP_AREA_RESEARCH
 
 /area/station/science/lobby
 	name = "\improper Science Lobby"

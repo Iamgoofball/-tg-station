@@ -2,6 +2,7 @@
 
 // Stub defined ai_monitored.dm
 /area/station/ai_monitored
+	minimap_color = MINIMAP_AREA_DEFAULT
 
 /area/station/ai_monitored/turret_protected
 
@@ -37,21 +38,25 @@
 	name = "\improper AI Upload Chamber"
 	icon_state = "ai_upload"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	minimap_color = MINIMAP_AREA_RESEARCH
 
 /area/station/ai_monitored/turret_protected/ai_upload_foyer
 	name = "\improper AI Upload Access"
 	icon_state = "ai_upload_foyer"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	minimap_color = MINIMAP_AREA_RESEARCH
 
 /area/station/ai_monitored/turret_protected/ai
 	name = "\improper AI Chamber"
 	icon_state = "ai_chamber"
 	ai_will_not_hear_this = null
+	minimap_color = MINIMAP_AREA_RESEARCH
 
 /area/station/ai_monitored/turret_protected/aisat
 	name = "\improper AI Satellite"
 	icon_state = "ai"
 	sound_environment = SOUND_ENVIRONMENT_ROOM
+	minimap_color = MINIMAP_AREA_RESEARCH
 
 /area/station/ai_monitored/turret_protected/aisat/atmos
 	name = "\improper AI Satellite Atmos"
@@ -109,6 +114,7 @@
 	name = "EVA Storage"
 	icon_state = "eva"
 	ambience_index = AMBIENCE_DANGER
+	minimap_color = MINIMAP_AREA_COMMAND
 
 /area/station/ai_monitored/command/storage/eva/upper
 	name = "Upper EVA Storage"
@@ -117,6 +123,7 @@
 	name = "\improper Vault"
 	icon_state = "nuke_storage"
 	airlock_wires = /datum/wires/airlock/command
+	minimap_color = MINIMAP_AREA_CARGO
 
 //Security - AI Monitored
 /area/station/ai_monitored/security/armory
@@ -124,6 +131,7 @@
 	icon_state = "armory"
 	ambience_index = AMBIENCE_DANGER
 	airlock_wires = /datum/wires/airlock/security
+	minimap_color = MINIMAP_AREA_SEC
 
 /area/station/ai_monitored/security/armory/upper
 	name = "Upper Armory"
