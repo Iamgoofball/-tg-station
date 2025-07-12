@@ -8,6 +8,10 @@
 #define OVERLAY_LIGHT_DIRECTIONAL 3
 ///Light made by masking the lighting darkness plane, and is a directionally focused beam.
 #define OVERLAY_LIGHT_BEAM 4
+/// Vis_contents version of an overlay light. More expensive but lets you manipulate the lights directly for animate() and such.
+#define OVERLAY_LIGHT_VISCONTENTS 5
+#define OVERLAY_LIGHT_DIRECTIONAL_VISCONTENTS 6
+#define OVERLAY_LIGHT_BEAM_VISCONTENTS 7
 /// Nonesensical value for light color, used for null checks.
 #define NONSENSICAL_VALUE -99999
 

@@ -105,6 +105,7 @@
 	cell_type = /obj/item/stock_parts/power_store/cell/crap
 	item_flags = NEEDS_PERMIT | SLOWS_WHILE_IN_HAND
 	can_charge = FALSE
+	muzzle_type = /obj/effect/temp_visual/muzzle/laser
 	var/obj/item/minigunpack/ammo_pack
 
 /obj/item/gun/energy/minigun/Initialize(mapload)

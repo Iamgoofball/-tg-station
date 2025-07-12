@@ -1668,3 +1668,6 @@
 	SIGNAL_HANDLER
 	var/datum/atom_hud/datahud = GLOB.huds[GLOB.trait_to_hud[new_trait]]
 	datahud.hide_from(src)
+
+/mob/make_debris_proj(obj/projectile/proj)
+	return // no debris on base

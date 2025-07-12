@@ -3,8 +3,8 @@
 
 /obj/item/organ/brain/cybernetic
 	name = "cybernetic brain"
-	desc = "A mechanical brain found inside of androids. Not to be confused with a positronic brain."
-	icon_state = "brain-c"
+	desc = "A mechanical brain found inside of robots. The design is similar to a Positronic, but it's not a full positronic."
+	icon_state = "robot_brain_dead"
 	organ_flags = ORGAN_ROBOTIC | ORGAN_VITAL
 	failing_desc = "seems to be broken, and will not work without repairs."
 	organ_traits = list(
@@ -33,6 +33,7 @@
 	var/atom/movable/screen/power_meter/power_meter
 	var/atom/movable/screen/power_meter/oil/oil_meter
 	var/temperature_disparity = 1
+	var/obj/effect/dummy/lighting_obj/moblight/robot_beacon/our_beacon
 
 #define POWER_STATE_FULL_CHARGE 4
 #define POWER_STATE_CHARGED 3
@@ -258,10 +259,11 @@
 	beacon_light_timer = addtimer(CALLBACK(src, PROC_REF(pulse_beacon_light)), 2 SECONDS, TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
 
 /obj/item/organ/brain/cybernetic/proc/pulse_beacon_light()
-	owner.mob_light(range = 1.5, power = 2, color = LIGHT_COLOR_INTENSE_RED, duration = 1 SECONDS)
+	our_beacon.set_light_on(!our_beacon.light_on) // toggle that mf
 
 /obj/item/organ/brain/cybernetic/proc/deactivate_distress_beacon()
 	distress_beacon_active = FALSE
+	our_beacon.set_light_on(FALSE)
 	deltimer(beacon_light_timer)
 
 /obj/item/organ/brain/cybernetic/on_mob_insert(mob/living/carbon/brain_owner, special, movement_flags)
@@ -284,6 +286,7 @@
 	brain_owner.med_hud_set_health() // fix the health bar sprite
 	brain_owner.med_hud_set_status()
 	brain_owner.add_movespeed_mod_immunities("robot_brain", /datum/movespeed_modifier/damage_slowdown)
+	our_beacon = new(brain_owner)
 
 /obj/item/organ/brain/cybernetic/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	UnregisterSignal(organ_owner, COMSIG_HUMAN_ON_HANDLE_BLOOD)
@@ -303,6 +306,7 @@
 	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_TEMPERATURE)
 	organ_owner.mob_mood = new /datum/mood(organ_owner)
 	organ_owner.remove_movespeed_mod_immunities("robot_brain", /datum/movespeed_modifier/damage_slowdown)
+	qdel(our_beacon)
 	. = ..()
 
 /obj/item/organ/brain/cybernetic/proc/activate_distress_beacon_death(mob/living/target, gibbed)
@@ -340,6 +344,15 @@
 /obj/item/organ/brain/cybernetic/proc/on_login(mob/living/source)
 	SIGNAL_HANDLER
 	run_updates()
+	update_appearance()
+
+/obj/item/organ/brain/cybernetic/apply_organ_damage(damage_amount, maximum, required_organ_flag)
+	. = ..()
+	update_appearance()
+
+/obj/item/organ/brain/cybernetic/set_organ_damage(damage_amount, required_organ_flag)
+	. = ..()
+	update_appearance()
 
 /obj/item/organ/brain/cybernetic/proc/run_updates(instant = FALSE)
 	if(power < 0)
@@ -659,6 +672,22 @@
 			return span_info("You can feel the small spark of life still left in this one.")
 	else
 		return span_info("This one is completely devoid of life.")
+
+/obj/item/organ/brain/cybernetic/update_appearance(updates)
+	. = ..()
+	if(suicided)
+		icon_state = "robot_brain_dead"
+		return
+	if(brainmob && (decoy_override || brainmob.client || brainmob.get_ghost()))
+		if(organ_flags & ORGAN_FAILING)
+			icon_state = "robot_brain_dead"
+			return
+		else
+			icon_state = "robot_brain_alive"
+			return
+	else
+		icon_state = "robot_brain_empty"
+		return
 
 /obj/item/organ/brain/cybernetic/check_for_repair(obj/item/item, mob/user)
 	if (item.tool_behaviour == TOOL_MULTITOOL) //attempt to repair the brain

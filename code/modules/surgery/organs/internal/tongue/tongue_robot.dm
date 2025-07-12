@@ -8,6 +8,10 @@
 	attack_verb_simple = list("beep", "boop")
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	icon_state = "speaker"
+	sense_of_taste = FALSE
+	liked_foodtypes = NONE
+	disliked_foodtypes = NONE
+	toxic_foodtypes = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | GROSS | TOXIC | PINEAPPLE | BREAKFAST | CLOTH | NUTS | SEAFOOD | ORANGES | BUGS | GORE | STONE
 
 /obj/item/organ/tongue/speaker/on_life(seconds_per_tick, times_fired)
 	. = ..()

@@ -18,9 +18,6 @@
 	///item released when deconstructed
 	var/item_deconstruct = /obj/item/stack/rods
 
-/obj/structure/railing/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_SPARKS, -40, 8, 1)
-
 /datum/armor/structure_railing
 	melee = 35
 	bullet = 50

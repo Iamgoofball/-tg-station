@@ -5,7 +5,8 @@
 	hud_type = /datum/hud/living
 	interaction_flags_click = ALLOW_RESTING
 	interaction_flags_mouse_drop = ALLOW_RESTING
-
+	debris_icon = DEBRIS_BLOOD
+	debris_amount = 8
 	///Tracks the scale of the mob transformation matrix in relation to its identity. Use update_transform(resize) to change it.
 	var/current_size = RESIZE_DEFAULT_SIZE
 	///How the mob transformation matrix is scaled on init.

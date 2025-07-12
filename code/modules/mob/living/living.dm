@@ -2997,3 +2997,35 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
+
+/mob/living/make_debris_proj(obj/projectile/proj)
+	if(!proj.damage) // don't make impacts on shit like kisses
+		return
+	var/atom/target = src
+	var/angle = !isnull(proj.angle) ? proj.angle : round(get_angle(proj.starting, target), 1)
+	var/x_component = sin(angle) * debris_velocity
+	var/y_component = cos(angle) * debris_velocity
+	var/obj/effect/abstract/particle_holder/debris_visuals
+	var/turf/target_turf = get_turf(target)
+	var/impact_x = 0
+	var/impact_y = 0
+	var/particle_scale = min(1.5, max((proj.damage / 20), 1))
+	if(target_turf == proj.original)
+		impact_x = target.pixel_x + proj.p_x - ICON_SIZE_X / 2
+		impact_y = target.pixel_y + proj.p_y - ICON_SIZE_Y / 2
+	else
+		impact_x = proj.entry_x + proj.movement_vector?.pixel_x * rand(0, ICON_SIZE_X / 2)
+		impact_y = proj.entry_y + proj.movement_vector?.pixel_y * rand(0, ICON_SIZE_Y / 2)
+	if(debris_icon)
+		debris_visuals = new(target, /particles/debris)
+		debris_visuals.particles.position = list(impact_x, impact_y)
+		debris_visuals.particles.velocity = list(-x_component, -y_component)
+		debris_visuals.layer = ABOVE_OBJ_LAYER + 0.02
+		debris_visuals.particles.icon_state = debris_icon
+		debris_visuals.particles.count = debris_amount
+		debris_visuals.particles.spawning = debris_amount
+		debris_visuals.particles.scale = debris_scale * particle_scale
+		debris_visuals.particles.rotation = generator(GEN_NUM, debris_rotation_low, debris_rotation_high)
+		debris_visuals.particles.color = BLOOD_COLOR_RED
+
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, remove_ping), src, null, debris_visuals, null), 0.4 SECONDS)

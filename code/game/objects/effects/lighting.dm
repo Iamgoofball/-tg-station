@@ -33,6 +33,15 @@
 	if(!ismob(loc))
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/dummy/lighting_obj/moblight/robot_beacon
+	light_system = OVERLAY_LIGHT_VISCONTENTS
+	light_on = FALSE
+	light_range = 1.5
+	light_color = LIGHT_COLOR_INTENSE_RED
+	light_power = 2
+	light_on_time = 1 SECONDS
+	light_off_time = 1 SECONDS
+
 /obj/effect/dummy/lighting_obj/moblight/fire
 	name = "mob fire lighting"
 	light_color = LIGHT_COLOR_FIRE

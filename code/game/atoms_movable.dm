@@ -196,7 +196,12 @@
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
-
+		if(OVERLAY_LIGHT_VISCONTENTS)
+			AddComponent(/datum/component/overlay_lighting, viscontents = TRUE)
+		if(OVERLAY_LIGHT_DIRECTIONAL_VISCONTENTS)
+			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, viscontents = TRUE)
+		if(OVERLAY_LIGHT_BEAM_VISCONTENTS)
+			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE, viscontents = TRUE)
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)

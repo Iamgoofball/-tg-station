@@ -13,6 +13,9 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	armor_type = /datum/armor/structure_bookcase
+	debris_icon = DEBRIS_PAPER
+	debris_velocity = -40
+	debris_amount = 5
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE
@@ -23,8 +26,6 @@
 	/// How many random books to generate.
 	var/books_to_load = 0
 
-/obj/structure/bookcase/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_PAPER, -40, 5)
 
 /datum/armor/structure_bookcase
 	fire = 50

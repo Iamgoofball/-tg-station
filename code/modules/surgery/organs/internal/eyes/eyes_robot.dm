@@ -9,17 +9,24 @@
 /obj/item/organ/eyes/camera/on_mob_remove(mob/living/carbon/eye_owner)
 	. = ..()
 	owner.clear_fullscreen("robot_eye_static")
+	owner?.client?.view_size?.disableTextMode()
 
 /obj/item/organ/eyes/camera/damage_threshold_crossed(new_damage)
 	return // we don't do that here
 
 /obj/item/organ/eyes/camera/apply_damaged_eye_effects()
 	var/static_alpha = 0
+	var/go_robot = FALSE
 	static_alpha = 240 * (damage / maxHealth)
 	if(organ_flags & ORGAN_DEPOWERED)
-		static_alpha = 240
+		static_alpha = 0
+		owner?.client?.view_size?.resetFormat()
 	if(organ_flags & ORGAN_FAILING)
-		static_alpha = 240
+		static_alpha = 0
+	if(go_robot)
+		owner?.client?.view_size?.enableTextMode()
+	else
+		owner?.client?.view_size?.disableTextMode()
 	if(static_alpha)
 		owner.overlay_fullscreen("robot_eye_static", /atom/movable/screen/fullscreen/static_vision/robot_eyes, screen_alpha = static_alpha)
 	else

@@ -436,6 +436,7 @@
 	can_unsuppress = TRUE
 	suppressor_x_offset = 3
 	suppressor_y_offset = 3
+	muzzle_type = /obj/effect/temp_visual/muzzle/sniper
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/examine(mob/user)
 	. = ..()

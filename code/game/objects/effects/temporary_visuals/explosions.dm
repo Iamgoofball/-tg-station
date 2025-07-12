@@ -270,6 +270,8 @@
 	var/explosion_icon = 'icons/effects/96x96.dmi'
 	var/pixel_w_offset = -32
 	var/pixel_z_offset = -32
+	var/speed_multiplier = 1
+	var/speed_multiplier_invert = 1
 	///smoke wave particle holder
 	var/obj/effect/abstract/particle_holder/smoke_wave
 	///explosion smoke particle holder
@@ -329,6 +331,9 @@
 			explosion_smoke = new(src, /particles/explosion_smoke/tiny/nodirt)
 		else
 			explosion_smoke = new(src, /particles/explosion_smoke/nodirt)
+		explosion_smoke.particles.lifespan *= speed_multiplier
+		explosion_smoke.particles.fade *= speed_multiplier
+		explosion_smoke.particles.velocity = generator(GEN_CIRCLE, 15 * speed_multiplier_invert, 15 * speed_multiplier_invert)
 	if(!tiny)
 		if(outdoors)
 			if(small)
@@ -340,28 +345,44 @@
 				falling_debris = new(src, /particles/falling_debris/small)
 			else
 				falling_debris = new(src, /particles/falling_debris)
+			dirt_kickup.particles.lifespan *= speed_multiplier
+			dirt_kickup.particles.fade *= speed_multiplier
+			dirt_kickup.particles.velocity = list(0, 12 * speed_multiplier_invert)
+			falling_debris.particles.lifespan *= speed_multiplier
+			falling_debris.particles.fade *= speed_multiplier
+			falling_debris.particles.velocity = list(0, 26 * speed_multiplier_invert)
 		else
 			if(small)
 				smoke_wave = new(src, /particles/smoke_wave/small/nodirt)
 			else
 				smoke_wave = new(src, /particles/smoke_wave/nodirt)
+		smoke_wave.particles.lifespan *= speed_multiplier
+		smoke_wave.particles.fade *= speed_multiplier
 		sparks = new(src, /particles/sparks_outwards)
 		if(outdoors)
 			if(large)
 				large_kickup = new(src, /particles/dirt_kickup_large/deva)
+				large_kickup.particles.velocity = list(0, 25 * speed_multiplier_invert)
 			else
 				large_kickup = new(src, /particles/dirt_kickup_large)
+				large_kickup.particles.velocity = list(0, 12 * speed_multiplier_invert)
+			large_kickup.particles.lifespan *= speed_multiplier
+			large_kickup.particles.fade *= speed_multiplier
+		sparks.particles.lifespan *= speed_multiplier
+		sparks.particles.fade *= speed_multiplier
 		if(large)
-			smoke_wave.particles.velocity = generator(GEN_CIRCLE, 6 * radius, 6 * radius)
+			smoke_wave.particles.velocity = generator(GEN_CIRCLE, (6 * radius) * speed_multiplier_invert, (6 * radius) * speed_multiplier_invert)
 		else if(small)
-			smoke_wave.particles.velocity = generator(GEN_CIRCLE, 3 * radius, 3 * radius)
+			smoke_wave.particles.velocity = generator(GEN_CIRCLE, (3 * radius) * speed_multiplier_invert, (3 * radius) * speed_multiplier_invert)
 		else
-			smoke_wave.particles.velocity = generator(GEN_CIRCLE, 5 * radius, 5 * radius)
+			smoke_wave.particles.velocity = generator(GEN_CIRCLE, (5 * radius) * speed_multiplier_invert, (5 * radius) * speed_multiplier_invert)
 
 	if(!tiny)
-		sparks.particles.velocity = generator(GEN_CIRCLE, 8 * radius, 8 * radius)
-		addtimer(CALLBACK(src, PROC_REF(set_count_long)), 10)
-	addtimer(CALLBACK(src, PROC_REF(set_count_short), tiny), 5)
+		sparks.particles.velocity = generator(GEN_CIRCLE, (8 * radius) * speed_multiplier_invert, (8 * radius) * speed_multiplier_invert)
+		addtimer(CALLBACK(src, PROC_REF(set_count_long)), 10 * speed_multiplier)
+	else
+		sparks.particles.velocity = generator(GEN_CIRCLE, 30 * speed_multiplier_invert, 30 * speed_multiplier_invert)
+	addtimer(CALLBACK(src, PROC_REF(set_count_short), tiny), 5 * speed_multiplier)
 	explosion_smoke.layer = layer + 0.1
 
 /obj/effect/temp_visual/explosion/proc/set_count_short(tiny = FALSE)
@@ -392,3 +413,5 @@
 /obj/effect/temp_visual/explosion/fast
 	explosion_icon_state = "explosionfast"
 	duration = 12.5
+	speed_multiplier = 0.5
+	speed_multiplier_invert = 2

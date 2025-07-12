@@ -52,9 +52,6 @@
 			return TRUE
 		return FALSE
 
-/obj/structure/barricade/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_SPARKS, -40, 8, 1)
-
 /////BARRICADE TYPES///////
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
@@ -63,10 +60,11 @@
 	icon_state = "woodenbarricade"
 	resistance_flags = FLAMMABLE
 	bar_material = WOOD
+	debris_icon = DEBRIS_WOOD
+	debris_velocity = -40
+	debris_amount = 8
+	debris_scale = 1
 	var/drop_amount = 3
-
-/obj/structure/barricade/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_WOOD, -40, 8, 1)
 
 /obj/structure/barricade/wooden/Initialize(mapload)
 	. = ..()
@@ -115,9 +113,7 @@
 	desc = "This space is blocked off by a crude assortment of planks. It seems to be covered in a layer of snow."
 	icon_state = "plankbarricade_snow"
 	max_integrity = 75
-
-/obj/structure/barricade/wooden/crude/snow/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_SNOW, -40, 8, 1)
+	debris_icon = DEBRIS_SNOW
 
 /obj/structure/barricade/wooden/make_debris()
 	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
@@ -135,9 +131,10 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SANDBAGS
 	canSmoothWith = SMOOTH_GROUP_SANDBAGS + SMOOTH_GROUP_SECURITY_BARRICADE + SMOOTH_GROUP_WALLS
-
-/obj/structure/barricade/sandbags/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_PAPER, -40, 8, 1)
+	debris_icon = DEBRIS_PAPER
+	debris_velocity = -40
+	debris_amount = 8
+	debris_scale = 1
 
 /obj/structure/barricade/sandbags/Initialize(mapload)
 	. = ..()

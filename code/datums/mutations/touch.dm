@@ -417,7 +417,7 @@
 
 	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] [smite_text_to_target], hurting you!"))
 	motherfucker_to_hurt.emote("scream")
-	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), color = evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
+	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), 1, evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
 	. = TRUE
 
 /obj/item/melee/touch_attack/lay_on_hands

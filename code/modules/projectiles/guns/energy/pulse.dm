@@ -11,6 +11,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = /obj/item/stock_parts/power_store/cell/pulse
+	muzzle_type = /obj/effect/temp_visual/muzzle/pulse
 
 /obj/item/gun/energy/pulse/Initialize(mapload)
 	. = ..()

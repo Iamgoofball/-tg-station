@@ -1,41 +1,20 @@
 /datum/species/android
-	name = "Android"
+	name = "Robot"
 	id = SPECIES_ANDROID
 	examine_limb_id = SPECIES_HUMAN
-	inherent_traits = list(
-		TRAIT_GENELESS,
-		TRAIT_LIMBATTACHMENT,
-		TRAIT_LIVERLESS_METABOLISM,
-		TRAIT_NOBLOOD,
-		TRAIT_NOBREATH,
-		TRAIT_NOCRITDAMAGE,
-		TRAIT_NOFIRE,
-		TRAIT_NOHUNGER,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_PLASMA_TRANSFORM,
-		TRAIT_NO_UNDERWEAR,
-		TRAIT_OVERDOSEIMMUNE,
-		TRAIT_PIERCEIMMUNE,
-		TRAIT_RADIMMUNE,
-		TRAIT_RESISTCOLD,
-		TRAIT_RESISTHEAT,
-		TRAIT_RESISTHIGHPRESSURE,
-		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_TOXIMMUNE,
-	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	exotic_bloodtype = BLOOD_TYPE_OIL
 	meat = null
 	mutantbrain = /obj/item/organ/brain/cybernetic
-	mutanttongue = /obj/item/organ/tongue/robot
-	mutantstomach = null
-	mutantappendix = null
-	mutantheart = null
-	mutantliver = null
-	mutantlungs = null
-	mutanteyes = /obj/item/organ/eyes/robotic
-	mutantears = /obj/item/organ/ears/cybernetic
+	mutanttongue = /obj/item/organ/tongue/speaker
+	mutantstomach = /obj/item/organ/stomach/fuel_generator
+	mutantappendix = /obj/item/organ/appendix/random_number_database
+	mutantheart = /obj/item/organ/heart/oil_pump
+	mutantliver = /obj/item/organ/liver/cleaning_filter
+	mutantlungs = /obj/item/organ/lungs/cooling_fans
+	mutanteyes = /obj/item/organ/eyes/camera
+	mutantears = /obj/item/organ/ears/microphone
 	species_language_holder = /datum/language_holder/synthetic
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
@@ -49,16 +28,18 @@
 	)
 
 /datum/species/android/get_physical_attributes()
-	return "Androids are almost, but not quite, identical to fully augmented humans. \
+	return "Robots are almost, but not quite, identical to fully augmented humans. \
 	Unlike those, though, they're completely immune to toxin damage, don't have blood or organs (besides their head), don't get hungry, and can reattach their limbs! \
 	That said, an EMP will devastate them and they cannot process any chemicals."
 
 /datum/species/android/get_species_description()
-	return "Androids are an entirely synthetic species."
+	return "Robots are an entirely robotic species."
 
 /datum/species/android/get_species_lore()
 	return list(
-		"Androids are a synthetic species created by Nanotrasen as an intermediary between humans and cyborgs."
+		"Robots are the product of Robotification, a new medical procedure created by Nanotrasen for emergency situations in which the victim's organs \
+		are unrecoverable or otherwise damaged beyond repair, in markets where cyborgification is illegal or impractical due to regulations. It was \
+		licensed out to the TerraGov Marine Corps as a groundbreaking new treatment for otherwise permanently disabled troops, but "
 	)
 
 /datum/species/android/create_pref_traits_perks()

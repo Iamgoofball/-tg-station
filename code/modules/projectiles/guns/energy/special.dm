@@ -9,6 +9,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
+	muzzle_type = /obj/effect/temp_visual/muzzle/disabler
 
 /obj/item/gun/energy/ionrifle/Initialize(mapload)
 	. = ..()
@@ -98,6 +99,7 @@
 	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+	muzzle_type = /obj/effect/temp_visual/muzzle/plasma_cutter
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -322,6 +324,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = /obj/item/stock_parts/power_store/cell/high
 	pin = null
+	muzzle_type = /obj/effect/temp_visual/muzzle/laser/emitter
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"

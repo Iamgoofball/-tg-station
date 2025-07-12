@@ -14,9 +14,9 @@
 	cutting_tool = /obj/item/wirecutters
 	can_weld_shut = FALSE
 	lid_icon_state = "cardboardopen"
-
-/obj/structure/closet/crate/cardboard/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_PAPER, -40, 5)
+	debris_icon = DEBRIS_PAPER
+	debris_velocity = -40
+	debris_amount = 5
 
 /obj/structure/closet/crate/cardboard/mothic
 	name = "\improper Mothic Fleet box"

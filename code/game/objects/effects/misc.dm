@@ -91,3 +91,6 @@
 /obj/effect/abstract/marker/powernet
 	name = "powernet run marker"
 	var/powernet_owner
+
+/obj/effect/abstract/directional_lighting
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

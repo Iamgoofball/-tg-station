@@ -32,6 +32,8 @@
 	var/lum_power = 0.5
 	///Transparency value.
 	var/set_alpha = 0
+	///Cone transparency value.
+	var/cone_set_alpha = 110
 	///For light sources that can be turned on and off.
 	var/overlay_lighting_flags = NONE
 
@@ -52,6 +54,8 @@
 
 	///Overlay effect to cut into the darkness and provide light.
 	var/image/visible_mask
+	/// Viscontents version of visible_mask.
+	var/obj/effect/overlay/light_visible/visible_mask_viscontents
 	///Lazy list to track the turfs being affected by our light, to determine their visibility.
 	var/list/turf/affected_turfs
 	///Movable atom currently holding the light. Parent might be a flashlight, for example, but that might be held by a mob or something else.
@@ -62,8 +66,12 @@
 	var/directional = FALSE
 	///Whether we're a beam light
 	var/beam = FALSE
+	///Whether we're using viscontents. Don't use this unless you need to animate/flick the light.
+	var/is_viscontents = FALSE
 	///A cone overlay for directional light, its alpha and color are dependent on the light
 	var/image/cone
+	/// Viscontents version of cone.
+	var/obj/effect/overlay/light_cone/cone_viscontents
 	///Current tracked direction for the directional cast behaviour
 	var/current_direction
 	///Tracks current directional x offset so we don't update unnecessarily
@@ -73,31 +81,47 @@
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
 
-/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force)
+	var/on_time = null
+	var/off_time = null
+	var/animate_easing = LINEAR_EASING
+
+/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force, viscontents)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	var/atom/movable/movable_parent = parent
-	if(!force && movable_parent.light_system != OVERLAY_LIGHT && movable_parent.light_system != OVERLAY_LIGHT_DIRECTIONAL && movable_parent.light_system != OVERLAY_LIGHT_BEAM)
-		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use [OVERLAY_LIGHT], [OVERLAY_LIGHT_DIRECTIONAL] or [OVERLAY_LIGHT_BEAM] instead.")
+	var/list/compatible_lights = list(OVERLAY_LIGHT, OVERLAY_LIGHT_BEAM, OVERLAY_LIGHT_DIRECTIONAL, OVERLAY_LIGHT_VISCONTENTS, OVERLAY_LIGHT_BEAM_VISCONTENTS, OVERLAY_LIGHT_DIRECTIONAL_VISCONTENTS)
+	if(!force && !(movable_parent.light_system in compatible_lights))
+		stack_trace("[type] added to [parent], with [movable_parent.light_system] value for the light_system var. Use any of the OVERLAY_LIGHT options instead.")
 		return COMPONENT_INCOMPATIBLE
 
 	. = ..()
-
-	visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
-	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, movable_parent)
-	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	visible_mask.alpha = 0
-	visible_mask.blend_mode = BLEND_ADD
-	if(is_directional)
-		directional = TRUE
-		cone = image('icons/effects/light_overlays/light_cone.dmi', icon_state = "light")
-		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, movable_parent)
-		cone.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-		cone.alpha = 110
-		cone.blend_mode = BLEND_ADD
-		cone.transform = cone.transform.Translate(-32, -32)
-		set_direction(movable_parent.dir)
+	if(viscontents)
+		is_viscontents = TRUE
+	if(!is_viscontents)
+		visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
+		SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, movable_parent)
+		visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		visible_mask.alpha = 0
+		visible_mask.blend_mode = BLEND_ADD
+		if(is_directional)
+			directional = TRUE
+			cone = image('icons/effects/light_overlays/light_cone.dmi', icon_state = "light")
+			SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, movable_parent)
+			cone.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			cone.alpha = 110
+			cone.blend_mode = BLEND_ADD
+			cone.transform = cone.transform.Translate(-32, -32)
+			set_direction(movable_parent.dir)
+	else
+		visible_mask_viscontents = new()
+		SET_PLANE_EXPLICIT(visible_mask_viscontents, O_LIGHTING_VISUAL_PLANE, movable_parent)
+		if(is_directional)
+			directional = TRUE
+			cone_viscontents = new()
+			SET_PLANE_EXPLICIT(cone_viscontents, O_LIGHTING_VISUAL_PLANE, movable_parent)
+			cone_viscontents.transform = cone_viscontents.transform.Translate(-32, -32)
+			set_direction(movable_parent.dir)
 	if(is_beam)
 		beam = TRUE
 	if(!isnull(_range))
@@ -109,8 +133,15 @@
 	if(!isnull(_color))
 		movable_parent.set_light_color(_color)
 	set_color(parent, movable_parent.light_color)
+	if(!isnull(movable_parent.light_on_time))
+		on_time = movable_parent.light_on_time
+	if(!isnull(movable_parent.light_off_time))
+		off_time = movable_parent.light_off_time
+	if(!isnull(movable_parent.light_animate_curve))
+		animate_easing = movable_parent.light_animate_curve
 	if(!isnull(starts_on))
 		movable_parent.set_light_on(starts_on)
+
 
 
 /datum/component/overlay_lighting/RegisterWithParent()
@@ -162,8 +193,13 @@
 	set_parent_attached_to(null)
 	set_holder(null)
 	clean_old_turfs()
-	visible_mask = null
-	cone = null
+	if(!is_viscontents)
+		visible_mask = null
+		cone = null
+	else
+		QDEL_NULL(visible_mask_viscontents)
+		if(directional)
+			QDEL_NULL(cone_viscontents)
 	parent_attached_to = null
 	return ..()
 
@@ -200,18 +236,55 @@
 ///Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/add_dynamic_lumi()
 	LAZYSET(current_holder.affected_dynamic_lights, src, lumcount_range + 1)
-	current_holder.underlays += visible_mask
+	if(!is_viscontents)
+		current_holder.underlays += visible_mask
+	else
+		if(on_time)
+			visible_mask_viscontents.alpha = 0
+			current_holder.vis_contents += visible_mask_viscontents
+			animate(visible_mask_viscontents, alpha = set_alpha, time = on_time, easing = animate_easing, flags = ANIMATION_CONTINUE)
+		else
+			current_holder.vis_contents += visible_mask_viscontents
 	current_holder.update_dynamic_luminosity()
 	if(directional)
-		current_holder.underlays += cone
+		if(!is_viscontents)
+			current_holder.underlays += cone
+		else
+			if(on_time)
+				cone_viscontents.alpha = 0
+				current_holder.vis_contents += cone_viscontents
+				animate(cone_viscontents, alpha = cone_set_alpha, time = on_time, easing = animate_easing, flags = ANIMATION_CONTINUE)
+			else
+				current_holder.vis_contents += cone_viscontents
+
 
 ///Removes the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/remove_dynamic_lumi()
 	LAZYREMOVE(current_holder.affected_dynamic_lights, src)
-	current_holder.underlays -= visible_mask
+	if(!is_viscontents)
+		current_holder.underlays -= visible_mask
+	else
+		if(off_time)
+			animate(visible_mask_viscontents, alpha = 0, time = off_time, easing = animate_easing, flags = ANIMATION_CONTINUE)
+			addtimer(CALLBACK(src, PROC_REF(remove_visible_mask_viscontents)), wait = off_time, flags = TIMER_CLIENT_TIME)
+		else
+			current_holder.vis_contents -= visible_mask_viscontents
 	current_holder.update_dynamic_luminosity()
 	if(directional)
-		current_holder.underlays -= cone
+		if(!is_viscontents)
+			current_holder.underlays -= cone
+		else
+			if(off_time)
+				animate(cone_viscontents, alpha = 0, time = off_time, easing = animate_easing, flags = ANIMATION_CONTINUE)
+				addtimer(CALLBACK(src, PROC_REF(remove_cone_viscontents)), wait = off_time, flags = TIMER_CLIENT_TIME)
+			else
+				current_holder.vis_contents -= cone_viscontents
+
+/datum/component/overlay_lighting/proc/remove_visible_mask_viscontents()
+	current_holder.vis_contents -= visible_mask_viscontents
+
+/datum/component/overlay_lighting/proc/remove_cone_viscontents()
+	current_holder.vis_contents -= cone_viscontents
 
 ///Called to change the value of parent_attached_to.
 /datum/component/overlay_lighting/proc/set_parent_attached_to(atom/movable/new_parent_attached_to)
@@ -322,14 +395,21 @@
 /datum/component/overlay_lighting/proc/on_z_move(atom/source)
 	SIGNAL_HANDLER
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays -= visible_mask
-		current_holder.underlays -= cone
-	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, source)
-	if(cone)
-		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, source)
+		if(!is_viscontents)
+			current_holder.underlays -= visible_mask
+			current_holder.underlays -= cone
+	if(!is_viscontents)
+		SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, source)
+		if(cone)
+			SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, source)
+	else
+		SET_PLANE_EXPLICIT(visible_mask_viscontents, O_LIGHTING_VISUAL_PLANE, source)
+		if(cone_viscontents)
+			SET_PLANE_EXPLICIT(cone_viscontents, O_LIGHTING_VISUAL_PLANE, source)
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays += visible_mask
-		current_holder.underlays += cone
+		if(!is_viscontents)
+			current_holder.underlays += visible_mask
+			current_holder.underlays += cone
 
 ///Called when the current_holder is qdeleted, to remove the light effect.
 /datum/component/overlay_lighting/proc/on_parent_attached_to_qdel(atom/movable/source, force)
@@ -362,20 +442,30 @@
 	range = clamp(CEILING(new_range, 0.5), 1, 6)
 	var/pixel_bounds = ((range - 1) * 64) + 32
 	lumcount_range = CEILING(range, 1)
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays -= visible_mask
-	visible_mask.icon = light_overlays["[pixel_bounds]"]
+	if(!is_viscontents)
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays -= visible_mask
+		visible_mask.icon = light_overlays["[pixel_bounds]"]
+	else
+		visible_mask_viscontents.icon = light_overlays["[pixel_bounds]"]
 	if(pixel_bounds == 32)
 		if(!directional) // it's important that we make it to the end of this function if we are a directional light
-			visible_mask.transform = null
+			if(!is_viscontents)
+				visible_mask.transform = null
+			else
+				visible_mask_viscontents.transform = null
 			return
 	else
 		var/offset = (pixel_bounds - 32) * 0.5
 		var/matrix/transform = new
 		transform.Translate(-offset, -offset)
-		visible_mask.transform = transform
+		if(!is_viscontents)
+			visible_mask.transform = transform
+		else
+			visible_mask_viscontents.transform = transform
 	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays += visible_mask
+		if(!is_viscontents)
+			current_holder.underlays += visible_mask
 	if(directional)
 		if(beam)
 			cast_range = max(round(new_range * 0.5), 1)
@@ -391,39 +481,52 @@
 	var/new_power = source.light_power
 	set_lum_power(new_power >= 0 ? 0.5 : -0.5)
 	set_alpha = min(230, (abs(new_power) * 120) + 30)
-	visible_mask.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
-	if(directional)
-		cone.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays -= visible_mask
-	visible_mask.alpha = set_alpha
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays += visible_mask
-	if(!directional)
-		return
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays -= cone
-	cone.alpha = min(120, (abs(new_power) * 60) + 15)
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays += cone
-
+	cone_set_alpha = min(120, (abs(new_power) * 60) + 15)
+	if(!is_viscontents)
+		visible_mask.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
+		if(directional)
+			cone.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays -= visible_mask
+		visible_mask.alpha = set_alpha
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays += visible_mask
+		if(!directional)
+			return
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays -= cone
+		cone.alpha = cone_set_alpha
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays += cone
+	else
+		visible_mask_viscontents.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
+		visible_mask_viscontents.alpha = set_alpha
+		if(!directional)
+			return
+		cone_viscontents.blend_mode = new_power > 0 ? BLEND_ADD : BLEND_SUBTRACT
+		cone_viscontents.alpha = cone_set_alpha
 
 ///Changes the light's color, pretty straightforward.
 /datum/component/overlay_lighting/proc/set_color(atom/source, old_color)
 	SIGNAL_HANDLER
 	var/new_color = source.light_color
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays -= visible_mask
-	visible_mask.color = new_color
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays += visible_mask
-	if(!directional)
-		return
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays -= cone
-	cone.color = new_color
-	if(current_holder && overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays += cone
+	if(!is_viscontents)
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays -= visible_mask
+		visible_mask.color = new_color
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays += visible_mask
+		if(!directional)
+			return
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays -= cone
+		cone.color = new_color
+		if(current_holder && overlay_lighting_flags & LIGHTING_ON)
+			current_holder.underlays += cone
+	else
+		visible_mask_viscontents.color = new_color
+		if(directional)
+			cone_viscontents.color = new_color
 
 
 ///Toggles the light on and off.
@@ -502,8 +605,8 @@
 			final_distance = i
 			break
 		scanning = next_turf
-
-	current_holder.underlays -= visible_mask
+	if(!is_viscontents)
+		current_holder.underlays -= visible_mask
 
 	var/translate_x = -((range - 1) * 32)
 	var/translate_y = translate_x
@@ -526,6 +629,30 @@
 			translate_x += -32 * final_distance
 			if(beam && range > 1)
 				scale_y = 1 / (range - (range/5))
+		if(NORTHWEST)
+			translate_y += 32 * final_distance
+			translate_x += -32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				scale_y = 1 / (range - (range/5))
+		if(SOUTHWEST)
+			translate_y += -32 * final_distance
+			translate_x += -32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				scale_y = 1 / (range - (range/5))
+		if(NORTHEAST)
+			translate_y += 32 * final_distance
+			translate_x += 32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				scale_y = 1 / (range - (range/5))
+		if(SOUTHEAST)
+			translate_y += -32 * final_distance
+			translate_x += 32 * final_distance
+			if(beam && range > 1)
+				scale_x = 1 / (range - (range/5))
+				scale_y = 1 / (range - (range/5))
 
 	if((directional_offset_x != translate_x) || (directional_offset_y != translate_y))
 		directional_offset_x = translate_x
@@ -534,9 +661,13 @@
 		if(beam && range > 1)
 			transform.Scale(scale_x, scale_y)
 		transform.Translate(translate_x, translate_y)
-		visible_mask.transform = transform
+		if(!is_viscontents)
+			visible_mask.transform = transform
+		else
+			visible_mask_viscontents.transform = transform
 	if(overlay_lighting_flags & LIGHTING_ON)
-		current_holder.underlays += visible_mask
+		if(!is_viscontents)
+			current_holder.underlays += visible_mask
 
 ///Called when current_holder changes loc.
 /datum/component/overlay_lighting/proc/on_holder_dir_change(atom/movable/source, olddir, newdir)
@@ -555,6 +686,8 @@
 	if(current_direction == newdir)
 		return
 	current_direction = newdir
+	if(is_viscontents)
+		cone_viscontents.setDir(newdir)
 	if(overlay_lighting_flags & LIGHTING_ON)
 		make_luminosity_update()
 

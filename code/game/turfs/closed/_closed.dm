@@ -10,10 +10,6 @@
 	pass_flags_self = PASSCLOSEDTURF
 	minimap_color = MINIMAP_BLACK
 
-/turf/closed/Initialize(mapload)
-	. = ..()
-	add_debris_element()
-
 /turf/closed/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src

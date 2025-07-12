@@ -19,6 +19,8 @@
 	var/is_suppressed = FALSE
 	/// The client that owns this view packet
 	var/client/chief = null
+	/// Are we in text mode?
+	var/text_mode = FALSE
 
 /datum/view_data/New(client/owner)
 	chief = owner
@@ -67,6 +69,7 @@
 /datum/view_data/proc/resetToDefault()
 	width = 0
 	height = 0
+	text_mode = FALSE
 	apply()
 
 /datum/view_data/proc/add(toAdd)
@@ -109,6 +112,10 @@
 
 /datum/view_data/proc/apply()
 	chief?.change_view(getView())
+	if(text_mode)
+		winset(chief, "mapwindow.map", "text-mode=true")
+	else
+		winset(chief, "mapwindow.map", "text-mode=false")
 	afterViewChange()
 
 /datum/view_data/proc/supress()
@@ -117,6 +124,14 @@
 
 /datum/view_data/proc/unsupress()
 	is_suppressed = FALSE
+	apply()
+
+/datum/view_data/proc/enableTextMode()
+	text_mode = TRUE
+	apply()
+
+/datum/view_data/proc/disableTextMode()
+	text_mode = FALSE
 	apply()
 
 /datum/view_data/proc/getView()

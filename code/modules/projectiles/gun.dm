@@ -82,6 +82,9 @@
 
 	var/pb_knockback = 0
 
+	var/smoking_gun = FALSE
+	var/muzzle_type
+
 	/// Cooldown for the visible message sent from gun flipping.
 	COOLDOWN_DECLARE(flip_cooldown)
 
@@ -248,6 +251,15 @@
 			ignored_mobs = user,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
+
+	if(smoking_gun)
+		var/x_component = sin(get_angle(user, pbtarget)) * 40
+		var/y_component = cos(get_angle(user, pbtarget)) * 40
+		var/obj/effect/abstract/particle_holder/gun_smoke = new(get_turf(src), /particles/firing_smoke)
+		gun_smoke.particles.velocity = list(x_component, y_component)
+		addtimer(VARSET_CALLBACK(gun_smoke.particles, count, 0), 5)
+		addtimer(VARSET_CALLBACK(gun_smoke.particles, drift, 0), 3)
+		QDEL_IN(gun_smoke, 0.6 SECONDS)
 
 	if(chambered?.integrity_damage)
 		take_damage(chambered.integrity_damage, sound_effect = FALSE)
@@ -459,6 +471,8 @@
 			firing_burst = FALSE
 			return FALSE
 		else
+			if(muzzle_type)
+				new muzzle_type(get_turf(src), user, target)
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 				shoot_live_shot(user, TRUE, target, message)
 			else
@@ -519,6 +533,8 @@
 				shoot_with_empty_chamber(user)
 				return
 			else
+				if(muzzle_type)
+					new muzzle_type(get_turf(src), user, target)
 				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 					shoot_live_shot(user, TRUE, target, message)
 				else

@@ -6,6 +6,7 @@
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'
 	sound_vary = TRUE
+	muzzle_type = /obj/effect/temp_visual/muzzle/laser
 
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/power_store/cell

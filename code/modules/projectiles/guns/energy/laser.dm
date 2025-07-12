@@ -8,6 +8,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
+	muzzle_type = /obj/effect/temp_visual/muzzle/laser
 
 /obj/item/gun/energy/laser/Initialize(mapload)
 	. = ..()
@@ -74,6 +75,7 @@
 	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."
 	icon_state = "hellgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
+	muzzle_type = /obj/effect/temp_visual/muzzle/heavy_laser
 
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
@@ -137,6 +139,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
 	ammo_x_offset = 3
+	muzzle_type = /obj/effect/temp_visual/muzzle/heavy_laser
 
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator
@@ -167,6 +170,7 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	ammo_x_offset = 3
+	muzzle_type = /obj/effect/temp_visual/muzzle/xray
 
 ////////Laser Tag////////////////////
 
@@ -181,6 +185,7 @@
 	ammo_x_offset = 2
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
+	muzzle_type = /obj/effect/temp_visual/muzzle/laser/blue
 
 /obj/item/gun/energy/laser/bluetag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag/hitscan)
@@ -196,6 +201,7 @@
 	ammo_x_offset = 2
 	selfcharge = TRUE
 	gun_flags = NOT_A_REAL_GUN
+	muzzle_type = /obj/effect/temp_visual/muzzle/laser
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)

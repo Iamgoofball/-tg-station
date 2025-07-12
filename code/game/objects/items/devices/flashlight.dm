@@ -20,7 +20,9 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.2)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	action_slots = ALL
-	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL_VISCONTENTS
+	light_on_time = 0.05 SECONDS
+	light_off_time = 0.15 SECONDS
 	light_color = COLOR_LIGHT_ORANGE
 	light_range = 4
 	light_power = 1

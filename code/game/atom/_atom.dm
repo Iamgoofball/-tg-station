@@ -74,11 +74,18 @@
 	var/light_color = COLOR_WHITE
 	/// Angle of light to show in light_dir
 	/// 360 is a circle, 90 is a cone, etc.
+	/// If this is an overlay light, the light turns with transform. See Muzzle Flashes for an example.
 	var/light_angle = 360
 	/// What angle to project light in
 	var/light_dir = NORTH
 	///Boolean variable for toggleable lights. Has no effect without the proper light_system, light_range and light_power values.
 	var/light_on = TRUE
+	/// How should we animate our light turning on/off? Only applies to viscontents overlay lights.
+	var/light_on_time = null
+	var/light_off_time = null
+	/// What curve should we use for light animation?
+	var/light_animate_curve = CUBIC_EASING | EASE_OUT
+
 	/// How many tiles "up" this light is. 1 is typical, should only really change this if it's a floor light
 	var/light_height = LIGHTING_HEIGHT
 	///Bitflags to determine lighting-related atom properties.
@@ -139,6 +146,19 @@
 
 	///The color this atom will be if we choose to draw it on the minimap
 	var/minimap_color = MINIMAP_SOLID
+
+	///Icon state of debris when impacted by a projectile
+	var/debris_icon = DEBRIS_SPARKS
+	///Velocity of debris particles
+	var/debris_velocity = -20
+	///Amount of debris particles
+	var/debris_amount = 16
+	///Scale of particle debris
+	var/debris_scale = 0.7
+	///Lower end of debris angle
+	var/debris_rotation_low = -80
+	///Higher end of debris angle
+	var/debris_rotation_high = 80
 
 /**
  * Top level of the destroy chain for most atoms
@@ -975,6 +995,58 @@
 		return TRUE
 	. = !density
 
-///Adds the debris element for projectile impacts
-/atom/proc/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_SPARKS, -40, 8, 0.7)
+/atom/proc/make_debris_proj(obj/projectile/proj)
+	if(!proj.damage) // don't make impacts on shit like kisses
+		return
+	var/atom/target = src
+	var/angle = !isnull(proj.angle) ? proj.angle : round(get_angle(proj.starting, target), 1)
+	var/x_component = sin(angle) * debris_velocity
+	var/y_component = cos(angle) * debris_velocity
+	var/x_component_smoke = sin(angle) * -30
+	var/y_component_smoke = cos(angle) * -30
+	var/x_component_large = sin(angle) * -20
+	var/y_component_large = cos(angle) * -20
+	var/obj/effect/abstract/particle_holder/debris_visuals
+	var/obj/effect/abstract/particle_holder/smoke_visuals
+	var/obj/effect/abstract/particle_holder/large_impact_visuals
+	var/turf/target_turf = get_turf(target)
+	var/impact_x = 0
+	var/impact_y = 0
+	var/particle_scale = min(1.5, max((proj.damage / 20), 1))
+	if(target_turf == proj.original)
+		impact_x = target.pixel_x + proj.p_x - ICON_SIZE_X / 2
+		impact_y = target.pixel_y + proj.p_y - ICON_SIZE_Y / 2
+	else
+		impact_x = proj.entry_x + proj.movement_vector?.pixel_x * rand(0, ICON_SIZE_X / 2)
+		impact_y = proj.entry_y + proj.movement_vector?.pixel_y * rand(0, ICON_SIZE_Y / 2)
+	smoke_visuals = new(target, /particles/impact_smoke)
+	smoke_visuals.particles.position = list(impact_x, impact_y)
+	smoke_visuals.particles.velocity = list(x_component_smoke, y_component_smoke)
+	smoke_visuals.particles.scale = 0.4 * particle_scale
+	smoke_visuals.layer = ABOVE_OBJ_LAYER + 0.01
+	if(proj.damage >= 30)
+		large_impact_visuals = new(target, /particles/impact_large)
+		large_impact_visuals.particles.position = list(impact_x, impact_y)
+		large_impact_visuals.particles.velocity = list(x_component_large, y_component_large)
+		large_impact_visuals.particles.scale = 0.75 * particle_scale
+		large_impact_visuals.layer = ABOVE_OBJ_LAYER + 0.02
+	if(debris_icon)
+		debris_visuals = new(target, /particles/debris)
+		debris_visuals.particles.position = list(impact_x, impact_y)
+		debris_visuals.particles.velocity = list(x_component, y_component)
+		debris_visuals.layer = ABOVE_OBJ_LAYER + 0.02
+		debris_visuals.particles.icon_state = debris_icon
+		debris_visuals.particles.count = debris_amount
+		debris_visuals.particles.spawning = debris_amount
+		debris_visuals.particles.scale = debris_scale * particle_scale
+		debris_visuals.particles.rotation = generator(GEN_NUM, debris_rotation_low, debris_rotation_high)
+
+	addtimer(CALLBACK(src, PROC_REF(remove_ping), src, smoke_visuals, debris_visuals, large_impact_visuals), 0.4 SECONDS)
+
+/atom/proc/remove_ping(hit, obj/effect/abstract/particle_holder/smoke_visuals, obj/effect/abstract/particle_holder/debris_visuals, obj/effect/abstract/particle_holder/large_impact_visuals)
+	if(smoke_visuals)
+		QDEL_NULL(smoke_visuals)
+	if(large_impact_visuals)
+		QDEL_NULL(large_impact_visuals)
+	if(debris_visuals)
+		QDEL_NULL(debris_visuals)

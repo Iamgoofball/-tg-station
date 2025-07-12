@@ -18,11 +18,11 @@
 	name = "\improper M40 HIDP incendiary grenade"
 	desc = "The M40 HIDP is a small, but deceptively strong incendiary grenade. It is set to detonate in 4 seconds."
 	icon_state = "grenade_fire"
-	ex_flame = 2
+	ex_flame = 0
 	ex_light = 0
 
 /obj/item/grenade/m40/incendiary/on_detonation()
-	for(var/turf/found_turf in range(ex_flame, src))
+	for(var/turf/found_turf in range(2, src))
 		if(isopenturf(found_turf))
 			new /obj/effect/hotspot(found_turf)
 		for(var/mob/living/carbon/possible_victim in found_turf)
@@ -148,6 +148,7 @@
 	desc = "A sophisticated version of the M40 HSDP with a slighty improved smoke screen payload. It's set to detonate in 2 seconds."
 	icon_state = "grenade_cloak"
 	det_time = 2 SECONDS
+	ex_light = 0
 
 /obj/item/grenade/m40/cloaking/on_detonation()
 	do_smoke(7, location = get_turf(src), smoke_type = /obj/effect/particle_effect/fluid/smoke/transparent/tactical)

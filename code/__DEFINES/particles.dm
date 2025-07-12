@@ -12,3 +12,4 @@
 #define DEBRIS_SNOW "snow"
 #define DEBRIS_PAPER "paper"
 #define DEBRIS_ICE "ice"
+#define DEBRIS_BLOOD "fire_transparent_one"

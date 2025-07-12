@@ -5,6 +5,7 @@
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
+	muzzle_type = /obj/effect/temp_visual/muzzle/stun
 
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
@@ -12,6 +13,7 @@
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
+	muzzle_type = /obj/effect/temp_visual/muzzle/stun
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
@@ -33,6 +35,7 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
+	muzzle_type = /obj/effect/temp_visual/muzzle/disabler
 
 /obj/item/gun/energy/disabler/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
