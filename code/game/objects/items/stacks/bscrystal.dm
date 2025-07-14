@@ -57,7 +57,7 @@
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.5)
-	blink_range = 4 // Not as good as the organic stuff!
+	blink_range = 0 // can't blink with these
 	points = 0 //nice try
 	refined_type = null
 	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/silicon = 20)
@@ -81,7 +81,7 @@
 	grind_results = list(/datum/reagent/bluespace = 20)
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
 	material_type = /datum/material/bluespace
-	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
+	var/crystal_type = obj/item/stack/ore/bluespace_crystal/artificial
 
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
