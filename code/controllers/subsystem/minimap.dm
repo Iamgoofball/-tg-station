@@ -288,9 +288,11 @@ SUBSYSTEM_DEF(minimaps)
  *
  * TODO gross amount of assoc usage and unneeded ALL FLAGS iteration
  */
-/datum/controller/subsystem/minimaps/proc/on_z_change(atom/movable/source, oldz, newz)
+/datum/controller/subsystem/minimaps/proc/on_z_change(atom/movable/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 	var/image/blip
+	var/oldz = old_turf.z
+	var/newz = new_turf.z
 	for(var/flag in GLOB.all_minimap_flags)
 		if(!minimaps_by_z["[oldz]"]?.images_assoc["[flag]"][source])
 			continue
@@ -721,10 +723,11 @@ SUBSYSTEM_DEF(minimaps)
  */
 /datum/action/minimap/proc/on_owner_z_change(atom/movable/source, oldz, newz)
 	SIGNAL_HANDLER
-	change_z_shown(newz)
+	change_z_shown(source, oldz, newz)
 
 /// changes the currently to be displayed z. takes the new z as an arg
-/datum/action/minimap/proc/change_z_shown(newz)
+/datum/action/minimap/proc/change_z_shown(atom/movable/moved_atom, turf/old_turf, turf/new_turf)
+	var/newz = new_turf.z
 	var/atom/movable/tracking = locator_override ? locator_override : owner
 	if(minimap_displayed)
 		owner.client?.screen -= map

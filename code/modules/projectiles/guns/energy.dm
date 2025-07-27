@@ -179,10 +179,34 @@
 			recharge_newshot(TRUE)
 		update_appearance()
 
-/obj/item/gun/energy/attack_self(mob/living/user as mob)
+/obj/item/gun/energy/attack_self(mob/living/user as mob, list/modifiers)
+	if(wieldable)
+		return ..()
+	cycle_ammo(user)
+	return
+
+/obj/item/gun/energy/click_alt(mob/user)
+	. = ..()
+	if(wieldable)
+		cycle_ammo(user)
+
+/obj/item/gun/energy/proc/cycle_ammo(mob/user)
 	if(ammo_type.len > 1 && can_select)
 		select_fire(user)
-	return ..()
+
+/obj/item/gun/energy/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(wieldable)
+		var/text = HAS_TRAIT(src, TRAIT_WIELDED) ? "Stop wielding" : "Wield"
+		context[SCREENTIP_CONTEXT_LMB] = "[text]"
+		if(ammo_type.len > 1 && can_select)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Cycle shot type"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else
+		if(ammo_type.len > 1 && can_select)
+			context[SCREENTIP_CONTEXT_LMB] = "Cycle shot type"
+		. = CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]

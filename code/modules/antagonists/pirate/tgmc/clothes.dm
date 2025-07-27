@@ -28,6 +28,9 @@
 	acid = 15
 	wound = 10
 
+/datum/action/item_action/toggle_light/tgmc
+	background_icon_state = "bg_tgmc"
+
 /obj/item/clothing/suit/armor/vest/tgmc
 	name = "M3 pattern marine armor"
 	desc = "A standard TerraGov Marine Corps M3 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. \
@@ -44,11 +47,13 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	siemens_coefficient = 0.7
-	actions_types = list(/datum/action/item_action/toggle_light)
+	actions_types = list(/datum/action/item_action/toggle_light/tgmc)
 	light_range = 5 // A little better than the standard flashlight.
 	light_power = 0.8
+	light_on_time = 0.05 SECONDS
+	light_off_time = 0.15 SECONDS
 	light_color = "#99ccff"
-	light_system = OVERLAY_LIGHT_DIRECTIONAL
+	light_system = OVERLAY_LIGHT_DIRECTIONAL_VISCONTENTS
 	light_on = FALSE
 	/// The sound the light makes when it's turned on
 	var/sound_on = 'sound/items/weapons/magin.ogg'
@@ -56,6 +61,45 @@
 	var/sound_off = 'sound/items/weapons/magout.ogg'
 	///Boolean on whether the light is on and flashing.
 	var/light_enabled = FALSE
+	/// Time before we activate the magnet.
+	var/magnet_delay = 0.8 SECONDS
+	/// The typecache of all guns we allow.
+	var/static/list/guns_typecache
+	/// Our wearer.
+	var/mob/living/wearer
+
+/obj/item/clothing/suit/armor/vest/tgmc/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_OCLOTHING)
+		RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(check_dropped_item))
+		wearer = user
+
+/obj/item/clothing/suit/armor/vest/tgmc/dropped(mob/living/user)
+	. = ..()
+	wearer = null
+	UnregisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM)
+
+/obj/item/clothing/suit/armor/vest/tgmc/Initialize(mapload)
+	. = ..()
+	if(!guns_typecache)
+		guns_typecache = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe))
+
+/obj/item/clothing/suit/armor/vest/tgmc/proc/check_dropped_item(datum/source, obj/item/dropped_item, force, new_location)
+	SIGNAL_HANDLER
+
+	if(!is_type_in_typecache(dropped_item, guns_typecache))
+		return
+	if(new_location != get_turf(src))
+		return
+	addtimer(CALLBACK(src, PROC_REF(pick_up_item), dropped_item), magnet_delay)
+
+/obj/item/clothing/suit/armor/vest/tgmc/proc/pick_up_item(obj/item/item)
+	if(!isturf(item.loc) || !item.Adjacent(wearer))
+		return
+	if(!wearer.equip_to_slot_if_possible(item, ITEM_SLOT_SUITSTORE, qdel_on_fail = FALSE, disable_warning = TRUE))
+		return
+	playsound(src, 'sound/items/modsuit/magnetic_harness.ogg', 50, TRUE)
+	balloon_alert(wearer, "gun reattached")
 
 /obj/item/clothing/suit/armor/vest/tgmc/attack_self(mob/user)
 	. = ..()
@@ -125,6 +169,64 @@
 	worn_icon_state = "tgmc_boots"
 	clothing_traits = list(TRAIT_NO_SLIP_ALL)
 	siemens_coefficient = 0.7
+	var/datum/action/cooldown/marine_jump/jumping_power
+
+/obj/item/clothing/shoes/jackboots/tgmc/Initialize(mapload)
+	. = ..()
+	jumping_power = new(src)
+
+/obj/item/clothing/shoes/jackboots/tgmc/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		jumping_power.Grant(user)
+
+/obj/item/clothing/shoes/jackboots/tgmc/dropped(mob/living/user)
+	. = ..()
+	jumping_power.Remove(user)
+
+#define MARINE_JUMP "marine_jump"
+
+/datum/action/cooldown/marine_jump
+	name = "Marine Jump"
+	desc = "Put those knees to work and jump over obstacles!"
+	button_icon = 'icons/obj/clothing/shoes.dmi'
+	button_icon_state = "tgmc_boots"
+	background_icon_state = "bg_tgmc"
+	cooldown_time = 1 SECONDS
+
+/datum/action/cooldown/marine_jump/Activate(atom/target)
+	. = ..()
+	var/mob/living/carbon/human/marine = owner
+	marine.balloon_alert_to_viewers("jumps")
+	playsound(marine, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
+	marine.layer = ABOVE_MOB_LAYER
+	marine.pass_flags |= PASSMACHINE|PASSSTRUCTURE
+	passtable_on(marine, MARINE_JUMP)
+	ADD_TRAIT(marine, TRAIT_SILENT_FOOTSTEPS, MARINE_JUMP)
+	ADD_TRAIT(marine, TRAIT_MOVE_FLYING, MARINE_JUMP)
+	marine.zMove(UP)
+	marine.add_filter(MARINE_JUMP, 2, drop_shadow_filter(color = "#03020781", size = 0.9))
+	var/shadow_filter = marine.get_filter(MARINE_JUMP)
+	var/jump_height = 16
+	var/jump_duration = 0.5 SECONDS
+	new /obj/effect/temp_visual/mook_dust(get_turf(marine))
+	animate(marine, pixel_y = marine.pixel_y + jump_height, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
+	animate(pixel_y = initial(owner.pixel_y), time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
+
+	animate(shadow_filter, y = -jump_height, size = 4, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
+	animate(y = 0, size = 0.9, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
+
+	addtimer(CALLBACK(src, PROC_REF(end_jump), marine), jump_duration)
+
+///Ends the jump
+/datum/action/cooldown/marine_jump/proc/end_jump(mob/living/jumper)
+	jumper.remove_filter(MARINE_JUMP)
+	jumper.layer = initial(jumper.layer)
+	passtable_off(jumper, MARINE_JUMP)
+	jumper.pass_flags = initial(jumper.pass_flags)
+	REMOVE_TRAIT(jumper, TRAIT_SILENT_FOOTSTEPS, MARINE_JUMP)
+	REMOVE_TRAIT(jumper, TRAIT_MOVE_FLYING, MARINE_JUMP)
+	new /obj/effect/temp_visual/mook_dust(get_turf(jumper))
 
 /obj/item/clothing/head/helmet/tgmc
 	name = "\improper M10 pattern marine helmet"
@@ -165,6 +267,9 @@
 	desc = "The standard-issue pack of the TGMC forces. Designed to slug gear into the battlefield."
 	icon_state = "marinepack"
 	worn_icon_state = "marinepack"
+
+/datum/action/item_action/toggle_paddles/tgmc
+	background_icon_state = "bg_tgmc"
 
 /obj/item/storage/backpack/tgmc/corpsman
 	name = "\improper TGMC corpsman backpack"
@@ -246,6 +351,7 @@
 
 /datum/action/item_action/radio_requisitions
 	name = "Radio Requisitions"
+	background_icon_state = "bg_tgmc"
 
 /datum/action/item_action/radio_requisitions/do_effect(trigger_flags)
 	if(!target)
@@ -454,7 +560,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 		if(possible_commander.command && (possible_commander.marker_flags & marker_flags))
 			found_commander = headset
 			break
-	if((found_commander && (found_commander.z != wearer.z || !found_commander.wearer)) || QDELETED(found_commander) || !found_commander)
+	if(!found_commander || QDELETED(found_commander))
 		SL_locator.icon_state = ""
 		SL_locator.alpha = 0
 		return
@@ -473,7 +579,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	icon_state_for_map = "medic"
 
 /obj/item/radio/headset/syndicate/alt/tgmc/engineer
-	name = "marine commander radio headset"
+	name = "marine engineer radio headset"
 	worn_icon_state = "tgmc_headset_engineer"
 	icon_state = "tgmc_headset_engineer"
 	icon_state_for_map = "engi"
@@ -483,6 +589,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	uniform = /obj/item/clothing/under/misc/tgmc
 	shoes = /obj/item/clothing/shoes/jackboots/tgmc
 	gloves = /obj/item/clothing/gloves/combat
+	belt = /obj/item/gun/ballistic/p23
 	head = /obj/item/clothing/head/helmet/tgmc
 	suit = /obj/item/clothing/suit/armor/vest/tgmc
 	ears = /obj/item/radio/headset/syndicate/alt/tgmc
@@ -492,6 +599,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	backpack_contents = list(
 		/obj/item/lighter/greyscale,
 		/obj/item/storage/fancy/cigarettes,
+		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
 	)
 
 /datum/outfit/tgmc/command
@@ -501,10 +609,13 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	ears = /obj/item/radio/headset/syndicate/alt/tgmc/command
 	mask = /obj/item/cigarette/cigar/premium
 	back = /obj/item/storage/backpack/tgmc/command
+	belt = /obj/item/gun/ballistic/p23
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/gold,
 		/obj/item/lighter,
 		/obj/item/clothing/mask/whistle,
+		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
+		/obj/item/storage/tgmc_pouch/grenade_pouch/prefilled,
 	)
 
 /datum/outfit/tgmc/medic
@@ -519,6 +630,13 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	back = /obj/item/storage/backpack/tgmc/corpsman
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	mask = /obj/item/clothing/mask/surgical
+	backpack_contents = list(
+		/obj/item/lighter/greyscale,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/gun/ballistic/p23,
+		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
+		/obj/item/storage/tgmc_pouch/grenade_pouch/prefilled,
+	)
 
 /datum/outfit/tgmc/engineer
 	name = "TGMC Engineer"
@@ -529,4 +647,12 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	belt = /obj/item/storage/belt/utility/full/engi
 	back = /obj/item/storage/backpack/tgmc/engineer
 	r_pocket = /obj/item/storage/tgmc_pouch/explosive_pouch/prefilled
-	l_pocket = /obj/item/storage/tgmc_pouch/grenade_pouch/prefilled
+	l_pocket = /obj/item/storage/tgmc_pouch/ammo/smartgun
+	r_hand = /obj/item/gun/ballistic/automatic/smartmachinegun
+	backpack_contents = list(
+		/obj/item/lighter/greyscale,
+		/obj/item/storage/fancy/cigarettes,
+		/obj/item/gun/ballistic/p23,
+		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
+		/obj/item/storage/tgmc_pouch/grenade_pouch/prefilled,
+	)

@@ -262,8 +262,11 @@
 	name = "boom"
 	icon = 'icons/blanks/32x32.dmi'
 	icon_state = "nothing"
-	light_system = COMPLEX_LIGHT
+	light_system = OVERLAY_LIGHT_VISCONTENTS
 	duration = 25
+	light_on_time = 0.1 SECONDS
+	light_off_time = 0.30 SECONDS
+	light_on = FALSE
 	/// What icon state do we use for the actual explosion?
 	var/explosion_icon_state = "explosion"
 	/// What icon do we use for the actual explosion?
@@ -287,7 +290,11 @@
 
 /obj/effect/temp_visual/explosion/Initialize(mapload, radius = 1, color = LIGHT_COLOR_LAVA, small = FALSE, large = FALSE, tiny = FALSE)
 	. = ..()
-	set_light(radius, radius, color)
+	set_light_range(radius)
+	set_light_power(radius)
+	set_light_color(color)
+	set_light_on(TRUE)
+	set_light_on(FALSE)
 	generate_particles(radius, small, large, tiny)
 	var/image/I
 	if(tiny)

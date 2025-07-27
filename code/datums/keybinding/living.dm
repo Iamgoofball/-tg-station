@@ -227,3 +227,32 @@
 	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS))
 		return
 	living_user.give()
+
+/datum/keybinding/living/pump_shotgun
+	hotkey_keys = list("Space")
+	name = "pump_shotgun"
+	full_name = "Pump shotgun"
+	description = "Press to pump the shotgun in your active hand."
+	keybind_signal = COMSIG_KB_LIVING_PUMPSHOTGUN
+
+/datum/keybinding/living/pump_shotgun/down(client/user, turf/target)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/living_user = user.mob
+	var/obj/item/possible_shotgun = living_user.get_active_held_item()
+	var/obj/item/possible_wielded_for_shotgun = living_user.get_inactive_held_item()
+	var/obj/item/gun/ballistic/shotgun/found_shotgun
+	if(istype(possible_shotgun, /obj/item/gun/ballistic/shotgun))
+		found_shotgun = possible_shotgun
+	else if(istype(possible_shotgun, /obj/item/offhand))
+		if(istype(possible_wielded_for_shotgun, /obj/item/gun/ballistic/shotgun))
+			found_shotgun = possible_wielded_for_shotgun
+	else if(istype(possible_wielded_for_shotgun, /obj/item/gun/ballistic/shotgun))
+		found_shotgun = possible_wielded_for_shotgun
+	else if(istype(possible_wielded_for_shotgun, /obj/item/offhand))
+		if(istype(possible_shotgun, /obj/item/gun/ballistic/shotgun))
+			found_shotgun = possible_shotgun
+	if(found_shotgun)
+		found_shotgun.rack(living_user)
+	return

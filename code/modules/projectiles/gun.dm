@@ -22,7 +22,6 @@
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
 	action_slots = ALL
-
 	var/gun_flags = NONE
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
@@ -85,6 +84,16 @@
 	var/smoking_gun = FALSE
 	var/muzzle_type
 
+	var/wieldable = FALSE
+	var/wielded_icon
+	var/wielded_recoil = 0
+	var/unwielded_recoil = 0
+	var/wielded_spread = 0
+	var/unwielded_spread = 0
+
+	// Due to a bug with our inventory system that requires a refactor that's WIP, render the gun as an overlay to bypass issues with how it renders.
+	var/render_as_overlay = FALSE
+
 	/// Cooldown for the visible message sent from gun flipping.
 	COOLDOWN_DECLARE(flip_cooldown)
 
@@ -94,6 +103,12 @@
 		pin = new pin
 		pin.gun_insert(new_gun = src)
 
+	if(wieldable)
+		AddComponent(\
+			/datum/component/two_handed,\
+			wield_callback = CALLBACK(src, PROC_REF(on_wielded)),\
+			unwield_callback = CALLBACK(src, PROC_REF(on_unwielded)),\
+		)
 	add_seclight_point()
 	add_bayonet_point()
 
@@ -471,8 +486,9 @@
 			firing_burst = FALSE
 			return FALSE
 		else
-			if(muzzle_type)
-				new muzzle_type(get_turf(src), user, target)
+			if(!suppressed)
+				if(muzzle_type)
+					new muzzle_type(get_turf(src), user, target)
 			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
 				shoot_live_shot(user, TRUE, target, message)
 			else
@@ -661,6 +677,21 @@
 //Happens before the actual projectile creation
 /obj/item/gun/proc/before_firing(atom/target,mob/user)
 	return
+
+/obj/item/gun/proc/on_wielded(obj/item/source, mob/living/user)
+	user.balloon_alert(user, "wielded")
+	inhand_icon_state = wielded_icon
+	recoil = wielded_recoil
+	spread = wielded_spread
+	user.update_held_items()
+
+/obj/item/gun/proc/on_unwielded(obj/item/source, mob/living/user)
+	user.balloon_alert(user, "unwielded!")
+	inhand_icon_state = initial(inhand_icon_state)
+	recoil = unwielded_recoil
+	spread = unwielded_spread
+	user.update_held_items()
+
 
 #undef FIRING_PIN_REMOVAL_DELAY
 #undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

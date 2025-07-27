@@ -605,7 +605,36 @@
 		update_weight_class(w_class - I.w_class)
 	return ..()
 
-/obj/item/gun/ballistic/click_alt(mob/user)
+/obj/item/gun/ballistic/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(wieldable)
+		var/text = HAS_TRAIT(src, TRAIT_WIELDED) ? "Stop wielding" : "Wield"
+		context[SCREENTIP_CONTEXT_LMB] = "[text]"
+		if(!internal_magazine && magazine && !magazine.ammo_count())
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Eject magazine"
+		else if(bolt_type == BOLT_TYPE_NO_BOLT)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove round"
+		else if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Drop bolt"
+		else
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Rack round"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else
+		if(!internal_magazine && magazine && !magazine.ammo_count())
+			context[SCREENTIP_CONTEXT_LMB] = "Eject magazine"
+		else if(bolt_type == BOLT_TYPE_NO_BOLT)
+			context[SCREENTIP_CONTEXT_LMB] = "Remove round"
+		else if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
+			context[SCREENTIP_CONTEXT_LMB] = "Drop bolt"
+		else
+			context[SCREENTIP_CONTEXT_LMB] = "Rack round"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if((suppressed || can_unsuppress) && user.is_holding(src))
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Unscrew suppressor"
+		. = CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
+
+/obj/item/gun/ballistic/click_alt_secondary(mob/user)
 	if(!suppressed || !can_unsuppress)
 		return CLICK_ACTION_BLOCKING
 	var/obj/item/suppressor/S = suppressed
@@ -646,7 +675,18 @@
 		return
 	return ..()
 
-/obj/item/gun/ballistic/attack_self(mob/living/user)
+/obj/item/gun/ballistic/click_alt(mob/user)
+	. = ..()
+	if(wieldable)
+		do_racking(user)
+
+/obj/item/gun/ballistic/attack_self(mob/living/user, list/modifiers)
+	if(wieldable)
+		return ..()
+	else
+		do_racking()
+
+/obj/item/gun/ballistic/proc/do_racking(mob/living/user)
 	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)

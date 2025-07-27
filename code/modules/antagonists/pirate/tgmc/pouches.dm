@@ -110,3 +110,11 @@
 	new /obj/item/grenade/m40/smoke(src)
 	new /obj/item/grenade/m40/cloaking(src)
 	new /obj/item/grenade/m40/phosphorus(src)
+
+/obj/item/storage/tgmc_pouch/ammo/smartgun/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/ammo_box/magazine/smartmachinegun(src)
+
+/obj/item/storage/tgmc_pouch/ammo_pistol/filled/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/ammo_box/magazine/p23(src)

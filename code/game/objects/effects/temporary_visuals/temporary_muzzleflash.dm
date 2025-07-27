@@ -90,9 +90,6 @@
 	set_light_on(FALSE)
 	animate(src, alpha = 0, time = 0.2 SECONDS, easing = CUBIC_EASING | EASE_OUT)
 
-/obj/effect/temp_visual/muzzle/proc/turn_off_light()
-
-
 /obj/effect/temp_visual/muzzle/laser
 	icon_state = "muzzle_laser"
 	light_color = COLOR_RED_LIGHT

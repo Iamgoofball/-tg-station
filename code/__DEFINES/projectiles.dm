@@ -64,6 +64,8 @@
 #define CALIBER_JUNK "junk"
 /// The caliber used by the (gatfruit) peashooter
 #define CALIBER_PEA "pea"
+/// The calber used by the SG-29 by the TGMC Pirates.
+#define CALIBER_10X26_CASELESS "10x26mm caseless"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2

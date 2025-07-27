@@ -890,3 +890,11 @@
 		'sound/mobs/non-humanoids/cat/cat_meow3.ogg' = 33,
 		'sound/mobs/non-humanoids/cat/oranges_meow1.ogg' = 1,
 	)
+
+/datum/sound_effect/smartgun_firing
+	key = SFX_SMARTGUN_FIRING
+	file_paths = list(
+		'sound/items/weapons/gun/tgmc/smartgun1.ogg',
+		'sound/items/weapons/gun/tgmc/smartgun2.ogg',
+		'sound/items/weapons/gun/tgmc/smartgun3.ogg',
+	)
