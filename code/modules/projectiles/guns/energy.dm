@@ -102,6 +102,7 @@
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_appearance()
+	register_context()
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_recharge))
 	AddElement(/datum/element/update_icon_updates_onmob)
 

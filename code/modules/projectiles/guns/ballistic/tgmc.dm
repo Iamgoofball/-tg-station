@@ -4,7 +4,7 @@
 	fire support very well. It is generally used when someone wants to hold a position or provide fire support. Requires special training and \
 	uses 10x26mm ammunition."
 	icon = 'icons/obj/weapons/guns/tgmc_64.dmi'
-	SET_BASE_VISUAL_PIXEL(-32, 0)
+	//SET_BASE_VISUAL_PIXEL(-32, 0) UNCOMMENT ONCE FUCKING INVENTORY IS FIXED
 	icon_state = "sg29"
 	inhand_icon_state = "sg29"
 	worn_icon_state = "sg29"
@@ -69,4 +69,38 @@
 	unwielded_recoil = 0
 	wielded_spread = 0
 	unwielded_spread = 4
+	wieldable = TRUE
+
+/obj/item/gun/ballistic/shotgun/sh35
+	name = "\improper SH-35 pump shotgun"
+	desc = "The Terran Armories SH-35 is the shotgun used by the TerraGov Marine Corps. It's used as a close quarters tool when someone wants \
+	something more suited for close range than most people, or as an odd sidearm on your back for emergencies. Uses 12 gauge shells."
+	icon = 'icons/obj/weapons/guns/tgmc_64.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	//SET_BASE_VISUAL_PIXEL(-32, 0) UNCOMMENT ONCE FUCKING INVENTORY IS FIXED
+	icon_state = "sh35"
+	inhand_icon_state = "sh35"
+	worn_icon_state = "sh35"
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	mag_display = FALSE
+	empty_indicator = FALSE
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/sh35
+	pin = /obj/item/firing_pin
+	show_bolt_icon = FALSE
+	muzzle_type = /obj/effect/temp_visual/muzzle/bullet
+	fire_sound = 'sound/items/weapons/gun/tgmc/sh35_fire.ogg'
+	load_sound = 'sound/items/weapons/gun/tgmc/sh35_reload.ogg'
+	rack_sound = 'sound/items/weapons/gun/tgmc/sh35_pump.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/tgmc/sh35_empty.ogg'
+	recoil = 4
+	spread = 10
+	wielded_icon = "sh35-wielded"
+	wielded_recoil = 2
+	unwielded_recoil = 4
+	wielded_spread = 4
+	unwielded_spread = 10
 	wieldable = TRUE

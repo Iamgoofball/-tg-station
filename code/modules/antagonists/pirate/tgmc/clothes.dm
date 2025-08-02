@@ -538,12 +538,12 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 			if(!ghost?.can_reenter_corpse)
 				SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, "unrevivable", MINIMAP_BLIPS_LAYER))
 				return
-		SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, "revivable", MINIMAP_LABELS_LAYER))
+		SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, "revivable", MINIMAP_BLIPS_LAYER))
 		return
 	determine_icon()
 
 /obj/item/radio/headset/syndicate/alt/tgmc/proc/determine_icon()
-	SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, icon_state_for_map), MINIMAP_BLIPS_LAYER)
+	SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, icon_state_for_map, MINIMAP_BLIPS_LAYER))
 
 /obj/item/radio/headset/syndicate/alt/tgmc/proc/update_tracking()
 	if(!wearer && !wearer.hud_used)
@@ -629,6 +629,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	belt = /obj/item/storage/belt/medical/paramedic
 	back = /obj/item/storage/backpack/tgmc/corpsman
 	gloves = /obj/item/clothing/gloves/latex/nitrile
+	suit_store = /obj/item/gun/ballistic/shotgun/sh35
 	mask = /obj/item/clothing/mask/surgical
 	backpack_contents = list(
 		/obj/item/lighter/greyscale,
@@ -636,6 +637,8 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 		/obj/item/gun/ballistic/p23,
 		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
 		/obj/item/storage/tgmc_pouch/grenade_pouch/prefilled,
+		/obj/item/storage/shell_box/buckshot/prefilled,
+		/obj/item/storage/shell_box/buckshot/prefilled,
 	)
 
 /datum/outfit/tgmc/engineer

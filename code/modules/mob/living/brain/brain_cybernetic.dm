@@ -647,6 +647,7 @@
 		hud_used.infodisplay += hud_used.healths
 	if(organ_owner.mob_mood)
 		organ_owner.mob_mood.show_hud()
+	hud_used.show_hud(hud_used.hud_version)
 	. = ..()
 
 /obj/item/organ/brain/cybernetic/Destroy()

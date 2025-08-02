@@ -28,18 +28,14 @@
 	)
 
 /datum/species/android/get_physical_attributes()
-	return "Robots are almost, but not quite, identical to fully augmented humans. \
-	Unlike those, though, they're completely immune to toxin damage, don't have blood or organs (besides their head), don't get hungry, and can reattach their limbs! \
-	That said, an EMP will devastate them and they cannot process any chemicals."
+	return "NEEDS WRITTEN"
 
 /datum/species/android/get_species_description()
-	return "Robots are an entirely robotic species."
+	return "NEEDS WRITTEN"
 
 /datum/species/android/get_species_lore()
 	return list(
-		"Robots are the product of Robotification, a new medical procedure created by Nanotrasen for emergency situations in which the victim's organs \
-		are unrecoverable or otherwise damaged beyond repair, in markets where cyborgification is illegal or impractical due to regulations. It was \
-		licensed out to the TerraGov Marine Corps as a groundbreaking new treatment for otherwise permanently disabled troops, but "
+		"NEEDS WRITTEN "
 	)
 
 /datum/species/android/create_pref_traits_perks()

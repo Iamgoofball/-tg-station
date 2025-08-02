@@ -1,7 +1,7 @@
 /obj/item/ammo_casing/smartmachinegun
 	name = "10x26mm caseless bullet"
 	desc = "A 10x26mm caseless bullet."
-	icon_state = "762-casing"
+	icon_state = "tgmc_bullet"
 	caliber = CALIBER_10X26_CASELESS
 	projectile_type = /obj/projectile/bullet/tgmc/smartmachinegun
 
@@ -12,12 +12,14 @@
 /obj/item/ammo_casing/p23
 	name = ".45 ACP bullet"
 	desc = "A .45 ACP bullet."
+	icon_state = "tgmc_bullet"
 	caliber = CALIBER_45
 	projectile_type = /obj/projectile/bullet/tgmc/dot45acp
 
 /obj/item/ammo_casing/shotgun/tgmc
 	name = "TGMC 12 gauge buckshot shell"
 	desc = "A TGMC-issue 12 gauge buckshot shell."
+	icon_state = "tgmc_buckshot"
 	caliber = CALIBER_SHOTGUN
 	projectile_type = /obj/projectile/bullet/tgmc/buckshot
 	pellets = 6

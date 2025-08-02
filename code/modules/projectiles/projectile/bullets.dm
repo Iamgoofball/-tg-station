@@ -13,8 +13,8 @@
 	wound_falloff_tile = -5
 	embed_falloff_tile = -3
 	light_system = OVERLAY_LIGHT
-	light_range = 0.5
-	light_power = 0.5
+	light_range = 0.2
+	light_power = 0.2
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_on = TRUE
 
