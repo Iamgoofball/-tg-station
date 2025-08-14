@@ -1,0 +1,89 @@
+// flashing moving text
+.theme-advertisement {
+  // flash background and text colors randomly within a hue range
+  color: hsl(0, 0%, 80%);
+  font-size: 1em;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+  animation: flashColors 2s infinite alternate;
+  --titlebar-background: hsl(303, 84%, 35%);
+
+  * .Layout__content {
+    background-image: none;
+    background-color: hsl(0, 70%, 36%);
+  }
+}
+
+.Advertisement__MovingText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: marquee 6s linear infinite;
+}
+
+.Advertisement__SpinningButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  //   transform: translate(-50%, -50%);
+  animation: spinAround 5s linear infinite;
+}
+// dollarsign at the corners of the advertisement
+.Advertisement_DollarSign {
+  position: absolute;
+  font-size: 2em;
+  color: hsl(120, 100%, 50%);
+  //   flash and spin around
+  animation:
+    flashColors 1s infinite alternate,
+    spinAround 3s linear infinite;
+}
+
+.top-left {
+  top: 10px;
+  left: 10px;
+}
+.top-right {
+  top: 10px;
+  right: 10px;
+}
+.bottom-left {
+  bottom: 10px;
+  left: 10px;
+}
+.bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@keyframes spinAround {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes flashColors {
+  0% {
+    color: hsl(120, 100%, 50%);
+  }
+  100% {
+    color: hsl(0, 100%, 50%);
+  }
+}
