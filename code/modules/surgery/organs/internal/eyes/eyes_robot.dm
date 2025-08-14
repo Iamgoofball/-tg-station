@@ -1,6 +1,6 @@
 /obj/item/organ/eyes/camera
-	name = "cameras"
-	desc = "Expensive cameras for viewing the station."
+	name = "optical sensory suite"
+	desc = "An expensive pair of cameras with thick, internal data cables. Used to give cybernetic organisms sight."
 	icon_state = "camera"
 	iris_overlay = null
 	organ_flags = ORGAN_ROBOTIC
@@ -43,7 +43,7 @@
 		return
 	if(robot_brain.power <= 3)
 		if(!(organ_flags & ORGAN_DEPOWERED))
-			say("ERROR: Power critically low, depowering cameras to conserve energy!")
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
 			organ_flags |= ORGAN_DEPOWERED
 	else
 		organ_flags &= ~ORGAN_DEPOWERED

@@ -84,6 +84,8 @@
 	var/show_bolt_icon = TRUE ///Hides the bolt icon.
 	///Whether the gun has to be racked each shot or not.
 	var/semi_auto = TRUE
+	///Whether the gun auto-racks when you dry fire it with ammo left if it's not semi-auto
+	var/rack_on_dryfire_if_not_semi_auto = FALSE
 	///Actual magazine currently contained within the gun
 	var/obj/item/ammo_box/magazine/magazine
 	///whether the gun ejects the chambered casing
@@ -580,6 +582,12 @@
 		bonus_spread += SAWN_OFF_ACC_PENALTY
 
 	return ..()
+
+/obj/item/gun/ballistic/shoot_with_empty_chamber(mob/living/user)
+	if(!semi_auto && magazine.ammo_count() && rack_on_dryfire_if_not_semi_auto)
+		do_racking(user)
+	else
+		. = ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(isnull(chambered))

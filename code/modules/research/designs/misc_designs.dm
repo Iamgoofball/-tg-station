@@ -1162,3 +1162,46 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/tgmc_locator_minimap
+	name = "Headset Upgrade Kit: Locator/Minimap"
+	desc = "A locator/minimap combo for tactical strategic awareness on the station. Attach it to any standard-issue Security headset!"
+	id = "tgmc_locator_minimap"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*2,
+	)
+	build_path = /obj/item/headset_minimap_kit
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/tgmc_magharness
+	name = "Armor Upgrade Kit: Magnetic Harness"
+	desc = "A magnetic harness for automatically picking up your gun if you drop it by accident. Attach it to any standard-issue Security armor!"
+	id = "tgmc_magharness"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*2,
+	)
+	build_path = /obj/item/armor_magharness_kit
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/tgmc_jumpboots
+	name = "Jackboots Upgrade Kit: Jump Boots"
+	desc = "A spring-loaded heel for enabling jumping manuevers. Attach it to any standard-issue Jackboots!"
+	id = "tgmc_jumpboots"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT*2,
+	)
+	build_path = /obj/item/boots_jump_kit
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SECURITY
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+

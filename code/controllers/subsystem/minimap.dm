@@ -576,6 +576,19 @@ SUBSYSTEM_DEF(minimaps)
 	minimap_flags = MINIMAP_FLAG_TGMC
 	marker_flags = MINIMAP_FLAG_TGMC
 
+/datum/action/minimap/crew
+	minimap_flags = MINIMAP_FLAG_CREW
+	marker_flags = MINIMAP_FLAG_CREW
+
+/datum/action/minimap/syndie
+	minimap_flags = MINIMAP_FLAG_SYNDIES
+	marker_flags = MINIMAP_FLAG_SYNDIES
+
+/datum/action/minimap/abductors
+	minimap_flags = MINIMAP_FLAG_ABDUCTORS
+	marker_flags = MINIMAP_FLAG_ABDUCTORS
+
+
 /datum/action/minimap/New(Target, new_minimap_flags, new_marker_flags)
 	. = ..()
 	locator = new
@@ -721,13 +734,12 @@ SUBSYSTEM_DEF(minimaps)
 /**
  * Updates the map when the owner changes zlevel
  */
-/datum/action/minimap/proc/on_owner_z_change(atom/movable/source, oldz, newz)
+/datum/action/minimap/proc/on_owner_z_change(atom/movable/source, turf/oldz, turf/newz)
 	SIGNAL_HANDLER
-	change_z_shown(source, oldz, newz)
+	change_z_shown(newz.z)
 
 /// changes the currently to be displayed z. takes the new z as an arg
-/datum/action/minimap/proc/change_z_shown(atom/movable/moved_atom, turf/old_turf, turf/new_turf)
-	var/newz = new_turf.z
+/datum/action/minimap/proc/change_z_shown(newz)
 	var/atom/movable/tracking = locator_override ? locator_override : owner
 	if(minimap_displayed)
 		owner.client?.screen -= map

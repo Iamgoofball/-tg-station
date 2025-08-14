@@ -4,23 +4,25 @@
 #define ADVERT_TIME 10 SECONDS
 
 /datum/design/board/robotifier
-	name = "Machine Design (Robotifier)"
-	desc = "The circuit board for the Robotifier, for replacing an organic humanoid's internal organs with robotic ones with the press of a button."
+	name = "Machine Design (CHOPSHOP)"
+	desc = "The circuit board for the CHOPSHOP, for replacing an organic humanoid's internal organs with robotic ones with the press of a button."
 	id = "robotifier"
 	build_path = /obj/item/circuitboard/machine/robotifier
 	category = list(RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
 
 /obj/item/circuitboard/machine/robotifier
-	name = "Robotifier (Machine Board)"
+	name = "CHOPSHOP (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/robotifier
 	req_components = list(/datum/stock_part/micro_laser = 1)
 
 /obj/machinery/robotifier
-	name = "robotifier"
-	desc = "Performs a full replacement of the patient's organs with robotic ones. The change is permanent, but great for patients who are absolutely \
-	fucked up and need a full set of new organs in a very short time period, consequences be damned."
+	name = "CHOPSHOP"
+	desc = "The CHOPSHOP (that is the official, BRANDED name) is a tight, fully mechanized surgery theatre originally sold to Galactic (para)militaries as \
+	a means to prevent fatal casualities, at a high cost. When inserted inside, the machine automatically replaces the presumably dead or dying \
+	patient's entire body with cybernetic parts. This produces a conscious and able-bodied person very quickly, who is able to work and fight, \
+	but also trapped in a body which is not their own."
 	icon = 'icons/obj/machines/organ.dmi'
 	icon_state = "robotifier_open"
 	circuit = /obj/item/circuitboard/machine/robotifier

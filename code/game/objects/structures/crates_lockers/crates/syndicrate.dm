@@ -91,3 +91,12 @@
 		return NONE
 	context[SCREENTIP_CONTEXT_LMB] = "Unlock Syndicrate"
 	return CONTEXTUAL_SCREENTIP_SET
+
+// Doesn't have the lock mechanics; just for visuals.
+/obj/structure/closet/crate/secure/syndicrate_fake
+	name = "syndicate crate"
+	desc = "A conspicuous crate with the Syndicate logo on it."
+	icon_state = "syndicrate"
+	base_icon_state = "syndicrate"
+	armor_type = /datum/armor/crate_syndicrate
+	paint_jobs = null

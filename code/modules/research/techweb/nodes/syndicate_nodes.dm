@@ -47,3 +47,23 @@
 		"beamrifle",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
+
+
+/datum/techweb_node/tgmc_reverse_engineer
+	id = TECHWEB_NODE_TGMC_REVERSE_ENGINEER
+	display_name = "Reverse-Engineered TerraGov Marine Corps Technology"
+	description = "Our boys in the R&D lab have ripped apart those samples you donated, and we think we can upgrade your Security department's \
+	gear with this tech. Just don't tell TerraGov!"
+	required_items_to_unlock = list(
+		/obj/item/radio/headset/syndicate/alt/tgmc,
+		/obj/item/clothing/suit/armor/vest/tgmc,
+		/obj/item/clothing/shoes/jackboots/tgmc,
+	)
+	prereq_ids = list()
+	design_ids = list(
+		"tgmc_magharness",
+		"tgmc_locator_minimap",
+		"tgmc_jumpboots",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	hidden = TRUE

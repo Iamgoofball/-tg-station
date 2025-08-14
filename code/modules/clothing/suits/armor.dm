@@ -43,6 +43,15 @@
 		wearer.update_equipment_speed_mods()
 	return ..()
 
+/obj/item/clothing/suit/armor/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = ..()
+	if(!GetComponent(/datum/component/magnetic_harness))
+		if(istype(weapon, /obj/item/armor_magharness_kit))
+			balloon_alert(user, "mag-harness attached")
+			qdel(weapon)
+			AddComponent(/datum/component/magnetic_harness)
+			return ITEM_INTERACT_SUCCESS
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
 	desc = "A slim Type I armored vest that provides decent protection against most types of damage."

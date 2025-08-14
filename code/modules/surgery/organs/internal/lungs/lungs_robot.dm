@@ -1,12 +1,12 @@
 /obj/item/organ/lungs/cooling_fans
 	name = "cooling fans"
-	desc = "Modulates the temperature of the robot via air intake. Be careful not to get it gummed up!"
+	desc = "A set of dense fans that channel air over steel heat sinks and force it out through a tube."
 	organ_flags = ORGAN_ROBOTIC
-	low_threshold_passed = span_warning("You feel short of breath.")
-	high_threshold_passed = span_warning("You feel some sort of constriction around your chest as your breathing becomes shallow and rapid.")
-	now_fixed = span_warning("Your lungs seem to once again be able to hold air.")
-	low_threshold_cleared = span_info("You can breathe normally again.")
-	high_threshold_cleared = span_info("The constriction around your chest loosens as your breathing calms down.")
+	low_threshold_passed = span_warning("You hear the fans start struggling.")
+	high_threshold_passed = span_warning("You feel the fans starting and stopping.")
+	now_fixed = span_warning("Your fans spin at a normal RPM again.")
+	low_threshold_cleared = span_info("Your fans slowly lower back to normal speed.")
+	high_threshold_cleared = span_info("Your fans stop stuttering and begin running consistently again.")
 	icon_state = "cooling_fans"
 
 /obj/item/organ/lungs/cooling_fans/setup_breathing()
@@ -28,7 +28,7 @@
 		return
 	if(robot_brain.power <= 20)
 		if(!(organ_flags & ORGAN_DEPOWERED))
-			say("ERROR: Power critically low, depowering cooling fans to conserve energy!")
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
 			organ_flags |= ORGAN_DEPOWERED
 	else
 		organ_flags &= ~ORGAN_DEPOWERED

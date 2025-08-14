@@ -2,7 +2,9 @@
 	name = "Robot"
 	id = SPECIES_ANDROID
 	examine_limb_id = SPECIES_HUMAN
-
+	inherent_traits = list(
+		TRAIT_NOHUNGER // Has to be here for the UI to render right, species traits are handled by the brain organ
+	)
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	exotic_bloodtype = BLOOD_TYPE_OIL
 	meat = null
@@ -31,7 +33,10 @@
 	return "NEEDS WRITTEN"
 
 /datum/species/android/get_species_description()
-	return "NEEDS WRITTEN"
+	return "Recent advances in the fields of medicine, robotics, and psychology have made a kind of \"clean\" immortality plausible for humanity: \
+	androidism, an evolution on the full-body prosthetic (FBP) movement. Androidists (or simply \"androids\") are people who — for whatever reason \
+	(medical necessity, an ideological commitment to transhumanism, etc) — have replaced their entire body with cutting edge advanced cybernetics \
+	that aim to improve and iterate upon, not merely replace, human body parts."
 
 /datum/species/android/get_species_lore()
 	return list(

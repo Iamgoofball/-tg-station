@@ -1,7 +1,7 @@
 /obj/item/organ/heart/oil_pump
-	name = "oil pump"
+	name = "oil heart"
 	icon_state = "oil_pump"
-	desc = "Pumps oil around the chassis. You can't replace the oil in a robot without it!"
+	desc = "An Android heart, used to distribute oil throughout the chassis."
 	organ_flags = ORGAN_ROBOTIC
 	var/list/lubricants = list( // What chemicals will satisfy the oil requirement to lube up the joints?
 		/datum/reagent/fuel/oil = 1,
@@ -56,7 +56,7 @@
 		return
 	if(robot_brain.power <= 30)
 		if(!(organ_flags & ORGAN_DEPOWERED))
-			say("ERROR: Power critically low, depowering oil pump to conserve energy!")
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
 			organ_flags |= ORGAN_DEPOWERED
 	else
 		organ_flags &= ~ORGAN_DEPOWERED

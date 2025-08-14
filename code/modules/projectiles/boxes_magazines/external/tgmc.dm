@@ -19,3 +19,14 @@
 	ammo_type = /obj/item/ammo_casing/p23
 	caliber = CALIBER_45
 	max_ammo = 14
+
+/obj/item/ammo_box/magazine/ar21
+	name = "\improper AR-21 skirmish rifle magazine"
+	desc = "A magazine filled with 10x25mm rifle rounds for the AR-21."
+	icon_state = "ar21"
+	base_icon_state = "ar21"
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	multiple_sprite_use_base = TRUE
+	ammo_type = /obj/item/ammo_casing/ar21
+	caliber = CALIBER_10X26_CASELESS
+	max_ammo = 40

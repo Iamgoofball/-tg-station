@@ -1,6 +1,6 @@
 /obj/item/organ/appendix/random_number_database
-	name = "random number database"
-	desc = "The work is mysterious and important."
+	name = "cyborg GPU"
+	desc = "A beefy GPU built for installation inside of cybernetic organisms, used for various computing tasks. This particular one is well-worn."
 	organ_flags = ORGAN_ROBOTIC
 	icon_state = "random_number_database"
 	var/list/guessed_numbers = list() // well, it's a database
@@ -17,7 +17,7 @@
 		return
 	if(robot_brain.power <= 50)
 		if(!(organ_flags & ORGAN_DEPOWERED))
-			say("ERROR: Power critically low, depowering random number database to conserve energy!")
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
 			organ_flags |= ORGAN_DEPOWERED
 	else
 		organ_flags &= ~ORGAN_DEPOWERED

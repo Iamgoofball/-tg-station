@@ -1,11 +1,12 @@
 /obj/item/organ/stomach/fuel_generator
-	name = "liquid fuel generator"
-	desc = "Burns fuel to generate power."
+	name = "Android engine"
+	desc = "An incredibly small, versatile modern combustion engine produced by Conarex Aeronautics, meant to power cybernetic organisms."
 	disable_base_stomach_behavior = TRUE
 	can_process_solids = FALSE
 	organ_flags = ORGAN_ROBOTIC
 	reagent_vol = 100
 	icon_state = "fuel_generator"
+	organ_traits = list(TRAIT_NOHUNGER)
 	var/ethanol_modifier = 6
 	var/flammable_modifier = 3
 	var/list/flammable_reagents = list(

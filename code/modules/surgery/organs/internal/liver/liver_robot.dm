@@ -1,6 +1,6 @@
 /obj/item/organ/liver/cleaning_filter
-	name = "cleaning filter"
-	desc = "Filters unwanted liquids out of the robot. Doesn't handle toxic material very well. Keep powered to avoid damage to internal components."
+	name = "intake filter"
+	desc = "A fitted filter meant for use in cybernetic organisms. It struggles with most substances toxic to organics."
 	organ_flags = ORGAN_ROBOTIC
 	icon_state = "cleaning_filter"
 
@@ -45,7 +45,7 @@
 		return
 	if(robot_brain.power <= 25)
 		if(!(organ_flags & ORGAN_DEPOWERED))
-			say("ERROR: Power critically low, depowering cleaning filter to conserve energy!")
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
 			organ_flags |= ORGAN_DEPOWERED
 	else
 		organ_flags &= ~ORGAN_DEPOWERED

@@ -42,6 +42,15 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	overlay_mic_idle = null
 	overlay_mic_active = null
 
+/obj/item/radio/headset/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = ..()
+	if(!GetComponent(/datum/component/locator_and_minimap))
+		if(istype(weapon, /obj/item/headset_minimap_kit))
+			balloon_alert(user, "locator and radar attached")
+			qdel(weapon)
+			AddComponent(/datum/component/locator_and_minimap, /datum/action/minimap/crew, MINIMAP_FLAG_CREW, null)
+			return ITEM_INTERACT_SUCCESS
+
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
 	return TOXLOSS

@@ -1,6 +1,6 @@
 /obj/item/organ/ears/microphone
-	name = "stereo microphone"
-	desc = "A pair of microphones. Used for picking up sounds."
+	name = "auditory sensor suite"
+	desc = "A pair of ruggedized microphones. Used to translate noise to sound for cybernetic organisms."
 	icon_state = "microphone"
 	organ_flags = ORGAN_ROBOTIC
 
@@ -28,7 +28,7 @@
 		return
 	if(robot_brain.power <= 10)
 		if(!(organ_flags & ORGAN_DEPOWERED))
-			say("ERROR: Power critically low, depowering microphones to conserve energy!")
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
 			organ_flags |= ORGAN_DEPOWERED
 	else
 		organ_flags &= ~ORGAN_DEPOWERED

@@ -54,6 +54,15 @@
 	fastening_type = SHOES_SLIPON
 	body_parts_covered = FEET|LEGS
 
+/obj/item/clothing/shoes/jackboots/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	. = ..()
+	if(!GetComponent(/datum/component/jump_shoes))
+		if(istype(weapon, /obj/item/boots_jump_kit))
+			balloon_alert(user, "jump booster attached")
+			qdel(weapon)
+			AddComponent(/datum/component/jump_shoes)
+			return ITEM_INTERACT_SUCCESS
+
 /datum/armor/shoes_jackboots
 	bio = 90
 

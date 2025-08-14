@@ -6,7 +6,7 @@
 	maximum_range = 20
 
 /obj/projectile/bullet/tgmc/smartmachinegun
-	name = "10x25mm bullet"
+	name = "10x26mm bullet"
 	damage = 20
 	armour_penetration = 15
 	accurate_range = 12
@@ -27,3 +27,9 @@
 	maximum_range = 10
 	damage = 40
 	damage_falloff_tile = 4
+
+/obj/projectile/bullet/tgmc/ar21
+	name = "10x25mm bullet"
+	damage = 30
+	armour_penetration = 10
+	accurate_range = 12

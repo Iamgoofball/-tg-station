@@ -801,8 +801,8 @@
 //Cybernetic organs
 
 /datum/design/robot_oil_pump
-	name = "Oil Pump"
-	desc = "An oil pump for robots."
+	name = "oil heart"
+	desc = "An Android heart, used to distribute oil throughout the chassis."
 	id = "robot_oil_pump"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -814,8 +814,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/robot_fuel_generator
-	name = "Liquid Fuel Generator"
-	desc = "A liquid fuel generator for robots."
+	name = "Android engine"
+	desc = "An incredibly small, versatile modern combustion engine produced by Conarex Aeronautics, meant to power cybernetic organisms."
 	id = "robot_fuel_generator"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -827,8 +827,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/robot_cooling_fans
-	name = "Cooling Fans"
-	desc = "Cooling fans for robots."
+	name = "cooling fans"
+	desc = "A set of dense fans that channel air over steel heat sinks and force it out through a tube."
 	id = "robot_cooling_fans"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -840,8 +840,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/robot_microphone
-	name = "Microphone"
-	desc = "A microphone for robots."
+	name = "auditory sensor suite"
+	desc = "A pair of ruggedized microphones. Used to translate noise to sound for cybernetic organisms."
 	id = "robot_microphone"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -853,8 +853,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/robot_speaker
-	name = "Speaker"
-	desc = "A speaker for robots."
+	name = "robotic voice box"
+	desc = "A high-fidelity speaker used to produce a clear synthetic voice. It is incapable of the exact intonation and subvocal queues of humans in accordance with TerraGov law."
 	id = "robot_speaker"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -866,8 +866,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/robot_cleaning_filter
-	name = "Cleaning Filter"
-	desc = "A cleaning filter for robots."
+	name = "intake filter"
+	desc = "A fitted filter meant for use in cybernetic organisms. It struggles with most substances toxic to organics."
 	id = "robot_cleaning_filter"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -879,8 +879,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/robot_random_number_database
-	name = "Random Number Database"
-	desc = "A random number database for robots."
+	name = "cyborg GPU"
+	desc = "A beefy GPU built for installation inside of cybernetic organisms, used for various computing tasks. This particular one is well-worn."
 	id = "robot_random_number_database"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS
@@ -892,8 +892,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/robot_camera
-	name = "Camera"
-	desc = "A camera for robots."
+	name = "optical sensory suite"
+	desc = "An expensive pair of cameras with thick, internal data cables. Used to give cybernetic organisms sight."
 	id = "robot_camera"
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 4 SECONDS

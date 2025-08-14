@@ -1,6 +1,6 @@
 /obj/item/organ/tongue/speaker
-	name = "speaker"
-	desc = "A speaker. Used for emitting sounds."
+	name = "robotic voice box"
+	desc = "A high-fidelity speaker used to produce a clear synthetic voice. It is incapable of the exact intonation and subvocal queues of humans in accordance with TerraGov law."
 	organ_flags = ORGAN_ROBOTIC
 	modifies_speech = TRUE
 	say_mod = "states"
@@ -26,7 +26,7 @@
 		return
 	if(robot_brain.power <= 5)
 		if(!(organ_flags & ORGAN_DEPOWERED))
-			say("ERROR: Power critically low, depowering speaker to conserve energy!")
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
 			organ_flags |= ORGAN_DEPOWERED
 	else
 		organ_flags &= ~ORGAN_DEPOWERED

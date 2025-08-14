@@ -61,45 +61,10 @@
 	var/sound_off = 'sound/items/weapons/magout.ogg'
 	///Boolean on whether the light is on and flashing.
 	var/light_enabled = FALSE
-	/// Time before we activate the magnet.
-	var/magnet_delay = 0.8 SECONDS
-	/// The typecache of all guns we allow.
-	var/static/list/guns_typecache
-	/// Our wearer.
-	var/mob/living/wearer
-
-/obj/item/clothing/suit/armor/vest/tgmc/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot == ITEM_SLOT_OCLOTHING)
-		RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(check_dropped_item))
-		wearer = user
-
-/obj/item/clothing/suit/armor/vest/tgmc/dropped(mob/living/user)
-	. = ..()
-	wearer = null
-	UnregisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM)
 
 /obj/item/clothing/suit/armor/vest/tgmc/Initialize(mapload)
 	. = ..()
-	if(!guns_typecache)
-		guns_typecache = typecacheof(list(/obj/item/gun/ballistic, /obj/item/gun/energy, /obj/item/gun/grenadelauncher, /obj/item/gun/chem, /obj/item/gun/syringe))
-
-/obj/item/clothing/suit/armor/vest/tgmc/proc/check_dropped_item(datum/source, obj/item/dropped_item, force, new_location)
-	SIGNAL_HANDLER
-
-	if(!is_type_in_typecache(dropped_item, guns_typecache))
-		return
-	if(new_location != get_turf(src))
-		return
-	addtimer(CALLBACK(src, PROC_REF(pick_up_item), dropped_item), magnet_delay)
-
-/obj/item/clothing/suit/armor/vest/tgmc/proc/pick_up_item(obj/item/item)
-	if(!isturf(item.loc) || !item.Adjacent(wearer))
-		return
-	if(!wearer.equip_to_slot_if_possible(item, ITEM_SLOT_SUITSTORE, qdel_on_fail = FALSE, disable_warning = TRUE))
-		return
-	playsound(src, 'sound/items/modsuit/magnetic_harness.ogg', 50, TRUE)
-	balloon_alert(wearer, "gun reattached")
+	AddComponent(/datum/component/magnetic_harness)
 
 /obj/item/clothing/suit/armor/vest/tgmc/attack_self(mob/user)
 	. = ..()
@@ -169,77 +134,24 @@
 	worn_icon_state = "tgmc_boots"
 	clothing_traits = list(TRAIT_NO_SLIP_ALL)
 	siemens_coefficient = 0.7
-	var/datum/action/cooldown/marine_jump/jumping_power
 
 /obj/item/clothing/shoes/jackboots/tgmc/Initialize(mapload)
 	. = ..()
-	jumping_power = new(src)
-
-/obj/item/clothing/shoes/jackboots/tgmc/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot == ITEM_SLOT_FEET)
-		jumping_power.Grant(user)
-
-/obj/item/clothing/shoes/jackboots/tgmc/dropped(mob/living/user)
-	. = ..()
-	jumping_power.Remove(user)
-
-#define MARINE_JUMP "marine_jump"
-
-/datum/action/cooldown/marine_jump
-	name = "Marine Jump"
-	desc = "Put those knees to work and jump over obstacles!"
-	button_icon = 'icons/obj/clothing/shoes.dmi'
-	button_icon_state = "tgmc_boots"
-	background_icon_state = "bg_tgmc"
-	cooldown_time = 1 SECONDS
-
-/datum/action/cooldown/marine_jump/Activate(atom/target)
-	. = ..()
-	var/mob/living/carbon/human/marine = owner
-	marine.balloon_alert_to_viewers("jumps")
-	playsound(marine, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
-	marine.layer = ABOVE_MOB_LAYER
-	marine.pass_flags |= PASSMACHINE|PASSSTRUCTURE
-	passtable_on(marine, MARINE_JUMP)
-	ADD_TRAIT(marine, TRAIT_SILENT_FOOTSTEPS, MARINE_JUMP)
-	ADD_TRAIT(marine, TRAIT_MOVE_FLYING, MARINE_JUMP)
-	marine.zMove(UP)
-	marine.add_filter(MARINE_JUMP, 2, drop_shadow_filter(color = "#03020781", size = 0.9))
-	var/shadow_filter = marine.get_filter(MARINE_JUMP)
-	var/jump_height = 16
-	var/jump_duration = 0.5 SECONDS
-	new /obj/effect/temp_visual/mook_dust(get_turf(marine))
-	animate(marine, pixel_y = marine.pixel_y + jump_height, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
-	animate(pixel_y = initial(owner.pixel_y), time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
-
-	animate(shadow_filter, y = -jump_height, size = 4, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_OUT)
-	animate(y = 0, size = 0.9, time = jump_duration / 2, easing = CIRCULAR_EASING|EASE_IN)
-
-	addtimer(CALLBACK(src, PROC_REF(end_jump), marine), jump_duration)
-
-///Ends the jump
-/datum/action/cooldown/marine_jump/proc/end_jump(mob/living/jumper)
-	jumper.remove_filter(MARINE_JUMP)
-	jumper.layer = initial(jumper.layer)
-	passtable_off(jumper, MARINE_JUMP)
-	jumper.pass_flags = initial(jumper.pass_flags)
-	REMOVE_TRAIT(jumper, TRAIT_SILENT_FOOTSTEPS, MARINE_JUMP)
-	REMOVE_TRAIT(jumper, TRAIT_MOVE_FLYING, MARINE_JUMP)
-	new /obj/effect/temp_visual/mook_dust(get_turf(jumper))
+	AddComponent(/datum/component/jump_shoes)
 
 /obj/item/clothing/head/helmet/tgmc
 	name = "\improper M10 pattern marine helmet"
 	desc = "A standard M10 Pattern Helmet. It reads on the label, 'The difference between an open-casket and closed-casket funeral. Wear on head for best results.'."
 	icon_state = "tgmc_helmet"
 	worn_icon_state = "tgmc_helmet"
+	clothing_traits = list(TRAIT_SECURITY_HUD)
 	armor_type = /datum/armor/tgmc_marine_helmet_armor
 
 /obj/item/clothing/head/helmet/tgmc/command
 	name = "\improper M10-C pattern marine helmet"
 	icon_state = "tgmc_helmet_command"
 	worn_icon_state = "tgmc_helmet_command"
-	clothing_traits = list(TRAIT_MEDICAL_HUD)
+	clothing_traits = list(TRAIT_SECURITY_HUD, TRAIT_MEDICAL_HUD)
 	flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/clothing/head/helmet/tgmc/command/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
@@ -250,7 +162,7 @@
 	name = "\improper M10-M pattern marine helmet"
 	icon_state = "tgmc_helmet_medic"
 	worn_icon_state = "tgmc_helmet_medic"
-	clothing_traits = list(TRAIT_MEDICAL_HUD)
+	clothing_traits = list(TRAIT_SECURITY_HUD, TRAIT_MEDICAL_HUD)
 
 /obj/item/clothing/head/helmet/tgmc/medic/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -400,19 +312,21 @@
 
 	return packs
 
-/obj/item/storage/backpack/tgmc/command/proc/packin_up(forced = FALSE) // oh shit, I'm sorry
-	meme_pack_data = list() // sorry for what?
-	if(!forced && !SSshuttle.initialized) // our quartermaster taught us not to be ashamed of our supply packs
-		SSshuttle.express_consoles += src // specially since they're such a good price and all
-		return // yeah, I see that, your quartermaster gave you good advice
-	// it gets cheaper when I return it
-	for(var/pack_id in SSshuttle.supply_packs) // mmhm
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id] // sometimes, I return it so much, I rip the manifest
-		if(!meme_pack_data[pack.group]) // see, my quartermaster taught me a few things too
-			meme_pack_data[pack.group] = list( // like, how not to rip the manifest
-				"name" = pack.group, // by using someone else's crate
-				"packs" = get_packs_data(pack.group, express = TRUE), // will you show me?
-			) // i'd be right happy to
+/obj/item/storage/backpack/tgmc/command/proc/packin_up(forced = FALSE)
+	meme_pack_data = list()
+	if(!forced && !SSshuttle.initialized)
+		SSshuttle.express_consoles += src
+		return
+
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(!istype(pack, /datum/supply_pack/tgmc))
+			continue
+		if(!meme_pack_data[pack.group])
+			meme_pack_data[pack.group] = list(
+				"name" = pack.group,
+				"packs" = get_packs_data(pack.group, express = TRUE),
+			)
 
 /obj/item/storage/backpack/tgmc/command/ui_data(mob/user)
 	var/list/data = list()
@@ -467,107 +381,18 @@
 /obj/structure/closet/supplypod/syndicate
 	style = /datum/pod_style/syndicate
 
-/atom/movable/screen/SL_locator
-	name = "sl locator"
-	icon = 'icons/ui_icons/antags/pirates/tgmc_arrows.dmi'
-	icon_state = "Blue_arrow"
-	alpha = 128
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "CENTER,CENTER"
-
-GLOBAL_LIST_INIT(tgmc_headsets, list())
-
 /obj/item/radio/headset/syndicate/alt/tgmc
 	name = "marine radio headset"
 	desc = "A standard military radio headset."
 	icon_state = "tgmc_headset"
 	worn_icon_state = "tgmc_headset"
-	actions_types = list(/datum/action/minimap/tgmc)
-	var/mob/living/carbon/human/wearer = null
 	var/marker_flags = MINIMAP_FLAG_TGMC
-	var/atom/movable/screen/SL_locator/SL_locator
+	var/map_type = /datum/action/minimap/tgmc
 	var/icon_state_for_map = "private"
 
 /obj/item/radio/headset/syndicate/alt/tgmc/Initialize(mapload)
 	. = ..()
-	GLOB.tgmc_headsets += src
-
-/obj/item/radio/headset/syndicate/alt/tgmc/Destroy()
-	GLOB.tgmc_headsets -= src
-	. = ..()
-
-/obj/item/radio/headset/syndicate/alt/tgmc/equipped(mob/user, slot, initial)
-	. = ..()
-	if(slot == ITEM_SLOT_EARS)
-		wearer = user
-		RegisterSignals(wearer, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE), PROC_REF(update_minimap_icon))
-		RegisterSignal(wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-		update_minimap_icon()
-		//squad leader locator
-		SL_locator = new /atom/movable/screen/SL_locator(null, wearer?.hud_used)
-		wearer?.hud_used?.infodisplay += SL_locator
-		update_tracking()
-		wearer?.hud_used?.show_hud(wearer?.hud_used?.hud_version)
-
-/obj/item/radio/headset/syndicate/alt/tgmc/dropped(mob/user, silent)
-	if(!QDELETED(user))
-		SSminimaps.remove_marker(user)
-		UnregisterSignal(user, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE, COMSIG_MOVABLE_MOVED))
-		user?.hud_used?.infodisplay -= SL_locator
-	qdel(SL_locator)
-	wearer = null
-	. = ..()
-
-/obj/item/radio/headset/syndicate/alt/tgmc/proc/on_moved(atom/movable/mover, turf/old_loc)
-	SIGNAL_HANDLER
-	if(command)
-		for(var/headset in GLOB.tgmc_headsets)
-			var/obj/item/radio/headset/syndicate/alt/tgmc/possible_tracker = headset
-			if(possible_tracker.marker_flags & marker_flags)
-				possible_tracker.update_tracking()
-	else
-		update_tracking()
-
-///Updates the wearer's minimap icon
-/obj/item/radio/headset/syndicate/alt/tgmc/proc/update_minimap_icon()
-	SIGNAL_HANDLER
-	SSminimaps.remove_marker(wearer)
-	if(wearer.stat == DEAD)
-		if(!wearer.mind)
-			var/mob/dead/observer/ghost = wearer.get_ghost(TRUE)
-			if(!ghost?.can_reenter_corpse)
-				SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, "unrevivable", MINIMAP_BLIPS_LAYER))
-				return
-		SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, "revivable", MINIMAP_BLIPS_LAYER))
-		return
-	determine_icon()
-
-/obj/item/radio/headset/syndicate/alt/tgmc/proc/determine_icon()
-	SSminimaps.add_marker(wearer, marker_flags, image('icons/ui_icons/antags/pirates/tgmc_minimap_blips.dmi', null, icon_state_for_map, MINIMAP_BLIPS_LAYER))
-
-/obj/item/radio/headset/syndicate/alt/tgmc/proc/update_tracking()
-	if(!wearer && !wearer.hud_used)
-		SL_locator.icon_state = ""
-		SL_locator.alpha = 0
-		return
-	if(command)
-		SL_locator.icon_state = ""
-		SL_locator.alpha = 0
-		return
-	var/obj/item/radio/headset/syndicate/alt/tgmc/found_commander
-	for(var/headset in GLOB.tgmc_headsets)
-		var/obj/item/radio/headset/syndicate/alt/tgmc/possible_commander = headset
-		if(possible_commander.command && (possible_commander.marker_flags & marker_flags))
-			found_commander = headset
-			break
-	if(!found_commander || QDELETED(found_commander))
-		SL_locator.icon_state = ""
-		SL_locator.alpha = 0
-		return
-	SL_locator.icon_state = "Blue_arrow"
-	SL_locator.alpha = 128
-	SL_locator.transform = 0 //Reset and 0 out
-	SL_locator.transform = turn(SL_locator.transform, get_angle(wearer, get_turf(found_commander)))
+	AddComponent(/datum/component/locator_and_minimap, map_type, marker_flags, icon_state_for_map)
 
 /obj/item/radio/headset/syndicate/alt/tgmc/command
 	name = "marine commander radio headset"
@@ -593,7 +418,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 	head = /obj/item/clothing/head/helmet/tgmc
 	suit = /obj/item/clothing/suit/armor/vest/tgmc
 	ears = /obj/item/radio/headset/syndicate/alt/tgmc
-	r_pocket = /obj/item/storage/tgmc_pouch/ammo
+	r_pocket = /obj/item/storage/tgmc_pouch/ammo/ar21
 	l_pocket = /obj/item/storage/tgmc_pouch/grenade_pouch/prefilled
 	back = /obj/item/storage/backpack/tgmc
 	backpack_contents = list(
@@ -601,6 +426,8 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
 	)
+	suit_store = /obj/item/gun/ballistic/automatic/ar21
+	id = /obj/item/card/id/tgmc
 
 /datum/outfit/tgmc/command
 	name = "TGMC Squad Leader"
@@ -617,6 +444,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
 		/obj/item/storage/tgmc_pouch/grenade_pouch/prefilled,
 	)
+	id = /obj/item/card/id/tgmc/leader
 
 /datum/outfit/tgmc/medic
 	name = "TGMC Corpsman"
@@ -640,6 +468,7 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 		/obj/item/storage/shell_box/buckshot/prefilled,
 		/obj/item/storage/shell_box/buckshot/prefilled,
 	)
+	id = /obj/item/card/id/tgmc/corpsman
 
 /datum/outfit/tgmc/engineer
 	name = "TGMC Engineer"
@@ -659,3 +488,44 @@ GLOBAL_LIST_INIT(tgmc_headsets, list())
 		/obj/item/storage/tgmc_pouch/ammo_pistol/filled,
 		/obj/item/storage/tgmc_pouch/grenade_pouch/prefilled,
 	)
+	id = /obj/item/card/id/tgmc/engineer
+
+/obj/item/card/id/tgmc
+	name = "dog tag"
+	desc = "A marine dog tag."
+	trim = /datum/id_trim/tgmc
+	icon_state = "tgmc_dogtag"
+	registered_age = null
+
+/obj/item/card/id/tgmc/marine
+	name = "marine dog tag"
+
+/obj/item/card/id/tgmc/corpsman
+	name = "corpsman dog tag"
+	trim = /datum/id_trim/tgmc/corpsman
+
+/obj/item/card/id/tgmc/engineer
+	name = "engineer dog tag"
+	trim = /datum/id_trim/tgmc/engineer
+
+/obj/item/card/id/tgmc/leader
+	name = "squad leader dog tag"
+	trim = /datum/id_trim/tgmc/leader
+
+/obj/item/boots_jump_kit
+	name = "Jump Boots Upgrade Kit"
+	desc = "Use on jackboots to upgrade with jumping capabilities."
+	icon = 'icons/obj/storage/box.dmi'
+	icon_state = "flat"
+
+/obj/item/armor_magharness_kit
+	name = "Armor Mag-Harness Upgrade Kit"
+	desc = "Use on armor to upgrade with a mag harness."
+	icon = 'icons/obj/storage/box.dmi'
+	icon_state = "flat"
+
+/obj/item/headset_minimap_kit
+	name = "Security Headset Minimap Upgrade Kit"
+	desc = "Use on a headset to upgrade with a minimap and locator."
+	icon = 'icons/obj/storage/box.dmi'
+	icon_state = "flat"

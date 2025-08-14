@@ -618,6 +618,8 @@
 
 /obj/item/organ/brain/cybernetic/on_life(seconds_per_tick, times_fired)
 	. = ..()
+	owner.setToxLoss(0)
+	owner.setOxyLoss(0)
 	power -= (0.0125 * seconds_per_tick) * temperature_disparity
 	run_updates()
 

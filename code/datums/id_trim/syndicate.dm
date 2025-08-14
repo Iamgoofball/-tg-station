@@ -112,3 +112,34 @@
 	access = list(ACCESS_MAINT_TUNNELS, ACCESS_SYNDICATE, ACCESS_SYNDICATE_LEADER)
 	big_pointer = TRUE
 	pointer_color = COLOR_SYNDIE_RED
+
+/// Trims for the TGMC pirates
+/datum/id_trim/tgmc
+	assignment = "TGMC Squaddie"
+	trim_state = null // no trim
+	department_color = COLOR_SYNDIE_RED // Being bankrolled by the syndicate, so they share access
+	subdepartment_color = COLOR_SYNDIE_RED
+	sechud_icon_state = "hudtgmcgrunt"
+	access = list(ACCESS_SYNDICATE)
+	threat_modifier = 5
+	pointer_color = COLOR_SYNDIE_RED
+
+/datum/id_trim/tgmc/marine
+	assignment = "TGMC Marine"
+	sechud_icon_state = "hudtgmcgrunt"
+	big_pointer = FALSE
+
+/datum/id_trim/tgmc/corpsman
+	assignment = "TGMC Corpsman"
+	sechud_icon_state = "hudtgmcmedic"
+	big_pointer = FALSE
+
+/datum/id_trim/tgmc/engineer
+	assignment = "TGMC Engineer"
+	sechud_icon_state = "hudtgmcengineer"
+	big_pointer = FALSE
+
+/datum/id_trim/tgmc/leader
+	assignment = "TGMC Squad Leader"
+	sechud_icon_state = "hudtgmcleader"
+	big_pointer = TRUE

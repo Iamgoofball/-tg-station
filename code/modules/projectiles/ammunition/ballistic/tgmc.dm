@@ -25,3 +25,14 @@
 	pellets = 6
 	variance = 30
 	randomspread = FALSE
+
+/obj/item/ammo_casing/ar21
+	name = "10x25mm caseless bullet"
+	desc = "A 10x25mm caseless bullet."
+	icon_state = "tgmc_bullet"
+	caliber = CALIBER_10X25_CASELESS
+	projectile_type = /obj/projectile/bullet/tgmc/ar21
+
+/obj/item/ammo_casing/ar21/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/caseless)

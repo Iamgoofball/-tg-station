@@ -115,6 +115,10 @@
 	for(var/i in 1 to 3)
 		new /obj/item/ammo_box/magazine/smartmachinegun(src)
 
+/obj/item/storage/tgmc_pouch/ammo/ar21/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/ammo_box/magazine/ar21(src)
+
 /obj/item/storage/tgmc_pouch/ammo_pistol/filled/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/ammo_box/magazine/p23(src)

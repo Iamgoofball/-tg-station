@@ -104,3 +104,46 @@
 	wielded_spread = 4
 	unwielded_spread = 10
 	wieldable = TRUE
+	rack_on_dryfire_if_not_semi_auto = TRUE
+
+/obj/item/gun/ballistic/automatic/ar21
+	name = "\improper AR-21 Kauser skirmish rifle"
+	desc = "The Kauser AR-21 is a versatile rifle is developed to bridge a gap between higher caliber weaponry and a normal rifle. \
+	It fires a strong 10x25mm round, which has decent stopping power. It however suffers in magazine size and movement capablity compared \
+	to smaller peers."
+	icon = 'icons/obj/weapons/guns/tgmc_64.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	icon_state = "ar21"
+	inhand_icon_state = "ar21"
+	worn_icon_state = "ar21"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 32
+	burst_size = 1
+	actions_types = list()
+	mag_display = TRUE
+	empty_indicator = TRUE
+	w_class = WEIGHT_CLASS_BULKY // It's a rifle
+	slot_flags = ITEM_SLOT_SUITSTORE | ITEM_SLOT_BACK
+	accepted_magazine_type = /obj/item/ammo_box/magazine/ar21
+	pin = /obj/item/firing_pin
+	show_bolt_icon = FALSE
+	muzzle_type = /obj/effect/temp_visual/muzzle/bullet
+	fire_sound = 'sound/items/weapons/gun/tgmc/ar21_fire.ogg'
+	dry_fire_sound = 'sound/items/weapons/gun/tgmc/ar21_empty.ogg'
+	load_sound = 'sound/items/weapons/gun/tgmc/ar21_reload.ogg'
+	load_empty_sound = 'sound/items/weapons/gun/tgmc/ar21_reload.ogg'
+	eject_sound = 'sound/items/weapons/gun/tgmc/ar21_unload.ogg'
+	eject_empty_sound = 'sound/items/weapons/gun/tgmc/ar21_unload.ogg'
+	recoil = 4
+	spread = 13
+	wielded_icon = "ar21_wielded"
+	wielded_recoil = 0.5
+	unwielded_recoil = 4
+	wielded_spread = 0
+	unwielded_spread = 13
+	wieldable = TRUE
+
+/obj/item/gun/ballistic/automatic/ar21/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
