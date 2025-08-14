@@ -306,7 +306,7 @@
 	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_TEMPERATURE)
 	organ_owner.mob_mood = new /datum/mood(organ_owner)
 	organ_owner.remove_movespeed_mod_immunities("robot_brain", /datum/movespeed_modifier/damage_slowdown)
-	qdel(our_beacon)
+	QDEL_NULL(our_beacon)
 	. = ..()
 
 /obj/item/organ/brain/cybernetic/proc/activate_distress_beacon_death(mob/living/target, gibbed)
@@ -320,6 +320,11 @@
 		return
 	if(distress_beacon_active)
 		deactivate_distress_beacon()
+	INVOKE_ASYNC(src, PROC_REF(show_ad))
+
+/obj/item/organ/brain/cybernetic/proc/show_ad()
+	var/datum/tgui/ui = new(owner, GLOB.ad_window, "Advertisement")
+	ui.open()
 
 /datum/movespeed_modifier/robot_low_oil
 	multiplicative_slowdown = 0.4
