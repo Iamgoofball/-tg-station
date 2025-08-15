@@ -72,6 +72,8 @@ GLOBAL_LIST_INIT(minimap_headsets, list())
 	SIGNAL_HANDLER
 	if(!source.client)
 		return
+	if(SL_locator)
+		qdel(SL_locator)
 	SL_locator = new /atom/movable/screen/SL_locator(null, wearer?.hud_used)
 	wearer?.hud_used?.infodisplay += SL_locator
 	update_tracking()

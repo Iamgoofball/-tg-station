@@ -55,13 +55,13 @@ const setWindowSize = (vec: [number, number]) => {
 };
 
 // Get screen position
-const getScreenPosition = (): [number, number] => [
+export const getScreenPosition = (): [number, number] => [
   0 - screenOffset[0],
   0 - screenOffset[1],
 ];
 
 // Get screen size
-const getScreenSize = (): [number, number] => [
+export const getScreenSize = (): [number, number] => [
   window.screen.availWidth * pixelRatio,
   window.screen.availHeight * pixelRatio,
 ];

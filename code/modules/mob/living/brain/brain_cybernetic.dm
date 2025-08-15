@@ -320,11 +320,15 @@
 		return
 	if(distress_beacon_active)
 		deactivate_distress_beacon()
-	INVOKE_ASYNC(src, PROC_REF(show_ad))
+	var/sound/annoying_sound = sound('sound/machines/computer/you_got_mail.ogg', volume = 100)
+	SEND_SOUND(owner, annoying_sound)
+	for(var/i in 1 to rand(1, 2 + severity))
+		addtimer(CALLBACK(src, PROC_REF(show_ad), severity), rand(5, 15))
 
-/obj/item/organ/brain/cybernetic/proc/show_ad()
-	var/datum/tgui/ui = new(owner, GLOB.ad_window, "Advertisement")
-	ui.open()
+/obj/item/organ/brain/cybernetic/proc/show_ad(severity)
+	if(owner && owner.client)
+		var/datum/advertisement/popup = new
+		popup.open_for(owner, severity)
 
 /datum/movespeed_modifier/robot_low_oil
 	multiplicative_slowdown = 0.4
