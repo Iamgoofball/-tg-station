@@ -1,16 +1,21 @@
 ///global lists of all pirate gangs that can show up today. they will be taken out of the global lists as spawned so dupes cannot spawn.
-GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(is_heavy = FALSE))
-GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
+GLOBAL_LIST_INIT(light_pirate_gangs, init_pirate_gangs(is_heavy = FALSE, is_superheavy = FALSE))
+GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE, is_superheavy = FALSE))
+GLOBAL_LIST_INIT(superheavy_pirate_gangs, init_pirate_gangs(is_heavy = FALSE, is_superheavy = TRUE))
 
 ///initializes the pirate gangs glob list, adding all subtypes that can roll today.
-/proc/init_pirate_gangs(is_heavy)
+/proc/init_pirate_gangs(is_heavy, is_superheavy)
 	var/list/pirate_gangs = list()
 
 	for(var/type in subtypesof(/datum/pirate_gang))
 		var/datum/pirate_gang/possible_gang = new type
 		if(!possible_gang.can_roll())
 			qdel(possible_gang)
-		else if(possible_gang.is_heavy_threat == is_heavy)
+		if(possible_gang.is_heavy_threat && is_heavy)
+			pirate_gangs += possible_gang
+		if(possible_gang.is_superheavy_threat && is_superheavy)
+			pirate_gangs += possible_gang
+		if(!possible_gang.is_heavy_threat && !possible_gang.is_superheavy_threat && !is_heavy && !is_superheavy)
 			pirate_gangs += possible_gang
 	return pirate_gangs
 
@@ -21,6 +26,8 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	///Whether or not this pirate crew is a heavy-level threat
 	var/is_heavy_threat = FALSE
+	///Whether or not this pirate crew is a superheavy-level threat
+	var/is_superheavy_threat = FALSE
 	///the random ship name chosen from pirates.json
 	var/ship_name
 	///the ship they load in on.
@@ -231,12 +238,12 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 /// Honorably discharged for injuries sustained in the line of duty, these veterans are out to pay their substantial medical bills.
 /datum/pirate_gang/veterans
 	name = "Abused Veterans"
-	is_heavy_threat = TRUE
+	is_superheavy_threat = TRUE
 	ship_template_id = "thank_you_for_your_service"
-	ship_name_pool = "tgmc_ship_names"
+	ship_name_pool = "tgmc_names"
 
 	threat_title = "The Left Behind"
-	threat_content = "ATTENTION NANOTRASEN: This is %CAPTAIN, commanding officer of the Left Behind, a group of disabled veterans abandoned \
+	threat_content = "ATTENTION NANOTRASEN: This is the commanding officer of the Left Behind, a group of disabled veterans abandoned \
 	by our country. Your corporate masters engaged in a concerted, multi-year campaign to deprive us of our disability benefits, and continues \
 	to do so to many other veterans. We are unable to work. We will never recover, but we are 'cured' anyway. We are here seeking restitution from you, \
 	that is, we are here for credits. Pay us %PAYOFF and we'll leave you be, otherwise: we will have to come aboard to take it. \
@@ -248,7 +255,7 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 		"I can't authorize credit transfers to outside vessels, sorry."
 	)
 	response_received = "Thank you. This helps more than I can express in the Commmon language. Hopefully, one day soon, \
-	we can get the Senate to reconsider and make this all stop. I'm sorry to have to threaten you. %CAPTAIN out. Be safe, %STATION_NAME."
+	we can get the Senate to reconsider and make this all stop. I'm sorry to have to threaten you. Be safe, %STATION_NAME."
 	response_rejected = "If you won't give it to us, we're coming aboard to take it. Do not stand in our way."
 	response_too_late = "We can't wait all day out here. We are going to board and pull credits from your corporate accounts. Comply with my men's orders."
 	response_not_enough = "I'm sorry, this isn't enough for even a month's expenses. Prepare to be boarded, please look for more."

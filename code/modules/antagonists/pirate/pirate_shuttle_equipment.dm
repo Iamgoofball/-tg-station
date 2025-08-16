@@ -109,6 +109,9 @@
 	y_offset = 0
 	see_hidden = FALSE
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/alamo
+	whitelist_turfs = list() // the LZ is anywhere they want it to be
+
 /obj/docking_port/mobile/pirate
 	name = "pirate shuttle"
 	shuttle_id = "pirate"

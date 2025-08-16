@@ -322,8 +322,8 @@
 		deactivate_distress_beacon()
 	var/sound/annoying_sound = sound('sound/machines/computer/you_got_mail.ogg', volume = 100)
 	SEND_SOUND(owner, annoying_sound)
-	for(var/i in 1 to rand(1, 2 + severity))
-		addtimer(CALLBACK(src, PROC_REF(show_ad), severity), rand(5, 15))
+	for(var/i in 1 to rand(1, 3 + severity))
+		addtimer(CALLBACK(src, PROC_REF(show_ad), severity), rand(5, 25))
 
 /obj/item/organ/brain/cybernetic/proc/show_ad(severity)
 	if(owner && owner.client)

@@ -123,6 +123,10 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// will show the feature as selectable.
 	var/relevant_external_organ = null
 
+	/// If the selected species is this,
+	/// will show the feature as selectable.
+	var/relevant_species = null
+
 	/// If the selected species has this head_flag by default,
 	/// will show the feature as selectable.
 	var/relevant_head_flag = null
@@ -333,7 +337,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 /// Checks if this preference is relevant and thus visible to the passed preferences object.
 /datum/preference/proc/has_relevant_feature(datum/preferences/preferences)
-	if(isnull(relevant_inherent_trait) && isnull(relevant_external_organ) && isnull(relevant_head_flag) && isnull(relevant_body_markings))
+	if(isnull(relevant_inherent_trait) && isnull(relevant_external_organ) && isnull(relevant_head_flag) && isnull(relevant_body_markings) && isnull(relevant_species))
 		return TRUE
 
 	return current_species_has_savekey(preferences)

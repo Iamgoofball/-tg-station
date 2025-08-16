@@ -82,3 +82,21 @@
 	if(counter != 1)
 		shuttle_id = "[shuttle_id]_[counter]"
 		lzname = "[lzname] [counter]"
+
+
+/obj/item/assault_pod/tgmc //for the TGMC pirates
+	name = "Shuttle placement designator"
+	desc = "A device used to select where you want to land your shuttle."
+	shuttle_id = "pirate"
+	dwidth = 1
+	dheight = 1
+	width = 11
+	height = 21
+	lzname = "pirate"
+
+/obj/item/assault_pod/tgmc/Initialize(mapload)
+	. = ..()
+	var/counter = length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/shuttle/pirate))
+	if(counter != 1)
+		shuttle_id = "[shuttle_id]_[counter]"
+		lzname = "[lzname] [counter]"

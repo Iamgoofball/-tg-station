@@ -29,6 +29,8 @@
 		blood_type = BLOOD_TYPE_H2O
 	else if(holder.has_reagent(/datum/reagent/toxin/slimejelly))
 		blood_type = BLOOD_TYPE_TOX
+	else if(holder.has_reagent(/datum/reagent/fuel/oil))
+		blood_type = BLOOD_TYPE_OIL
 	else
 		blood_type = null
 	return ..()
@@ -96,6 +98,14 @@
 /obj/item/reagent_containers/blood/toxin/examine()
 	. = ..()
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
+
+/obj/item/reagent_containers/blood/oil
+	blood_type = BLOOD_TYPE_OIL
+	unique_blood = /datum/reagent/fuel/oil
+
+/obj/item/reagent_containers/blood/oil/examine()
+	. = ..()
+	. += span_notice("There is a flammable warning on the label.")
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = BLOOD_TYPE_UNIVERSAL

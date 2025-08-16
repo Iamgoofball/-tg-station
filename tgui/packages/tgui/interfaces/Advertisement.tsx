@@ -1,12 +1,131 @@
 // Obnoxious advertisement with moving text and flashing colors
 import '../styles/interfaces/Advertisement.scss';
 
+import { storage } from 'common/storage';
 import { useEffect, useRef, useState } from 'react';
 import { Button, Icon, Modal, Section, Stack } from 'tgui-core/components';
 
 import { backendSuspendStart, globalStore, useBackend } from '../backend';
 import { getWindowSize, setWindowPosition } from '../drag';
 import { Window } from '../layouts';
+import { logger } from '../logging';
+
+export interface PopupQuestion {
+  question: string;
+  button1: string;
+  button2: string;
+  closesWindow: 'button1' | 'button2';
+}
+
+export const popupQuestions: PopupQuestion[] = [
+  {
+    question:
+      'Are you *not* ready to not immediately stop cancelling your choice? (5 seconds left)',
+    button1: 'Absolutely Not',
+    button2: 'Don’t Cancel',
+    closesWindow: 'button1',
+  },
+  {
+    question:
+      'Will you confirm that you don’t not want to reject quitting before the timer ends?',
+    button1: 'Reject Confirmation',
+    button2: 'Agree to Not Reject',
+    closesWindow: 'button2',
+  },
+  {
+    question:
+      'Are you certain you don’t disagree with avoiding closure... *quickly*?',
+    button1: 'Close Avoidance',
+    button2: 'Don’t Close Avoidance',
+    closesWindow: 'button1',
+  },
+  {
+    question:
+      'Do you want to not refuse the option to not end now? Time’s almost up!',
+    button1: 'End Refusal',
+    button2: 'Refuse End',
+    closesWindow: 'button1',
+  },
+  {
+    question: 'Will you not cancel your refusal to not accept leaving?',
+    button1: 'Accept Refusal',
+    button2: 'Cancel Leaving',
+    closesWindow: 'button2',
+  },
+  {
+    question:
+      'Are you sure you’re not unsure about not confirming you’re not ready right now?',
+    button1: 'Not Ready Confirmed',
+    button2: 'Ready Unconfirmed',
+    closesWindow: 'button2',
+  },
+  {
+    question:
+      'Do you deny not wanting to instantly agree to avoid not quitting?',
+    button1: 'Agree Avoid Quit',
+    button2: 'Don’t Agree Quit',
+    closesWindow: 'button1',
+  },
+  {
+    question: 'Are you sure you don’t want to not close at this exact moment?',
+    button1: 'Close Later',
+    button2: 'Close Now Not',
+    closesWindow: 'button2',
+  },
+  {
+    question:
+      'Will you reject not cancelling your attempt to not quit before it’s too late?',
+    button1: 'Cancel Attempt',
+    button2: 'Reject Cancel',
+    closesWindow: 'button1',
+  },
+  {
+    question: 'Do you not refuse to not stop the process now?',
+    button1: 'Stop Refusal',
+    button2: 'Don’t Stop Refusal',
+    closesWindow: 'button2',
+  },
+  {
+    question: 'You don’t not want to avoid declining to quit, right?',
+    button1: 'Decline Quit',
+    button2: 'Avoid Decline Quit',
+    closesWindow: 'button2',
+  },
+  {
+    question:
+      'If you’re not unsure about not confirming your decision to not exit, click now!',
+    button1: 'Confirm Exit Not',
+    button2: 'Don’t Confirm Not Exit',
+    closesWindow: 'button1',
+  },
+  {
+    question:
+      'Will you not cancel your decision to not leave if you don’t act instantly?',
+    button1: 'Cancel Not Leave',
+    button2: 'Don’t Cancel Not Leave',
+    closesWindow: 'button1',
+  },
+  {
+    question:
+      'Are you certain you don’t not want to refuse the choice to not quit right now?',
+    button1: 'Refuse Quit',
+    button2: 'Don’t Refuse Quit',
+    closesWindow: 'button2',
+  },
+  {
+    question:
+      'Do you not want to not confirm you don’t want to quit before the popup explodes?',
+    button1: 'Confirm Not Quit',
+    button2: 'Don’t Confirm Not Quit',
+    closesWindow: 'button1',
+  },
+];
+
+// Utility to select a random question
+export function getRandomPopup(): PopupQuestion {
+  const index = Math.floor(Math.random() * popupQuestions.length);
+  return popupQuestions[index];
+}
 
 const pickRandomElement = (arr: string[]) =>
   arr[Math.floor(Math.random() * arr.length)];
@@ -15,66 +134,6 @@ type Data = {
   severity: number;
   customer: string;
 };
-const pixelRatio = window.devicePixelRatio ?? 1;
-const screenSize: [number, number] = [
-  window.screen.availWidth * pixelRatio,
-  window.screen.availHeight * pixelRatio,
-];
-const winSize = getWindowSize();
-const position = useRef<[number, number]>([0, 0]);
-const useBouncer = (speed: number) => {
-  const [enabled, setEnabled] = useState(true);
-  const velocity = useRef<[number, number]>([
-    (Math.random() > 0.5 ? 1 : -1) * (speed * 0.3), // Reduce speed to be less aggressive
-    (Math.random() > 0.5 ? 0.8 : -0.8) * (speed * 0.3),
-  ]);
-
-  useEffect(() => {
-    let raf: number;
-    let last = performance.now();
-    const step = (now: number) => {
-      if (!enabled) return;
-      const dt = Math.max(0.001, Math.min((now - last) / 1000, 0.05)); // Cap dt to prevent large jumps
-      last = now;
-      const screen: [number, number] = [
-        window.screen.availWidth * pixelRatio,
-        window.screen.availHeight * pixelRatio,
-      ];
-      const size = getWindowSize();
-      const v = velocity.current;
-      const p = position.current;
-      // Integrate
-      p[0] += v[0] * dt;
-      p[1] += v[1] * dt;
-      // Bounce
-      if (p[0] < 0) {
-        p[0] = 0;
-        v[0] = Math.abs(v[0]);
-      } else if (p[0] + size[0] > screen[0]) {
-        p[0] = Math.max(0, screen[0] - size[0]);
-        v[0] = -Math.abs(v[0]);
-      }
-      if (p[1] < 0) {
-        p[1] = 0;
-        v[1] = Math.abs(v[1]);
-      } else if (p[1] + size[1] > screen[1]) {
-        p[1] = Math.max(0, screen[1] - size[1]);
-        v[1] = -Math.abs(v[1]);
-      }
-      setWindowPosition([p[0], p[1]]);
-      // Use a slower update rate to maintain interactivity
-      setTimeout(() => {
-        raf = requestAnimationFrame(step);
-      }, 50);
-    };
-    raf = requestAnimationFrame(step);
-    return () => {
-      setEnabled(false);
-      cancelAnimationFrame(raf);
-    };
-  }, []); // Remove speed dependency to prevent recreation
-};
-
 const titleVariants = [
   'HOT MOTHS IN YOUR AREA',
   'LOSE FIFTY POUNDS IN A SHIFT',
@@ -107,81 +166,91 @@ const purchasePhrases = [
   '!!GET NOW!!',
   '!!SHOP NOW!!',
 ];
-
-const pleaseDontCloseMeIWillCry = [
-  'Closing now may leave you LIABLE!',
-  'WARNING: System breach may get worse if you close this alert!',
-  "If you leave me, I'll never love again!",
-  'As your anti-virus, I advise you to not close this window.',
-  "Are you sure you don't not want to not close this window?",
-  'Closing this window is a binding contract. Are you sure?',
-  'This is an official Central Command message; DO NOT CLOSE!',
-  "You won't last five minutes without this deal!",
+const pixelRatio = window.devicePixelRatio ?? 1;
+const screenSize: [number, number] = [
+  window.screen.availWidth * pixelRatio,
+  window.screen.availHeight * pixelRatio,
 ];
-
+const winSize = getWindowSize();
+const position = useRef<[number, number]>([0, 0]);
+const hasOpened = useRef(false);
 export const Advertisement = () => {
-  const { act, data } = useBackend<Data>();
+  const { act, data, suspended } = useBackend<Data>();
   const { severity } = data;
 
   const [header] = useState(pickRandomElement(titleVariants));
   const [body] = useState(pickRandomElement(bodyVariants));
   const [purchasePhrase] = useState(pickRandomElement(purchasePhrases));
 
-  const [closePhrase, setClosePhrase] = useState('SOMETHING BROKE');
+  // Pop-up state (replaces closePhrase)
+  const [popup, setPopup] = useState<PopupQuestion | null>(null);
 
   const [showClosePrompt, setShowClosePrompt] = useState(false);
 
   useEffect(() => {
+    const relocate_window = setTimeout(() => {
+      position.current = [
+        Math.random() * Math.max(0, screenSize[0] - winSize[0]),
+        Math.random() * Math.max(0, screenSize[1] - winSize[1]),
+      ];
+      logger.log(position.current);
+      storage.remove(Byond.windowId);
+      setWindowPosition(position.current);
+    }, 300);
     const closeButton = document.getElementsByClassName('TitleBar__close');
     if (closeButton.length > 0) {
       closeButton[0].addEventListener('click', tryCloseWindow);
     }
-
     return () => {
+      clearTimeout(relocate_window);
       if (closeButton.length > 0) {
         closeButton[0].removeEventListener('click', tryCloseWindow);
       }
     };
-  }, []);
+  }, [suspended]);
 
   const [closePromptTimeout, setClosePromptTimeout] =
     useState<NodeJS.Timeout>();
 
   const [closePromptConfirmation, setClosePromptConfirmation] = useState(false);
 
-  const actuallyCloseWindow = () => globalStore.dispatch(backendSuspendStart());
+  const actuallyCloseWindow = () => {
+    globalStore.dispatch(backendSuspendStart());
+  };
 
   const tryCloseWindow = (event: Event) => {
     event.preventDefault();
     event.stopPropagation();
-    if (severity > 1) {
-      actuallyCloseWindow();
-      clearTimeout(closePromptTimeout);
-    } else {
-      setClosePromptConfirmation(false);
-      setClosePhrase(pickRandomElement(pleaseDontCloseMeIWillCry));
-      setShowClosePrompt(true);
-      setClosePromptTimeout(
-        setTimeout(() => {
-          setShowClosePrompt(false);
-        }, 3000),
-      );
-    }
+    setClosePromptConfirmation(false);
+    setPopup(getRandomPopup());
+    setShowClosePrompt(true);
+    setClosePromptTimeout(
+      setTimeout(() => {
+        setShowClosePrompt(false);
+      }, 10000),
+    );
   };
 
   const closePrompt = () => {
     setShowClosePrompt(false);
-    clearTimeout(closePromptTimeout);
+    if (closePromptTimeout) clearTimeout(closePromptTimeout);
   };
-  position.current = [
-    Math.random() * Math.max(0, screenSize[0] - winSize[0]),
-    Math.random() * Math.max(0, screenSize[1] - winSize[1]),
-  ];
-  setWindowPosition(position.current);
+
+  const handleDeceptiveClick = (pressed: 'button1' | 'button2') => {
+    if (!popup) return;
+    if (popup.closesWindow === pressed) {
+      // Correct: actually close the window
+      closePrompt();
+      actuallyCloseWindow();
+    } else {
+      // Wrong: just dismiss (same as your old "Back")
+      closePrompt();
+    }
+  };
   return (
-    <Window title={header} width={400} height={300} theme="retro">
+    <Window title={header} width={600} height={300} theme="retro">
       <Window.Content>
-        {showClosePrompt && (
+        {showClosePrompt && popup && (
           <Modal>
             <Stack
               textAlign="center"
@@ -190,27 +259,34 @@ export const Advertisement = () => {
               fill
               textColor="black"
             >
-              <Stack.Item>{closePhrase}</Stack.Item>
-              <Stack.Item style={{ display: 'flex', gap: '1em' }}>
+              {/* If you want the *emphasis* to render, swap to dangerouslySetInnerHTML */}
+              <Stack.Item>{popup.question}</Stack.Item>
+
+              <Stack.Item
+                style={{
+                  display: 'flex',
+                  gap: '1em',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <Button
                   textAlign="center"
                   fontSize="1.2em"
-                  onClick={() => {
-                    closePrompt();
-                    actuallyCloseWindow();
-                  }}
+                  onClick={() => handleDeceptiveClick('button1')}
                 >
-                  Close
+                  {popup.button1}
                 </Button>
 
                 <Button
+                  align="right"
                   textAlign="center"
                   fontSize="1.2em"
-                  onClick={() => closePrompt()}
+                  onClick={() => handleDeceptiveClick('button2')}
                 >
-                  Back
+                  {popup.button2}
                 </Button>
               </Stack.Item>
+
               <Stack.Item>
                 {severity < 2 && (
                   <Button.Checkbox
@@ -230,6 +306,9 @@ export const Advertisement = () => {
         )}
         <Section className="Advertisement" fill align="center">
           <Stack textAlign="center" fontSize="1.5em" vertical fill>
+            <Stack.Item maxWidth="32rem" align="center">
+              {header}
+            </Stack.Item>
             <Stack.Item maxWidth="24rem" align="center">
               <span className="Advertisement__marquee">{body}</span>
             </Stack.Item>

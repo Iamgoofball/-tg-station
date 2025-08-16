@@ -411,6 +411,7 @@
 
 /datum/outfit/tgmc
 	name = "TGMC Marine"
+	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/misc/tgmc
 	shoes = /obj/item/clothing/shoes/jackboots/tgmc
 	gloves = /obj/item/clothing/gloves/combat
@@ -429,8 +430,29 @@
 	suit_store = /obj/item/gun/ballistic/automatic/ar21
 	id = /obj/item/card/id/tgmc
 
+/datum/outfit/tgmc/post_equip(mob/living/carbon/human/equipped)
+	equipped.faction |= FACTION_PIRATE
+
+	var/obj/item/radio/outfit_radio = equipped.ears
+	if(outfit_radio)
+		outfit_radio.set_frequency(FREQ_SYNDICATE)
+		outfit_radio.freqlock = RADIO_FREQENCY_LOCKED
+
+	var/obj/item/card/id/outfit_id = equipped.wear_id
+	if(outfit_id)
+		outfit_id.registered_name = equipped.real_name
+		outfit_id.update_label()
+		outfit_id.update_icon()
+
+	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
+	if(pirate_uniform)
+		pirate_uniform.has_sensor = NO_SENSORS
+		pirate_uniform.sensor_mode = SENSOR_OFF
+		equipped.update_suit_sensors()
+
 /datum/outfit/tgmc/command
 	name = "TGMC Squad Leader"
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	head = /obj/item/clothing/head/soft/tgmc
 	suit = /obj/item/clothing/suit/armor/vest/tgmc/command
 	ears = /obj/item/radio/headset/syndicate/alt/tgmc/command
@@ -452,7 +474,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt/tgmc/medic
 	uniform = /obj/item/clothing/under/misc/tgmc/medic
 	r_pocket = /obj/item/healthanalyzer/advanced
-	l_pocket = /obj/item/storage/tgmc_pouch/medipen_pouch/prefilled
+	l_pocket = /obj/item/reagent_containers/cup/glass/bottle/moonshine
 	r_hand = /obj/item/storage/medkit/surgery
 	belt = /obj/item/storage/belt/medical/paramedic
 	back = /obj/item/storage/backpack/tgmc/corpsman

@@ -14,6 +14,10 @@
 	you_are_text = "You are a space pirate."
 	flavour_text = "The station refused to pay for your protection. Protect the ship, siphon the credits from the station, and raid it for even more loot."
 	spawner_job_path = /datum/job/space_pirate
+	///Is this the pirate commander? If so, ensures this is filled at top priority.
+	var/commander = FALSE
+	///Is this role a priority? If so, ensures this is filled after the commander is filled but before the rest.
+	var/priority = FALSE
 	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
 	///Path of the structure we spawn after creating a pirate.
@@ -43,9 +47,11 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/captain
 	rank = "Renegade Leader"
 	outfit = /datum/outfit/pirate/space/captain
+	commander = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/gunner
 	rank = "Rogue"
+	priority = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton
 	name = "pirate remains"
@@ -62,9 +68,11 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain
 	rank = "Captain"
 	outfit = /datum/outfit/pirate/captain/skeleton
+	commander = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/gunner
 	rank = "Gunner"
+	priority = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale
 	name = "elegant sleeper"
@@ -91,9 +99,11 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/captain
 	rank = "Old-guard"
 	outfit = /datum/outfit/pirate/silverscale/captain
+	commander = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner
 	rank = "Top-drawer"
+	priority = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne
 	name = "\improper Interdyne sleeper"
@@ -122,6 +132,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/senior
 	rank = "Pharmacist Director"
 	outfit = /datum/outfit/pirate/interdyne/captain
+	commander = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/interdyne/junior
 	rank = "Pharmacist"
@@ -140,6 +151,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/grey/shitter
 	rank = "Tidemaster"
+	commander = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs
 	name = "\improper Space IRS sleeper"
@@ -170,6 +182,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/irs/auditor
 	rank = "Head Auditor"
 	outfit = /datum/outfit/pirate/irs/auditor
+	commander = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous
 	name = "lustrous crystal"
@@ -188,9 +201,11 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/captain
 	rank = "Radiant"
 	outfit = /datum/outfit/pirate/lustrous/captain
+	commander = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/lustrous/gunner
 	rank = "Coruscant"
+	priority = TRUE
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/medieval
 	name = "\improper Improvised sleeper"
@@ -221,3 +236,52 @@
 	. = ..()
 	spawned_mob.dna.add_mutation(/datum/mutation/hulk/superhuman, MUTATION_SOURCE_GHOST_ROLE)
 	spawned_mob.dna.add_mutation(/datum/mutation/gigantism, MUTATION_SOURCE_GHOST_ROLE)
+
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc
+	name = "\improper TGMC Rifleman sleeper"
+	desc = "An old, rusty, TerraGov Marine Corps sleeper. Standard issue for marine deployments, but they're not usually found on dropships like this. \
+	It looks like it's been getting a lot of jury-rigged maintenance, and there's hookups for oil and booze on the side."
+	density = FALSE
+	you_are_text = "You are a veteran TGMC Rifleman"
+	flavour_text = "After your benefits were cut by TerraGov despite your years of service, the horrifying CHOPSHOP treatment you were non-consensually \
+	subjected to was listed as the reason you are \"no longer disabled, and thus ineligible for your disability claim\". Your old Squad Leader from your tour of duty on LV-624 \
+	reached out to let you know about a new business opportunity. Thanks to some corporate benefactors, your squad is loaded up and ready to drop into the LZ one last time."
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+	prompt_name = "A TGMC Squad Rifleman"
+	outfit = /datum/outfit/tgmc
+	mob_species = /datum/species/android
+	fluff_spawn = null
+	rank = "Rifleman"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/generate_pirate_name(spawn_gender)
+	return "[rank] [pick(GLOB.last_names)]"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/squad_leader
+	name = "\improper TGMC Squad Leader sleeper"
+	rank = "Squad Leader"
+	you_are_text = "You are a veteran TGMC Squad Leader"
+	flavour_text = "After your benefits were cut by TerraGov despite your years of service, the horrifying CHOPSHOP treatment you were non-consensually \
+	subjected to was listed as the reason you are \"no longer disabled, and thus ineligible for your disability claim\". A mysterious representative of the Syndicate came to your \
+	doorstep that very same day with an offer: Get some like-minded individuals from your old unit together, take this very large pile of equipment, \
+	wreck hell on Nanotrasen's pocketbook or facilities, and we'll cover your health insurance for the rest of your lives. You found quite a few takers."
+	prompt_name = "The TGMC Squad Leader"
+	outfit = /datum/outfit/tgmc/command
+	commander = TRUE
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/corpsman
+	name = "\improper TGMC Corpsman sleeper"
+	rank = "Corpsman"
+	you_are_text = "You are a veteran TGMC Corpsman"
+	prompt_name = "The TGMC Corpsman"
+	outfit = /datum/outfit/tgmc/medic
+	priority = TRUE
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/engineer
+	name = "\improper TGMC Smartgunner sleeper"
+	rank = "Smartgunner"
+	you_are_text = "You are a veteran TGMC Smartgunner"
+	prompt_name = "The TGMC Smartgunner"
+	outfit = /datum/outfit/tgmc/engineer
+	priority = TRUE

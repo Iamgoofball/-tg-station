@@ -100,6 +100,19 @@
 /datum/dynamic_ruleset/midround/pirates/heavy/default_pirate_pool()
 	return GLOB.heavy_pirate_gangs
 
+/datum/dynamic_ruleset/midround/pirates/superheavy
+	name = "Super-Heavy Pirates"
+	config_tag = "Super-Heavy Pirates"
+	midround_type = HEAVY_MIDROUND
+	jobban_flag = ROLE_TRAITOR
+	ruleset_flags = RULESET_INVADER
+	weight = 2
+	min_pop = 35
+	min_antag_cap = 0 // ship will spawn if there are no ghosts around
+
+/datum/dynamic_ruleset/midround/pirates/superheavy/default_pirate_pool()
+	return GLOB.superheavy_pirate_gangs
+
 #define RANDOM_PIRATE_POOL "Random"
 
 /datum/dynamic_ruleset/midround/pirates/configure_ruleset(mob/admin)
@@ -131,7 +144,10 @@
 	var/payoff = 0
 	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(account)
-		payoff = max(PAYOFF_MIN, FLOOR(account.account_balance * 0.80, 1000))
+		if(chosen_gang.is_superheavy_threat)
+			payoff = account.account_balance // ALL OF IT
+		else
+			payoff = max(PAYOFF_MIN, FLOOR(account.account_balance * 0.80, 1000))
 	var/datum/comm_message/threat = chosen_gang.generate_message(payoff)
 	//send message
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
@@ -175,24 +191,39 @@
 
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
-
+	var/list/all_spawners = list()
+	var/list/pirate_spawner_priority = list()
 	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
-			if(candidates.len > 0)
-				var/mob/our_candidate = candidates[1]
-				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
-				candidates -= our_candidate
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
-					source = spawned_mob,
-					header = "Pirates!",
-				)
-			else
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
-					source = spawner,
-					header = "Pirate Spawn Here!",
-				)
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf) // First, collect all spawners.
+			all_spawners.Add(spawner)
+	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in all_spawners) // Populate the captain first.
+		if(spawner.commander)
+			pirate_spawner_priority.Add(spawner)
+		continue
+	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in all_spawners) // Then any specialty crew.
+		if(spawner.priority)
+			pirate_spawner_priority.Add(spawner)
+		continue
+	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in all_spawners) // Then the rest of the bilge rats.
+		if(!spawner.priority && !spawner.commander)
+			pirate_spawner_priority.Add(spawner)
+		continue
+	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in pirate_spawner_priority)
+		if(candidates.len > 0)
+			var/mob/our_candidate = candidates[1]
+			var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+			candidates -= our_candidate
+			notify_ghosts(
+				"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
+				source = spawned_mob,
+				header = "Pirates!",
+			)
+		else
+			notify_ghosts(
+				"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
+				source = spawner,
+				header = "Pirate Spawn Here!",
+			)
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 

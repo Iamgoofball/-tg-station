@@ -33,3 +33,7 @@
 /datum/map_template/shuttle/pirate/medieval
 	suffix = "medieval"
 	name = "pirate ship (Siege Pod)"
+
+/datum/map_template/shuttle/pirate/tgmc
+	suffix = "thank_you_for_your_service"
+	name = "pirate ship (The Alamo)"

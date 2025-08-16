@@ -1,0 +1,1102 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/machinery/computer/security/wooden_tv,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"aJ" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1;
+	color = "#695b3c"
+	},
+/turf/open/floor/plating/airless{
+	color = "#695b3c"
+	},
+/area/shuttle/pirate)
+"aS" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"bM" = (
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"dk" = (
+/obj/machinery/piratepad,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"dE" = (
+/obj/structure/chair/comfy/shuttle{
+	color = "#695b3c"
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"dV" = (
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = 12
+	},
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = 3
+	},
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 2;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = -4;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 2;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 10;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 10;
+	pixel_x = 3
+	},
+/obj/structure/rack{
+	color = "#695b3c"
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"em" = (
+/obj/machinery/power/shuttle_engine/large{
+	dir = 1;
+	color = "#695b3c"
+	},
+/turf/open/floor/plating/airless{
+	color = "#695b3c"
+	},
+/area/shuttle/pirate)
+"eR" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"fH" = (
+/obj/structure/table{
+	color = "#695b3c"
+	},
+/obj/item/storage/shell_box/buckshot/prefilled{
+	pixel_x = -9;
+	pixel_y = 13
+	},
+/obj/item/storage/shell_box/buckshot/prefilled{
+	pixel_x = -2;
+	pixel_y = 13
+	},
+/obj/item/storage/shell_box/buckshot/prefilled{
+	pixel_x = 6;
+	pixel_y = 13
+	},
+/obj/item/grenade/m40/smoke{
+	pixel_x = -14;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/smoke{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/smoke{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/smoke{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/smoke{
+	pixel_x = 9;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/cloaking{
+	pixel_x = -15;
+	pixel_y = -4
+	},
+/obj/item/grenade/m40/cloaking{
+	pixel_x = -10;
+	pixel_y = -4
+	},
+/obj/item/grenade/m40/cloaking{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/grenade/m40/cloaking{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/grenade/m40/cloaking{
+	pixel_x = 9;
+	pixel_y = -4
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"gR" = (
+/obj/structure/fermenting_barrel,
+/obj/item/reagent_containers/cup/glass/bottle/moonshine{
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/bottle/moonshine{
+	pixel_x = 9;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/moonshine{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"hu" = (
+/obj/machinery/button/door/directional/south{
+	id = "pirate_tgmc_blastdoors";
+	name = "Loading Doors Control";
+	color = "#89a0a1"
+	},
+/obj/structure/table{
+	color = "#695b3c"
+	},
+/obj/item/grenade/m40/incendiary{
+	pixel_x = -15;
+	pixel_y = 16
+	},
+/obj/item/grenade/m40/phosphorus{
+	pixel_x = -14;
+	pixel_y = 2
+	},
+/obj/item/grenade/m40/incendiary{
+	pixel_x = -10;
+	pixel_y = 16
+	},
+/obj/item/grenade/m40/incendiary{
+	pixel_x = -4;
+	pixel_y = 16
+	},
+/obj/item/grenade/m40/incendiary{
+	pixel_x = 2;
+	pixel_y = 16
+	},
+/obj/item/grenade/m40/incendiary{
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/item/grenade/m40/phosphorus{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/grenade/m40/phosphorus{
+	pixel_y = 2
+	},
+/obj/item/grenade/m40/phosphorus{
+	pixel_y = 2;
+	pixel_x = 7
+	},
+/obj/item/grenade/m40/emp{
+	pixel_x = -15;
+	pixel_y = -7
+	},
+/obj/item/grenade/m40/emp{
+	pixel_x = -9;
+	pixel_y = -7
+	},
+/obj/item/grenade/m40/emp{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/item/grenade/m40/emp{
+	pixel_x = 4;
+	pixel_y = -7
+	},
+/obj/item/grenade/m40/emp{
+	pixel_x = 11;
+	pixel_y = -7
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"hv" = (
+/obj/structure/chair/comfy/shuttle{
+	color = "#695b3c";
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"il" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"jp" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	color = "#695b3c"
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"jX" = (
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"lo" = (
+/obj/structure/table{
+	color = "#695b3c"
+	},
+/obj/item/ammo_box/magazine/smartmachinegun{
+	pixel_x = 12;
+	pixel_y = 17
+	},
+/obj/item/ammo_box/magazine/smartmachinegun{
+	pixel_x = 6;
+	pixel_y = 17
+	},
+/obj/item/ammo_box/magazine/smartmachinegun{
+	pixel_y = 16
+	},
+/obj/item/ammo_box/magazine/smartmachinegun{
+	pixel_y = 16;
+	pixel_x = -7
+	},
+/obj/item/grenade/m40{
+	pixel_x = 13;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"mu" = (
+/obj/structure/table{
+	color = "#695b3c"
+	},
+/obj/item/storage/toolbox/syndicate,
+/obj/item/reagent_containers/blood/oil{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/glass/bottle/moonshine{
+	pixel_x = -7;
+	pixel_y = 14
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"ni" = (
+/obj/machinery/door/poddoor{
+	color = "#695b3c";
+	id = "pirate_tgmc_blastdoors"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"pc" = (
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc,
+/obj/docking_port/mobile/pirate{
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "Pirate Ship";
+	port_direction = 2
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"pj" = (
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = 12
+	},
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = 3
+	},
+/obj/item/gun/ballistic/automatic/ar21{
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 2;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = -4;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 2;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 10;
+	pixel_x = 11
+	},
+/obj/item/ammo_box/magazine/ar21{
+	pixel_y = 10;
+	pixel_x = 3
+	},
+/obj/structure/rack{
+	color = "#695b3c"
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"ps" = (
+/obj/machinery/computer/piratepad_control{
+	dir = 1
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"pE" = (
+/obj/structure/rack{
+	color = "#695b3c"
+	},
+/obj/item/gun/ballistic/shotgun/sh35{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/gun/ballistic/shotgun/sh35{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/gun/ballistic/shotgun/sh35{
+	pixel_x = -5
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"rd" = (
+/obj/structure/chair/sofa/left/brown{
+	dir = 8;
+	pixel_x = -15
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"rt" = (
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/blood/oil,
+/obj/item/reagent_containers/blood/oil,
+/obj/item/reagent_containers/blood/oil,
+/obj/item/reagent_containers/blood/oil,
+/obj/item/reagent_containers/blood/oil,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"rA" = (
+/obj/structure/rack{
+	color = "#695b3c"
+	},
+/obj/item/gun/ballistic/automatic/smartmachinegun{
+	pixel_x = -13;
+	pixel_y = 9
+	},
+/obj/item/gun/ballistic/automatic/smartmachinegun{
+	pixel_x = -13;
+	pixel_y = 4
+	},
+/obj/item/gun/ballistic/automatic/smartmachinegun{
+	pixel_x = -13;
+	pixel_y = -3
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"sh" = (
+/obj/machinery/shuttle_scrambler,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"td" = (
+/obj/machinery/computer/crew/robot{
+	color = "#7e7169"
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"tk" = (
+/obj/structure/chair/sofa/right/brown{
+	dir = 8;
+	pixel_x = -15
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"vt" = (
+/turf/closed/wall/mineral/titanium{
+	color = "#695b3c"
+	},
+/area/shuttle/pirate)
+"wE" = (
+/obj/structure/table/wood,
+/obj/item/rag,
+/obj/item/card/id/tgmc{
+	pixel_x = 32
+	},
+/obj/item/ammo_box/magazine/smartmachinegun{
+	pixel_x = 7
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"wQ" = (
+/obj/machinery/door/airlock/hatch{
+	color = "#695b3c"
+	},
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"EC" = (
+/obj/machinery/computer/operating{
+	color = "#695b3c"
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"EV" = (
+/obj/machinery/door/airlock/hatch{
+	color = "#695b3c"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Ir" = (
+/obj/structure/lattice{
+	color = "#695b3c"
+	},
+/obj/structure/lattice{
+	color = "#695b3c"
+	},
+/turf/open/space/basic,
+/area/shuttle/pirate)
+"Iz" = (
+/obj/machinery/button/door/directional/south{
+	id = "pirate_tgmc_blastdoors";
+	name = "Loading Doors Control";
+	color = "#89a0a1"
+	},
+/obj/structure/table{
+	color = "#695b3c"
+	},
+/obj/item/grenade/m40/m15{
+	pixel_x = 12;
+	pixel_y = 22
+	},
+/obj/item/grenade/m40/m15{
+	pixel_x = 6;
+	pixel_y = 22
+	},
+/obj/item/grenade/m40/m15{
+	pixel_x = -1;
+	pixel_y = 22
+	},
+/obj/item/grenade/m40/m15{
+	pixel_x = -8;
+	pixel_y = 22
+	},
+/obj/item/grenade/m40/lasburster{
+	pixel_x = 11;
+	pixel_y = 14
+	},
+/obj/item/grenade/m40/lasburster{
+	pixel_x = 4;
+	pixel_y = 14
+	},
+/obj/item/grenade/m40/lasburster{
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/obj/item/grenade/m40/lasburster{
+	pixel_x = -11;
+	pixel_y = 14
+	},
+/obj/item/grenade/m40/hefa{
+	pixel_x = 11;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/hefa{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/hefa{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/grenade/m40/hefa{
+	pixel_x = -11;
+	pixel_y = 6
+	},
+/obj/item/grenade/c4/x4{
+	pixel_x = 16;
+	pixel_y = -7
+	},
+/obj/item/grenade/c4/x4{
+	pixel_x = 9;
+	pixel_y = -7
+	},
+/obj/item/grenade/c4/x4{
+	pixel_x = 2;
+	pixel_y = -7
+	},
+/obj/item/grenade/c4/x4{
+	pixel_x = -6;
+	pixel_y = -7
+	},
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"ID" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/alamo{
+	color = "#7e7169"
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"IF" = (
+/obj/structure/table/optable{
+	color = "#695b3c"
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/screwdriver/red,
+/obj/item/crowbar/red,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"IX" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/shuttle{
+	color = "#89a0a1"
+	},
+/turf/open/space/basic,
+/area/shuttle/pirate)
+"Jk" = (
+/turf/open/floor/plating/airless{
+	color = "#695b3c"
+	},
+/area/shuttle/pirate)
+"KX" = (
+/obj/structure/window/reinforced/shuttle{
+	color = "#89a0a1"
+	},
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/shuttle/pirate)
+"Lo" = (
+/obj/machinery/vending/cigarette/syndicate,
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"MK" = (
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"NH" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/obj/item/reagent_containers/cup/glass/bottle/moonshine,
+/obj/item/reagent_containers/cup/glass/bottle/moonshine,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Pg" = (
+/obj/structure/lattice{
+	color = "#695b3c"
+	},
+/turf/open/space/basic,
+/area/shuttle/pirate)
+"PG" = (
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/corpsman,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"QF" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_x = 29;
+	pixel_y = 14
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"QJ" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/corpsman,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Rd" = (
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"RS" = (
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/engineer,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"So" = (
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/squad_leader,
+/obj/structure/chair/comfy/shuttle{
+	color = "#695b3c"
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Th" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_x = 13;
+	pixel_y = 14
+	},
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_x = 29;
+	pixel_y = 14
+	},
+/obj/effect/mob_spawn/ghost_role/human/pirate/tgmc/engineer,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Ui" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/grenade/m40/m15{
+	pixel_x = -7
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Ut" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/obj/item/reagent_containers/cup/glass/bottle/moonshine,
+/obj/item/reagent_containers/cup/glass/bottle/moonshine,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Wk" = (
+/obj/structure/chair/comfy/shuttle{
+	color = "#695b3c";
+	dir = 4
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"WA" = (
+/turf/open/space/basic,
+/area/template_noop)
+"WX" = (
+/obj/machinery/loot_locator,
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Yo" = (
+/obj/item/gun/ballistic/p23{
+	pixel_x = -10
+	},
+/obj/item/ammo_box/magazine/p23{
+	pixel_x = 8
+	},
+/obj/machinery/computer/shuttle/pirate{
+	color = "#7e7169"
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+"Ys" = (
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_x = 13;
+	pixel_y = 14
+	},
+/obj/structure/chair/stool/bar/directional/north{
+	pixel_x = 29;
+	pixel_y = 14
+	},
+/turf/open/floor/iron/large{
+	color = "#444444"
+	},
+/area/shuttle/pirate)
+
+(1,1,1) = {"
+WA
+WA
+WA
+WA
+WA
+Pg
+Pg
+Pg
+WA
+WA
+WA
+WA
+WA
+WA
+WA
+WA
+Jk
+em
+aJ
+WA
+WA
+"}
+(2,1,1) = {"
+WA
+WA
+WA
+WA
+vt
+vt
+vt
+vt
+vt
+wQ
+wQ
+vt
+vt
+vt
+WA
+WA
+Jk
+Jk
+aJ
+WA
+Pg
+"}
+(3,1,1) = {"
+WA
+WA
+WA
+WA
+vt
+mu
+rt
+Wk
+hv
+Rd
+Rd
+Lo
+ad
+vt
+vt
+vt
+vt
+vt
+vt
+WA
+Pg
+"}
+(4,1,1) = {"
+vt
+vt
+vt
+vt
+vt
+IF
+PG
+Rd
+Rd
+Rd
+Rd
+Rd
+Rd
+eR
+pj
+pE
+fH
+hu
+vt
+vt
+Pg
+"}
+(5,1,1) = {"
+IX
+td
+bM
+sh
+vt
+EC
+QJ
+Rd
+Rd
+MK
+MK
+tk
+rd
+eR
+dE
+dE
+dE
+dE
+ni
+WA
+WA
+"}
+(6,1,1) = {"
+IX
+Yo
+jp
+Rd
+EV
+Rd
+Rd
+Rd
+QF
+pc
+MK
+Rd
+So
+Rd
+Rd
+Rd
+Rd
+Rd
+ni
+WA
+WA
+"}
+(7,1,1) = {"
+KX
+ID
+jX
+gR
+vt
+Ut
+Rd
+Ui
+Ys
+MK
+MK
+Rd
+WX
+eR
+dE
+dE
+dE
+dE
+ni
+WA
+WA
+"}
+(8,1,1) = {"
+vt
+vt
+vt
+vt
+vt
+NH
+RS
+wE
+Th
+Rd
+Rd
+Rd
+ps
+eR
+dV
+rA
+lo
+Iz
+vt
+vt
+Pg
+"}
+(9,1,1) = {"
+WA
+WA
+WA
+WA
+vt
+aS
+Rd
+il
+jX
+Rd
+Rd
+jX
+dk
+vt
+vt
+vt
+vt
+vt
+vt
+WA
+Pg
+"}
+(10,1,1) = {"
+WA
+WA
+WA
+WA
+vt
+vt
+vt
+vt
+vt
+wQ
+wQ
+vt
+vt
+vt
+WA
+WA
+Jk
+em
+aJ
+WA
+Pg
+"}
+(11,1,1) = {"
+WA
+WA
+WA
+WA
+WA
+Pg
+Ir
+Pg
+WA
+WA
+WA
+WA
+WA
+WA
+WA
+WA
+Jk
+Jk
+aJ
+WA
+WA
+"}

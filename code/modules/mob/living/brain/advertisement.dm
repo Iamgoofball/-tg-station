@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(all_advertisements)
 		if(play_close_noise)
 			var/sound/annoying_sound = sound('sound/machines/computer/popup_close.ogg', volume = 100)
 			SEND_SOUND(user, annoying_sound)
-		if(!permanently_closed && !QDELETED(src))
+		if(!permanently_closed && !QDELETED(src) && target && !target.stat)
 			addtimer(CALLBACK(src, PROC_REF(open_for), target, severity), 5 SECONDS, TIMER_DELETE_ME)
 		else
 			if(!moving_to_promo)
@@ -92,6 +92,8 @@ GLOBAL_LIST_EMPTY(all_advertisements)
 		return
 	switch(action)
 		if("purchase")
+			if(!target || target.stat) // we're too occupied to purchase right now
+				return TRUE
 			var/broke = FALSE
 			var/datum/bank_account/sucker = target.get_bank_account()
 			if(sucker)
@@ -142,7 +144,7 @@ GLOBAL_LIST_EMPTY(all_advertisements)
 
 /datum/advertisement/proc/advertise_space_cola()
 	if(target && !target.stat)
-		target.say(message = pick(verbal_ads), forced = TRUE, ignore_spam = TRUE, filterproof = TRUE)
+		target.say(message = prob(25) ? ";[pick(verbal_ads)]" : pick(verbal_ads), forced = TRUE, ignore_spam = TRUE, filterproof = TRUE)
 
 /datum/advertisement/proc/close_space_cola_ad()
 	can_close_ad_safely = TRUE
