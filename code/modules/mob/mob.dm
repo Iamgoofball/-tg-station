@@ -88,6 +88,7 @@
 	update_incapacitated()
 	set_focus(src)
 	prepare_huds()
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/thermal_view, "thermal_overlay", src)
 	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
 		alt_hud.apply_to_new_mob(src)
 

@@ -351,6 +351,7 @@
 	pixel_x = -7;
 	pixel_y = 14
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/iron/large{
 	color = "#444444"
 	},
@@ -468,13 +469,10 @@
 	},
 /area/shuttle/pirate)
 "rt" = (
-/obj/machinery/iv_drip,
-/obj/item/reagent_containers/blood/oil,
-/obj/item/reagent_containers/blood/oil,
-/obj/item/reagent_containers/blood/oil,
-/obj/item/reagent_containers/blood/oil,
-/obj/item/reagent_containers/blood/oil,
 /obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/machinery/organ_fixer{
+	color = "#695b3c"
+	},
 /turf/open/floor/iron/large{
 	color = "#444444"
 	},

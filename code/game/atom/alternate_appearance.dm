@@ -1,4 +1,5 @@
 GLOBAL_LIST_EMPTY(active_alternate_appearances)
+GLOBAL_LIST_EMPTY(alt_appearance_managers)
 
 /atom
 	var/list/alternate_appearances
@@ -21,6 +22,43 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 	var/list/arguments = args.Copy(2)
 	return new type(arglist(arguments))
+
+/datum/alt_appearance_manager
+	var/list/signals = list() // automatically add login and logout, because they're important
+	var/list/huds_to_manage = list()
+
+/datum/alt_appearance_manager/New()
+	LAZYADD(GLOB.alt_appearance_managers, src)
+	huds_to_manage = typecacheof(huds_to_manage)
+	signals |= list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT)
+
+/datum/alt_appearance_manager/Destroy(force)
+	LAZYREMOVE(GLOB.alt_appearance_managers, src)
+	. = ..()
+
+/datum/alt_appearance_manager/proc/register_mob(mob/whomst)
+	RegisterSignals(whomst, signals, PROC_REF(update_huds))
+
+/datum/alt_appearance_manager/proc/update_huds(mob/whomst)
+	SIGNAL_HANDLER
+	for(var/datum/atom_hud/alternate_appearance/app in GLOB.active_alternate_appearances)
+		if(is_type_in_typecache(app, huds_to_manage))
+			app.check_hud(whomst)
+
+/datum/alt_appearance_manager/thermal_vision
+	signals = list(
+		SIGNAL_ADDTRAIT(TRAIT_THERMAL_VISION),
+		SIGNAL_REMOVETRAIT(TRAIT_THERMAL_VISION),
+	)
+	huds_to_manage = list(/datum/atom_hud/alternate_appearance/thermal_view)
+
+/mob/Initialize()
+	. = ..()
+	if(!length(GLOB.alt_appearance_managers))
+		for(var/appearance_manager in subtypesof(/datum/alt_appearance_manager))
+			new appearance_manager()
+	for(var/datum/alt_appearance_manager/manager in GLOB.alt_appearance_managers)
+		manager.register_mob(src)
 
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
@@ -227,3 +265,105 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(IS_HERETIC(M))
 		return TRUE
 	return FALSE
+
+#define IRONBOW_SCALE 0,"#0e1330",BODYTEMP_COLD_WARNING_2/BODYTEMP_HEAT_WARNING_3,"#492b77",BODYTEMP_COLD_WARNING_1/BODYTEMP_HEAT_WARNING_3,"#b12891",BODYTEMP_NORMAL,"#ec3048",BODYTEMP_HEAT_WARNING_1/BODYTEMP_HEAT_WARNING_3,"#f17220",BODYTEMP_HEAT_WARNING_2/BODYTEMP_HEAT_WARNING_3,"#fcf018",1,"#fefbfb"
+
+#define ARCTIC_SCALE 0,\
+\	"#2c3794",\
+\	BODYTEMP_COLD_WARNING_2/BODYTEMP_HEAT_WARNING_3,\
+\	"#67cad2",\
+\	BODYTEMP_COLD_WARNING_1/BODYTEMP_HEAT_WARNING_3,\
+\	"#8b6452",\
+\	BODYTEMP_NORMAL,\
+\	"#f26523",\
+\	BODYTEMP_HEAT_WARNING_1/BODYTEMP_HEAT_WARNING_3,\
+\	"#f8a134",\
+\	BODYTEMP_HEAT_WARNING_2/BODYTEMP_HEAT_WARNING_3,\
+\	"#fbed7b",\
+\	1,\
+\	"#f9f4e5"
+
+#define WHITE_HOT_SCALE 0,\
+\	"#121517",\
+\	BODYTEMP_COLD_WARNING_2/BODYTEMP_HEAT_WARNING_3,\
+\	"#2d2d2d",\
+\	BODYTEMP_COLD_WARNING_1/BODYTEMP_HEAT_WARNING_3,\
+\	"#4c4c4c",\
+\	BODYTEMP_NORMAL,\
+\	"#787878",\
+\	BODYTEMP_HEAT_WARNING_1/BODYTEMP_HEAT_WARNING_3,\
+\	"#afafaf",\
+\	BODYTEMP_HEAT_WARNING_2/BODYTEMP_HEAT_WARNING_3,\
+\	"#d5d5d5",\
+\	1,\
+\	"#f8feff"
+
+#define OUTDOOR_ALERT_SCALE 0,\
+\	"#ffffff",\
+\	BODYTEMP_COLD_WARNING_2/BODYTEMP_HEAT_WARNING_3,\
+\	"#c1c1c1",\
+\	BODYTEMP_COLD_WARNING_1/BODYTEMP_HEAT_WARNING_3,\
+\	"#919191",\
+\	BODYTEMP_NORMAL,\
+\	"#656565",\
+\	BODYTEMP_HEAT_WARNING_1/BODYTEMP_HEAT_WARNING_3,\
+\	"#070707",\
+\	BODYTEMP_HEAT_WARNING_2/BODYTEMP_HEAT_WARNING_3,\
+\	"#c8312b",\
+\	1,\
+\	"#fcf6b6"
+
+//Thermal vision for androids using the thermal vision camera.
+/datum/atom_hud/alternate_appearance/thermal_view
+	var/mob/target_mob
+	var/image/thermal_image
+	uses_global_hud_category = FALSE
+
+/datum/atom_hud/alternate_appearance/thermal_view/New(key, mob/target)
+	..()
+	target_mob = target
+	if(!target_mob.render_target)
+		target_mob.render_target = ref(target_mob)
+	thermal_image = new()
+	thermal_image.appearance_flags |= KEEP_APART|RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	thermal_image.loc = target_mob
+	thermal_image.render_source = target_mob.render_target
+
+	RegisterSignal(target_mob, COMSIG_MOB_TEMPERATURE_CHANGE, PROC_REF(update_thermal))
+	LAZYADD(target_mob.update_on_z, thermal_image)
+	add_atom_to_hud(target_mob)
+	target_mob.set_hud_image_active(appearance_key, exclusive_hud = src)
+
+/datum/atom_hud/alternate_appearance/thermal_view/proc/update_thermal(datum/source, new_temp, old_temp)
+	SIGNAL_HANDLER
+	thermal_image.remove_filter("thermal_filter")
+	var/temperature = new_temp
+	if(temperature < BODYTEMP_COLD_WARNING_3)
+		temperature = BODYTEMP_COLD_WARNING_3
+	if(temperature > BODYTEMP_HEAT_WARNING_3)
+		temperature = BODYTEMP_HEAT_WARNING_3
+	thermal_image.add_filter("thermal_filter", 1, color_transition_filter(rgb_gradient(temperature/BODYTEMP_HEAT_WARNING_3, IRONBOW_SCALE)))
+
+
+/datum/atom_hud/alternate_appearance/thermal_view/mobShouldSee(mob/M)
+	if(HAS_TRAIT(M, TRAIT_THERMAL_VISION))
+		return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/thermal_view/Destroy()
+	. = ..()
+	LAZYREMOVE(target_mob.update_on_z, thermal_image)
+	QDEL_NULL(thermal_image)
+	target_mob = null
+
+/datum/atom_hud/alternate_appearance/thermal_view/add_atom_to_hud(atom/A)
+	LAZYINITLIST(A.hud_list)
+	A.hud_list[appearance_key] = thermal_image
+	. = ..()
+
+/datum/atom_hud/alternate_appearance/thermal_view/remove_atom_from_hud(atom/A)
+	. = ..()
+	LAZYREMOVE(A.hud_list, appearance_key)
+	A.set_hud_image_inactive(appearance_key)
+	if(. && !QDELETED(src))
+		qdel(src)

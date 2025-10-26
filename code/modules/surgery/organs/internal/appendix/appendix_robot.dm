@@ -31,3 +31,34 @@
 		guessed_numbers += chosen_number
 		random_number = rand(1, max_number)
 	robot_brain.run_updates()
+
+/obj/item/organ/appendix/emotion_chip
+	name = "emotion processing unit"
+	desc = "A beefy neural processing unit for simulating life-like emotions in synthetic life."
+	organ_flags = ORGAN_ROBOTIC
+	icon_state = "random_number_database"
+
+/obj/item/organ/appendix/emotion_chip/on_life(seconds_per_tick, times_fired)
+	. = ..()
+	var/obj/item/organ/brain/cybernetic/robot_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(!robot_brain || !istype(robot_brain))
+		if(!(organ_flags & ORGAN_DEPOWERED))
+			say("ERROR: No cybernetic brain to draw power from!")
+			organ_flags |= ORGAN_DEPOWERED
+		return
+	if(robot_brain.power <= 50)
+		if(!(organ_flags & ORGAN_DEPOWERED))
+			say("ERROR: Power critically low, depowering [name] to conserve energy!")
+			organ_flags |= ORGAN_DEPOWERED
+	else
+		organ_flags &= ~ORGAN_DEPOWERED
+
+	if(organ_flags & ORGAN_DEPOWERED)
+		if(robot_brain.owner && !robot_brain.owner.mob_mood.forced_neutral)
+			robot_brain.owner.mob_mood.enable_forced_neutral()
+		return
+
+	robot_brain.power -= (ROBOT_POWER_DRAIN * seconds_per_tick) * robot_brain.temperature_disparity
+	if(robot_brain.owner.mob_mood.forced_neutral)
+		robot_brain.owner.mob_mood.disable_forced_neutral()
+	robot_brain.run_updates()

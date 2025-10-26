@@ -64,6 +64,8 @@
 				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(initial_gas_mix)
 				SSair.planetary[initial_gas_mix] = mix
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/thermal_view, "thermal_overlay", src)
+
 	return ..()
 
 /turf/open/Destroy()

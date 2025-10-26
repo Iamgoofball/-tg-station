@@ -79,6 +79,13 @@
 	if(!istype(target_mob))
 		return
 
+	if(iscarbon(target_mob))
+		var/mob/living/carbon/drinker = target_mob
+		var/obj/item/organ/stomach/stomach = drinker.get_organ_slot(ORGAN_SLOT_STOMACH)
+		if(stomach && istype(stomach) && !stomach.can_process_liquids)
+			drinker.balloon_alert(user, "can't drink liquids!")
+			return ITEM_INTERACT_BLOCKING
+
 	if(target_mob != user)
 		target_mob.visible_message(span_danger("[user] attempts to feed [target_mob] something from [src]."), \
 					span_userdanger("[user] attempts to feed you something from [src]."))

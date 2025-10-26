@@ -556,6 +556,16 @@
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+/obj/item/clothing/glasses/thermal/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_EYES) || !istype(user))
+		return
+	ADD_TRAIT(user, TRAIT_THERMAL_VISION, GLASSES_TRAIT)
+
+/obj/item/clothing/glasses/thermal/dropped(mob/living/carbon/human/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_THERMAL_VISION, GLASSES_TRAIT)
+
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)

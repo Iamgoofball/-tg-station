@@ -190,6 +190,12 @@
 	priority = CLIENT_COLOR_ORGAN_PRIORITY
 	color = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ 0,-130,0,0) // Matrix colors
 
+/datum/client_colour/robot_thermal_background
+	color = list(/*R*/ 1.3, 0.4, 0.4, 0, /*G*/ 0.3, 0.2, 0.2, 0, /*B*/ 0.2, 0.2, 0.3, 0, /*A*/ 0,0,0,1, /*C*/ 0,0,0,0) // Matrix colors
+	priority = CLIENT_COLOR_ORGAN_PRIORITY
+	fade_in = 2 SECONDS
+	fade_out = 2 SECONDS
+
 /datum/client_colour/monochrome
 	color = COLOR_MATRIX_GRAYSCALE
 	priority = CLIENT_COLOR_FILTER_PRIORITY
@@ -276,6 +282,10 @@
 
 /datum/client_colour/glass_colour/gray
 	color = "#cccccc"
+
+/datum/client_colour/glass_colour/nightmare
+	color = list(/*R*/ 255,0,0,0, /*G*/ 0,0,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ -130,0,0,0) //every color is either red or black
+	split_filters = TRUE
 
 /datum/client_colour/glass_colour/nightmare
 	color = list(/*R*/ 255,0,0,0, /*G*/ 0,0,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/ -130,0,0,0) //every color is either red or black

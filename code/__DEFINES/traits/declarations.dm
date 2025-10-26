@@ -1531,4 +1531,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
 #define TRAIT_UNCOVERED_TURF "uncovered_turf"
+
 // END TRAIT DEFINES

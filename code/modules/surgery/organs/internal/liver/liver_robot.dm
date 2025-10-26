@@ -8,7 +8,7 @@
 	. = ..()
 	var/obj/item/organ/stomach/fuel_generator/fuel_generator = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(fuel_generator))
-		if(istype(chem, /datum/reagent/consumable/ethanol) || is_type_in_list(chem, fuel_generator.flammable_reagents))
+		if(istype(chem, fuel_generator.favorite_reagent) || is_type_in_list(chem, fuel_generator.flammable_reagents))
 			organ_owner.reagents.trans_to(fuel_generator, chem.metabolization_rate * seconds_per_tick, null, chem.type)
 			return COMSIG_MOB_STOP_REAGENT_TICK
 	if(organ_flags & ORGAN_FAILING || organ_flags & ORGAN_DEPOWERED)

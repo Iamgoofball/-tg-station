@@ -1,5 +1,6 @@
 #define GAS_N2 "n2"
 #define GAS_O2 "o2"
+#define GAS_CO "co"
 #define GAS_CO2 "co2"
 #define GAS_PLASMA "plasma"
 #define GAS_N2O "n2o"

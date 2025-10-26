@@ -22,6 +22,8 @@
 	var/icon
 	///icon state of the main segments of the beam
 	var/icon_state = ""
+	///icon_state of the ending of the beam
+	var/icon_state_end = null
 	///The beam will qdel if it's longer than this many tiles.
 	var/max_distance = 0
 	///the objects placed in the elements list
@@ -57,7 +59,8 @@
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
-	beam_layer = ABOVE_ALL_MOB_LAYER
+	beam_layer = ABOVE_ALL_MOB_LAYER,
+	icon_state_end = null
 )
 	src.origin = origin
 	src.target = target
@@ -72,6 +75,7 @@
 	src.override_target_pixel_x = override_target_pixel_x
 	src.override_target_pixel_y = override_target_pixel_y
 	src.beam_layer = beam_layer
+	src.icon_state_end = icon_state_end
 	if(time < INFINITY)
 		QDEL_IN(src, time)
 
@@ -149,7 +153,7 @@
 		//Assign our single visual ebeam to each ebeam's vis_contents
 		//ends are cropped by a transparent box icon of length-N pixel size laid over the visuals obj
 		if(N+32>length) //went past the target, we draw a box of space to cut away from the beam sprite so the icon actually ends at the center of the target sprite
-			var/icon/II = new(icon, icon_state)//this means we exclude the overshooting object from the visual contents which does mean those visuals don't show up for the final bit of the beam...
+			var/icon/II = new(icon, icon_state_end ? icon_state_end : icon_state)//this means we exclude the overshooting object from the visual contents which does mean those visuals don't show up for the final bit of the beam...
 			II.DrawBox(null,1,(length-N),32,32)//in the future if you want to improve this, remove the drawbox and instead use a 513 filter to cut away at the final object's icon
 			segment.icon = II
 			segment.color = beam_color
@@ -298,8 +302,9 @@
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
-	layer = ABOVE_ALL_MOB_LAYER
+	layer = ABOVE_ALL_MOB_LAYER,
+	icon_state_end = null,
 )
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_end)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam/, Start))
 	return newbeam

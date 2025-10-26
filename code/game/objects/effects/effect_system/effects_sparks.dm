@@ -16,7 +16,10 @@
 	name = "sparks"
 	icon_state = "sparks"
 	anchored = TRUE
-	light_system = OVERLAY_LIGHT
+	light_on = FALSE
+	light_on_time = 0.05 SECONDS
+	light_off_time = 0.3 SECONDS
+	light_system = OVERLAY_LIGHT_VISCONTENTS
 	light_range = 1.5
 	light_power = 0.8
 	light_color = LIGHT_COLOR_FIRE
@@ -27,6 +30,8 @@
 
 /obj/effect/particle_effect/sparks/LateInitialize()
 	RegisterSignals(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER), PROC_REF(sparks_touched))
+	set_light_on(TRUE)
+	set_light_on(FALSE)
 	flick(icon_state, src)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/location = loc

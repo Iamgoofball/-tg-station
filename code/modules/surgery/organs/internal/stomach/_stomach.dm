@@ -45,6 +45,9 @@
 	///Can this stomach process solids?
 	var/can_process_solids = TRUE
 
+	///Can this stomach process liquids?
+	var/can_process_liquids = TRUE
+
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
 	//None edible organs do not get a reagent holder by default

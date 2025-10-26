@@ -695,6 +695,7 @@
 /mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
 	if(HAS_TRAIT(src, TRAIT_HYPOTHERMIC) && amount > 0) //Prevent warming up
 		return
+	var/old_temp = bodytemperature
 	// apply insulation to the amount of change
 	if(use_insulation)
 		amount *= (1 - get_insulation_protection(bodytemperature + amount))
@@ -708,6 +709,7 @@
 
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)
 		bodytemperature = clamp(bodytemperature + amount, min_temp, max_temp)
+		SEND_SIGNAL(src, COMSIG_MOB_TEMPERATURE_CHANGE, bodytemperature, old_temp)
 
 
 ///////////

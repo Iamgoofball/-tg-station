@@ -60,7 +60,7 @@
 	icon_state = "oilbar"
 	screen_loc = ui_mood
 	power_icon_state = "power_oil"
-	power_icon_offset = 0
+	power_icon_offset = 3
 	power_bar_type = /atom/movable/screen/robothud_bar/oil
 
 /atom/movable/screen/power_meter/oil/update_power_state()
@@ -106,6 +106,26 @@
 	var/obj/item/organ/brain/cybernetic/robot_brain = hungry.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!robot_brain || !istype(robot_brain))
 		return
+	var/new_icon = "power_none"
+	var/new_icon_file = 'icons/hud/screen_gen.dmi'
+	var/new_offset = 0
+	var/obj/item/organ/stomach/fuel_generator/robot_stomach = hungry.get_organ_slot(ORGAN_SLOT_STOMACH)
+	if(!robot_stomach || !istype(robot_stomach))
+		new_icon = "power_none"
+	else
+		new_icon = robot_stomach.hud_icon
+		new_icon_file = robot_stomach.hud_icon_file
+		new_offset = robot_stomach.offset_pixel
+	if(new_icon != power_icon_state)
+		power_icon = new_icon_file
+		power_icon_state = new_icon
+		underlays -= power_source_image
+		qdel(power_source_image)
+		power_source_image = image(icon = power_icon, icon_state = new_icon, pixel_x = power_icon_offset + new_offset)
+		power_source_image.plane = plane
+		power_source_image.appearance_flags |= KEEP_APART // To be unaffected by filters applied to src
+		power_source_image.add_filter("simple_outline", 2, outline_filter(1, COLOR_BLACK, OUTLINE_SHARP))
+		underlays += power_source_image // To be below filters applied to src
 
 	power_left = robot_brain.power / robot_brain.max_power
 
@@ -282,10 +302,14 @@
 	RegisterSignal(brain_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_effect))
 	RegisterSignal(brain_owner, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(on_login))
 	RegisterSignal(brain_owner, COMSIG_SPECIES_HANDLE_TEMPERATURE, PROC_REF(temperature_overrides))
-	qdel(brain_owner.mob_mood)
+	RegisterSignal(brain_owner, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
+	brain_owner.mob_mood.enable_robot()
+	brain_owner.mob_mood.enable_forced_neutral()
+	brain_owner.mob_mood.update_mood()
+	brain_owner.mob_mood.update_mood_icon()
 	brain_owner.med_hud_set_health() // fix the health bar sprite
 	brain_owner.med_hud_set_status()
-	brain_owner.add_movespeed_mod_immunities("robot_brain", /datum/movespeed_modifier/damage_slowdown)
+	brain_owner.add_movespeed_mod_immunities("robot_brain", /datum/movespeed_modifier/damage_slowdown) // handled by power loss
 	our_beacon = new(brain_owner)
 
 /obj/item/organ/brain/cybernetic/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
@@ -304,7 +328,11 @@
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(organ_owner, COMSIG_MOB_CLIENT_LOGIN)
 	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_TEMPERATURE)
-	organ_owner.mob_mood = new /datum/mood(organ_owner)
+	UnregisterSignal(organ_owner, COMSIG_LIVING_REVIVE)
+	organ_owner.mob_mood.disable_robot()
+	organ_owner.mob_mood.disable_forced_neutral()
+	organ_owner.mob_mood.update_mood()
+	organ_owner.mob_mood.update_mood_icon()
 	organ_owner.remove_movespeed_mod_immunities("robot_brain", /datum/movespeed_modifier/damage_slowdown)
 	QDEL_NULL(our_beacon)
 	. = ..()
@@ -324,6 +352,11 @@
 	SEND_SOUND(owner, annoying_sound)
 	for(var/i in 1 to rand(1, 3 + severity))
 		addtimer(CALLBACK(src, PROC_REF(show_ad), severity), rand(5, 25))
+
+/obj/item/organ/brain/cybernetic/proc/on_revive(mob/living/escapee)
+	SIGNAL_HANDLER
+	power = max_power
+	run_updates(TRUE)
 
 /obj/item/organ/brain/cybernetic/proc/show_ad(severity)
 	if(owner && owner.client)
@@ -449,6 +482,7 @@
 	var/old_bodytemp = robot.old_bodytemperature
 	var/bodytemp = robot.bodytemperature
 	if(bodytemp > source.bodytemp_heat_damage_limit)
+		robot.clear_fullscreen("robot_temp_cold")
 		temperature_disparity = bodytemp / BODYTEMP_NORMAL
 		robot.remove_movespeed_modifier(/datum/movespeed_modifier/robot_cold)
 		robot.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/robot_hot, multiplicative_slowdown = -(((min(robot.bodytemperature, BODYTEMP_HEAT_WARNING_3) - source.bodytemp_heat_damage_limit) / (COLD_SLOWDOWN_FACTOR * 2)) * 0.1))
@@ -462,6 +496,7 @@
 			robot.overlay_fullscreen("robot_temp_hot", /atom/movable/screen/fullscreen/robot_hot, 3)
 			robot.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
 	else if(bodytemp < source.bodytemp_cold_damage_limit)
+		robot.clear_fullscreen("robot_temp_hot")
 		temperature_disparity = BODYTEMP_NORMAL / bodytemp
 		robot.remove_movespeed_modifier(/datum/movespeed_modifier/robot_hot)
 		robot.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/robot_cold, multiplicative_slowdown = ((source.bodytemp_cold_damage_limit - max(BODYTEMP_COLD_WARNING_3, robot.bodytemperature)) / COLD_SLOWDOWN_FACTOR) * 0.25)
@@ -642,8 +677,6 @@
 		var/datum/hud/hud_used = target.hud_used
 		if(hud_used.infodisplay.Find(hud_used.healths))
 			hud_used.infodisplay -= hud_used.healths
-		if(target.mob_mood)
-			target.mob_mood.hide_hud()
 		power_meter = new(null, hud_used)
 		oil_meter = new(null, hud_used)
 		hud_used.infodisplay += power_meter
@@ -654,11 +687,10 @@
 
 /obj/item/organ/brain/cybernetic/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	var/datum/hud/hud_used = organ_owner.hud_used
-	if(hud_used?.healths)
-		hud_used.infodisplay += hud_used.healths
-	if(organ_owner.mob_mood)
-		organ_owner.mob_mood.show_hud()
-	hud_used.show_hud(hud_used.hud_version)
+	if(hud_used)
+		if(hud_used?.healths)
+			hud_used.infodisplay += hud_used.healths
+		hud_used.show_hud(hud_used.hud_version)
 	. = ..()
 
 /obj/item/organ/brain/cybernetic/Destroy()

@@ -184,8 +184,6 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
 
-	robotic_emp_paralyze_damage_percent_threshold = 0.6
-
 	wing_types = list(/obj/item/organ/wings/functional/robotic)
 
 	var/wired = FALSE
@@ -305,6 +303,9 @@
 		wired = FALSE
 	cell?.forceMove(drop_loc)
 	return ..()
+
+/obj/item/bodypart/chest/robot/can_dismember(obj/item/item)
+	return FALSE // do not spill out robot parts
 
 /obj/item/bodypart/head/robot
 	name = "cyborg head"
