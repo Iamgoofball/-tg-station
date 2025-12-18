@@ -16,12 +16,14 @@ import { render } from 'tgui/renderer';
 import { configureStore } from 'tgui/store';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { App } from './app';
+
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { gameMiddleware, gameReducer } from './game';
+import { Panel } from './Panel';
 import { setupPanelFocusHacks } from './panelFocus';
 import { pingMiddleware, pingReducer } from './ping';
+import { settingsMiddleware, settingsReducer } from './settings';
 import { telemetryMiddleware } from './telemetry';
 
 perf.mark('inception', window.performance?.timeOrigin);
@@ -33,12 +35,14 @@ const store = configureStore({
     chat: chatReducer,
     game: gameReducer,
     ping: pingReducer,
+    settings: settingsReducer,
   }),
   middleware: {
     pre: [
       chatMiddleware,
       pingMiddleware,
       telemetryMiddleware,
+      settingsMiddleware,
       audioMiddleware,
       gameMiddleware,
     ],
@@ -62,7 +66,7 @@ function setupApp() {
   captureExternalLinks();
 
   // Re-render UI on store updates
-  store.subscribe(() => render(<App />));
+  store.subscribe(() => render(<Panel />));
 
   // Dispatch incoming messages as store actions
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
@@ -91,10 +95,11 @@ function setupApp() {
         './Notifications',
         './Panel',
         './ping',
+        './settings',
         './telemetry',
       ],
       () => {
-        render(<App />);
+        render(<Panel />);
       },
     );
   }

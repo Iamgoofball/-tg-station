@@ -1,4 +1,4 @@
-import { useDispatch } from 'tgui/backend';
+import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -10,15 +10,21 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
+
 import { rebuildChat } from '../chat/actions';
+import {
+  addHighlightSetting,
+  removeHighlightSetting,
+  updateHighlightSetting,
+} from './actions';
 import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
-import { useHighlights } from './use-highlights';
+import {
+  selectHighlightSettingById,
+  selectHighlightSettings,
+} from './selectors';
 
 export function TextHighlightSettings(props) {
-  const {
-    highlights: { highlightSettings },
-    addHighlight,
-  } = useHighlights();
+  const highlightSettings = useSelector(selectHighlightSettings);
   const dispatch = useDispatch();
 
   return (
@@ -36,7 +42,9 @@ export function TextHighlightSettings(props) {
             <Button
               color="transparent"
               icon="plus"
-              onClick={() => addHighlight()}
+              onClick={() => {
+                dispatch(addHighlightSetting());
+              }}
             >
               Add Highlight Setting
             </Button>
@@ -65,11 +73,8 @@ export function TextHighlightSettings(props) {
 
 function TextHighlightSetting(props) {
   const { id, ...rest } = props;
-  const {
-    highlights: { highlightSettingById },
-    updateHighlight,
-    removeHighlight,
-  } = useHighlights();
+  const highlightSettingById = useSelector(selectHighlightSettingById);
+  const dispatch = useDispatch();
   const {
     highlightColor,
     highlightText,
@@ -85,7 +90,13 @@ function TextHighlightSetting(props) {
           <Button
             color="transparent"
             icon="times"
-            onClick={() => removeHighlight(id)}
+            onClick={() =>
+              dispatch(
+                removeHighlightSetting({
+                  id: id,
+                }),
+              )
+            }
           >
             Delete
           </Button>
@@ -95,10 +106,12 @@ function TextHighlightSetting(props) {
             checked={highlightWholeMessage}
             tooltip="If this option is selected, the entire message will be highlighted in yellow."
             onClick={() =>
-              updateHighlight({
-                id,
-                highlightWholeMessage: !highlightWholeMessage,
-              })
+              dispatch(
+                updateHighlightSetting({
+                  id: id,
+                  highlightWholeMessage: !highlightWholeMessage,
+                }),
+              )
             }
           >
             Whole Message
@@ -110,10 +123,12 @@ function TextHighlightSetting(props) {
             tooltipPosition="bottom-start"
             tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Not compatible with punctuation. Overriden if regex is used."
             onClick={() =>
-              updateHighlight({
-                id,
-                matchWord: !matchWord,
-              })
+              dispatch(
+                updateHighlightSetting({
+                  id: id,
+                  matchWord: !matchWord,
+                }),
+              )
             }
           >
             Exact
@@ -124,10 +139,12 @@ function TextHighlightSetting(props) {
             tooltip="If this option is selected, the highlight will be case-sensitive."
             checked={matchCase}
             onClick={() =>
-              updateHighlight({
-                id,
-                matchCase: !matchCase,
-              })
+              dispatch(
+                updateHighlightSetting({
+                  id: id,
+                  matchCase: !matchCase,
+                }),
+              )
             }
           >
             Case
@@ -141,10 +158,12 @@ function TextHighlightSetting(props) {
             placeholder="#ffffff"
             value={highlightColor}
             onBlur={(value) =>
-              updateHighlight({
-                id,
-                highlightColor: value,
-              })
+              dispatch(
+                updateHighlightSetting({
+                  id: id,
+                  highlightColor: value,
+                }),
+              )
             }
           />
         </Stack.Item>
@@ -155,10 +174,12 @@ function TextHighlightSetting(props) {
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
         onBlur={(value) =>
-          updateHighlight({
-            id: id,
-            highlightText: value,
-          })
+          dispatch(
+            updateHighlightSetting({
+              id: id,
+              highlightText: value,
+            }),
+          )
         }
       />
     </Stack.Item>

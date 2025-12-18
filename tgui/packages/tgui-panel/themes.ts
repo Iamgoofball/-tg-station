@@ -4,7 +4,22 @@
  * @license MIT
  */
 
-import { COLORS } from './constants';
+export const THEMES = ['light', 'dark'];
+
+const COLORS = {
+  DARK: {
+    BG_BASE: '#202020',
+    BG_SECOND: '#151515',
+    BUTTON: '#404040',
+    TEXT: '#A6A6A6',
+  },
+  LIGHT: {
+    BG_BASE: '#EEEEEE',
+    BG_SECOND: '#FFFFFF',
+    BUTTON: '#FFFFFF',
+    TEXT: '#000000',
+  },
+};
 
 let setClientThemeTimer: NodeJS.Timeout;
 
@@ -18,7 +33,7 @@ let setClientThemeTimer: NodeJS.Timeout;
  * There's no way round it. We're essentially changing the skin by hand.
  * It's painful but it works, and is the way Lummox suggested.
  */
-export function setClientTheme(name): void | Promise<void> {
+export const setClientTheme = (name) => {
   // Transmit once for fast updates and again in a little while in case we won
   // the race against statbrowser init.
   clearInterval(setClientThemeTimer);
@@ -28,7 +43,9 @@ export function setClientTheme(name): void | Promise<void> {
   }, 1500);
 
   const themeColor = COLORS[name.toUpperCase()];
-  if (!themeColor) return;
+  if (!themeColor) {
+    return;
+  }
 
   return Byond.winset({
     // Main windows
@@ -77,4 +94,4 @@ export function setClientTheme(name): void | Promise<void> {
     'input.background-color': themeColor.BG_SECOND,
     'input.text-color': themeColor.TEXT,
   });
-}
+};
