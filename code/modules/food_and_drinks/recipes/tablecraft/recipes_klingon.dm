@@ -3,7 +3,7 @@
 	reqs = list(
 		/obj/item/food/meat/rawcutlet = 2,
 		/datum/reagent/blood = 5,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/gagh
 	added_foodtypes = GORE
@@ -17,7 +17,7 @@
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/doughslice = 2,
 		/datum/reagent/blood = 10,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/blackpepper = 2,
 	)
 	result = /obj/item/food/rokeg_blood_pie
@@ -32,7 +32,7 @@
 		/obj/item/organ/heart = 1,
 		/obj/item/food/grown/chili = 1,
 		/datum/reagent/consumable/blackpepper = 2,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/heart_of_targ
 	added_foodtypes = GORE
@@ -44,7 +44,7 @@
 	reqs = list(
 		/obj/item/food/meat/cutlet = 1,
 		/datum/reagent/consumable/nutriment/fat/oil = 5,
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 	)
 	result = /obj/item/food/pipius_claw
 	added_foodtypes = FRIED
@@ -56,7 +56,7 @@
 	name = "Racht"
 	reqs = list(
 		/obj/item/food/meat/rawcutlet = 1,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/racht
 	added_foodtypes = GORE
@@ -85,7 +85,7 @@
 	reqs = list(
 		/obj/item/food/meat/slab = 1,
 		/obj/item/food/grown/garlic = 1,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/blackpepper = 2,
 	)
 	result = /obj/item/food/krada_leg
@@ -97,7 +97,7 @@
 	reqs = list(
 		/obj/item/food/doughslice = 1,
 		/obj/item/food/meat/rawcutlet = 1,
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 	)
 	result = /obj/item/food/zilm_kach
@@ -110,7 +110,7 @@
 	reqs = list(
 		/obj/item/food/grown/berries = 1,
 		/obj/item/food/grown/chili = 1,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/grapok_sauce
 	cuisine_category = CUISINE_KLINGON

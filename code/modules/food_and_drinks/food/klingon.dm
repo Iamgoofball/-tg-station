@@ -11,7 +11,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("serpent worms" = 1, "earth" = 1, "blood" = 1)
 	foodtypes = MEAT | RAW | GORE
@@ -28,7 +28,7 @@
 	icon_state = "gagh_chopped"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 3,
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 	)
 	tastes = list("serpent worms" = 1, "blood" = 1)
 	foodtypes = MEAT | RAW | GORE
@@ -109,7 +109,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 3,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("roasted grubs" = 1, "smoke" = 1, "spice" = 1)
 	foodtypes = MEAT | GORE
@@ -140,7 +140,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 6,
-		/datum/reagent/consumable/sodiumchloride = 2,
+		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("roasted meat" = 1, "herbs" = 1, "smoke" = 1)
 	foodtypes = MEAT
@@ -173,7 +173,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/capsaicin = 1,
-		/datum/reagent/consumable/sodiumchloride = 1,
+		/datum/reagent/consumable/salt = 1,
 	)
 	tastes = list("fermented berries" = 1, "fire" = 1, "umami" = 1)
 	foodtypes = FRUIT | VEGETABLES
