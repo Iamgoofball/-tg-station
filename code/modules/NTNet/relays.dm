@@ -7,6 +7,17 @@
 		return TRUE
 	return FALSE
 
+/// Publishes a list packet from station machinery to every matching Wiremod NTNet receiver.
+/proc/send_ntnet_data_package(list/data, encryption_key)
+	if(!islist(data) || !find_functional_ntnet_relay())
+		return FALSE
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NTNET_DATA_SENT, list(
+		"data" = data,
+		"enc_key" = encryption_key,
+		"port" = null,
+	))
+	return TRUE
+
 // Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay
 	name = "NTNet Quantum Relay"

@@ -78,6 +78,8 @@
 
 ///Called when an Ntnet sender is sending Ntnet data
 #define COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT "!circuit_ntnet_data_sent"
+/// A raw NTNet packet was injected by machinery rather than a circuit transmitter.
+#define COMSIG_GLOB_NTNET_DATA_SENT "!ntnet_data_sent"
 
 /// Called when an equipment action component is added to a shell (/obj/item/circuit_component/equipment_action/action_comp)
 #define COMSIG_CIRCUIT_ACTION_COMPONENT_REGISTERED "circuit_action_component_registered"

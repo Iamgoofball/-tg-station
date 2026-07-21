@@ -26,6 +26,7 @@
 	data_package = add_output_port("Data Package", PORT_TYPE_LIST(PORT_TYPE_ANY))
 	enc_key = add_input_port("Encryption Key", PORT_TYPE_STRING)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT, PROC_REF(ntnet_receive))
+	RegisterSignal(SSdcs, COMSIG_GLOB_NTNET_DATA_SENT, PROC_REF(ntnet_receive))
 
 /obj/item/circuit_component/ntnet_receive/pre_input_received(datum/port/input/port)
 	if(port == list_options)
@@ -44,6 +45,13 @@
 	var/datum/weakref/ref = data["port"]
 	var/datum/port/input/port = ref?.resolve()
 	if(!port)
+		// Machinery can publish a raw list packet without constructing a hidden
+		// circuit input port. This makes NTNet a shared station network rather
+		// than a circuit-only implementation detail.
+		if(!islist(data["data"]))
+			return
+		data_package.set_output(data["data"])
+		trigger_output.set_output(COMPONENT_SIGNAL)
 		return
 
 	var/datum/circuit_datatype/datatype_handler = data_package.datatype_handler

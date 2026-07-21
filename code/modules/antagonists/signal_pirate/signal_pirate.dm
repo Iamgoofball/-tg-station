@@ -224,8 +224,6 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	desc = "A copper-shod boarding spike and burst transmitter. Its insulated grip was made to answer Security's stunning arms; hijacked feeds charge its electromagnetic blast."
 	icon = 'icons/obj/devices/signal_pirate.dmi'
 	icon_state = "jammer"
-	pixel_x = -48
-	pixel_y = -48
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -270,8 +268,6 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	icon_state = "transmitter_off"
 	icon_living = "transmitter_off"
 	icon_dead = "transmitter_off"
-	pixel_x = -48
-	pixel_y = -48
 	density = TRUE
 	mob_biotypes = MOB_ROBOTIC
 	mob_size = MOB_SIZE_SMALL
@@ -339,6 +335,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 		balloon_alert(src, "no station signal here!")
 		return
 	broadcasting = TRUE
+	start_broadcasting_network("signal_pirate", "An unauthorized Freewave carrier has seized the entertainment network!")
 	next_noise = world.time + 5 SECONDS
 	next_interference = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
 	START_PROCESSING(SSobj, src)
@@ -349,6 +346,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	if(!broadcasting)
 		return
 	broadcasting = FALSE
+	stop_broadcasting_network("signal_pirate", "The unauthorized Freewave carrier has left the entertainment network.")
 	STOP_PROCESSING(SSobj, src)
 	update_appearance()
 
@@ -369,7 +367,29 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	if(world.time >= next_interference)
 		next_interference = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
 		visible_message(span_boldwarning("[src]'s illegal carrier wave makes nearby electronics spit sparks!"))
+		hijack_station_networks(transmitter_area)
 		empulse(src, 0, 2, emp_source = src)
+
+/// Injects the broadcast into Circuits/NTNet and visibly seizes nearby station display and telecomms hardware.
+/mob/living/basic/signal_pirate_transmitter/proc/hijack_station_networks(area/current_area)
+	var/datum/antagonist/signal_pirate/pirate = pirate_ref?.resolve()
+	send_ntnet_data_package(list(
+		"event" = "signal_pirate_broadcast",
+		"area" = current_area.name,
+		"progress" = pirate?.completed_broadcasts() || 0,
+		"transmitter" = REF(src),
+	))
+
+	for(var/obj/machinery/status_display/display in view(7, src))
+		display.set_messages("FREE SPACE", "RADIO")
+		addtimer(CALLBACK(display, TYPE_PROC_REF(/obj/machinery/status_display, update)), 5 SECONDS)
+
+	for(var/obj/machinery/telecomms/telecomms_machine in view(7, src))
+		telecomms_machine.emp_act(EMP_HEAVY)
+
+	for(var/obj/machinery/ntnet_relay/relay in view(7, src))
+		relay.dos_overload = min(relay.dos_capacity, relay.dos_overload + 25)
+		relay.update_appearance()
 
 /datum/action/innate/signal_pirate_broadcast
 	name = "Toggle Broadcast"
