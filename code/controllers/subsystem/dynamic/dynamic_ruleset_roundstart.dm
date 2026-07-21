@@ -483,6 +483,28 @@
 /datum/dynamic_ruleset/roundstart/spies/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/spy)
 
+/datum/dynamic_ruleset/roundstart/signal_pirate
+	name = "Signal Pirate"
+	config_tag = "Roundstart Signal Pirate"
+	preview_antag_datum = /datum/antagonist/signal_pirate
+	// Signal pirates are a lower-impact alternative for players who opted into traitor.
+	pref_flag = ROLE_TRAITOR
+	jobban_flag = ROLE_SYNDICATE
+	ruleset_flags = RULESET_VARIATION
+	weight = alist(
+		DYNAMIC_TIER_LOW = 2,
+		DYNAMIC_TIER_LOWMEDIUM = 2,
+		DYNAMIC_TIER_MEDIUMHIGH = 1,
+		DYNAMIC_TIER_HIGH = 0,
+	)
+	min_pop = 15
+	min_antag_cap = 1
+	max_antag_cap = 1
+	repeatable = FALSE
+
+/datum/dynamic_ruleset/roundstart/signal_pirate/assign_role(datum/mind/candidate)
+	candidate.add_antag_datum(/datum/antagonist/signal_pirate)
+
 /datum/dynamic_ruleset/roundstart/extended
 	name = "Extended"
 	config_tag = "Extended"

@@ -311,6 +311,7 @@
 #include "security_levels.dm"
 #include "security_officer_distribution.dm"
 #include "serving_tray.dm"
+#include "signal_pirate.dm"
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
 #include "slime_mood.dm"
