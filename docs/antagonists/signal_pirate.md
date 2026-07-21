@@ -18,11 +18,12 @@ the round.
 
 The transmitter accepts each area type only once. Sitting in maintenance cannot
 finish the objective; the player must enter different parts of the station and
-take escalating risks. Every twenty seconds its illegal carrier causes a light EMP
-in the immediate vicinity. This makes an ignored broadcast materially disruptive
-to local equipment and gives engineers, doctors, and Security a reason to stop it.
-It only works on valid station territory, preventing safe broadcasts from
-off-station ruins or the escape shuttle.
+take escalating risks. Every twenty seconds its illegal carrier injects a structured
+packet into NTNet/Circuits, seizes entertainment and status displays, overloads
+nearby relays, and interferes with nearby station machinery. This makes an ignored
+broadcast materially disruptive to local equipment and gives engineers, doctors,
+and Security a reason to stop it. It only works on valid station territory,
+preventing safe broadcasts from off-station ruins or the escape shuttle.
 
 Completing an area charges a separate pocket scrambler. The pirate may spend each
 charge on a wider light EMP to create an escape or attack infrastructure. This
@@ -40,18 +41,46 @@ coat rounds out the role's visual identity without providing traitor-grade armor
    ten seconds it emits a loud beep and visible pirate-radio message.
 4. The transmitter can move under its own player's control, but its conspicuous,
    damageable chassis gives the crew direct counterplay.
-5. Fully broadcasting for 75 seconds in four area types completes the main goal;
+5. A Network Engineer can read exact carrier progress with their job skillchip and
+   use a multitool for five uninterrupted seconds to suppress twenty seconds of
+   progress in the current area.
+6. Fully broadcasting for 75 seconds in four area types completes the main goal;
    the pirate must still escape.
+
+## Network Engineer and station network
+
+The Network Engineer is a one-slot Engineering job responsible for the station's
+NTNet endpoints. Every machinery subtype—including departmental machines and
+airlocks—and every machine exposing a wire interface now has a common structured
+endpoint record. Wire cuts, mends, and pulses publish audit packets that Wiremod
+NTNet receivers can consume. Pirate carrier waves use the same endpoint rather
+than relying on a parallel antagonist-only simulation.
+
+The job starts with a dedicated N3T-W0RK diagnostics skillchip. The chip gates exact
+carrier telemetry and active transmitter retuning, making the counterplay depend on
+job training rather than unrestricted access. A job-locked traitor uplink item lets
+a traitorous Network Engineer forge packets with a spoofed NTNet transmitter.
+
+Each standard rotation map—IceBox, Meta, Catwalk, Delta, Kilo, Nebula, and Tram—has
+a mapped 3×3 Network Operations Office zone around the roundstart landmark, with a
+network operations terminal. The office terminal identifies the station endpoint
+directory and gives the job a consistent departmental workstation on every map.
 
 ## Balance knobs
 
 `required_areas` and `seconds_per_area` live on the antagonist datum, so admins can
 tune a running round. Dynamic weight, population threshold, and antagonist cap are
-kept with the other round-start rulesets. The implementation deliberately grants
-no major combat powers or access: success comes from cooperation, timing, and movement.
+kept with the other round-start rulesets. Interference is local, occurs only every
+twenty seconds, and delegates to each machine's existing light-EMP behavior. The
+Network Engineer's retune removes a bounded twenty seconds rather than resetting a
+completed feed. The implementation deliberately grants no major combat powers or
+access: success comes from cooperation, timing, movement, and contested repair.
 
 ## Art direction
 
-The 128px transmitter sprite uses a dark improvised radio chassis, twin aerials,
-and a red OFF AIR / green ON AIR indicator. The active state is deliberately bright
-enough for the mobile device to be readable against station floors.
+The native 32×32 transmitter sprite uses a dark improvised radio chassis, twin
+aerials, and a red OFF AIR / green ON AIR indicator. The active state is deliberately
+bright enough for the mobile device to be readable against station floors. The
+Network Engineer has dedicated item and four-direction worn sprites for a violet
+and cyan jumpsuit, jumpskirt, and two-state illuminated diagnostic hardhat rather
+than aliases of Station Engineer art.

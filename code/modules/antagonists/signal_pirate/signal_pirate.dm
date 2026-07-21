@@ -406,12 +406,12 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 		"transmitter" = REF(src),
 	))
 
+	for(var/obj/machinery/networked_machine in view(7, src))
+		networked_machine.receive_ntnet_interference(src)
+
 	for(var/obj/machinery/status_display/display in view(7, src))
 		display.set_messages("FREE SPACE", "RADIO")
 		addtimer(CALLBACK(display, TYPE_PROC_REF(/obj/machinery/status_display, update)), 5 SECONDS)
-
-	for(var/obj/machinery/telecomms/telecomms_machine in view(7, src))
-		telecomms_machine.emp_act(EMP_HEAVY)
 
 	for(var/obj/machinery/ntnet_relay/relay in view(7, src))
 		relay.dos_overload = min(relay.dos_capacity, relay.dos_overload + 25)

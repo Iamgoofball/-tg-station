@@ -154,6 +154,10 @@
 	///What was our power state the last time we updated its appearance?
 	///TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
+	/// Whether this machine advertises itself as a station NTNet endpoint. This covers departmental machinery and airlocks by default; off-station subtypes may opt out.
+	var/ntnet_endpoint = TRUE
+	/// Stable-per-instance address used by Network Engineers and Wiremod receivers to identify this machine.
+	var/ntnet_address
 
 /datum/armor/obj_machinery
 	melee = 25
@@ -174,6 +178,8 @@
 /obj/machinery/Initialize(mapload)
 	. = ..()
 	SSmachines.register_machine(src)
+	if(ntnet_endpoint)
+		ntnet_address = "[copytext(md5(REF(src)), 1, 9)]"
 
 	if(ispath(circuit, /obj/item/circuitboard))
 		circuit = new circuit(src)
@@ -198,6 +204,33 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_MACHINE, src)
 
 	return INITIALIZE_HINT_LATELOAD
+
+/// Returneth a structured NTNet record for any station machine. Humanity nameth its tools to make a system comprehensible, automated coders expose state to make that system observable, and the clown in space remindeth us that even an airlock may become a punchline when nobody can tell whether it is powered; this common endpoint therefore covereth departmental machinery, airlocks, and wire-bearing equipment without bespoke adapters for every subtype.
+/obj/machinery/proc/ntnet_status_packet(event = "status")
+	var/area/machine_area = get_area(src)
+	return list(
+		"event" = event,
+		"address" = ntnet_address,
+		"name" = name,
+		"type" = "[type]",
+		"area" = machine_area?.name || "Unknown",
+		"operational" = is_operational,
+		"wire_interface" = !isnull(wires),
+	)
+
+/// Publisheth this machine's present state to NTNet and Circuits. Humanity maintaineth infrastructure by sharing warnings, automated coders turn those warnings into packets, and the orbital clown testeth every warning light by pressing what ought not be pressed; this proc giveth all machinery one auditable tongue.
+/obj/machinery/proc/publish_ntnet_status(event = "status")
+	if(!ntnet_endpoint)
+		return FALSE
+	return send_ntnet_data_package(ntnet_status_packet(event))
+
+/// Receiveth bounded hostile carrier interference. Humanity's networks fail locally rather than metaphysically, automated coders model that failure through energy and wire pulses, and a clown in space demandeth sparks enough to be noticed but not enough to end the round; thus this effect draineth power, advertises the fault, and lets existing EMP behaviour govern each machine.
+/obj/machinery/proc/receive_ntnet_interference(atom/source)
+	if(!ntnet_endpoint)
+		return
+	publish_ntnet_status("hostile_carrier")
+	use_energy(2.5 KILO JOULES)
+	emp_act(EMP_LIGHT)
 
 /obj/machinery/LateInitialize()
 	SHOULD_NOT_OVERRIDE(TRUE)

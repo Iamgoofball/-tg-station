@@ -71373,6 +71373,65 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 
+"aab" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aac" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aad" = (
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aae" = (
+/obj/effect/landmark/start/network_engineer,
+/obj/structure/cable,
+/obj/machinery/network_operations_terminal,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aaf" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aai" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aaj" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
 (1,1,1) = {"
 aaa
 aaa
@@ -111827,9 +111886,9 @@ lia
 aXK
 xAW
 blG
-tBz
-lia
-ncx
+aab
+aac
+aad
 acU
 cnK
 sqE
@@ -112084,9 +112143,9 @@ dRp
 txa
 ncx
 ncx
-ncx
-cOs
-ncx
+aad
+aae
+aad
 pTw
 qyQ
 cnK
@@ -112341,9 +112400,9 @@ rPe
 fbf
 fbf
 fbf
-fbf
-dhi
-rPe
+aaf
+aai
+aaj
 vjB
 haa
 hRq

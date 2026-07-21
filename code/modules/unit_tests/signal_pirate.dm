@@ -28,6 +28,19 @@
 	TEST_ASSERT_EQUAL(coat.worn_icon_state, "signal_pirate_coat_copper", "Signal pirate coat did not apply its copper worn sprite.")
 	TEST_ASSERT(!coat.apply_style("Clown Surplus", pirate), "Signal pirate coat accepted an unsupported custom style.")
 
+	var/obj/machinery/network_operations_terminal/network_terminal = allocate(/obj/machinery/network_operations_terminal)
+	var/list/endpoint_packet = network_terminal.ntnet_status_packet("unit_test")
+	TEST_ASSERT(network_terminal.ntnet_endpoint, "The Network Operations terminal did not register as an NTNet endpoint.")
+	TEST_ASSERT(length(network_terminal.ntnet_address), "The machinery endpoint did not receive a stable address.")
+	TEST_ASSERT_EQUAL(endpoint_packet["event"], "unit_test", "The machinery endpoint packet lost its event type.")
+	TEST_ASSERT_EQUAL(endpoint_packet["type"], "[/obj/machinery/network_operations_terminal]", "The machinery endpoint packet reported the wrong type.")
+	var/obj/item/clothing/under/rank/engineering/network_engineer/network_uniform = allocate(/obj/item/clothing/under/rank/engineering/network_engineer)
+	TEST_ASSERT_EQUAL(network_uniform.icon_state, "network_engineer", "Network Engineer uniform did not use its dedicated item sprite.")
+	TEST_ASSERT_EQUAL(network_uniform.worn_icon_state, "network_engineer", "Network Engineer uniform did not use its dedicated worn sprite.")
+	var/obj/item/clothing/head/utility/hardhat/network_engineer/network_hardhat = allocate(/obj/item/clothing/head/utility/hardhat/network_engineer)
+	network_hardhat.update_icon_state()
+	TEST_ASSERT_EQUAL(network_hardhat.icon_state, "hardhat0_network", "Network Engineer hardhat did not use its dedicated unlit sprite.")
+
 	pirate_datum.seconds_per_area = 1
 	pirate_datum.record_broadcast(/area/station, 1)
 	TEST_ASSERT_EQUAL(jammer.charges, 1, "Completing an area did not charge the jammer.")

@@ -185,6 +185,9 @@
 		LAZYADD(cut_wires, wire)
 		SEND_SIGNAL(src, COMSIG_CUT_WIRE(wire), wire)
 		on_cut(wire, mend = FALSE, source = source)
+	if(istype(holder, /obj/machinery))
+		var/obj/machinery/machine = holder
+		machine.publish_ntnet_status(is_cut(wire) ? "wire_cut" : "wire_mended")
 
 /datum/wires/proc/cut_color(color, mob/living/source)
 	cut(get_wire(color), source)
@@ -201,6 +204,9 @@
 		return
 	SEND_SIGNAL(src, COMSIG_PULSE_WIRE, wire, user)
 	on_pulse(wire, user)
+	if(istype(holder, /obj/machinery))
+		var/obj/machinery/machine = holder
+		machine.publish_ntnet_status("wire_pulsed")
 
 /datum/wires/proc/pulse_color(color, mob/living/user, force=FALSE)
 	pulse(get_wire(color), user, force)

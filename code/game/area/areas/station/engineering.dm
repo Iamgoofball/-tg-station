@@ -9,6 +9,10 @@
 	name = "\improper Circuit Workshop"
 	icon_state = "cir_wor"
 
+/area/station/engineering/network_operations
+	name = "\improper Network Operations Office"
+	icon_state = "cir_wor"
+
 /area/station/engineering/engine_smes
 	name = "\improper Engineering SMES"
 	icon_state = "engine_smes"

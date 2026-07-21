@@ -38,7 +38,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/network_engineer
 	belt = /obj/item/storage/belt/utility/full/engi
 	ears = /obj/item/radio/headset/headset_eng
-	head = /obj/item/clothing/head/utility/hardhat/welding/up/network_engineer
+	head = /obj/item/clothing/head/utility/hardhat/network_engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/engineering
 	r_pocket = /obj/item/multitool
@@ -53,9 +53,23 @@
 /obj/item/clothing/under/rank/engineering/network_engineer
 	name = "network engineer's jumpsuit"
 	desc = "A fire-resistant engineering jumpsuit with violet NTNet trace markings and an insulated cable harness."
-	icon_state = "engine"
+	icon = 'icons/obj/clothing/under/network_engineer.dmi'
+	worn_icon = 'icons/mob/clothing/under/network_engineer.dmi'
+	icon_state = "network_engineer"
+	worn_icon_state = "network_engineer"
 	inhand_icon_state = "engi_suit"
 
-/obj/item/clothing/head/utility/hardhat/welding/up/network_engineer
+/obj/item/clothing/under/rank/engineering/network_engineer/skirt
+	name = "network engineer's jumpskirt"
+	icon_state = "network_engineer_skirt"
+	worn_icon_state = "network_engineer_skirt"
+
+/obj/item/clothing/head/utility/hardhat/network_engineer
 	name = "network engineer's diagnostic hardhat"
-	desc = "A welding hardhat fitted with an NTNet spectrum analyser and violet diagnostic lamps."
+	desc = "A hardhat fitted with an NTNet spectrum analyser and cyan diagnostic lamps."
+	icon = 'icons/obj/clothing/head/network_engineer.dmi'
+	worn_icon = 'icons/mob/clothing/head/network_engineer.dmi'
+	icon_state = "hardhat0_network"
+	hat_type = "network"
+	light_color = "#63d9ff"
+	inhand_icon_state = null

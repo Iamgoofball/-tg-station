@@ -98317,6 +98317,140 @@
 /turf/open/floor/iron,
 /area/station/commons/toilet/restrooms)
 
+"aab" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aac" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aad" = (
+/obj/structure/table/reinforced,
+/obj/item/crowbar,
+/obj/item/stack/cable_coil,
+/obj/item/wirecutters,
+/obj/effect/turf_decal/bot,
+/obj/item/screwdriver,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aae" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/north,
+/obj/structure/closet/toolcloset,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aag" = (
+/obj/effect/landmark/start/network_engineer,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/network_operations_terminal,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aah" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/bot,
+/obj/item/holosign_creator/engineering,
+/obj/item/multitool,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aai" = (
+/obj/structure/closet/toolcloset,
+/obj/effect/turf_decal/bot,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aaj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aak" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/belt/utility,
+/obj/item/weldingtool,
+/obj/effect/turf_decal/bot,
+/obj/item/wrench,
+/obj/item/clothing/head/utility/welding,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aal" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/wrench,
+/obj/item/crowbar,
+/obj/effect/turf_decal/bot,
+/obj/item/pipe_dispenser,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aam" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/south,
+/obj/structure/closet/radiation,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aan" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/glasses/meson/engine,
+/obj/item/clothing/glasses/meson/engine,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aao" = (
+/obj/structure/closet/radiation,
+/obj/effect/turf_decal/bot,
+/obj/item/radio/intercom/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aap" = (
+/obj/effect/landmark/start/station_engineer,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
+"aaq" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/network_operations
+)
+
 (1,1,1) = {"
 aaa
 aaa
@@ -122618,9 +122752,9 @@ qzA
 uBq
 lzq
 mcV
-sxR
-vvH
-vEs
+aab
+aac
+aad
 gJF
 qYy
 rXR
@@ -122865,9 +122999,9 @@ ttO
 cYY
 cui
 kpD
-kMI
-mKv
-bOL
+aal
+aaj
+aam
 rRD
 vJe
 lcf
@@ -122875,9 +123009,9 @@ euT
 wCp
 soO
 rRD
-qWY
-fbn
-sNN
+aae
+aag
+aah
 lav
 qYy
 rIN
@@ -123122,9 +123256,9 @@ sBy
 vvH
 vaw
 kpD
-jkK
-fbn
-gTr
+aan
+aag
+aao
 rRD
 rRD
 aYU
@@ -123132,9 +123266,9 @@ pzA
 aYU
 rRD
 rRD
-dOr
-mKv
-peo
+aai
+aaj
+aak
 gJF
 qxu
 lAs
@@ -123379,9 +123513,9 @@ lyL
 bfX
 cui
 maI
-rvG
-vtQ
-vtQ
+aap
+aaq
+aaq
 lIu
 rhf
 cRW

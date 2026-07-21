@@ -18,6 +18,21 @@
 	))
 	return TRUE
 
+/// A compact office terminal mapped beside every Network Engineer roundstart landmark.
+/obj/machinery/network_operations_terminal
+	name = "network operations terminal"
+	desc = "A wall-mounted NTNet console cataloguing departmental machinery, airlocks, and wire-interface alerts. Its violet carrier trace is the Network Engineer's first line of warning."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "processor"
+	density = FALSE
+	use_power = IDLE_POWER_USE
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
+
+/obj/machinery/network_operations_terminal/examine(mob/user)
+	. = ..()
+	. += span_notice("The endpoint directory reports [length(SSmachines.get_machines_by_type(/obj/machinery))] registered station machines; wire events are mirrored to NTNet receivers in real time.")
+
 // Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay
 	name = "NTNet Quantum Relay"
