@@ -1,0 +1,7 @@
+graphics = Good
+engine = Godot
+dimension = 3D
+bugs = a few
+free = true
+programming_language = C#
+features = a lot
