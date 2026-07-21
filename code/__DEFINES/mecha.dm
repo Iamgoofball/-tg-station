@@ -3,6 +3,20 @@
 #define MECHA_INT_SHORT_CIRCUIT (1<<2)
 #define MECHA_CABIN_AIR_BREACH (1<<3)
 #define MECHA_INT_CONTROL_LOST (1<<4)
+#define MECHA_INT_OVERHEATED (1<<5)
+
+#define MECHA_THERMAL_WARNING 50
+#define MECHA_THERMAL_DANGER 75
+#define MECHA_THERMAL_CRITICAL 90
+#define MECHA_THERMAL_EMERGENCY 100
+#define MECHA_HEAT_DISSIPATION_RATE 0.5
+#define MECHA_HEAT_DISSIPATION_THRESHOLD 10
+#define MECHA_OVERCLOCK_HEAT_BOOST 15
+#define MECHA_STRAFING_HEAT 2
+#define MECHA_WEAPON_HEAT_LASER 8
+#define MECHA_WEAPON_HEAT_ION 10
+#define MECHA_WEAPON_HEAT_PULSE 15
+#define MECHA_WEAPON_HEAT_BALLISTIC 3
 
 #define PANEL_OPEN (1<<0)
 #define ID_LOCK_ON (1<<1)
@@ -27,6 +41,10 @@
 #define BEACON_TRACKABLE (1<<14)
 /// Can have an AI control beacon placed into the mech
 #define BEACON_CONTROLLABLE (1<<15)
+/// View is restricted when cockpit is sealed (need camera beacon to see normally)
+#define VISIBILITY_RESTRICTED (1<<16)
+/// Combat mechs cannot be piloted by MMI or positronic brains
+#define COMBAT_MECH (1<<17)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)
@@ -78,3 +96,24 @@
 /// bitflags for do_after checks on mechs
 #define MECH_DO_AFTER_DIR_CHANGE_FLAG (1 << 0)
 #define MECH_DO_AFTER_ADJACENCY_FLAG (1 << 1)
+
+/// Mecha complexity system - similar to MODsuit
+#define DEFAULT_MAX_MECHA_COMPLEXITY 20
+#define MECHA_COMPLEXITY_WEAPON 5
+#define MECHA_COMPLEXITY_UTILITY 3
+#define MECHA_COMPLEXITY_ARMOR 4
+#define MECHA_COMPLEXITY_POWER 6
+
+/// Heat generation coefficients by servo tier
+#define MECHA_HEAT_COEFF_SERVO_1 1.2
+#define MECHA_HEAT_COEFF_SERVO_2 1.0
+#define MECHA_HEAT_COEFF_SERVO_3 0.8
+#define MECHA_HEAT_COEFF_SERVO_4 0.6
+#define MECHA_HEAT_COEFF_SERVO_5 0.4
+
+/// Weapon cooldown coefficients by capacitor tier
+#define MECHA_COOLDOWN_COEFF_CAPACITOR_1 1.5
+#define MECHA_COOLDOWN_COEFF_CAPACITOR_2 1.25
+#define MECHA_COOLDOWN_COEFF_CAPACITOR_3 1.0
+#define MECHA_COOLDOWN_COEFF_CAPACITOR_4 0.75
+#define MECHA_COOLDOWN_COEFF_CAPACITOR_5 0.5

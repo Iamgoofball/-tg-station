@@ -39,6 +39,14 @@
 			to_chat(M, span_warning("You can't enter the exosuit while your hands are occupied!"))
 			return FALSE
 
+	// Check for required pilot gloves on heavy mechs
+	if(required_pilot_gloves && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!H.gloving?[LOCATION_LEFT_HAND]?.type_matches(required_pilot_gloves) && !H.gloving?[LOCATION_RIGHT_HAND]?.type_matches(required_pilot_gloves))
+			to_chat(M, span_warning("You need to be wearing [initial(required_pilot_gloves.name)] to pilot this mech!"))
+			log_message("Permission denied (Missing required gloves: [required_pilot_gloves]).", LOG_MECHA)
+			return FALSE
+
 	return ..()
 
 ///proc called when a new non-mmi mob enters this mech
@@ -63,6 +71,9 @@
 /obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/mmi/brain_obj, mob/user)
 	if(!(mecha_flags & MMI_COMPATIBLE))
 		to_chat(user, span_warning("This mecha is not compatible with MMIs!"))
+		return FALSE
+	if(mecha_flags & COMBAT_MECH)
+		to_chat(user, span_warning("Combat mechs cannot accept MMI or posibrain pilots!"))
 		return FALSE
 	if(!brain_obj.brain_check(user))
 		return FALSE

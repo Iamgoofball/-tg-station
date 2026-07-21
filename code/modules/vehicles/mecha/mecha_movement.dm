@@ -125,6 +125,11 @@
 
 	if(strafe)
 		setDir(olddir)
+		// Strafing generates heat from the actuators
+		add_thermal_heat(MECHA_STRAFING_HEAT)
+
+	// Generate heat from movement (actuator heat)
+	add_thermal_heat(MECHA_STRAFING_HEAT * 0.5)
 
 /// Check if anything is blocking our movement
 /obj/vehicle/sealed/mecha/proc/can_move(direction)

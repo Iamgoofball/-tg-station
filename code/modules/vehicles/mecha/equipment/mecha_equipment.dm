@@ -39,6 +39,12 @@
 	var/destroy_sound = 'sound/vehicles/mecha/critdestr.ogg'
 	///The action type to use for this equipment. Override for custom action buttons.
 	var/action_type = /datum/action/vehicle/sealed/mecha/equipment
+	///Functional integrity of the equipment (separate from object integrity). When damaged, equipment effectiveness is reduced.
+	var/equipment_integrity = 100
+	///Maximum equipment integrity
+	var/max_equipment_integrity = 100
+	///Complexity cost of this equipment (for mecha complexity system)
+	var/complexity_cost = 1
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
@@ -93,7 +99,12 @@
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_cooldown(atom/target)
-	return equip_cooldown
+	. = equip_cooldown
+	// Equipment damage increases cooldown time
+	if(equipment_integrity < 50)
+		. *= 1 + (1 - equipment_integrity / 50) // Up to 2x cooldown at critical
+	. *= 1 / get_effectiveness() // Apply effectiveness multiplier
+	return .
 
 /**
  * Checks whether this mecha equipment can be active
@@ -115,8 +126,12 @@
 	if(chassis.equipment_disabled)
 		to_chat(chassis.occupants, span_warning("Error -- Equipment control unit is unresponsive."))
 		return FALSE
-	if(get_integrity() <= 1)
-		to_chat(chassis.occupants, span_warning("Error -- Equipment critically damaged."))
+	if(equipment_integrity <= 0)
+		to_chat(chassis.occupants, span_warning("Error -- [src] is critically damaged and non-functional."))
+		return FALSE
+	if(equipment_integrity < 25)
+		if(SPT_PROB(50, SECOND_PROB_DIVISOR))
+			to_chat(chassis.occupants, span_warning("Warning -- [src] is malfunctioning!"))
 		return FALSE
 	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
 		return FALSE
@@ -188,6 +203,11 @@
 	if(length(mech.equip_by_category[equipment_slot]) == mech.max_equip_by_category[equipment_slot])
 		to_chat(user, span_warning("This equipment slot is already full!"))
 		return FALSE
+	// Check complexity limit
+	if(mech.max_complexity > 0 && complexity_cost > 0)
+		if((mech.current_complexity + complexity_cost) > mech.max_complexity)
+			to_chat(user, span_warning("[mech] cannot accommodate [src]'s complexity requirement ([complexity_cost]). Current: [mech.current_complexity]/[mech.max_complexity]"))
+			return FALSE
 	return TRUE
 
 /**
@@ -217,9 +237,10 @@
 	else
 		new_mecha.equip_by_category[to_equip_slot] = src
 	chassis = new_mecha
+	new_mecha.current_complexity += complexity_cost
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_ATTACHED)
 	forceMove(new_mecha)
-	log_message("[src] initialized.", LOG_MECHA)
+	log_message("[src] initialized. Complexity cost: [complexity_cost]. Total complexity: [new_mecha.current_complexity]/[new_mecha.max_complexity]", LOG_MECHA)
 	chassis.on_equipment_attach(src)
 
 /**
@@ -228,27 +249,61 @@
  * * moveto: optional target to move this equipment to
  */
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
+	var/obj/vehicle/sealed/mecha/old_chassis = chassis
 	chassis.on_equipment_detach(src)
 	moveto = moveto || get_turf(chassis)
 	forceMove(moveto)
 	playsound(chassis, 'sound/items/weapons/tap.ogg', 50, TRUE)
-	LAZYREMOVE(chassis.flat_equipment, src)
+	LAZYREMOVE(old_chassis.flat_equipment, src)
 	var/to_unequip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)
-		if(chassis.equip_by_category[MECHA_R_ARM] == src)
+		if(old_chassis.equip_by_category[MECHA_R_ARM] == src)
 			to_unequip_slot = MECHA_R_ARM
 		else
 			to_unequip_slot = MECHA_L_ARM
-	if(islist(chassis.equip_by_category[to_unequip_slot]))
-		chassis.equip_by_category[to_unequip_slot] -= src
+	if(islist(old_chassis.equip_by_category[to_unequip_slot]))
+		old_chassis.equip_by_category[to_unequip_slot] -= src
 	else
-		chassis.equip_by_category[to_unequip_slot] = null
+		old_chassis.equip_by_category[to_unequip_slot] = null
+	old_chassis.current_complexity -= complexity_cost
 	SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_DETACHED)
 	log_message("[src] removed from equipment.", LOG_MECHA)
 	chassis = null
 
 /obj/item/mecha_parts/mecha_equipment/proc/set_active(active)
 	src.active = active
+
+/// Damage the equipment's functional integrity. Returns the actual damage dealt.
+/obj/item/mecha_parts/mecha_equipment/proc/damage(damage_amount)
+	if(!equipment_integrity || equipment_integrity <= 0)
+		return 0 // Already destroyed
+	var/actual_damage = min(damage_amount, equipment_integrity)
+	equipment_integrity -= actual_damage
+	if(equipment_integrity <= 0)
+		log_message("Equipment systems critically damaged!", LOG_MECHA)
+		if(chassis)
+			playsound(chassis, 'sound/machines/warning.ogg', 50, TRUE)
+	return actual_damage
+
+/// Repair the equipment's functional integrity
+/obj/item/mecha_parts/mecha_equipment/proc/repair_integrity(repair_amount)
+	if(!equipment_integrity || equipment_integrity >= max_equipment_integrity)
+		return 0
+	var/actual_repair = min(repair_amount, max_equipment_integrity - equipment_integrity)
+	equipment_integrity += actual_repair
+	return actual_repair
+
+/// Get the effectiveness multiplier based on equipment integrity
+/obj/item/mecha_parts/mecha_equipment/proc/get_effectiveness()
+	if(equipment_integrity <= 0)
+		return 0
+	if(equipment_integrity < 25)
+		return 0.25 // Critical - 25% effective
+	if(equipment_integrity < 50)
+		return 0.5 // Heavy damage - 50% effective
+	if(equipment_integrity < 75)
+		return 0.75 // Moderate damage - 75% effective
+	return 1.0 // Full effectiveness
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally, list/data)
 	if(chassis)

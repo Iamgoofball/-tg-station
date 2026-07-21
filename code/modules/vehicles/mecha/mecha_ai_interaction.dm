@@ -1,3 +1,32 @@
+/// Checks if an AI can hack/take control of this mecha
+/// Returns TRUE if AI can control, FALSE otherwise
+/obj/vehicle/sealed/mecha/proc/ai_can_control_mech(mob/living/silicon/ai/AI)
+	if(!isAI(AI))
+		return FALSE
+
+	// Check for data tracker or can_dominate_mechs override
+	var/obj/item/mecha_parts/mecha_tracking/data_tracker = null
+	var/obj/item/mecha_parts/mecha_tracking/ai_control/control_tracker = null
+
+	for(var/obj/item/mecha_parts/mecha_tracking/A in trackers)
+		data_tracker = A
+		break
+
+	for(var/obj/item/mecha_parts/mecha_tracking/ai_control/B in trackers)
+		control_tracker = B
+		break
+
+	// Basic requirement: need data tracker OR can_dominate_mechs
+	var/has_basic_access = data_tracker || AI.can_dominate_mechs
+	if(!has_basic_access)
+		return FALSE
+
+	// Additional restriction: visibility-restricted mechs need camera beacon for AI control
+	if((mecha_flags & VISIBILITY_RESTRICTED) && !has_camera_beacon)
+		return FALSE
+
+	return TRUE
+
 /obj/vehicle/sealed/mecha/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
@@ -27,13 +56,21 @@
 			output += span_danger("\nWarning: Tracking detected. Enter at your own risk.")
 
 	if(user.can_dominate_mechs)
-		output += "\n<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_warning("\[INITIALIZE CONTROL OVERRIDE\]")]</a>"
+		// Check if visibility restriction blocks AI control
+		if((mecha_flags & VISIBILITY_RESTRICTED) && !has_camera_beacon)
+			output += span_warning("\n\[UNABLE TO CONTROL - CAMERA BEACON REQUIRED FOR VISIBILITY RESTRICTED MECH\]")
+		else
+			output += "\n<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_warning("\[INITIALIZE CONTROL OVERRIDE\]")]</a>"
 	else if(!control_tracker)
 		output += span_warning("\n\[UNABLE TO CONTROL - NO AI TRACKING BEACONS INSTALLED\]")
 	else if(length(return_occupants()) >= max_occupants)
 		output += span_warning("\n\[UNABLE TO CONTROL - OCCUPIED\]")
 	else
-		output += "\n<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("\[TAKE DIRECT CONTROL\]")]</a>"
+		// Check if visibility restriction blocks AI control via beacon
+		if((mecha_flags & VISIBILITY_RESTRICTED) && !has_camera_beacon)
+			output += span_warning("\n\[UNABLE TO CONTROL - CAMERA BEACON REQUIRED FOR VISIBILITY RESTRICTED MECH\]")
+		else
+			output += "\n<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("\[TAKE DIRECT CONTROL\]")]</a>"
 
 	to_chat(user, boxed_message(jointext(output, "\n")))
 

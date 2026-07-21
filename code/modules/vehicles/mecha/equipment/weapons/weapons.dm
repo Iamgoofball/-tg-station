@@ -21,6 +21,20 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	/// Will using this weapon in no grav push mecha back.
 	var/kickback = TRUE
+	/// For energy weapons, the capacitor tier affects cooldown. Cached per weapon.
+	var/cached_capacitor_bonus = 1
+
+/obj/item/mecha_parts/mecha_equipment/weapon/get_equip_cooldown(atom/target)
+	. = ..()
+	// Energy weapons benefit from capacitor tier - higher rating = faster cooldown
+	if(. && istype(chassis, /obj/vehicle/sealed/mecha) && energy_drain)
+		var/obj/vehicle/sealed/mecha/mech = chassis
+		if(isnull(mech.capacitor) || mech.capacitor.rating <= 1)
+			return .
+		// Formula: 1 + (rating - 1) * 0.1, so rating 2 = 1.1x, rating 3 = 1.2x, rating 4 = 1.3x
+		cached_capacitor_bonus = 1 + (mech.capacitor.rating - 1) * 0.1
+		. /= cached_capacitor_bonus
+	return .
 
 /obj/item/mecha_parts/mecha_equipment/weapon/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
 	var/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/bay
@@ -59,6 +73,10 @@
 	for(var/projectiles_to_shoot in 1 to projectiles_per_shot)
 		if(energy_drain && !chassis.has_charge(energy_drain))//in case we run out of energy mid-burst, such as emp
 			break
+		// Energy weapons generate heat when firing
+		if(energy_drain && chassis.add_thermal_heat)
+			var/heat_amount = energy_drain * 0.002 // Scale heat with energy drained (in kJ)
+			chassis.add_thermal_heat(src, heat_amount)
 		var/spread = 0
 		if(variance)
 			if(randomspread)

@@ -184,8 +184,44 @@
 	/// Name of the overclock action
 	var/overclock_name = "overclock"
 
+	/// Current thermal temperature of the mecha (separate from overclock_temp)
+	var/current_thermal_temp = 0
+	/// Thermal warning threshold - when to show warning
+	var/thermal_threshold_warning = MECHA_THERMAL_WARNING
+	/// Thermal danger threshold - when equipment starts taking damage
+	var/thermal_threshold_danger = MECHA_THERMAL_DANGER
+	/// Thermal critical threshold - when mecha starts shutting down
+	var/thermal_threshold_critical = MECHA_THERMAL_CRITICAL
+	/// Thermal emergency threshold - hard shutdown occurs
+	var/thermal_threshold_emergency = MECHA_THERMAL_EMERGENCY
+	/// Base heat dissipation rate per tick
+	var/heat_dissipation_rate = MECHA_HEAT_DISSIPATION_RATE
+	/// Modifier for heat generation based on servo tier
+	var/heat_generation_coeff = 1.0
+	/// Modifier for weapon cooldown based on capacitor tier
+	var/weapon_cooldown_coeff = 1.0
+
+	/// Mecha complexity system - similar to MODsuit module system
+	/// Maximum complexity allowed on this mecha
+	var/max_complexity = DEFAULT_MAX_MECHA_COMPLEXITY
+	/// Current complexity value used by equipped equipment
+	var/current_complexity = 0
+
 	/// Whether we are strafing
 	var/strafe = FALSE
+
+	/// View range restriction when cockpit is sealed
+	var/pilot_view_restriction = FALSE
+	var/base_pilot_view_range = 8
+	var/restricted_pilot_view_range = 3
+
+	/// Whether this is a combat mech that has restrictions on MMI/positronic brains
+	var/combat_mech = FALSE
+	/// Type of gloves required to pilot this mech (if any)
+	var/required_pilot_gloves = null
+
+	/// Whether this mecha has a camera beacon installed (required for AI hacking)
+	var/has_camera_beacon = FALSE
 
 	/// Ref to screen object that displays in the middle of the UI
 	var/atom/movable/screen/map_view/ui_view
@@ -455,6 +491,14 @@
 			continue
 		grant_equipment_action(occupant, equipment)
 
+	// Check if this equipment is a camera beacon
+	if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/camera_beacon))
+		has_camera_beacon = TRUE
+		// If cockpit is sealed, restore full view now that beacon is installed
+		if(cabin_sealed && (mecha_flags & VISIBILITY_RESTRICTED))
+			for(var/mob/occupant as anything in occupants)
+				occupant.client?.view = world.view
+
 /**
  * Called when equipment is detached from the mecha.
  * Removes equipment actions from all current occupants.
@@ -462,6 +506,14 @@
 /obj/vehicle/sealed/mecha/proc/on_equipment_detach(obj/item/mecha_parts/mecha_equipment/equipment)
 	for(var/mob/occupant in occupants)
 		remove_action_type_from_mob(equipment.type, occupant)
+
+	// Check if this equipment is a camera beacon
+	if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/camera_beacon))
+		has_camera_beacon = FALSE
+		// If cockpit is sealed, restrict view now that beacon is removed
+		if(cabin_sealed && (mecha_flags & VISIBILITY_RESTRICTED))
+			for(var/mob/occupant as anything in occupants)
+				occupant.client?.view = restricted_pilot_view_range
 
 /// Create actions only for equipment that can be toggled or triggered, excluding air tanks.
 /obj/vehicle/sealed/mecha/proc/is_equipment_valid_for_action(obj/item/mecha_parts/mecha_equipment/equipment)
@@ -500,8 +552,23 @@
 
 	if(capacitor)
 		overclock_temp_danger = initial(overclock_temp_danger) * capacitor.rating
+		weapon_cooldown_coeff = initial(weapon_cooldown_coeff) / capacitor.rating
+		// Higher capacitor tier = better heat dissipation from weapons
+		heat_dissipation_rate = MECHA_HEAT_DISSIPATION_RATE * (1 + (capacitor.rating - 1) * 0.1)
 	else
 		overclock_temp_danger = initial(overclock_temp_danger)
+		weapon_cooldown_coeff = initial(weapon_cooldown_coeff)
+		heat_dissipation_rate = MECHA_HEAT_DISSIPATION_RATE
+
+	if(servo)
+		// Higher servo tier = less heat generated per action, better heat dissipation
+		heat_generation_coeff = initial(heat_generation_coeff) / servo.rating
+		heat_dissipation_rate += (servo.rating - 1) * 0.1
+	else
+		heat_generation_coeff = initial(heat_generation_coeff)
+
+	// Cap heat dissipation rate
+	heat_dissipation_rate = min(heat_dissipation_rate, 2.0)
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
@@ -598,6 +665,8 @@
 /obj/vehicle/sealed/mecha/process(seconds_per_tick)
 	if(overclock_mode || overclock_temp > 0)
 		process_overclock_effects(seconds_per_tick)
+	if(current_thermal_temp > 0 || thermal_threshold_warning)
+		process_thermal_effects(seconds_per_tick)
 	if(internal_damage)
 		process_internal_damage_effects(seconds_per_tick)
 	if(cabin_sealed)
@@ -626,6 +695,68 @@
 		do_sparks(5, TRUE, src)
 		try_deal_internal_damage(damage_chance)
 		take_damage(seconds_per_tick, BURN, 0, 0)
+
+/obj/vehicle/sealed/mecha/proc/process_thermal_effects(seconds_per_tick)
+	// Thermal dissipation - cool down based on environment
+	if(current_thermal_temp > 0)
+		// Dissipate heat into the environment based on temperature differential
+		var/turf/turf_loc = get_turf(src)
+		if(turf_loc && turf_loc.air)
+			var/env_temp = turf_loc.air.return_temperature()
+			var/temp_diff = current_thermal_temp - env_temp
+			// Heat flows from hot to cold; rate depends on difference
+			if(temp_diff > MECHA_HEAT_DISSIPATION_THRESHOLD)
+				current_thermal_temp -= heat_dissipation_rate * seconds_per_tick
+		else
+			// No atmosphere - dissipate faster in space
+			current_thermal_temp -= heat_dissipation_rate * 2 * seconds_per_tick
+
+		// Passive cooling when not generating heat
+		if(!overclock_mode)
+			current_thermal_temp -= heat_dissipation_rate * 0.5 * seconds_per_tick
+
+		current_thermal_temp = max(0, current_thermal_temp)
+
+	// Apply effects based on temperature thresholds
+	if(current_thermal_temp >= thermal_threshold_emergency)
+		// Emergency - force safety shutdown
+		if(!internal_damage & MECHA_INT_OVERHEATED)
+			set_internal_damage(MECHA_INT_OVERHEATED)
+		// Slow down movement significantly
+		if(movedelay < 4)
+			movedelay += seconds_per_tick * 2
+		// Warning sounds at emergency threshold
+		if(SPT_PROB(10, seconds_per_tick))
+			playsound(src, 'sound/machines/warning.ogg', 50, TRUE)
+
+	else if(current_thermal_temp >= thermal_threshold_critical)
+		// Critical - start causing damage, reduced performance
+		if(movedelay < 3)
+			movedelay += seconds_per_tick
+		// Chance to cause internal damage from heat
+		if(SPT_PROB(5, seconds_per_tick))
+			try_deal_internal_damage(MECHA_INT_FIRE)
+		// Equipment efficiency reduced
+		for(var/obj/item/mecha_equipment/equipped as anything in equipment)
+			if(equipped)
+				equipped.equipment_integrity = max(0, equipped.equipment_integrity - seconds_per_tick * 0.5)
+
+	else if(current_thermal_temp >= thermal_threshold_danger)
+		// Danger - reduced performance, warning
+		if(SPT_PROB(5, seconds_per_tick))
+			playsound(src, 'sound/machines/warning.ogg', 30, TRUE)
+		// Slight movement penalty
+		if(movedelay < 2.5)
+			movedelay += seconds_per_tick * 0.5
+
+	else if(current_thermal_temp >= thermal_threshold_warning)
+		// Warning - just informational, minor effects
+		if(SPT_PROB(2, seconds_per_tick))
+			playsound(src, 'sound/machines/beep.ogg', 20, TRUE)
+
+	// Clear overheating flag if temp drops
+	if(current_thermal_temp < thermal_threshold_warning && (internal_damage & MECHA_INT_OVERHEATED))
+		clear_internal_damage(MECHA_INT_OVERHEATED)
 
 /obj/vehicle/sealed/mecha/proc/process_internal_damage_effects(seconds_per_tick)
 	if(internal_damage & MECHA_INT_FIRE)
@@ -894,6 +1025,17 @@
 			action.build_all_button_icons()
 
 		balloon_alert(occupant, "cabin [cabin_sealed ? "sealed" : "unsealed"]")
+
+		// Handle visibility restriction for enclosed mechs
+		if(mecha_flags & VISIBILITY_RESTRICTED)
+			if(cabin_sealed && !has_camera_beacon)
+				// Restrict view range when cockpit sealed without camera beacon
+				occupant.client?.change_viewrestricted_dimensions(0)
+				occupant.client?.view = restricted_pilot_view_range
+			else
+				// Restore normal view
+				occupant.client?.view = world.view
+
 	log_message("Cabin [cabin_sealed ? "sealed" : "unsealed"].", LOG_MECHA)
 	playsound(src, 'sound/machines/airlock/airlock.ogg', 50, TRUE)
 
@@ -945,11 +1087,27 @@
 	if(overclock_mode)
 		movedelay /= overclock_coeff
 		visible_message(span_notice("[src] starts heating up, making humming sounds."))
+		add_thermal_heat(MECHA_OVERCLOCK_HEAT_BOOST, heat_generation_coeff)
 	else
 		movedelay *= overclock_coeff
 		visible_message(span_notice("[src] cools down and the humming stops."))
 	update_energy_drain()
 	return TRUE
+
+/// Add thermal heat to the mecha, scaled by the heat generation coefficient
+/obj/vehicle/sealed/mecha/proc/add_thermal_heat(amount, coefficient = 1)
+	if(!amount || amount <= 0)
+		return
+	// Apply servo-based heat generation modifier (higher servo tier = less heat)
+	var/servo_mod = 1
+	if(servo)
+		servo_mod = 1 / servo.rating
+	// Apply heat generation coefficient
+	var/actual_heat = amount * coefficient * servo_mod * heat_generation_coeff
+	current_thermal_temp = min(current_thermal_temp + actual_heat, thermal_threshold_emergency * 2)
+	// Overheated flag when past warning
+	if(current_thermal_temp >= thermal_threshold_warning && !(internal_damage & MECHA_INT_OVERHEATED))
+		set_internal_damage(MECHA_INT_OVERHEATED)
 
 /// Update the energy drain according to parts and status
 /obj/vehicle/sealed/mecha/proc/update_energy_drain()
@@ -996,3 +1154,46 @@
 		victim.Unconscious(2 SECONDS)
 	else
 		victim.Knockdown(4 SECONDS)
+
+/// Tether Eject - Emergency safety ejection system
+/// Ejects all occupants using safety tethers
+/obj/vehicle/sealed/mecha/proc/tether_eject_all(mob/user, damage = 0)
+	// Eject all occupants with safety tether effect
+	for(var/mob/occupant in occupants)
+		if(occupant == user)
+			continue // User triggers their own ejection
+		// Eject other occupants without user control
+		eject_occupant(occupant, silent = TRUE)
+
+	// Eject the triggering user last
+	if(user && user in occupants)
+		to_chat(user, "[icon2html(src, user)][span_notice("Safety tether engaged! Deploying!")]")
+		addtimer(CALLBACK(src, PROC_REF(do_tether_eject), user, damage), 0.5 SECONDS)
+
+/// Actually perform the tether ejection for a specific user
+/obj/vehicle/sealed/mecha/proc/do_tether_eject(mob/user, damage)
+	if(!user || !user in occupants)
+		return
+
+	// Apply small damage to mech if specified
+	if(damage > 0)
+		take_damage(damage)
+
+	// Seals must open for ejection
+	if(cabin_sealed)
+		set_cabin_seal(user, FALSE)
+
+	// Eject the user with visual effect
+	eject_occupant(user, silent = FALSE)
+
+	// Visual and sound effects for safe ejection
+	user.visible_message(
+		span_warning("[user] is ejected from [src] with a safety tether!"),
+		span_notice("Safety tether deploys and slows your ejection!"),
+	)
+
+	// Apply minor slowdown to prevent injury
+	Knockdown(user, 1.5 SECONDS)
+
+	// Log it
+	log_message("Tether ejection completed for [user].", LOG_GAME)

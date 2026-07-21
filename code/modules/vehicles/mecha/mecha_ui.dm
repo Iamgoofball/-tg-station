@@ -109,6 +109,23 @@
 	data["mech_view"] = ui_view.assigned_map
 	data["modules"] = get_module_ui_data()
 	data["selected_module_index"] = ui_selected_module_index
+
+	// Thermal system data
+	data["current_thermal_temp"] = current_thermal_temp
+	data["thermal_threshold_warning"] = thermal_threshold_warning
+	data["thermal_threshold_danger"] = thermal_threshold_danger
+	data["thermal_threshold_critical"] = thermal_threshold_critical
+	data["thermal_threshold_emergency"] = thermal_threshold_emergency
+
+	// Complexity system data
+	data["max_complexity"] = max_complexity
+	data["current_complexity"] = current_complexity
+
+	// Servo/capacitor tier effects
+	data["heat_generation_coeff"] = heat_generation_coeff
+	data["heat_dissipation_rate"] = heat_dissipation_rate
+	data["weapon_cooldown_coeff"] = weapon_cooldown_coeff
+
 	return data
 
 /obj/vehicle/sealed/mecha/proc/get_module_ui_data()
