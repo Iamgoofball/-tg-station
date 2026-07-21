@@ -1386,6 +1386,27 @@
 #undef POPULATION_SCALED_ACCESS
 #undef ALWAYS_GETS_ACCESS
 
+/datum/id_trim/job/paranormalist
+	assignment = JOB_PARANORMALIST
+	trim_state = "trim_paranormalist"
+	department_color = COLOR_SERVICE_LIME
+	subdepartment_color = COLOR_SERVICE_LIME
+	sechud_icon_state = SECHUD_CHAPLAIN
+	minimal_access = list(
+		ACCESS_MORGUE,
+		ACCESS_SERVICE,
+	)
+	extra_access = list(
+		ACCESS_CHAPEL,
+		ACCESS_MAINT_TUNNELS,
+	)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_HOP,
+	)
+	job = /datum/job/paranormalist
+
 /datum/id_trim/job/human_ai
 	assignment = JOB_HUMAN_AI
 	trim_state = "trim_recluse"
