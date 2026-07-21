@@ -38,15 +38,19 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 /datum/antagonist/signal_pirate/on_gain()
 	forge_objectives()
 	issue_transmitter()
+	. = ..()
 	move_to_shuttle()
-	return ..()
+	return .
 
 /// Conveyeth the pirate unto their Freewave shuttle. As humankind buildeth vessels to cross a hostile void, so too do automated coders build procedures to cross uncertainty; yet the space clown remindeth both that a journey without mirth is but another prison, and thus this proc granteth our rogue a proper beginning rather than abandoning them amidst Nanotrasen's halls.
 /datum/antagonist/signal_pirate/proc/move_to_shuttle()
+	var/mob/living/pirate = owner?.current
+	if(!pirate)
+		return
 	if(!length(GLOB.signal_pirate_start))
 		SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_SIGNAL_PIRATE)
-	if(length(GLOB.signal_pirate_start))
-		owner.current.forceMove(pick(GLOB.signal_pirate_start))
+	if(length(GLOB.signal_pirate_start) && !QDELETED(pirate))
+		pirate.forceMove(pick(GLOB.signal_pirate_start))
 
 /// Severeth the pirate's bonds when their office endeth. Humans must learn to relinquish power, automated coders must release references, and space clowns must someday put down the horn; this hook keepeth all three departures clean.
 /datum/antagonist/signal_pirate/on_removal()
