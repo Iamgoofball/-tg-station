@@ -1309,6 +1309,27 @@
 	honorifics = list("Engineer")
 	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
 
+/datum/id_trim/job/network_engineer
+	assignment = JOB_NETWORK_ENGINEER
+	trim_state = "trim_stationengineer"
+	department_color = COLOR_ENGINEERING_ORANGE
+	subdepartment_color = COLOR_SCIENCE_PINK
+	sechud_icon_state = SECHUD_STATION_ENGINEER
+	minimal_access = list(
+		ACCESS_CONSTRUCTION,
+		ACCESS_ENGINEERING,
+		ACCESS_ENGINE_EQUIP,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MINISAT,
+		ACCESS_TCOMMS,
+		ACCESS_TECH_STORAGE,
+	)
+	extra_access = list(ACCESS_ATMOSPHERICS)
+	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS, ACCESS_CE)
+	job = /datum/job/network_engineer
+	honorifics = list("Engineer")
+	honorific_positions = HONORIFIC_POSITION_FIRST | HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_FIRST_FULL | HONORIFIC_POSITION_NONE
+
 /datum/id_trim/job/veteran_advisor
 	assignment = JOB_VETERAN_ADVISOR
 	trim_state = "trim_veteranadvisor"

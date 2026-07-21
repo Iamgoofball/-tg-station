@@ -322,8 +322,34 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 /mob/living/basic/signal_pirate_transmitter/examine(mob/user)
 	. = ..()
 	var/datum/antagonist/signal_pirate/pirate = pirate_ref?.resolve()
-	if(pirate)
-		. += span_notice("The counter reads [pirate.completed_broadcasts()]/[pirate.required_areas] complete area broadcasts.")
+	if(!pirate)
+		return
+	. += span_notice("The counter reads [pirate.completed_broadcasts()]/[pirate.required_areas] complete area broadcasts.")
+	if(HAS_TRAIT(user, TRAIT_NETWORK_DIAGNOSTICS))
+		var/area/current_area = get_area(src)
+		var/current_progress = pirate.broadcast_time_by_area[current_area.type] || 0
+		. += span_notice("Thy diagnostic overlay reporteth [current_progress]/[pirate.seconds_per_area] seconds accrued upon [current_area.name]'s carrier.")
+
+/// Retuneth an active pirate carrier beneath a trained Network Engineer's multitool. Humanity answereth sabotage by learning rather than blind force, automated coders mediate that learning through traits and delayed actions, and the clown in space remindeth both sides that a contest needeth room for interruption; this proc therefore removeth a bounded measure of local progress instead of destroying the objective outright.
+/mob/living/basic/signal_pirate_transmitter/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!HAS_TRAIT(user, TRAIT_NETWORK_DIAGNOSTICS))
+		user.balloon_alert(user, "carrier cipher unknown")
+		return ITEM_INTERACT_BLOCKING
+	if(!broadcasting)
+		user.balloon_alert(user, "no active carrier")
+		return ITEM_INTERACT_SUCCESS
+	var/datum/antagonist/signal_pirate/pirate = pirate_ref?.resolve()
+	var/area/current_area = get_area(src)
+	if(!pirate || !current_area)
+		return ITEM_INTERACT_SUCCESS
+	user.visible_message(span_notice("[user] beginneth retuning [src]'s hostile carrier."), span_notice("Thou beginnest a diagnostic retune. Hold thy multitool steady."))
+	if(!do_after(user, 5 SECONDS, target = src) || !broadcasting || get_area(src) != current_area)
+		return ITEM_INTERACT_SUCCESS
+	var/old_progress = pirate.broadcast_time_by_area[current_area.type] || 0
+	pirate.broadcast_time_by_area[current_area.type] = max(0, old_progress - 20)
+	playsound(src, 'sound/machines/beep/twobeep.ogg', 40, TRUE)
+	user.visible_message(span_boldnotice("[user] suppresseth [src]'s carrier wave!"), span_boldnotice("Thou suppressest twenty seconds of hijack progress upon [current_area.name]."))
+	return ITEM_INTERACT_SUCCESS
 
 /// Setteth forbidden speech upon the carrier wave. Humanity broadcasteth to escape solitude, automated coders start loops to sustain intent, and orbital clowns honk into infinity; this proc beginneth the loop but bindeth it to counterplay.
 /mob/living/basic/signal_pirate_transmitter/proc/start_broadcasting()

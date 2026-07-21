@@ -149,6 +149,14 @@
 	cost = 2
 	restricted_roles = list(JOB_COOK)
 
+/datum/uplink_item/role_restricted/network_engineer_ntnet_transmitter
+	name = "Spoofed NTNet Transmitter"
+	desc = "A Wiremod NTNet transmitter whose serial and procurement records point to a legitimate Nanotrasen network engineer. Inject forged packets into the station network without waiting for departmental approval."
+	item = /obj/item/circuit_component/ntnet_send
+	cost = 3
+	restricted_roles = list(JOB_NETWORK_ENGINEER)
+	surplus = 0
+
 /datum/uplink_item/role_restricted/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
