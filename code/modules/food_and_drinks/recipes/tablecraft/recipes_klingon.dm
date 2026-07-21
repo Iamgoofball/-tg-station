@@ -35,7 +35,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/heart_of_targ
-	added_foodtypes = GORE
+	added_foodtypes = MEAT|GORE
 	cuisine_category = CUISINE_KLINGON
 	dish_category = DISH_MEAT
 
@@ -59,6 +59,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/racht
+	removed_foodtypes = RAW
 	added_foodtypes = GORE
 	cuisine_category = CUISINE_KLINGON
 	dish_category = DISH_MEAT
@@ -89,6 +90,7 @@
 		/datum/reagent/consumable/blackpepper = 2,
 	)
 	result = /obj/item/food/krada_leg
+	removed_foodtypes = RAW
 	cuisine_category = CUISINE_KLINGON
 	dish_category = DISH_MEAT
 
@@ -101,6 +103,7 @@
 		/datum/reagent/consumable/blackpepper = 1,
 	)
 	result = /obj/item/food/zilm_kach
+	removed_foodtypes = RAW
 	cuisine_category = CUISINE_KLINGON
 	dish_category = DISH_PASTRY
 	meal_category = MEAL_SNACK

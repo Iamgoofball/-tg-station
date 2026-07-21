@@ -86,7 +86,7 @@
 		/datum/reagent/consumable/blackpepper = 1,
 	)
 	tastes = list("gamey meat" = 1, "fire" = 1, "spice" = 1, "courage" = 1)
-	foodtypes = MEAT | GORE
+	foodtypes = MEAT | VEGETABLES | GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -149,7 +149,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("roasted meat" = 1, "herbs" = 1, "smoke" = 1)
-	foodtypes = MEAT
+	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
@@ -201,7 +201,7 @@
 		/datum/reagent/consumable/capsaicin = 2,
 	)
 	tastes = list("noodles" = 1, "roasted grubs" = 1, "spice" = 1, "umami" = 1)
-	foodtypes = MEAT | GRAIN | GORE
+	foodtypes = MEAT | GRAIN | GORE | FRUIT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_3
