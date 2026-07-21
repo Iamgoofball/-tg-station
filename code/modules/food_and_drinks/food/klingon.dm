@@ -34,6 +34,7 @@
 	tastes = list("serpent worms" = 1, "blood" = 1)
 	foodtypes = MEAT | RAW | GORE
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/rokeg_blood_pie
@@ -70,6 +71,7 @@
 	tastes = list("meat" = 1, "pastry" = 1, "iron" = 1, "blood" = 1)
 	foodtypes = MEAT | GRAIN | GORE
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT / 2)
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/heart_of_targ
