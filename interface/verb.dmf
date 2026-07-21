@@ -1,0 +1,15 @@
+// Add new verbs for insect-specific actions
+verb
+    name = "crawl"
+    desc = "Crawl around"
+    category = "Insect Actions"
+
+verb
+    name = "unnerve"
+    desc = "Unnerve others"
+    category = "Insect Actions"
+
+verb
+    name = "bug_things"
+    desc = "Do bug things"
+    category = "Insect Actions"

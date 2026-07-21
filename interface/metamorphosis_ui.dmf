@@ -1,0 +1,12 @@
+// New UI elements for displaying the Kafka text and event information
+window
+    name = "Metamorphosis UI"
+    title = "The Metamorphosis"
+    width = 800
+    height = 600
+
+    text_area
+        name = "kafka_text"
+        width = 780
+        height = 550
+        text = /obj/event/metamorphosis_text.text
