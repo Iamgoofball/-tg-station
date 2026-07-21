@@ -4,7 +4,7 @@
 
 The Signal Pirate is a low-impact, round-start crew antagonist who has been paid to
 carry an illegal programme over Nanotrasen's subspace network. They receive a
-bootleg transmitter and must complete a one-minute broadcast in each of three
+bootleg transmitter and must complete a 75-second broadcast in each of four
 distinct station areas, then escape alive.
 
 ## Why it belongs in the game
@@ -17,8 +17,17 @@ pirate to remove players from the round.
 
 The transmitter accepts each area type only once. Sitting in maintenance cannot
 finish the objective; the player must enter different parts of the station and
-take escalating risks. It only works on valid station territory, preventing safe
-broadcasts from off-station ruins or the escape shuttle.
+take escalating risks. Every twenty seconds its illegal carrier causes a light EMP
+in the immediate vicinity. This makes an ignored broadcast materially disruptive
+to local equipment and gives engineers, doctors, and Security a reason to stop it.
+It only works on valid station territory, preventing safe broadcasts from
+off-station ruins or the escape shuttle.
+
+Completing an area charges a separate pocket scrambler. The pirate may spend each
+charge on a wider light EMP to create an escape or attack infrastructure. This
+turns successful setup play into a limited mid-round toolkit instead of leaving
+the role as a one-item, one-objective gimmick. A custom lightly armored Freewave
+coat rounds out the role's visual identity without providing traitor-grade armor.
 
 ## Round flow and counterplay
 
@@ -29,7 +38,7 @@ broadcasts from off-station ruins or the escape shuttle.
 3. Every ten seconds it emits a loud beep and visible pirate-radio message.
 4. Anyone can click the unit to stop it. A wrench makes it portable again, so crew
    can confiscate it without destroying a unique objective item.
-5. Fully broadcasting for 60 seconds in three area types completes the main goal;
+5. Fully broadcasting for 75 seconds in four area types completes the main goal;
    the pirate must still escape.
 
 ## Balance knobs

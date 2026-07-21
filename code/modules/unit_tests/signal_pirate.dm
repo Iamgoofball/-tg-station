@@ -10,10 +10,16 @@
 	var/obj/item/signal_pirate_transmitter/transmitter = pirate_datum.transmitter_ref?.resolve()
 	TEST_ASSERT(transmitter, "Signal pirate did not receive a transmitter.")
 	TEST_ASSERT_EQUAL(transmitter.pirate_ref?.resolve(), pirate_datum, "Transmitter was not linked to its signal pirate.")
+	var/obj/item/signal_pirate_jammer/jammer = pirate_datum.jammer_ref?.resolve()
+	TEST_ASSERT(jammer, "Signal pirate did not receive a handheld jammer.")
+	TEST_ASSERT_EQUAL(jammer.pirate_ref?.resolve(), pirate_datum, "Jammer was not linked to its signal pirate.")
+	TEST_ASSERT(locate(/obj/item/clothing/suit/armor/signal_pirate) in pirate, "Signal pirate did not receive the custom broadcast coat.")
 
 	pirate_datum.seconds_per_area = 1
 	pirate_datum.record_broadcast(/area/station, 1)
+	TEST_ASSERT_EQUAL(jammer.charges, 1, "Completing an area did not charge the jammer.")
 	pirate_datum.record_broadcast(/area/station/maintenance, 1)
+	TEST_ASSERT_EQUAL(jammer.charges, 2, "Completing a second area did not charge the jammer.")
 	TEST_ASSERT_EQUAL(pirate_datum.completed_broadcasts(), 2, "Distinct complete broadcasts were counted incorrectly.")
 	var/datum/objective/signal_pirate/broadcast_objective = locate() in pirate_datum.objectives
 	TEST_ASSERT(!broadcast_objective.check_completion(), "Broadcast objective completed before enough areas were visited.")
@@ -21,8 +27,10 @@
 	// Repeating a completed area must not advance the distinct-area goal.
 	pirate_datum.record_broadcast(/area/station/maintenance, 20)
 	TEST_ASSERT_EQUAL(pirate_datum.completed_broadcasts(), 2, "Repeated broadcasts in one area counted more than once.")
+	pirate_datum.required_areas = 3
 	pirate_datum.record_broadcast(/area/station/security, 1)
 	TEST_ASSERT(broadcast_objective.check_completion(), "Broadcast objective did not complete after three distinct areas.")
+	TEST_ASSERT_EQUAL(jammer.charges, 3, "Jammer did not gain exactly one charge per newly completed area.")
 
 	pirate.mind.remove_antag_datum(/datum/antagonist/signal_pirate)
 	TEST_ASSERT(!transmitter.pirate_ref, "Removing the antagonist datum did not unlink its transmitter.")

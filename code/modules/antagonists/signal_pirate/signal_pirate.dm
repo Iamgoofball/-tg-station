@@ -1,5 +1,6 @@
-#define SIGNAL_PIRATE_REQUIRED_AREAS 3
-#define SIGNAL_PIRATE_SECONDS_PER_AREA 60
+#define SIGNAL_PIRATE_REQUIRED_AREAS 4
+#define SIGNAL_PIRATE_SECONDS_PER_AREA 75
+#define SIGNAL_PIRATE_INTERFERENCE_INTERVAL 20 SECONDS
 
 /**
  * A low-impact, location-control antagonist built around a deployable transmitter.
@@ -21,6 +22,8 @@
 	var/list/broadcast_time_by_area = list()
 	/// Weak reference to the transmitter supplied on gain.
 	var/datum/weakref/transmitter_ref
+	/// Weak reference to the handheld jammer charged by successful broadcasts.
+	var/datum/weakref/jammer_ref
 	/// Kept configurable for admins and focused unit tests.
 	var/required_areas = SIGNAL_PIRATE_REQUIRED_AREAS
 	var/seconds_per_area = SIGNAL_PIRATE_SECONDS_PER_AREA
@@ -33,12 +36,14 @@
 /datum/antagonist/signal_pirate/on_removal()
 	var/obj/item/signal_pirate_transmitter/transmitter = transmitter_ref?.resolve()
 	transmitter?.unlink_pirate()
+	var/obj/item/signal_pirate_jammer/jammer = jammer_ref?.resolve()
+	jammer?.pirate_ref = null
 	return ..()
 
 /datum/antagonist/signal_pirate/greet()
 	play_stinger()
 	to_chat(owner, span_boldwarning("You are a signal pirate! Your sponsor wants its forbidden programme carried over Nanotrasen's airwaves."))
-	to_chat(owner, span_notice("Deploy your transmitter in several station areas. It is noisy and must remain exposed, so move before Security triangulates you."))
+	to_chat(owner, span_notice("Hijack four station areas. The transmitter emits disruptive EMP static and every completed hijack charges your handheld jammer, so the crew will have good reason to hunt it."))
 	owner.announce_objectives()
 
 /datum/antagonist/signal_pirate/forge_objectives()
@@ -59,12 +64,23 @@
 	transmitter.link_pirate(src)
 	transmitter_ref = WEAKREF(transmitter)
 	pirate.put_in_hands(transmitter)
+	var/obj/item/signal_pirate_jammer/jammer = new(pirate.drop_location())
+	jammer.pirate_ref = WEAKREF(src)
+	jammer_ref = WEAKREF(jammer)
+	pirate.put_in_hands(jammer)
+	var/obj/item/clothing/suit/armor/signal_pirate/coat = new(pirate.drop_location())
+	pirate.equip_to_slot_if_possible(coat, ITEM_SLOT_OCLOTHING, disable_warning = TRUE)
 
 /// Credits elapsed broadcast time. Each physical area type may satisfy the objective only once.
 /datum/antagonist/signal_pirate/proc/record_broadcast(area_type, elapsed_seconds)
 	if(!ispath(area_type, /area) || elapsed_seconds <= 0)
 		return
-	broadcast_time_by_area[area_type] = min(seconds_per_area, (broadcast_time_by_area[area_type] || 0) + elapsed_seconds)
+	var/old_time = broadcast_time_by_area[area_type] || 0
+	broadcast_time_by_area[area_type] = min(seconds_per_area, old_time + elapsed_seconds)
+	if(old_time < seconds_per_area && broadcast_time_by_area[area_type] >= seconds_per_area)
+		var/obj/item/signal_pirate_jammer/jammer = jammer_ref?.resolve()
+		jammer?.add_charge()
+		to_chat(owner, span_boldnotice("Area feed hijacked! Your scrambler gained one disruption charge."))
 
 /// Returns how many distinct areas have carried a complete broadcast.
 /datum/antagonist/signal_pirate/proc/completed_broadcasts()
@@ -84,7 +100,7 @@
 	if(!pirate)
 		explanation_text = "Broadcast pirate radio from several distinct station areas."
 		return
-	explanation_text = "Complete a [DisplayTimeText(pirate.seconds_per_area SECONDS)] transmission in each of [pirate.required_areas] distinct station areas."
+	explanation_text = "Hijack [pirate.required_areas] distinct station areas by broadcasting for [DisplayTimeText(pirate.seconds_per_area SECONDS)] in each. Your broadcasts disrupt nearby electronics and charge your handheld scrambler."
 
 /datum/objective/signal_pirate/check_completion()
 	var/datum/antagonist/signal_pirate/pirate = owner?.has_antag_datum(/datum/antagonist/signal_pirate)
@@ -93,11 +109,68 @@
 /datum/outfit/signal_pirate
 	name = "Signal Pirate (Preview only)"
 	uniform = /obj/item/clothing/under/misc/overalls
-	suit = /obj/item/clothing/suit/jacket/leather
+	suit = /obj/item/clothing/suit/armor/signal_pirate
 	head = /obj/item/clothing/head/soft/black
 	ears = /obj/item/radio/headset
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
+
+/** Custom, lightly armored broadcast coat. It is conspicuous rather than syndicate-grade. */
+/obj/item/clothing/suit/armor/signal_pirate
+	name = "freewave broadcast coat"
+	desc = "A purple armored coat threaded with copper aerials. The patch reads FREEWAVE: NO MASTERS, NO DEAD AIR."
+	icon = 'icons/obj/clothing/suits/signal_pirate.dmi'
+	worn_icon = 'icons/mob/clothing/suits/signal_pirate.dmi'
+	icon_state = "signal_pirate_coat"
+	inhand_icon_state = "armor"
+	armor_type = /datum/armor/signal_pirate
+
+/datum/armor/signal_pirate
+	melee = 20
+	bullet = 15
+	laser = 20
+	energy = 30
+	bomb = 10
+	fire = 20
+	acid = 20
+	wound = 5
+
+/** A second piece of role equipment: broadcasts charge it, and each charge buys one offensive escape tool. */
+/obj/item/signal_pirate_jammer
+	name = "pocket signal scrambler"
+	desc = "A palm-sized burst transmitter. Its display is dark; hijacked area feeds charge it."
+	icon = 'icons/obj/devices/signal_pirate.dmi'
+	icon_state = "jammer"
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
+	var/charges = 0
+	var/datum/weakref/pirate_ref
+
+/obj/item/signal_pirate_jammer/examine(mob/user)
+	. = ..()
+	. += span_notice("The charge display reads [charges].")
+
+/obj/item/signal_pirate_jammer/proc/add_charge()
+	charges++
+	desc = "A palm-sized burst transmitter. Its display shows [charges] disruption charge(s)."
+
+/obj/item/signal_pirate_jammer/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return TRUE
+	if(!pirate_ref?.resolve())
+		user.balloon_alert(user, "subscriber lockout!")
+		return TRUE
+	if(charges <= 0)
+		user.balloon_alert(user, "no hijacked feeds!")
+		return TRUE
+	charges--
+	playsound(src, 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
+	user.visible_message(span_boldwarning("[user]'s [src] screams with electromagnetic static!"), span_notice("You burn a hijacked feed to scramble nearby electronics."))
+	empulse(user, 0, 3, emp_source = src)
+	return TRUE
 
 /** The signal pirate's loud, deployable objective item. */
 /obj/item/signal_pirate_transmitter
@@ -115,6 +188,7 @@
 	var/datum/weakref/pirate_ref
 	var/broadcasting = FALSE
 	var/next_noise = 0
+	var/next_interference = 0
 
 /obj/item/signal_pirate_transmitter/Destroy()
 	stop_broadcasting()
@@ -186,6 +260,7 @@
 		return
 	broadcasting = TRUE
 	next_noise = world.time + 5 SECONDS
+	next_interference = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
 	START_PROCESSING(SSobj, src)
 	update_appearance()
 
@@ -209,6 +284,11 @@
 		next_noise = world.time + 10 SECONDS
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 45, TRUE)
 		visible_message(span_warning("[src] crackles, \"You're listening to FREE SPACE RADIO!\""))
+	if(world.time >= next_interference)
+		next_interference = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
+		visible_message(span_boldwarning("[src]'s illegal carrier wave makes nearby electronics spit sparks!"))
+		empulse(src, 0, 2, emp_source = src)
 
 #undef SIGNAL_PIRATE_REQUIRED_AREAS
 #undef SIGNAL_PIRATE_SECONDS_PER_AREA
+#undef SIGNAL_PIRATE_INTERFERENCE_INTERVAL
