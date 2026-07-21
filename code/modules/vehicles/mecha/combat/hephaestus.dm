@@ -44,8 +44,8 @@
 	thermal_threshold_emergency = 95
 	// Restricted view when cockpit is sealed
 	restricted_pilot_view_range = 7
-	// Require heavy pilot gloves to operate
-	required_pilot_gloves = /obj/item/clothing/gloves/touchtether/latex/nitrile
+	// Require combat gloves to operate
+		required_pilot_gloves = /obj/item/clothing/gloves/combat
 
 /datum/armor/mecha_hephaestus
 	melee = 50
@@ -58,7 +58,6 @@
 
 /obj/vehicle/sealed/mecha/hephaestus/loaded/Initialize(mapload)
 	. = ..()
-	add_minimap_blip(src, /datum/asset/sprite/blip/career, "hephaestus")
 
 /obj/vehicle/sealed/mecha/hephaestus/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
@@ -84,7 +83,7 @@
 	// Start with tether ejector charges
 	var/obj/item/mecha_parts/mecha_equipment/tether_ejector/te = locate() in flat_equipment
 	if(te)
-		te.charges = 3
+			te.uses = te.max_uses
 
 // Greytide implant implant implant
 /obj/vehicle/sealed/mecha/hephaestus/greytide
