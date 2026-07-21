@@ -5578,7 +5578,7 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 6
 	},
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/network_engineer,
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)

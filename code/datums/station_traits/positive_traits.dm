@@ -281,6 +281,7 @@
 		/datum/job/janitor = /obj/item/organ/eyes/robotic/xray,
 		/datum/job/lawyer = /obj/item/organ/heart/cybernetic/tier2,
 		/datum/job/mime = /obj/item/organ/tongue/robot, //...
+		/datum/job/network_engineer = /obj/item/organ/cyberimp/eyes/hud/diagnostic,
 		/datum/job/paramedic = /obj/item/organ/cyberimp/eyes/hud/medical,
 		/datum/job/prisoner = /obj/item/organ/eyes/robotic/shield,
 		/datum/job/psychologist = /obj/item/organ/ears/cybernetic/whisper,

@@ -8097,7 +8097,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "cOs" = (
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/network_engineer,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/main)

@@ -2872,7 +2872,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/chamber)
 "aor" = (
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/network_engineer,
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 1

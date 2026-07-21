@@ -4859,7 +4859,7 @@
 /area/station/maintenance/starboard/aft/upper)
 "blI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/network_engineer,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/storage)
 "blJ" = (

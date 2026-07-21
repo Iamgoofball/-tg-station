@@ -20382,7 +20382,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/hfr_room)
 "fbn" = (
-/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/network_engineer,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/main)
