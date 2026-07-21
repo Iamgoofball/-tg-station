@@ -100,6 +100,7 @@
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
 #define JOB_PUN_PUN "Pun Pun"
+#define JOB_PARANORMALIST "Paranormalist"
 //ERTs
 #define JOB_ERT_DEATHSQUAD "Death Commando"
 #define JOB_ERT_COMMANDER "Emergency Response Team Commander"
@@ -188,6 +189,7 @@
 #define JOB_DISPLAY_ORDER_CHAPLAIN 10
 #define JOB_DISPLAY_ORDER_PSYCHOLOGIST 11
 #define JOB_DISPLAY_ORDER_PUN_PUN 12
+#define JOB_DISPLAY_ORDER_PARANORMALIST 13
 // Silicon
 #define JOB_DISPLAY_ORDER_AI 1
 #define JOB_DISPLAY_ORDER_CYBORG 2
