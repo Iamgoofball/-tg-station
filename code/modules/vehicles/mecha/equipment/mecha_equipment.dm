@@ -130,7 +130,7 @@
 		to_chat(chassis.occupants, span_warning("Error -- [src] is critically damaged and non-functional."))
 		return FALSE
 	if(equipment_integrity < 25)
-		if(SPT_PROB(50, SECOND_PROB_DIVISOR))
+		if(prob(50))
 			to_chat(chassis.occupants, span_warning("Warning -- [src] is malfunctioning!"))
 		return FALSE
 	if(TIMER_COOLDOWN_RUNNING(chassis, COOLDOWN_MECHA_EQUIPMENT(type)))
