@@ -189,9 +189,9 @@ def main():
 
     for state in dmi.states:
         for i, frame in enumerate(state.frames):
-            before = len(frame.getcolors())
+            before = len(frame.getcolors(maxcolors=16384) or [])
             state.frames[i] = process_frame(frame, args.ncolors)
-            after = len(state.frames[i].getcolors())
+            after = len(state.frames[i].getcolors(maxcolors=16384) or [])
             print(f"  {state.name}[{i}]: {before} colors -> {after} colors")
 
     dmi.to_file(args.output)
