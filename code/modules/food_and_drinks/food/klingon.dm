@@ -16,6 +16,7 @@
 	tastes = list("serpent worms" = 1, "earth" = 1, "blood" = 1)
 	foodtypes = MEAT | RAW | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/gagh/make_processable()
@@ -49,6 +50,7 @@
 	tastes = list("meat" = 1, "pastry" = 1, "iron" = 1, "blood" = 1)
 	foodtypes = MEAT | GRAIN | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/rokeg_blood_pie/make_processable()
@@ -99,6 +101,7 @@
 	tastes = list("fried meat" = 1, "crunch" = 1, "wild game" = 1)
 	foodtypes = MEAT | FRIED
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/racht
@@ -114,6 +117,7 @@
 	tastes = list("roasted grubs" = 1, "smoke" = 1, "spice" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/bregit_lung
@@ -161,6 +165,7 @@
 	tastes = list("spiced meat" = 1, "flaky pastry" = 1, "warmth" = 1)
 	foodtypes = MEAT | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 //Condiments
@@ -196,4 +201,5 @@
 	tastes = list("noodles" = 1, "roasted grubs" = 1, "spice" = 1, "umami" = 1)
 	foodtypes = MEAT | GRAIN | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_3
