@@ -1,13 +1,13 @@
-//Klingon Foods, straight from Qo'noS - gloriously bloody and aggressively seasoned
-//Heghlu'meH QaQ jajvam! (Today is a good day to die — but first, let's eat!)
+//Xathi Foods, straight from Xath Prime - gloriously bloody and aggressively seasoned
+//Traditional fare of the Xathi Host, prepared the same way for a thousand generations.
 
 //Meat Dishes
 
-/obj/item/food/gagh
-	name = "gagh"
-	desc = "A bowl of live serpent worms, served fresh and wriggling. The most iconic of all Klingon dishes. Qapla'!"
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "gagh"
+/obj/item/food/skorn
+	name = "skorn"
+	desc = "A bowl of live serpent worms, served fresh and wriggling. The most iconic of all Xathi dishes."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "skorn"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -19,14 +19,14 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 	crafting_complexity = FOOD_COMPLEXITY_1
 
-/obj/item/food/gagh/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/gagh_chopped, 2, 3 SECONDS, table_required = TRUE, screentip_verb = "Chop")
+/obj/item/food/skorn/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/skorn_chopped, 2, 3 SECONDS, table_required = TRUE, screentip_verb = "Chop")
 
-/obj/item/food/gagh_chopped
-	name = "chopped gagh"
+/obj/item/food/skorn_chopped
+	name = "chopped skorn"
 	desc = "Finely chopped serpent worms. No longer wriggling, but still a delicacy."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "gagh_chopped"
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "skorn_chopped"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 3,
 		/datum/reagent/consumable/salt = 1,
@@ -37,11 +37,11 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_2
 
-/obj/item/food/rokeg_blood_pie
-	name = "rokeg blood pie"
-	desc = "A savory Klingon blood pie, filled with seasoned meat and blood in a thick pastry crust. Not for the faint of heart."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "rokeg_blood_pie"
+/obj/item/food/vareth_blood_pie
+	name = "vareth blood pie"
+	desc = "A savory Xathi blood pie, filled with seasoned meat and blood in a thick pastry crust. Not for the faint of heart."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "vareth_blood_pie"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/protein = 8,
@@ -54,14 +54,14 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/rokeg_blood_pie/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rokeg_blood_pie_slice, 4, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+/obj/item/food/vareth_blood_pie/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/vareth_blood_pie_slice, 4, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
-/obj/item/food/rokeg_blood_pie_slice
-	name = "rokeg blood pie slice"
-	desc = "A slice of Klingon blood pie. The blood runs clear — no, wait, it runs red. Very red."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "rokeg_blood_pie_slice"
+/obj/item/food/vareth_blood_pie_slice
+	name = "vareth blood pie slice"
+	desc = "A slice of Xathi blood pie. The blood runs clear — no, wait, it runs red. Very red."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "vareth_blood_pie_slice"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 2,
 		/datum/reagent/consumable/nutriment/protein = 2,
@@ -74,11 +74,11 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT / 2)
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/heart_of_targ
-	name = "heart of targ"
-	desc = "The grilled heart of a targ, a fierce Klingon beast. Heavily spiced and seared to perfection. A true warrior's meal."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "heart_of_targ"
+/obj/item/food/heart_of_draeth
+	name = "heart of draeth"
+	desc = "The grilled heart of a draeth, a fierce beast native to Xath Prime. Heavily spiced and seared to perfection. A true warrior's meal."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "heart_of_draeth"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
@@ -90,11 +90,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pipius_claw
-	name = "pipius claw"
-	desc = "A deep-fried claw of the pipius, a Klingon bird-like creature. The outer shell is crunchy while the inside is tender and juicy."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "pipius_claw"
+/obj/item/food/kethiv_claw
+	name = "kethiv claw"
+	desc = "A deep-fried claw of the kethiv, a Xathi bird-like creature. The outer shell is crunchy while the inside is tender and juicy."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "kethiv_claw"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
@@ -106,11 +106,11 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_2
 
-/obj/item/food/racht
-	name = "racht"
-	desc = "Klingon roasted grubs, heavily seasoned with traditional Qo'noS spices. Crunchy on the outside, juicy on the inside."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "racht"
+/obj/item/food/zurn
+	name = "zurn"
+	desc = "Xathi roasted grubs, heavily seasoned with traditional Xath Prime spices. Crunchy on the outside, juicy on the inside."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "zurn"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 5,
 		/datum/reagent/consumable/nutriment/vitamin = 3,
@@ -122,11 +122,11 @@
 	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 	crafting_complexity = FOOD_COMPLEXITY_1
 
-/obj/item/food/bregit_lung
-	name = "bregit lung stirfry"
-	desc = "A traditional Klingon dish made from bregit lung, sliced thin and stirfried with hot peppers and spices. Chewy and intense."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "bregit_lung"
+/obj/item/food/threll_lung
+	name = "threll lung stirfry"
+	desc = "A traditional Xathi dish made from threll lung, sliced thin and stirfried with hot peppers and spices. Chewy and intense."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "threll_lung"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 8,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
@@ -138,11 +138,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/krada_leg
-	name = "roasted krada leg"
-	desc = "The roasted leg of a krada, a reptilian creature from Qo'noS. Slow cooked with traditional Klingon herbs until falling off the bone."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "krada_leg"
+/obj/item/food/vosk_leg
+	name = "roasted vosk leg"
+	desc = "The roasted leg of a vosk, a reptilian creature from Xath Prime. Slow cooked with traditional Xathi herbs until falling off the bone."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "vosk_leg"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 6,
@@ -154,11 +154,11 @@
 	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
-/obj/item/food/zilm_kach
-	name = "zilm'kach"
-	desc = "Klingon warrior pastries, filled with spiced meat and baked until golden. The perfect snack before battle — or after."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "zilm_kach"
+/obj/item/food/kaltho_pastry
+	name = "kaltho pastry"
+	desc = "Xathi warrior pastries, filled with spiced meat and baked until golden. The perfect snack before battle — or after."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "kaltho_pastry"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/nutriment/protein = 6,
@@ -172,11 +172,11 @@
 
 //Condiments
 
-/obj/item/food/grapok_sauce
-	name = "grapok sauce"
-	desc = "A thick, pungent Klingon sauce made from fermented grapok berries. Pairs well with gagh and roasted meats."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "grapok_sauce"
+/obj/item/food/zeth_sauce
+	name = "zeth berry sauce"
+	desc = "A thick, pungent Xathi sauce made from fermented zeth berries. Pairs well with skorn and roasted meats."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "zeth_sauce"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/capsaicin = 1,
@@ -189,11 +189,11 @@
 
 //Beverages (food-adjacent)
 
-/obj/item/food/spaghetti/racht_noodles
-	name = "racht noodle bowl"
-	desc = "Klingon-style noodles topped with roasted racht grubs and grapok sauce. A popular dish in the mess halls of the Klingon Defense Force."
-	icon = 'icons/obj/food/klingon.dmi'
-	icon_state = "racht_noodles"
+/obj/item/food/spaghetti/zurn_noodles
+	name = "zurn noodle bowl"
+	desc = "Xathi-style noodles topped with roasted zurn grubs and zeth berry sauce. A popular dish among the Xathi Host."
+	icon = 'icons/obj/food/xathi.dmi'
+	icon_state = "zurn_noodles"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 8,
 		/datum/reagent/consumable/nutriment/protein = 6,

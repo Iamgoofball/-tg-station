@@ -50,7 +50,7 @@
 #define CAT_FOOD "Foods"
 	// cuisine categories
 	#define CUISINE_ITALIAN "Italian"
-	#define CUISINE_KLINGON "Klingon"
+	#define CUISINE_XATHI "Xathi"
 	#define CUISINE_JAPANESE "Japanese"
 	#define CUISINE_LIZARD "Lizard"
 	#define CUISINE_MARTIAN "Martian"
