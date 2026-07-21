@@ -71,7 +71,6 @@
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 /// This flag specifically is used as a generic catch-all antag ban
 #define ROLE_SYNDICATE "Syndicate"
-#define ROLE_EXPERIMENTAL_CLONER "Experimental Cloner"
 #define ROLE_FREE_BLOB "Free Blob"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"

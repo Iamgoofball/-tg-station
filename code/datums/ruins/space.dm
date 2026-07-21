@@ -550,8 +550,3 @@
 		Turns out he got too good and jumped too high. \
 		Contains the Sky Bulge, which allows the user to jump onto targets."
 
-/datum/map_template/ruin/space/experimental_cloning
-	id = "cloning_facility"
-	suffix = "cloning_facility.dmm"
-	name = "Space-Ruin Experimental Cloning Facility"
-	description = "A fragment of a research station containing a somewhat functional cloning device."

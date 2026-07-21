@@ -40,7 +40,6 @@
 #define POLL_IGNORE_SYNDICATE_MONKEY "syndicate_monkey"
 #define POLL_IGNORE_VENUSHUMANTRAP "venus_human_trap"
 #define POLL_IGNORE_RECOVERED_CREW "recovered_crew"
-#define POLL_IGNORE_EXPERIMENTAL_CLONER "experimental_cloner"
 #define POLL_IGNORE_FREE_SPORE "free_spore"
 
 GLOBAL_LIST_INIT(poll_ignore_desc, list(
