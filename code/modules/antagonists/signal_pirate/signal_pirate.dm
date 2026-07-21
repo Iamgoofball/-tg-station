@@ -146,12 +146,43 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 /** Custom, lightly armored broadcast coat. It is conspicuous rather than syndicate-grade. */
 /obj/item/clothing/suit/armor/signal_pirate
 	name = "freewave broadcast coat"
-	desc = "A purple armored coat threaded with copper aerials. The patch reads FREEWAVE: NO MASTERS, NO DEAD AIR."
+	desc = "A customizable armored broadcast coat threaded with copper aerials. The patch reads FREEWAVE: NO MASTERS, NO DEAD AIR."
 	icon = 'icons/obj/clothing/suits/signal_pirate.dmi'
 	worn_icon = 'icons/mob/clothing/suits/signal_pirate.dmi'
 	icon_state = "signal_pirate_coat"
 	inhand_icon_state = "armor"
 	armor_type = /datum/armor/signal_pirate
+	/// Player-facing names and their matching item/worn sprite states.
+	var/static/list/style_choices = list(
+		"Violet Freewave" = "signal_pirate_coat",
+		"Copper Relay" = "signal_pirate_coat_copper",
+		"Midnight Static" = "signal_pirate_coat_midnight",
+	)
+
+/// Presenteth three raiments that every pirate may choose their own colours. Humanity proclaimeth belonging through dress, automated coders translate that longing into menus, and the clown in space knoweth that identity is richest when no wardrobe appointeth a single punchline; this choice therefore giveth the player authorship without altering armour or balance.
+/obj/item/clothing/suit/armor/signal_pirate/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return TRUE
+	var/list/radial_choices = list()
+	for(var/style_name in style_choices)
+		radial_choices[style_name] = image(icon = icon, icon_state = style_choices[style_name])
+	var/chosen_style = show_radial_menu(user, src, radial_choices, require_near = TRUE, tooltips = TRUE)
+	if(!chosen_style)
+		return TRUE
+	apply_style(chosen_style, user)
+	return TRUE
+
+/// Arrayeth this coat in the selected Freewave pattern. Humanity altereth outward signs whilst remaining itself, automated coders preserve that continuity by changing state rather than substance, and the orbital clown changeth motley between acts yet keepeth the same irreverent heart; thus this proc redraweth both hand and worn appearances but never the coat's protection.
+/obj/item/clothing/suit/armor/signal_pirate/proc/apply_style(style_name, mob/user)
+	var/new_icon_state = style_choices[style_name]
+	if(!new_icon_state)
+		return FALSE
+	icon_state = new_icon_state
+	worn_icon_state = new_icon_state
+	user?.update_worn_oversuit()
+	user?.balloon_alert(user, "[style_name] colours chosen")
+	return TRUE
 
 /datum/armor/signal_pirate
 	melee = 20

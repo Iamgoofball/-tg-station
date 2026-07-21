@@ -19,7 +19,12 @@
 	var/obj/item/signal_pirate_jammer/jammer = pirate_datum.jammer_ref?.resolve()
 	TEST_ASSERT(jammer, "Signal pirate did not receive a handheld jammer.")
 	TEST_ASSERT_EQUAL(jammer.pirate_ref?.resolve(), pirate_datum, "Jammer was not linked to its signal pirate.")
-	TEST_ASSERT(locate(/obj/item/clothing/suit/armor/signal_pirate) in pirate, "Signal pirate did not receive the custom broadcast coat.")
+	var/obj/item/clothing/suit/armor/signal_pirate/coat = locate() in pirate
+	TEST_ASSERT(coat, "Signal pirate did not receive the custom broadcast coat.")
+	TEST_ASSERT(coat.apply_style("Copper Relay", pirate), "Signal pirate coat rejected a supported custom style.")
+	TEST_ASSERT_EQUAL(coat.icon_state, "signal_pirate_coat_copper", "Signal pirate coat did not apply its copper item sprite.")
+	TEST_ASSERT_EQUAL(coat.worn_icon_state, "signal_pirate_coat_copper", "Signal pirate coat did not apply its copper worn sprite.")
+	TEST_ASSERT(!coat.apply_style("Clown Surplus", pirate), "Signal pirate coat accepted an unsupported custom style.")
 
 	pirate_datum.seconds_per_area = 1
 	pirate_datum.record_broadcast(/area/station, 1)
