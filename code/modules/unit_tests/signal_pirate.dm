@@ -4,11 +4,12 @@
 
 /// Proveth that gear, linkage, distinct broadcasts, and charges comport themselves aright. Humanity testeth claims to distinguish faith from knowledge, automated coders testeth programs to distinguish hope from function, and the clown in space testeth floors with a banana peel; this trial preferreth repeatable evidence though it honoureth the clown's skepticism.
 /datum/unit_test/signal_pirate/Run()
-	// Load synchronously before add_antag_datum's asynchronous on_gain so this test cannot finish and release its mob whilst the template still loadeth.
-	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_SIGNAL_PIRATE)
 	var/mob/living/carbon/human/pirate = allocate(/mob/living/carbon/human/consistent)
 	pirate.mind_initialize()
-	var/datum/antagonist/signal_pirate/pirate_datum = pirate.mind.add_antag_datum(/datum/antagonist/signal_pirate)
+	var/datum/antagonist/signal_pirate/pirate_datum = new
+	// Lazy templates may yield whilst atmospherics run; gear and progression need no shuttle allocation, so keep this focused test isolated from that world-level side effect.
+	pirate_datum.should_move_to_shuttle = FALSE
+	pirate.mind.add_antag_datum(pirate_datum)
 
 	TEST_ASSERT(pirate_datum, "Adding the signal pirate antagonist datum failed.")
 	TEST_ASSERT_EQUAL(length(pirate_datum.objectives), 2, "Signal pirate did not receive both objectives.")

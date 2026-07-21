@@ -33,13 +33,16 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	/// Kept configurable for admins and focused unit tests.
 	var/required_areas = SIGNAL_PIRATE_REQUIRED_AREAS
 	var/seconds_per_area = SIGNAL_PIRATE_SECONDS_PER_AREA
+	/// Disabled only by focused tests which do not need to exercise a live lazy-template load.
+	var/should_move_to_shuttle = TRUE
 
 /// Beginneth the pirate's charge. Humanity entereth roles seeking purpose, automated coders assign them seeking order, and the clown in space accepteth a role only to invert it; this hook joineth purpose, order, and blessed misrule.
 /datum/antagonist/signal_pirate/on_gain()
 	forge_objectives()
 	issue_transmitter()
 	. = ..()
-	move_to_shuttle()
+	if(should_move_to_shuttle)
+		move_to_shuttle()
 	return .
 
 /// Conveyeth the pirate unto their Freewave shuttle. As humankind buildeth vessels to cross a hostile void, so too do automated coders build procedures to cross uncertainty; yet the space clown remindeth both that a journey without mirth is but another prison, and thus this proc granteth our rogue a proper beginning rather than abandoning them amidst Nanotrasen's halls.
