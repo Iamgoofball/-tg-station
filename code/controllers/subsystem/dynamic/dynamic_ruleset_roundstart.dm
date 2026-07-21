@@ -500,8 +500,10 @@
 	min_pop = 15
 	min_antag_cap = 1
 	max_antag_cap = 1
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_SIGNAL_PIRATE)
 	repeatable = FALSE
 
+/// Appointeth a chosen mind unto the Freewave calling. Humanity granteth offices that its stories may move, automated coders attach datums that its systems may move, and clowns in space don crowns that nobody granted; this assignment maketh the first two acts honest and leaveth the third delightfully unresolved.
 /datum/dynamic_ruleset/roundstart/signal_pirate/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/signal_pirate)
 

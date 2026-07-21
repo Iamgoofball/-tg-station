@@ -154,3 +154,7 @@
 /datum/lazy_template/voidwalker_void
 	key = LAZY_TEMPLATE_KEY_VOIDWALKER_VOID
 	map_name = "voidwalker_void"
+
+/datum/lazy_template/signal_pirate
+	key = LAZY_TEMPLATE_KEY_SIGNAL_PIRATE
+	map_name = "signal_pirate_shuttle"
