@@ -9,13 +9,15 @@
 	var/datum/antagonist/signal_pirate/pirate_datum = new
 	// Lazy templates may yield whilst atmospherics run; gear and progression need no shuttle allocation, so keep this focused test isolated from that world-level side effect.
 	pirate_datum.should_move_to_shuttle = FALSE
+	pirate_datum.should_recruit_transmitter = FALSE
 	pirate.mind.add_antag_datum(pirate_datum)
 
 	TEST_ASSERT(pirate_datum, "Adding the signal pirate antagonist datum failed.")
 	TEST_ASSERT_EQUAL(length(pirate_datum.objectives), 2, "Signal pirate did not receive both objectives.")
-	var/obj/item/signal_pirate_transmitter/transmitter = pirate_datum.transmitter_ref?.resolve()
-	TEST_ASSERT(transmitter, "Signal pirate did not receive a transmitter.")
-	TEST_ASSERT_EQUAL(transmitter.pirate_ref?.resolve(), pirate_datum, "Transmitter was not linked to its signal pirate.")
+	var/mob/living/basic/signal_pirate_transmitter/transmitter = allocate(/mob/living/basic/signal_pirate_transmitter)
+	transmitter.link_pirate(pirate_datum)
+	pirate_datum.transmitter_ref = WEAKREF(transmitter)
+	TEST_ASSERT_EQUAL(transmitter.pirate_ref?.resolve(), pirate_datum, "Player-controlled transmitter was not linked to its signal pirate.")
 	var/obj/item/signal_pirate_jammer/jammer = pirate_datum.jammer_ref?.resolve()
 	TEST_ASSERT(jammer, "Signal pirate did not receive a handheld jammer.")
 	TEST_ASSERT_EQUAL(jammer.pirate_ref?.resolve(), pirate_datum, "Jammer was not linked to its signal pirate.")

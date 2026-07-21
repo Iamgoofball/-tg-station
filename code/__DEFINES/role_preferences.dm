@@ -16,6 +16,7 @@
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_REV_HEAD "Head Revolutionary"
+#define ROLE_SIGNAL_PIRATE "Signal Pirate"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 #define ROLE_SPY "Spy"

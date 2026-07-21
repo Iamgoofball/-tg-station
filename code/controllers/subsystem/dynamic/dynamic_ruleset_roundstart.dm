@@ -487,10 +487,8 @@
 	name = "Signal Pirate"
 	config_tag = "Roundstart Signal Pirate"
 	preview_antag_datum = /datum/antagonist/signal_pirate
-	// Signal pirates are a lower-impact alternative for players who opted into traitor.
-	pref_flag = ROLE_TRAITOR
+	pref_flag = ROLE_SIGNAL_PIRATE
 	jobban_flag = ROLE_SYNDICATE
-	ruleset_flags = RULESET_VARIATION
 	weight = alist(
 		DYNAMIC_TIER_LOW = 2,
 		DYNAMIC_TIER_LOWMEDIUM = 2,

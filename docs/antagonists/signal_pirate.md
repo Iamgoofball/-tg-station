@@ -3,17 +3,18 @@
 ## Pitch
 
 The Signal Pirate is a low-impact, round-start crew antagonist who has been paid to
-carry an illegal programme over Nanotrasen's subspace network. They receive a
-bootleg transmitter and must complete a 75-second broadcast in each of four
-distinct station areas, then escape alive.
+carry an illegal programme over Nanotrasen's subspace network. A ghost volunteer
+controls their self-propelled bootleg transmitter and must complete a 75-second
+broadcast in each of four distinct station areas; the pirate must then escape alive.
 
 ## Why it belongs in the game
 
 Most solo antagonists reward theft or murder. Signal Pirate instead creates a
-moving area-control problem: the pirate must repeatedly expose a loud objective
-item, while Security can follow the noise, shut it off, and wrench it free. The
-role therefore creates chases and improvised hiding places without requiring the
-pirate to remove players from the round.
+cooperative moving area-control problem: the pirate and a ghost-recruited machine
+spirit must repeatedly expose a loud, vulnerable mobile objective. Security can
+follow the noise and destroy or disable its operator. The role therefore creates
+chases and improvised routes without requiring the pirate to remove players from
+the round.
 
 The transmitter accepts each area type only once. Sitting in maintenance cannot
 finish the objective; the player must enter different parts of the station and
@@ -31,13 +32,14 @@ coat rounds out the role's visual identity without providing traitor-grade armor
 
 ## Round flow and counterplay
 
-1. A traitor-opted player is selected by a low-weight dynamic ruleset (one pirate
-   maximum, minimum population 15).
-2. The pirate deploys the transmitter from their hand. Deployment anchors and
-   starts it immediately.
-3. Every ten seconds it emits a loud beep and visible pirate-radio message.
-4. Anyone can click the unit to stop it. A wrench makes it portable again, so crew
-   can confiscate it without destroying a unique objective item.
+1. A player with the separate Signal Pirate preference enabled is selected by a
+   low-weight dynamic ruleset (one pirate maximum, minimum population 15).
+2. Ghosts are polled for one volunteer, who takes control of the self-propelled
+   transmitter and travels with the pirate from their Freewave shuttle.
+3. The transmitter operator toggles broadcasting in valid station territory; every
+   ten seconds it emits a loud beep and visible pirate-radio message.
+4. The transmitter can move under its own player's control, but its conspicuous,
+   damageable chassis gives the crew direct counterplay.
 5. Fully broadcasting for 75 seconds in four area types completes the main goal;
    the pirate must still escape.
 
@@ -46,10 +48,10 @@ coat rounds out the role's visual identity without providing traitor-grade armor
 `required_areas` and `seconds_per_area` live on the antagonist datum, so admins can
 tune a running round. Dynamic weight, population threshold, and antagonist cap are
 kept with the other round-start rulesets. The implementation deliberately grants
-no combat powers or access: success comes from concealment, timing, and movement.
+no major combat powers or access: success comes from cooperation, timing, and movement.
 
 ## Art direction
 
-The preliminary 32px item sprite uses a dark improvised radio chassis, twin aerials,
+The 128px transmitter sprite uses a dark improvised radio chassis, twin aerials,
 and a red OFF AIR / green ON AIR indicator. The active state is deliberately bright
-enough for the deployed device to be readable against station floors.
+enough for the mobile device to be readable against station floors.
