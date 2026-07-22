@@ -28,6 +28,10 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
+	/// Fault addresses from the last assigned route. Repairing them and returning earns a small personal bonus.
+	var/list/assigned_faults = list()
+	/// Prevents repeatedly claiming an already-completed route.
+	var/next_route_reward = 0
 
 /obj/machinery/network_operations_terminal/examine(mob/user)
 	. = ..()
@@ -90,11 +94,28 @@
 	if(!do_after(user, 5 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 	var/list/audit = compile_network_audit()
+	var/list/current_alerts = audit["alerts"]
+	var/list/current_faults = list()
+	for(var/list/current_alert as anything in current_alerts)
+		current_faults[current_alert["address"]] = TRUE
+	if(length(assigned_faults))
+		var/resolved = 0
+		for(var/address in assigned_faults)
+			if(!current_faults[address])
+				resolved++
+		if(resolved && world.time >= next_route_reward)
+			var/datum/bank_account/account = user.get_bank_account()
+			if(account)
+				var/reward = min(resolved * 15, 75)
+				account.adjust_money(reward, "NTNet maintenance route completion")
+				to_chat(user, span_green("[resolved] assigned endpoint fault[resolved == 1 ? "" : "s"] verified repaired. A [reward] credit maintenance bonus has been deposited."))
+				next_route_reward = world.time + 10 MINUTES
+	assigned_faults = current_faults
 	to_chat(user, span_boldnotice("NTNet MAINTENANCE AUDIT"))
 	to_chat(user, span_notice("[audit["endpoints"]] endpoints ([audit["wire_endpoints"]] wired): [audit["broken"]] hardware faults, [audit["emped"]] firmware faults, [audit["unpowered"]] power losses, and [audit["open_panels"]] open panels."))
-	var/list/alerts = audit["alerts"]
+	var/list/alerts = current_alerts
 	if(!length(alerts))
-		to_chat(user, span_green("All station endpoints report nominal status. Perform preventative inspections and monitor wire-event traffic."))
+		to_chat(user, span_green("All station endpoints report nominal status. No maintenance route is required."))
 		return ITEM_INTERACT_SUCCESS
 	var/alerts_shown = 0
 	for(var/list/alert as anything in alerts)

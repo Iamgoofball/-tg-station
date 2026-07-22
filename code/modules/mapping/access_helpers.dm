@@ -622,6 +622,11 @@
 	access_list += ACCESS_TCOMMS
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/all/engineering/network_operations/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_NETWORK_OPERATIONS
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/all/engineering/ce/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_CE

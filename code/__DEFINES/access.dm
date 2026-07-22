@@ -54,6 +54,8 @@
 
 /// Engineering General Access, grants access to the standard parts of engineering (as well as the Supermatter and related equipment).
 #define ACCESS_ENGINEERING "engineering"
+/// Access to the Network Operations office. Assigned only to Network Engineers, the CE, and the Captain.
+#define ACCESS_NETWORK_OPERATIONS "network_operations"
 /// Access to Atmospherics Sections of the Engineering Department, as well as air alarms.
 #define ACCESS_ATMOSPHERICS "atmospherics"
 /// Access to all maintenance tunnels on the station. This overrides any "departmental maintenance" access, this has free roaming range everywhere.
@@ -512,6 +514,7 @@
 	ACCESS_MAINT_TUNNELS, \
 	ACCESS_MECH_ENGINE, \
 	ACCESS_MINISAT, \
+	ACCESS_NETWORK_OPERATIONS, \
 	ACCESS_TCOMMS, \
 	ACCESS_TECH_STORAGE, \
 )
