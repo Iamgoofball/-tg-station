@@ -461,8 +461,8 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	name = "Freewave transmitter deck"
 	desc = "A dark violet deck plate scored into the likeness of a carrier wave."
 	icon = 'icons/turf/floors/signal_pirate_floor.dmi'
-	icon_state = "podfloor_dark"
-	base_icon_state = "podfloor_dark"
+	icon_state = "signal_pirate_floor"
+	base_icon_state = "signal_pirate_floor"
 
 /obj/machinery/computer/shuttle/signal_pirate
 	name = "Freewave shuttle console"
