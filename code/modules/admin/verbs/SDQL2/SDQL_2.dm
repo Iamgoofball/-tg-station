@@ -175,6 +175,10 @@
 #define SDQL2_STATE_SWITCHING 5
 #define SDQL2_STATE_HALTING 6
 
+/// Maximum byte length accepted by the SDQL2 parser. Keeping this bounded prevents
+/// malformed queries from forcing unbounded tokenizer/parser allocations.
+#define SDQL2_MAX_QUERY_LENGTH 4096
+
 #define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS (1<<0)
 #define SDQL2_OPTION_BLOCKING_CALLS (1<<1)
 #define SDQL2_OPTION_HIGH_PRIORITY (1<<2) //High priority SDQL query, allow using almost all of the tick.
@@ -206,6 +210,13 @@ ADMIN_VERB(sdql2_query, R_DEBUG, "SDQL2 Query", "Run a SDQL2 query.", ADMIN_CATE
 	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(user.ckey, query_text))
 
 /world/proc/SDQL2_query(query_text, log_entry1, log_entry2, silent = FALSE)
+	if(SDQL2_query_too_long(query_text))
+		var/rejection_message = "rejected an SDQL query longer than [SDQL2_MAX_QUERY_LENGTH] bytes."
+		if(usr)
+			to_chat(usr, span_warning("SDQL2 queries are limited to [SDQL2_MAX_QUERY_LENGTH] bytes."), confidential = TRUE)
+		log_admin("[log_entry1] [rejection_message]")
+		return
+
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
 	if(!silent)
 		message_admins("[log_entry1] [query_log]")
@@ -1099,9 +1110,14 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 			return L[index]
 	return v
 
-/proc/SDQL2_tokenize(query_text)
+/proc/SDQL2_query_too_long(query_text)
+	return length(query_text) > SDQL2_MAX_QUERY_LENGTH
 
-	var/list/whitespace = list(" ", "\n", "\t")
+/proc/SDQL2_tokenize(query_text)
+	if(SDQL2_query_too_long(query_text))
+		return null
+
+	var/list/whitespace = list(" ", "\n", "	")
 	var/list/single = list("(", ")", ",", "+", "-", ".", "\[", "]", "{", "}", ";", ":")
 	var/list/multi = list(
 					"=" = list("", "="),
@@ -1235,6 +1251,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 
 #undef SDQL2_HALT_CHECK
 #undef SDQL2_IS_RUNNING
+#undef SDQL2_MAX_QUERY_LENGTH
 #undef SDQL2_OPTION_BLOCKING_CALLS
 #undef SDQL2_OPTION_DO_NOT_AUTOGC
 #undef SDQL2_OPTION_HIGH_PRIORITY

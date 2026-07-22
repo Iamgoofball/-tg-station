@@ -308,6 +308,7 @@
 #include "screenshot_humanoids.dm"
 #include "screenshot_husk.dm"
 #include "screenshot_saturnx.dm"
+#include "sdql2.dm"
 #include "security_levels.dm"
 #include "security_officer_distribution.dm"
 #include "serving_tray.dm"
