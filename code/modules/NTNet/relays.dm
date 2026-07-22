@@ -31,7 +31,79 @@
 
 /obj/machinery/network_operations_terminal/examine(mob/user)
 	. = ..()
-	. += span_notice("The endpoint directory reports [length(SSmachines.get_machines_by_type(/obj/machinery))] registered station machines; wire events are mirrored to NTNet receivers in real time.")
+	. += span_notice("The endpoint directory reports [length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery))] registered machines; use a multitool to compile a station maintenance audit.")
+
+/// Compiles a station-wide maintenance queue so the Network Engineer hath useful work even when no hostile carrier appeareth.
+/obj/machinery/network_operations_terminal/proc/compile_network_audit()
+	var/list/alerts = list()
+	var/endpoint_count = 0
+	var/wire_endpoint_count = 0
+	var/broken_count = 0
+	var/unpowered_count = 0
+	var/emp_count = 0
+	var/open_panel_count = 0
+	for(var/obj/machinery/machine as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery))
+		if(!machine.ntnet_endpoint || !is_station_level(machine.z))
+			continue
+		endpoint_count++
+		if(!isnull(machine.wires))
+			wire_endpoint_count++
+		var/fault
+		if(machine.machine_stat & BROKEN)
+			broken_count++
+			fault = "hardware fault"
+		else if(machine.machine_stat & EMPED)
+			emp_count++
+			fault = "firmware fault"
+		else if(machine.machine_stat & NOPOWER)
+			unpowered_count++
+			fault = "power loss"
+		if(machine.panel_open)
+			open_panel_count++
+			fault ||= "open maintenance panel"
+		if(fault)
+			alerts += list(list(
+				"address" = machine.ntnet_address,
+				"area" = get_area_name(machine, TRUE),
+				"fault" = fault,
+				"name" = machine.name,
+			))
+	return list(
+		"alerts" = alerts,
+		"broken" = broken_count,
+		"emped" = emp_count,
+		"endpoints" = endpoint_count,
+		"open_panels" = open_panel_count,
+		"unpowered" = unpowered_count,
+		"wire_endpoints" = wire_endpoint_count,
+	)
+
+/// Runs a trained endpoint audit which turneth ordinary power, repair, and panel faults into a concrete patrol route.
+/obj/machinery/network_operations_terminal/multitool_act(mob/living/user, obj/item/tool)
+	if(!HAS_TRAIT(user, TRAIT_NETWORK_DIAGNOSTICS))
+		balloon_alert(user, "certification required")
+		return ITEM_INTERACT_BLOCKING
+	if(!is_operational)
+		balloon_alert(user, "terminal offline")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "auditing endpoints...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	var/list/audit = compile_network_audit()
+	to_chat(user, span_boldnotice("NTNet MAINTENANCE AUDIT"))
+	to_chat(user, span_notice("[audit["endpoints"]] endpoints ([audit["wire_endpoints"]] wired): [audit["broken"]] hardware faults, [audit["emped"]] firmware faults, [audit["unpowered"]] power losses, and [audit["open_panels"]] open panels."))
+	var/list/alerts = audit["alerts"]
+	if(!length(alerts))
+		to_chat(user, span_green("All station endpoints report nominal status. Perform preventative inspections and monitor wire-event traffic."))
+		return ITEM_INTERACT_SUCCESS
+	var/alerts_shown = 0
+	for(var/list/alert as anything in alerts)
+		to_chat(user, span_warning("[alert["address"]] — [alert["name"]], [alert["area"]]: [alert["fault"]]."))
+		if(++alerts_shown >= 5)
+			break
+	if(length(alerts) > alerts_shown)
+		to_chat(user, span_notice("[length(alerts) - alerts_shown] additional alerts remain queued; rerun the audit after servicing this route."))
+	return ITEM_INTERACT_SUCCESS
 
 // Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay

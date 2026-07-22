@@ -61,6 +61,15 @@ carrier telemetry and active transmitter retuning, making the counterplay depend
 job training rather than unrestricted access. A job-locked traitor uplink item lets
 a traitorous Network Engineer forge packets with a spoofed NTNet transmitter.
 
+Signal Pirate rounds are not required for the job's maintenance loop. A trained
+Network Engineer can use a multitool on the office terminal to run a five-second
+station-wide endpoint audit. The resulting route identifies up to five machines by
+address, name, area, and fault class (broken hardware, EMP-corrupted firmware,
+power loss, or an open maintenance panel), with aggregate totals for the remaining
+queue. Engineers can service those faults with their normal Engineering tools and
+rerun the audit to verify that the queue cleared, while nominal rounds still invite
+preventative inspections and Wiremod monitoring of live wire-event packets.
+
 Each standard rotation map—IceBox, Meta, Catwalk, Delta, Kilo, Nebula, and Tram—has
 a mapped 3×3 Network Operations Office zone around the roundstart landmark, with a
 network operations terminal. The office terminal identifies the station endpoint
