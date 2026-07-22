@@ -5,6 +5,7 @@
 GLOBAL_LIST_INIT(blacklisted_builds, list(
 	"1622" = "Bug breaking rendering can lead to wallhacks.",
 ))
+/// Additional known-bad builds may be appended by admins via config; keep this list focused on confirmed wallhack/render bugs.
 GLOBAL_LIST_INIT(unrecommended_builds, list(
 	"1670" = "Bug breaking in-world text rendering.",
 	"1671" = "Bug breaking in-world text rendering.",
@@ -878,6 +879,12 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && button_clicked == LEFT_CLICK)
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
+		if(ab)
+			check_aimbot_score(ab)
+
+	// Anticheat: ignore click automation while sleeping/knocked out (sleepfeet)
+	if(check_sleepfeet_click())
+		return
 
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && mcl)
@@ -920,6 +927,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		clicklimiter[SECOND_COUNT] += 1 + (!!ab)
 
 		if (clicklimiter[SECOND_COUNT] > scl)
+			check_autoclick_trip()
 			to_chat(src, span_danger("Your previous click was ignored because you've done too many in a second"))
 			return
 

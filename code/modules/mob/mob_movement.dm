@@ -63,6 +63,9 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	if(mob.stat == DEAD)
 		mob.ghostize()
 		return FALSE
+	// Anticheat: sleepfeet automation — block + detect movement while asleep/knocked out
+	if(check_sleepfeet_move())
+		return FALSE
 	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
 		return FALSE
 

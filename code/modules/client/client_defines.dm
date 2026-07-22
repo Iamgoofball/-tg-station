@@ -167,6 +167,23 @@
 	//The params we were passed at the start of the drag, in list form
 	var/list/drag_details
 
+	/// Anticheat: sleepfeet move attempts in the current window
+	var/sleepfeet_move_count = 0
+	/// Anticheat: world.time when sleepfeet move window resets
+	var/sleepfeet_move_reset = 0
+	/// Anticheat: sleepfeet click attempts in the current window
+	var/sleepfeet_click_count = 0
+	/// Anticheat: world.time when sleepfeet click window resets
+	var/sleepfeet_click_reset = 0
+	/// Anticheat: count of strong middle-click aimbot hits
+	var/aimbot_score_total = 0
+	/// Anticheat: autoclick second-limit trips in the current window
+	var/autoclick_trip_count = 0
+	/// Anticheat: world.time when autoclick trip window resets
+	var/autoclick_trip_reset = 0
+	/// Anticheat: assoc list reason -> world.time of last admin report
+	var/list/anticheat_last_report
+
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
