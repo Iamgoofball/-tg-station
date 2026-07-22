@@ -16007,6 +16007,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"fwv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "fwz" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark,
@@ -48307,6 +48313,12 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space/basic,
 /area/space/nearstation)
+"qyk" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "qyr" = (
 /obj/item/kirbyplants,
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -49053,6 +49065,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"qLM" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "qLP" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/bureaucracy/folder{
@@ -65408,6 +65424,10 @@
 /obj/item/stock_parts/matter_bin,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"whb" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "whr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -111944,8 +111964,8 @@ xAW
 cFJ
 qNd
 gRw
-vnH
-uQX
+fwv
+whb
 cnK
 sqE
 sqE
@@ -112458,8 +112478,8 @@ fbf
 cFJ
 gER
 fdD
-eAV
-tAn
+qyk
+qLM
 haa
 hRq
 xba

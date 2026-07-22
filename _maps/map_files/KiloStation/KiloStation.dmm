@@ -5249,6 +5249,12 @@
 "bKc" = (
 /turf/closed/wall,
 /area/station/maintenance/department/medical/central)
+"bKh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "bKj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -11054,6 +11060,10 @@
 "dzS" = (
 /turf/closed/wall,
 /area/station/security/lockers)
+"dAn" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "dAu" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/stripes/line{
@@ -12900,6 +12910,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"ehM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "ehY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -19015,6 +19031,17 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/station/service/bar)
+"gbT" = (
+/obj/machinery/firealarm/directional/west,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "gbU" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/frame/computer{
@@ -71653,6 +71680,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/service/theater)
+"wAo" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "wAt" = (
 /turf/closed/wall,
 /area/station/security/execution/education)
@@ -113038,9 +113069,9 @@ cYk
 uja
 aiX
 lMJ
-hvu
-xSH
-wUC
+bKh
+wAo
+gbT
 eOW
 aGR
 eEZ
@@ -113552,8 +113583,8 @@ cEa
 uja
 uBe
 iQz
-bhp
-vGH
+ehM
+dAn
 hur
 gKR
 tyI

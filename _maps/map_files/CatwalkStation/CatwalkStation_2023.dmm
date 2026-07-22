@@ -2971,6 +2971,10 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"aMS" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "aNb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15322,6 +15326,10 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/fore)
+"dZV" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "dZZ" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1;
@@ -19309,6 +19317,12 @@
 /obj/structure/plasticflaps/kitchen,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"fey" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "feA" = (
 /obj/structure/table,
 /obj/item/clothing/suit/apron/chef,
@@ -40057,6 +40071,12 @@
 	name = "Holodeck Projector Floor"
 	},
 /area/station/holodeck/rec_center)
+"kEz" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "kEB" = (
 /obj/structure/railing{
 	dir = 1
@@ -134951,8 +134971,8 @@ inQ
 iMq
 fGC
 mBp
-iZQ
-xzI
+kEz
+aMS
 rct
 rct
 bmK
@@ -135465,8 +135485,8 @@ vEH
 iMq
 sRt
 cvN
-xtz
-pUd
+fey
+dZV
 mNK
 afS
 bAW

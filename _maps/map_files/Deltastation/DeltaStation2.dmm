@@ -14588,6 +14588,12 @@
 "dzw" = (
 /turf/closed/wall/r_wall,
 /area/station/security/brig)
+"dAC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "dBc" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
@@ -51064,6 +51070,10 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
+"mBb" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "mBd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -78255,6 +78265,10 @@
 "tnB" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/bomb)
+"tnF" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "tnG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -84260,6 +84274,12 @@
 /obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
+"uID" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "uIF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
 	dir = 4
@@ -123039,8 +123059,8 @@ cui
 iyb
 kaK
 xpX
-vho
-jbE
+uID
+tnF
 vJe
 lcf
 euT
@@ -123553,8 +123573,8 @@ cui
 iyb
 sCL
 oBj
-ybc
-gcq
+dAC
+mBb
 rhf
 cRW
 pgr

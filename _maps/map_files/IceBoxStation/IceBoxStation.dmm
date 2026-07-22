@@ -16286,6 +16286,10 @@
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron/smooth_edge,
 /area/station/security/lockers)
+"eBv" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "eBz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33706,6 +33710,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/treatment_center)
+"jDq" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "jDz" = (
 /obj/machinery/light/small/directional/east,
 /obj/item/pickaxe,
@@ -65842,6 +65850,10 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"syf" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/station/engineering/network_operations)
 "syh" = (
 /obj/structure/chair/pew/right{
 	dir = 1
@@ -76707,6 +76719,12 @@
 /obj/structure/falsewall,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"vFn" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "vFq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -79867,6 +79885,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
+"wDd" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron,
+/area/station/engineering/network_operations)
 "wDe" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -84362,6 +84386,21 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"xMl" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Room"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/effect/landmark/navigate_destination,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/duct,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/construction,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/general,
+/turf/open/floor/iron/dark,
+/area/station/engineering/network_operations)
 "xMn" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/holopad,
@@ -247836,8 +247875,8 @@ rSC
 aad
 bVc
 aKo
-ecd
-pfK
+vFn
+syf
 sCA
 sCA
 qnC
@@ -248095,7 +248134,7 @@ oYx
 nvA
 uku
 txv
-lLD
+eBv
 xZl
 qaF
 pna
@@ -248350,8 +248389,8 @@ fEL
 aad
 yjl
 wLq
-sLj
-bgw
+wDd
+xMl
 uSo
 uSo
 uSo
