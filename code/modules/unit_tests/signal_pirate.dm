@@ -46,6 +46,13 @@
 	var/obj/item/clothing/head/utility/hardhat/network_engineer/network_hardhat = allocate(/obj/item/clothing/head/utility/hardhat/network_engineer)
 	network_hardhat.update_icon_state()
 	TEST_ASSERT_EQUAL(network_hardhat.icon_state, "hardhat0_network", "Network Engineer hardhat did not use its dedicated unlit sprite.")
+	var/turf/open/floor/pod/signal_pirate/pirate_floor = allocate(/turf/open/floor/pod/signal_pirate)
+	TEST_ASSERT_EQUAL(pirate_floor.plane, FLOOR_PLANE, "Signal Pirate deck was not rendered on the floor plane.")
+	TEST_ASSERT_EQUAL(pirate_floor.layer, LOW_FLOOR_LAYER, "Signal Pirate deck could render above standing mobs.")
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/signal_pirate/nav_console = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/signal_pirate)
+	TEST_ASSERT_EQUAL(nav_console.shuttleId, "signal_pirate", "Signal Pirate navigation computer targeted the wrong shuttle.")
+	TEST_ASSERT_EQUAL(nav_console.shuttlePortId, "signal_pirate_custom", "Signal Pirate navigation computer targeted the wrong custom dock.")
+	TEST_ASSERT(nav_console.lock_override & CAMERA_LOCK_STATION, "Signal Pirate navigation computer could not view station z-levels.")
 
 	pirate_datum.seconds_per_area = 1
 	pirate_datum.record_broadcast(/area/station, 1)

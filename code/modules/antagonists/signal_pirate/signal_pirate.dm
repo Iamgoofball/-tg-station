@@ -475,6 +475,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	icon = 'icons/turf/floors/signal_pirate_floor.dmi'
 	icon_state = "signal_pirate_floor"
 	base_icon_state = "signal_pirate_floor"
+	layer = LOW_FLOOR_LAYER
 	plane = FLOOR_PLANE
 
 /obj/machinery/computer/shuttle/signal_pirate
