@@ -22,7 +22,7 @@
 		last_fire = world.time
 
 /obj/item/gun/ballistic/revolver/chamber_round(spin_cylinder = TRUE, replace_new_round)
-	if(!magazine) ////if it mag was qdel'd somehow.
+	if(!magazine) //if it mag was qdel'd somehow.
 		CRASH("revolver tried to chamber a round without a magazine!")
 	if(chambered)
 		UnregisterSignal(chambered, COMSIG_MOVABLE_MOVED)
@@ -45,7 +45,7 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/revolver/fire_sounds()
-	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo(TRUE, FALSE)) //// bading REVOLVERS
+	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo(TRUE, FALSE)) // fucking REVOLVERS
 	var/click_frequency_to_use = 1 - frequency_to_use * 0.75
 	var/play_click = sqrt(magazine?.max_ammo) > get_ammo(TRUE, FALSE)
 	if(suppressed)
@@ -84,7 +84,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 		chamber_round(spin_cylinder = FALSE)
 
 /obj/item/gun/ballistic/revolver/get_ammo(countchambered = FALSE, countempties = TRUE)
-	var/boolets = 0 ////mature var names for mature people
+	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
 	if (magazine)
@@ -161,7 +161,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 	alternative_fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
 	alternative_ammo_misfires = TRUE
 	misfire_probability = 0
-	misfire_percentage_increment = 25 ////about 1 in 4 rounds, which increases rapidly every shot
+	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
 
 	obj_flags = UNIQUE_RENAME
 
@@ -178,7 +178,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 
 /obj/item/gun/ballistic/revolver/cowboy
 	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
-	////There's already a cowboy sprite in there!
+	//There's already a cowboy sprite in there!
 	icon_state = "lucky"
 
 /obj/item/gun/ballistic/revolver/cowboy/nuclear
@@ -214,13 +214,13 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
 	icon_state = "russianrevolver"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
-	hidden_chambered = TRUE ////Cheater.
+	hidden_chambered = TRUE //Cheater.
 	gun_flags = NOT_A_REAL_GUN
-	can_hold_up = FALSE //// for obvious reasons
-	doafter_self_shoot = FALSE //// snowflake
-	///// If we've been spun before firing
+	can_hold_up = FALSE // for obvious reasons
+	doafter_self_shoot = FALSE // snowflake
+	/// If we've been spun before firing
 	var/spun = FALSE
-	///// Do after for trying to fire the gun
+	/// Do after for trying to fire the gun
 	var/aim_time = 4 SECONDS
 
 /obj/item/gun/ballistic/revolver/russian/examine(mob/user)
@@ -240,7 +240,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 
 /obj/item/gun/ballistic/revolver/russian/dropped(mob/user, silent)
 	. = ..()
-	aim_time = initial(aim_time) //// next person chooses their own time
+	aim_time = initial(aim_time) // next person chooses their own time
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()
@@ -248,7 +248,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 		spun = TRUE
 
 /obj/item/gun/ballistic/revolver/russian/can_shoot()
-	return TRUE //// we ALWAYS want to shoot. even if we don't have a chambered round, even if our chambered round has no bullet
+	return TRUE // we ALWAYS want to shoot. even if we don't have a chambered round, even if our chambered round has no bullet
 
 /obj/item/gun/ballistic/revolver/russian/load_gun(obj/item/ammo, mob/living/user)
 	. = ..()
@@ -268,12 +268,12 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 	return ..()
 
 /obj/item/gun/ballistic/revolver/russian/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
-	from_firing = FALSE //// never eject casings from firing the gun
+	from_firing = FALSE // never eject casings from firing the gun
 	return ..()
 
 /obj/item/gun/ballistic/revolver/russian/try_fire_gun(atom/target, mob/living/user, params)
 	if(user.combat_mode)
-		return FALSE //// melee attack
+		return FALSE // melee attack
 	if(target != user)
 		shoot_with_empty_chamber(user)
 		spun = FALSE
@@ -281,21 +281,21 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 			span_danger("[user] tries to fire \the [src] aimed at something else, but only succeeds at looking like an idiot."),
 			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"),
 		)
-		return TRUE //// no melee attack
+		return TRUE // no melee attack
 	if(!spun)
 		to_chat(user, span_warning("You need to spin \the [src]'s chamber first!"))
-		return TRUE //// no melee attack
-	if(HAS_TRAIT(user, TRAIT_CURSED)) //// I cannot live, I cannot die, trapped in myself, body my holding cell.
+		return TRUE // no melee attack
+	if(HAS_TRAIT(user, TRAIT_CURSED)) // I cannot live, I cannot die, trapped in myself, body my holding cell.
 		to_chat(user, span_warning("What a horrible night... To have a curse!"))
-		return TRUE //// no melee attack
+		return TRUE // no melee attack
 	if(loc != user)
 		if(tk_firing(user))
 			to_chat(user, span_warning("Russian roulette is stressful enough without trying to focus on telekinesis!"))
 		else
 			to_chat(user, span_warning("You need to be holding the gun to fire it!"))
-		return TRUE //// no melee attack
+		return TRUE // no melee attack
 
-	return ..() //// try to shoot the gun
+	return ..() // try to shoot the gun
 
 // Replaces clumsy check with a do after
 /obj/item/gun/ballistic/revolver/russian/check_botched(mob/living/user, atom/target)
@@ -321,7 +321,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 /obj/item/gun/ballistic/revolver/russian/before_firing(atom/target, mob/user)
 	if(target != user)
 		CRASH("Russian revolver somehow got to before_firing with a target that isn't the user!")
-	//// we will definitely have a chambered round, but not always projectile
+	// we will definitely have a chambered round, but not always projectile
 	if(check_zone(user.zone_selected) == BODY_ZONE_HEAD)
 		chambered.loaded_projectile?.damage = 300
 		chambered.loaded_projectile?.wound_bonus = 100
@@ -330,12 +330,12 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 		chambered.loaded_projectile?.wound_bonus = 10
 
 /obj/item/gun/ballistic/revolver/russian/fire_gun(atom/target, mob/living/user, flag, params)
-	//// . = false = no shot fired
+	// . = false = no shot fired
 	. = ..()
 	spun = FALSE
 	var/is_target_face = check_zone(user.zone_selected) == BODY_ZONE_HEAD
 	var/aimed_at_readable = parse_zone(user.zone_selected)
-	var/loaded_rounds = get_ammo(FALSE, FALSE) //// check before it is fired
+	var/loaded_rounds = get_ammo(FALSE, FALSE) // check before it is fired
 	if(loaded_rounds && is_target_face)
 		add_memory_in_range(user, 7, /datum/memory/witnessed_russian_roulette, \
 			protagonist = user, \
@@ -355,7 +355,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
-		return TRUE //// so they don't hit themselves in the forehead. because returning FALSE translates to "do melee attack" for whatever reason
+		return TRUE // so they don't hit themselves in the forehead. because returning FALSE translates to "do melee attack" for whatever reason
 
 	user.visible_message(
 		span_danger("[user][is_target_face ? "": " cowardly"] aims \the [src] at [user.p_their()] [aimed_at_readable] as it goes off!"),
@@ -372,7 +372,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 		return NONE
 	return ..()
 
-///// Called after successfully(if you can call it that) shooting ourselves
+/// Called after successfully(if you can call it that) shooting ourselves
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.add_mood_event(
 		"russian_roulette_lose",
@@ -387,7 +387,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 	. = ..()
 	if(affecting == BODY_ZONE_HEAD)
 		var/obj/item/soulstone/anybody/revolver/stone = new(user.drop_location())
-		if(!stone.capture_soul(user, forced = TRUE)) ////Something went wrong
+		if(!stone.capture_soul(user, forced = TRUE)) //Something went wrong
 			qdel(stone)
 			return
 		user.visible_message(
@@ -404,7 +404,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 	)
 	user.dust(drop_items = TRUE)
 
-/obj/item/gun/ballistic/revolver/reverse ////Fires directly at its user... unless the user is a clown, of course.
+/obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = FALSE
 
 /obj/item/gun/ballistic/revolver/reverse/can_trigger_gun(mob/living/user, akimbo_usage)

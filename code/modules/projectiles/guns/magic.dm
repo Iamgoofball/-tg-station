@@ -4,35 +4,35 @@
 	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "staffofnothing"
 	inhand_icon_state = "staff"
-	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi' ////not really a gun and some toys use these inhands
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	fire_sound = 'sound/items/weapons/emitter.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_HUGE
 	can_muzzle_flash = FALSE
 	clumsy_check = FALSE
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL //// Has no trigger at all, uses magic instead
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/firing_pin/magic
 	about_to_shoot_inside_mail_text = "It's humming with energy!"
-	///// If true, our fire sound gets lower as our charges decrease
+	/// If true, our fire sound gets lower as our charges decrease
 	var/pitch_with_charges = TRUE
-	///// What kind of magic is this
+	/// What kind of magic is this
 	var/school = SCHOOL_EVOCATION
-	///// What kind of antimagic resists this
+	/// What kind of antimagic resists this
 	var/antimagic_flags = MAGIC_RESISTANCE
-	///// How many charges can we hold at most
+	/// How many charges can we hold at most
 	var/max_charges = 6
-	///// How many charges do we currently have
+	/// How many charges do we currently have
 	var/charges = 0
-	///// How fast do we recharge charges? In seconds
+	/// How fast do we recharge charges? In seconds
 	var/recharge_rate = 8
-	///// How much have we currently recharged?
+	/// How much have we currently recharged?
 	var/charge_timer = 0
-	///// Whether this wand/staff recharges s own over time.
+	/// Whether this wand/staff recharges on its own over time.
 	var/self_charging = TRUE
-	///// What kind of projectile do we fire?
+	/// What kind of projectile do we fire?
 	var/ammo_type
-	///// If set to TRUE, wizards can't use this until they leave home
+	/// If set to TRUE, wizards can't use this until they leave home
 	var/no_den_usage = FALSE
 
 /obj/item/gun/magic/Initialize(mapload)
@@ -75,7 +75,7 @@
 
 	. = COMPONENT_ITEM_CHARGED
 
-	//// Non-self charging staves and wands can potentially expire
+	// Non-self charging staves and wands can potentially expire
 	if(!self_charging && max_charges && prob(80))
 		max_charges--
 
@@ -97,7 +97,7 @@
 			to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
 			return
 		else
-			no_den_usage = FALSE //// Well you're probably not going back
+			no_den_usage = FALSE // Well you're probably not going back
 	if(!user.can_cast_magic(antimagic_flags))
 		add_fingerprint(user)
 		return
@@ -113,8 +113,8 @@
 	return ..()
 
 /obj/item/gun/magic/handle_chamber()
-	if(chambered && !chambered.loaded_projectile) ////if BB is null, i.e the shot has been fired...
-		charges--////... drain a charge
+	if(chambered && !chambered.loaded_projectile) //if BB is null, i.e the shot has been fired...
+		charges--//... drain a charge
 		recharge_newshot()
 
 /obj/item/gun/magic/Initialize(mapload)
@@ -155,12 +155,12 @@
 	user.visible_message(span_suicide("...but nothing happens."))
 	return SHAME
 
-///// Extend to do something funny
+/// Extend to do something funny
 /obj/item/gun/magic/proc/do_suicide(mob/living/user)
 	playsound(loc, fire_sound, 50, TRUE, -1)
 	return FIRELOSS
 
-///// Returns true if specified mob can fire this weapon
+/// Returns true if specified mob can fire this weapon
 /obj/item/gun/magic/proc/can_user_shoot(mob/living/user)
 	return can_shoot() && user.can_cast_magic(antimagic_flags)
 

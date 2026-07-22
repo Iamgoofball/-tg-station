@@ -53,7 +53,7 @@
 
 /obj/item/gun/ballistic/automatic/c20r/update_overlays()
 	. = ..()
-	if(!chambered && empty_indicator) ////this is duplicated due to a layering issue with the select fire icon.
+	if(!chambered && empty_indicator) //this is duplicated due to a layering issue with the select fire icon.
 		. += "[icon_state]_empty"
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
@@ -106,7 +106,7 @@
 	mag_display = TRUE
 	empty_indicator = TRUE
 	click_on_low_ammo = FALSE
-	///// List of the possible firing sounds
+	/// List of the possible firing sounds
 	var/list/firing_sound_list = list(
 		'sound/items/weapons/gun/smartgun/smartgun_shoot_1.ogg',
 		'sound/items/weapons/gun/smartgun/smartgun_shoot_2.ogg',
@@ -156,7 +156,7 @@
 	mag_display = TRUE
 	empty_indicator = TRUE
 	fire_sound = 'sound/items/weapons/gun/smg/shot_alt.ogg'
-	///// Attached underbarrel grenade launcher
+	/// Attached underbarrel grenade launcher
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel/underbarrel
 
 /obj/item/gun/ballistic/automatic/m90/Initialize(mapload)
@@ -204,7 +204,7 @@
 	bolt_type = BOLT_TYPE_OPEN
 	empty_indicator = TRUE
 	show_bolt_icon = FALSE
-	///// Rate of fire, set on initialize only
+	/// Rate of fire, set on initialize only
 	var/rof = 0.1 SECONDS
 
 /obj/item/gun/ballistic/automatic/tommygun/Initialize(mapload)
@@ -355,7 +355,7 @@
 	weapon_weight = WEAPON_HEAVY
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m38
 	w_class = WEIGHT_CLASS_BULKY
-	force = 15 ////this thing is kind of oversized, okay?
+	force = 15 //this thing is kind of oversized, okay?
 	mag_display = TRUE
 	projectile_damage_multiplier = 1.2
 	projectile_speed_multiplier = 1.2
@@ -365,25 +365,25 @@
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	suppressor_x_offset = 0
 
-	///// Determines how many shots we can make before the weapon needs to be maintained.
+	/// Determines how many shots we can make before the weapon needs to be maintained.
 	var/shots_before_degradation = 10
-	///// The max number of allowed shots this gun can have before degradation.
+	/// The max number of allowed shots this gun can have before degradation.
 	var/max_shots_before_degradation = 10
-	///// Determines the degradation stage. The higher the value, the more poorly the weapon performs.
+	/// Determines the degradation stage. The higher the value, the more poorly the weapon performs.
 	var/degradation_stage = 0
-	///// Maximum degradation stage.
+	/// Maximum degradation stage.
 	var/degradation_stage_max = 5
-	///// The probability of degradation increasing per shot.
+	/// The probability of degradation increasing per shot.
 	var/degradation_probability = 10
-	///// The maximum speed malus for projectile flight speed. Projectiles probably shouldn't move too slowly or else they will start to cause problems.
+	/// The maximum speed malus for projectile flight speed. Projectiles probably shouldn't move too slowly or else they will start to cause problems.
 	var/maximum_speed_malus = 0.7
-	///// What is our damage multiplier if the gun is emagged?
+	/// What is our damage multiplier if the gun is emagged?
 	var/emagged_projectile_damage_multiplier = 1.6
 
-	///// Whether or not our gun is suffering an EMP related malfunction.
+	/// Whether or not our gun is suffering an EMP related malfunction.
 	var/emp_malfunction = FALSE
 
-	///// Our timer for when our gun is suffering an extreme malfunction. AKA it is going to explode
+	/// Our timer for when our gun is suffering an extreme malfunction. AKA it is going to explode
 	var/explosion_timer
 
 	SET_BASE_PIXEL(-8, 0)
@@ -489,10 +489,10 @@
 	else
 		attempt_degradation(FALSE)
 
-///// Proc to handle weapon degradation. Called when attempting to fire or immediately after an EMP takes place.
+/// Proc to handle weapon degradation. Called when attempting to fire or immediately after an EMP takes place.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_degradation(force_increment = FALSE)
 	if(!prob(degradation_probability) && !force_increment || degradation_stage == degradation_stage_max)
-		return ////Only update if we actually increment our degradation stage
+		return //Only update if we actually increment our degradation stage
 
 	degradation_stage = clamp(degradation_stage + (obj_flags & EMAGGED ? 2 : 1), 0, degradation_stage_max)
 	projectile_speed_multiplier = clamp(initial(projectile_speed_multiplier) + degradation_stage * 0.1, initial(projectile_speed_multiplier), maximum_speed_malus)
@@ -500,7 +500,7 @@
 	do_sparks(1, TRUE, src)
 	update_appearance()
 
-///// Called by /obj/machinery/recharger while inserted: attempts to recalibrate our gun but reducing degradation.
+/// Called by /obj/machinery/recharger while inserted: attempts to recalibrate our gun but reducing degradation.
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_recalibration(restoring_shots_before_degradation = FALSE, recharge_rate = 1)
 	emp_malfunction = FALSE
 
@@ -518,13 +518,13 @@
 
 	update_appearance()
 
-///// Proc to handle the countdown for our detonation
+/// Proc to handle the countdown for our detonation
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/perform_extreme_malfunction(mob/living/user)
 	balloon_alert(user, "gun is exploding, throw it!")
 	explosion_timer = addtimer(CALLBACK(src, PROC_REF(fucking_explodes_you)), 5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE))
 	playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 50, FALSE)
 
-///// proc to handle our detonation
+/// proc to handle our detonation
 /obj/item/gun/ballistic/automatic/battle_rifle/proc/fucking_explodes_you()
 	explosion(src, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
 

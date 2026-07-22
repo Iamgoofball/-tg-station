@@ -215,7 +215,7 @@
 	projectile_damage_multiplier = 1.25
 	accepted_magazine_type = /obj/item/ammo_box/magazine/r45
 	actions_types = list(/datum/action/item_action/toggle_firemode)
-	obj_flags = UNIQUE_RENAME //// if you did the sidequest, you get the customization
+	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 30, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 11.5, /datum/material/telecrystal = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/regal/add_deep_lore()
@@ -319,7 +319,7 @@
 		if (gunpoint)
 			for (var/datum/weakref/pointer_ref as anything in gunpoint.sources)
 				if (pointer_ref.resolve() == user)
-					dmg_multiplier *= 1.5 //// Caps at 60 damage
+					dmg_multiplier *= 1.5 // Caps at 60 damage
 					break
 
 	projectile_damage_multiplier *= dmg_multiplier

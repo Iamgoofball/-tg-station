@@ -26,7 +26,7 @@
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
 	weapon_weight = WEAPON_HEAVY
-	misfire_probability_cap = 35 //// Even if the misfire probability and increment are both zero, we've some shots that may do that.
+	misfire_probability_cap = 35 // Even if the misfire probability and increment are both zero, we've some shots that may do that.
 
 	pb_knockback = 2
 
@@ -41,7 +41,7 @@
 
 // RIOT SHOTGUN //
 
-/obj/item/gun/ballistic/shotgun/riot ////for spawn in the armory
+/obj/item/gun/ballistic/shotgun/riot //for spawn in the armory
 	name = "riot shotgun"
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
@@ -50,7 +50,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off = TRUE
-	chambered_attack_block = TRUE //// necessary for riot shotgun due to fire_delay and wanting to shoot point blank without accidental melee
+	chambered_attack_block = TRUE // necessary for riot shotgun due to fire_delay and wanting to shoot point blank without accidental melee
 
 //component for seclight attachment
 /obj/item/gun/ballistic/shotgun/riot/add_seclight_point()
@@ -75,7 +75,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/lake
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	pb_knockback = 4 //// Not advised.
+	pb_knockback = 4 // Not advised.
 
 // Automatic Shotguns//
 
@@ -131,11 +131,11 @@
 	w_class = WEIGHT_CLASS_HUGE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
-	///// If defined, the secondary tube is this type, if you want different shell loads
+	/// If defined, the secondary tube is this type, if you want different shell loads
 	var/alt_mag_type
-	///// If TRUE, we're drawing from the alternate_magazine
+	/// If TRUE, we're drawing from the alternate_magazine
 	var/toggled = FALSE
-	///// The B tube
+	/// The B tube
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/bounty
@@ -214,9 +214,9 @@
 	internal_magazine = FALSE
 	tac_reloads = TRUE
 	burst_fire_selection = TRUE
-	///// The type of secondary magazine for the bulldog
+	/// The type of secondary magazine for the bulldog
 	var/secondary_magazine_type
-	///// The secondary magazine
+	/// The secondary magazine
 	var/obj/item/ammo_box/magazine/secondary_magazine
 
 /obj/item/gun/ballistic/shotgun/bulldog/Initialize(mapload)
@@ -331,7 +331,7 @@
 	preview_name = "Rosewood"
 	new_icon_state = "dshotgun_p"
 
-///////////////////////////////
+/////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////
 
@@ -353,7 +353,7 @@
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_be_sawn_off = TRUE
-	pb_knockback = 3 //// it's a super shotgun!
+	pb_knockback = 3 // it's a super shotgun!
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/bar_shotgun)
@@ -388,12 +388,12 @@
 	weapon_weight = WEAPON_MEDIUM
 	semi_auto = TRUE
 	obj_flags = CONDUCTS_ELECTRICITY
-	force = 18 ////it has a hook 
-	sharpness = SHARP_POINTY ////it does in fact, have a hook 
+	force = 18 //it has a hook on it
+	sharpness = SHARP_POINTY //it does in fact, have a hook on it
 	attack_verb_continuous = list("slashes", "hooks", "stabs")
 	attack_verb_simple = list("slash", "hook", "stab")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	////our hook gun!
+	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
 
 /obj/item/gun/ballistic/shotgun/hook/Initialize(mapload)
@@ -413,7 +413,7 @@
 		return hook.try_fire_gun(target, user, params)
 	return ..()
 
-/////An underpowered shotgun given to Pun Pun when the station job trait roll.
+///An underpowered shotgun given to Pun Pun when the station job trait roll.
 /obj/item/gun/ballistic/shotgun/monkey
 	name = "\improper Barback's Shot"
 	desc = "A chimp-sized, single-shot and break-action shotgun with an unpractical stock."

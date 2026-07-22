@@ -16,7 +16,7 @@
 	drop_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_pickup1.ogg'
 	tac_reloads = FALSE
-	///// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
+	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
 	var/need_bolt_lock_to_interact = FALSE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
@@ -46,7 +46,7 @@
 	. = ..()
 	. += "The bolt is [bolt_locked ? "open" : "closed"]."
 
-/////////////////////////
+///////////////////////
 // BOLT ACTION RIFLE //
 ///////////////////////
 
@@ -168,7 +168,7 @@
 /obj/item/gun/ballistic/rifle/boltaction/prime/sawoff(mob/user)
 	. = ..()
 	if(.)
-		name = "\improper Obrez Moderna" //// wear it loud and proud
+		name = "\improper Obrez Moderna" // wear it loud and proud
 
 /obj/item/gun/ballistic/rifle/boltaction/donkrifle
 	name = "\improper Donk Co. Jezail"
@@ -185,7 +185,7 @@
 	can_be_sawn_off = TRUE
 	sawn_desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. Powerful enough to take down a space bear from a thousand paces. Its barrel has been cut off, so its power and accuracy have been impaired."
 
-/obj/item/gun/ballistic/rifle/boltaction/donkrifle/sawoff(mob/user) ////the heavy price one pays for fitting this in a backpack
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle/sawoff(mob/user) //the heavy price one pays for fitting this in a backpack
 	. = ..()
 	if(.)
 		projectile_damage_multiplier = 0.75
@@ -271,7 +271,7 @@
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
 	name = "stressed rebar crossbow"
 	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could rack and reload the crossbow faster. Hopefully, it was worth it."
-	//// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
+	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
 	can_misfire = TRUE
 	draw_time = 0.5 SECONDS
 	reload_time = 0.5 SECONDS
@@ -295,9 +295,9 @@
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 2) ////enough range to at least be useful for stealth
+	AddComponent(/datum/component/scope, range_modifier = 2) //enough range to at least be useful for stealth
 
-///// PIPE GUNS ///
+/// PIPE GUNS ///
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
@@ -349,9 +349,9 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
 	projectile_damage_multiplier = 0.625
 	projectile_speed_multiplier = 1
-	spread = 15 ////kinda inaccurate
-	burst_size = 3 ////but it empties the entire magazine when it fires
-	burst_delay = 0.3 //// and by empties, I mean it does it all at once
+	spread = 15 //kinda inaccurate
+	burst_size = 3 //but it empties the entire magazine when it fires
+	burst_delay = 0.3 // and by empties, I mean it does it all at once
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
@@ -388,10 +388,10 @@
 	inhand_icon_state = "regal_pipepistol"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/prime
 	projectile_damage_multiplier = 1
-	burst_size = 6 //// WHOLE CLIP
+	burst_size = 6 // WHOLE CLIP
 	spread = 0
 
-///// MAGICAL BOLT ACTIONS ///
+/// MAGICAL BOLT ACTIONS ///
 
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
@@ -471,7 +471,7 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 4) ////enough range to at least make extremely good use of the penetrator rounds
+	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/reset_fire_cd()
 	. = ..()
