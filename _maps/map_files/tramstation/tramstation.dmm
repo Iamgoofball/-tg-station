@@ -27628,10 +27628,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
-"iPI" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/engine,
-/area/station/engineering/engine_smes)
 "iPQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -37702,12 +37698,6 @@
 /obj/machinery/light/small/dim/directional/east,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"lZe" = (
-/obj/effect/landmark/start/network_engineer,
-/obj/machinery/network_operations_terminal,
-/obj/structure/cable/multilayer/connected,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "lZj" = (
 /obj/effect/turf_decal/tile/neutral/tram,
 /turf/open/floor/tram/plate,
@@ -47381,12 +47371,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/commons/storage/primary)
-"pFy" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/engine_smes)
 "pFE" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -53990,6 +53974,9 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/science/explab)
+"rUu" = (
+/turf/open/floor/engine,
+/area/station/engineering/engine_smes)
 "rUQ" = (
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/grass,
@@ -56651,6 +56638,13 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"sSd" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/landmark/start/network_engineer,
+/obj/machinery/network_operations_terminal,
+/obj/structure/cable/multilayer/connected,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "sSr" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -101028,8 +101022,8 @@ wJt
 jLD
 ezg
 jCi
-lZe
-iPI
+sSd
+rUu
 xWt
 kER
 uGy
@@ -101283,7 +101277,7 @@ bTm
 gLd
 wJt
 hfV
-pFy
+rUu
 jCi
 ecb
 jCi

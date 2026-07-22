@@ -3922,12 +3922,6 @@
 /obj/structure/transit_tube/diagonal/topleft,
 /turf/open/space/basic,
 /area/space/nearstation)
-"brP" = (
-/obj/effect/landmark/start/network_engineer,
-/obj/machinery/network_operations_terminal,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "brX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15107,6 +15101,13 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
+"fih" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/landmark/start/network_engineer,
+/obj/machinery/network_operations_terminal,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "fii" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
@@ -112026,7 +112027,7 @@ txa
 dtI
 oIr
 mht
-brP
+fih
 mht
 fVB
 gUV

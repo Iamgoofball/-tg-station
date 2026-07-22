@@ -29968,11 +29968,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/medical/chemistry)
-"izK" = (
-/obj/effect/landmark/start/network_engineer,
-/obj/machinery/network_operations_terminal,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "izT" = (
 /obj/structure/closet/crate{
 	name = "Firing Range Supplies Set"
@@ -34348,6 +34343,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"jMR" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/landmark/start/network_engineer,
+/obj/machinery/network_operations_terminal,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "jMY" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/dark_blue/line{
@@ -247887,7 +247888,7 @@ cNx
 agD
 nih
 ogb
-izK
+jMR
 hRR
 lpc
 hdG

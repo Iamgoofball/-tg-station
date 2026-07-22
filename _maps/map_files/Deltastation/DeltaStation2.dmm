@@ -7546,11 +7546,6 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/station/cargo/office)
-"bPk" = (
-/obj/effect/landmark/start/network_engineer,
-/obj/machinery/network_operations_terminal,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "bPr" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -17980,6 +17975,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"evK" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/landmark/start/network_engineer,
+/obj/machinery/network_operations_terminal,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "ewb" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
@@ -123014,7 +123015,7 @@ vvH
 xaH
 ufo
 kcW
-bPk
+evK
 kcW
 sgF
 oWx

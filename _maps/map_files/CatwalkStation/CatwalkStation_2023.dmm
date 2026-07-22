@@ -287,6 +287,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
+"aeb" = (
+/obj/machinery/light/floor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "aei" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Science - Xenobiology North";
@@ -42864,12 +42870,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron,
 /area/station/construction/storage_wing)
-"lsN" = (
-/obj/effect/landmark/start/network_engineer,
-/obj/machinery/network_operations_terminal,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "lsT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster/directional/south,
@@ -45398,12 +45398,6 @@
 /obj/machinery/camera/autoname/directional/west,
 /turf/open/openspace,
 /area/station/hallway/secondary/entry)
-"mbE" = (
-/obj/machinery/light/floor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "mbK" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Virology Maintenance"
@@ -49295,6 +49289,9 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
+"nfB" = (
+/turf/open/floor/engine,
+/area/station/engineering/storage)
 "nfG" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -52856,6 +52853,13 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/science/cytology)
+"oav" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/obj/effect/landmark/start/network_engineer,
+/obj/machinery/network_operations_terminal,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "oaF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -60625,12 +60629,6 @@
 /obj/structure/sign/warning/directional/west,
 /turf/open/space/openspace,
 /area/space/nearstation)
-"qfL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/storage)
 "qfS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -64909,12 +64907,6 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
-"roC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/storage)
 "roG" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
@@ -134740,8 +134732,8 @@ lqH
 wHE
 gaT
 gaT
-roC
-qfL
+nfB
+nfB
 gaT
 qaN
 rct
@@ -134997,9 +134989,9 @@ rxH
 htS
 nyf
 gaT
-lsN
+oav
 pwF
-mbE
+aeb
 lWe
 kEC
 oCN
