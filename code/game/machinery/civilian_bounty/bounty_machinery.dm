@@ -5,7 +5,7 @@
 ///Pad for the Civilian Bounty Control.
 /obj/machinery/piratepad/civilian
 	name = "civilian bounty pad"
-	desc = "A machine designed to send civilian bounty targets to centcom."
+	desc = "A machine designed to send civilian bounty targets to Central Command."
 	layer = TABLE_LAYER
 	resistance_flags = FIRE_PROOF
 	circuit = /obj/item/circuitboard/machine/bountypad

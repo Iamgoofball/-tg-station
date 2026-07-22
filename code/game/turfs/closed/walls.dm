@@ -334,3 +334,22 @@
 	to_chat(user, span_notice("You adjust [src]."))
 	tool.play_tool_sound(src)
 	return ITEM_INTERACT_SUCCESS
+
+// Reflective wall variant for laser ricochets based on angle.
+/turf/closed/wall/reflective
+	flags_ricochet = RICOCHET_SHINY
+	desc = "A wall with a highly reflective surface."
+
+// Random reflection variant: reflects at a random angle (0-180 degrees).
+/turf/closed/wall/reflective/random
+	desc = "A wall with a chaotic reflective surface."
+	/handle_ricochet(obj/projectile/ricocheting_projectile)
+		var/turf/p_turf = get_turf(ricocheting_projectile)
+		var/face_direction = get_dir(src, p_turf) || get_dir(src, ricocheting_projectile)
+		var/face_angle = dir2angle(face_direction)
+		var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (ricocheting_projectile.angle + 180))
+		var/a_incidence_s = abs(incidence_s)
+		if(a_incidence_s > 90 && a_incidence_s < 270)
+			return FALSE
+		ricocheting_projectile.set_angle(rand(0, 180))
+		return TRUE

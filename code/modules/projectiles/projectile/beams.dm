@@ -424,3 +424,27 @@
 /obj/projectile/magic/shrink/alien
 	antimagic_flags = NONE
 	shrink_time = 9 SECONDS
+
+// Bounty: proj_weak_laser_2 - Reflectivity based on angle of impact with reflective walls.
+/obj/projectile/beam/weak/laser_2
+	armor_flag = LASER
+	ricochet_chance = 80
+	reflectable = TRUE
+	/check_ricochet(atom/target)
+		// Only reflect off /turf/closed/wall/reflective and subtypes
+		if(!istype(target, /turf/closed/wall/reflective))
+			return FALSE
+		// Calculate incidence angle between projectile and target normal
+		var/incidence = GET_ANGLE_OF_INCIDENCE(dir2angle(get_dir(src, target)), (angle + 180))
+		var/a_incidence = abs(incidence)
+		// Minimum angle 0°, maximum 89°; outside this range no ricochet
+		if(a_incidence >= 90)
+			return FALSE
+		// Quadratic curve: reflection chance increases with angle
+		var/quad_factor = (a_incidence / 89) ** 2
+		var/chance = ricochet_chance * target.receive_ricochet_chance_mod * quad_factor
+		if(firer && HAS_TRAIT(firer, TRAIT_NICE_SHOT))
+			chance += NICE_SHOT_RICOCHET_BONUS
+		if(ricochets < min_ricochets || prob(chance))
+			return TRUE
+		return FALSE
