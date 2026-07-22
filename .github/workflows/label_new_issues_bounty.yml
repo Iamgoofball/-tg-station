@@ -1,22 +1,23 @@
-name: Label new issues as bounties # Names the workflow in the Actions interface.
-on: # Declares the GitHub event that starts this workflow.
-  issues: # Limits the event source to repository issue activity.
-    types: [opened] # Runs only when a new issue is opened.
-permissions: # Sets the workflow token's default permissions.
-  contents: read # Allows only read access to repository contents by default.
-jobs: # Defines the work performed for each matching event.
-  label: # Identifies the single job that applies the label.
-    permissions: # Overrides token permissions only for this job.
-      issues: write # Allows this job to update labels on the new issue.
-    runs-on: ubuntu-24.04 # Uses GitHub's pinned Ubuntu runner image.
-    steps: # Lists the operations executed by the labeling job.
-      - name: Add bounty label # Describes the labeling operation in job logs.
-        uses: actions/github-script@v9 # Runs an authenticated GitHub API script.
-        with: # Supplies inputs to the github-script action.
-          script: | # Begins the JavaScript sent to github-script.
-            await github.rest.issues.addLabels({ // Calls GitHub's add-labels endpoint.
-              owner: context.repo.owner, // Targets the repository owner from the event.
-              repo: context.repo.repo, // Targets the repository name from the event.
-              issue_number: context.issue.number, // Targets the newly opened issue.
-              labels: ['bounty'], // Applies the repository's existing bounty label.
-            }); // Waits for the label request to complete before the job exits.
+name: Label new issues as bounties # This human-readable name identifies the workflow on the Actions page and describes its single responsibility.
+on: # This top-level trigger map tells GitHub Actions which repository events are allowed to create a workflow run.
+  issues: # Selecting the issues event prevents unrelated pushes, pull requests, and scheduled events from starting this automation.
+    types: [opened] # Restricting the activity type to opened means edits, closures, transfers, and reopenings do not relabel existing issues.
+permissions: # This block establishes a restrictive default GITHUB_TOKEN permission set before any job-specific elevation is considered.
+  contents: read # Read-only contents access preserves the standard safe baseline and prevents the workflow from modifying repository files.
+jobs: # This map contains every independent unit of work GitHub Actions may schedule after a matching issue-opened event.
+  label: # The label job is the workflow's only job, keeping the automation narrowly scoped to the requested issue-label operation.
+    permissions: # Job-level permissions replace the workflow default for this job and make the required write capability explicit.
+      issues: write # GitHub's REST add-labels endpoint requires issue write access; no pull-request, action, or repository-content write is granted.
+    runs-on: ubuntu-24.04 # The job runs on GitHub's fixed Ubuntu 24.04 hosted image so execution does not depend on repository infrastructure.
+    steps: # Steps execute sequentially inside the hosted runner, and this workflow needs only one authenticated API operation.
+      - name: Add bounty label # This log label makes the purpose and any failure location immediately recognizable to maintainers.
+        uses: actions/github-script@v9 # github-script supplies an authenticated Octokit client and event context without a checkout or custom token handling.
+        with: # The with map passes action-specific configuration rather than exposing additional environment variables or credentials.
+          script:
+            | # The literal block below is executed as JavaScript by github-script with github and context objects already available.
+            await github.rest.issues.addLabels({ // Awaiting the REST request makes an API rejection fail the step instead of reporting false success.
+              owner: context.repo.owner, // The owner comes from the signed webhook context, ensuring the request targets the repository that emitted the event.
+              repo: context.repo.repo, // The repository name also comes from event context, so no fork or organization name is hard-coded.
+              issue_number: context.issue.number, // The event's issue number selects exactly the newly opened issue and cannot affect unrelated issues.
+              labels: ['bounty'], // The one-element array asks GitHub to attach the repository's pre-existing bounty label without changing other labels.
+            }); // Closing the call after await ensures the runner records success only after GitHub confirms the label update.
