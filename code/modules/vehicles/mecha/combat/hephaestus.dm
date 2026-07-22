@@ -9,7 +9,7 @@
 	base_icon_state = "hephaestus"
 	movedelay = 3.5
 	max_integrity = 400
-	accesses = list(ACCESS_MECH_SECURITY, ACCESS_MECH_COMMAND)
+	accesses = list(ACCESS_MECH_SECURITY, ACCESS_MECH_SCIENCE)
 	armor_type = /datum/armor/mecha_hephaestus
 	max_temperature = 40000
 	force = 30

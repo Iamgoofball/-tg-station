@@ -702,7 +702,7 @@
 		// Dissipate heat into the environment based on temperature differential
 		var/turf/turf_loc = get_turf(src)
 		if(turf_loc && turf_loc.air)
-			var/env_temp = turf_loc.air.return_temperature()
+			var/env_temp = turf_loc.return_air().return_temperature()
 			var/temp_diff = current_thermal_temp - env_temp
 			// Heat flows from hot to cold; rate depends on difference
 			if(temp_diff > MECHA_HEAT_DISSIPATION_THRESHOLD)
@@ -727,7 +727,7 @@
 			movedelay += seconds_per_tick * 2
 		// Warning sounds at emergency threshold
 		if(SPT_PROB(10, seconds_per_tick))
-			playsound(src, 'sound/machines/warning.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/cryo_warning.ogg', 50, TRUE)
 
 	else if(current_thermal_temp >= thermal_threshold_critical)
 		// Critical - start causing damage, reduced performance
@@ -744,7 +744,7 @@
 	else if(current_thermal_temp >= thermal_threshold_danger)
 		// Danger - reduced performance, warning
 		if(SPT_PROB(5, seconds_per_tick))
-			playsound(src, 'sound/machines/warning.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/cryo_warning.ogg', 30, TRUE)
 		// Slight movement penalty
 		if(movedelay < 2.5)
 			movedelay += seconds_per_tick * 0.5
@@ -1030,7 +1030,6 @@
 		if(mecha_flags & VISIBILITY_RESTRICTED)
 			if(cabin_sealed && !has_camera_beacon)
 				// Restrict view range when cockpit sealed without camera beacon
-				occupant.client?.change_viewrestricted_dimensions(0)
 				occupant.client?.view = restricted_pilot_view_range
 			else
 				// Restore normal view
@@ -1163,7 +1162,7 @@
 		if(occupant == user)
 			continue // User triggers their own ejection
 		// Eject other occupants without user control
-		eject_occupant(occupant, silent = TRUE)
+		mob_exit(occupant, silent = TRUE)
 
 	// Eject the triggering user last
 	if(user && user in occupants)
@@ -1184,7 +1183,7 @@
 		set_cabin_seal(user, FALSE)
 
 	// Eject the user with visual effect
-	eject_occupant(user, silent = FALSE)
+	mob_exit(user, silent = FALSE)
 
 	// Visual and sound effects for safe ejection
 	user.visible_message(
@@ -1193,7 +1192,7 @@
 	)
 
 	// Apply minor slowdown to prevent injury
-	Knockdown(user, 1.5 SECONDS)
+	user.Knockdown(1.5 SECONDS)
 
 	// Log it
 	log_message("Tether ejection completed for [user].", LOG_GAME)

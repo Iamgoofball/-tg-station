@@ -42,7 +42,8 @@
 	// Check for required pilot gloves on heavy mechs
 	if(required_pilot_gloves && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!H.gloving?[LOCATION_LEFT_HAND]?.type_matches(required_pilot_gloves) && !H.gloving?[LOCATION_RIGHT_HAND]?.type_matches(required_pilot_gloves))
+		var/obj/item/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+		if(!gloves?.type_matches(required_pilot_gloves))
 			to_chat(M, span_warning("You need to be wearing [initial(required_pilot_gloves.name)] to pilot this mech!"))
 			log_message("Permission denied (Missing required gloves: [required_pilot_gloves]).", LOG_MECHA)
 			return FALSE

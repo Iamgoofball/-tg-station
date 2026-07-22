@@ -76,7 +76,7 @@
 		// Energy weapons generate heat when firing
 		if(energy_drain && chassis.add_thermal_heat)
 			var/heat_amount = energy_drain * 0.002 // Scale heat with energy drained (in kJ)
-			chassis.add_thermal_heat(src, heat_amount)
+			chassis.add_thermal_heat(heat_amount)
 		var/spread = 0
 		if(variance)
 			if(randomspread)
