@@ -2395,6 +2395,10 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation)
+"aLv" = (
+/obj/machinery/firealarm/directional/east,
+/turf/closed/wall/r_wall/rust,
+/area/station/engineering/main)
 "aLC" = (
 /obj/machinery/computer/pandemic,
 /obj/effect/turf_decal/delivery,
@@ -7788,6 +7792,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"cBb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/duct,
+/turf/open/floor/engine,
+/area/station/engineering/main)
 "cBc" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/security/labor,
@@ -14962,6 +14976,10 @@
 "eUN" = (
 /turf/closed/wall,
 /area/station/medical/psychology)
+"eUR" = (
+/obj/machinery/firealarm/directional/east,
+/turf/closed/wall/rust,
+/area/station/security/checkpoint/engineering)
 "eUT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green{
@@ -31029,6 +31047,13 @@
 	},
 /turf/closed/wall/r_wall/rust,
 /area/station/science/ordnance/bomb)
+"jOQ" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/station/engineering/storage_shared)
 "jOY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52549,9 +52574,6 @@
 /obj/structure/cable/layer3,
 /turf/open/floor/engine,
 /area/station/ai/satellite/chamber)
-"qUU" = (
-/turf/closed/wall/rust,
-/area/station/security/checkpoint/engineering)
 "qUZ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -58825,17 +58847,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"sMG" = (
-/obj/machinery/firealarm,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/stripes/corner,
-/obj/machinery/duct,
-/turf/open/floor/engine,
-/area/station/engineering/main)
 "sMO" = (
 /obj/machinery/telecomms/processor/preset_four,
 /obj/structure/cable,
@@ -59926,14 +59937,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/treatment_center)
-"tdI" = (
-/obj/machinery/firealarm,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 4
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/dark,
-/area/station/engineering/storage_shared)
 "tdW" = (
 /obj/machinery/light_switch/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -75274,9 +75277,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"xOB" = (
-/turf/closed/wall/r_wall/rust,
-/area/station/engineering/main)
 "xOF" = (
 /obj/structure/sign/poster/contraband/missing_gloves,
 /turf/closed/wall/rust,
@@ -110284,7 +110284,7 @@ jBs
 fGu
 chS
 oIS
-qUU
+eUR
 jBs
 bty
 sHQ
@@ -110540,7 +110540,7 @@ mDM
 fSt
 icw
 tKS
-tdI
+jOQ
 nUZ
 ekm
 teU
@@ -112338,7 +112338,7 @@ vjv
 ctK
 way
 wDX
-xOB
+aLv
 xqE
 exD
 ekm
@@ -112596,7 +112596,7 @@ way
 nEr
 cgF
 eOW
-sMG
+cBb
 eEZ
 uJN
 vUD
