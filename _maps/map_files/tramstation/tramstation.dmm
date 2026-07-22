@@ -52919,6 +52919,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/engine)
+"rAv" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/turf/closed/wall/r_wall,
+/area/station/engineering/engine_smes)
 "rAS" = (
 /turf/closed/wall,
 /area/station/service/library/lounge)
@@ -100512,7 +100516,7 @@ azm
 fxr
 qsG
 tRI
-pkp
+rAv
 tvT
 wda
 bBu

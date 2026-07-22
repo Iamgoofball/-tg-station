@@ -80985,6 +80985,10 @@
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"vBy" = (
+/obj/effect/landmark/atmospheric_sanity/ignore_area,
+/turf/closed/wall,
+/area/station/engineering/storage)
 "vBB" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/structure/table/reinforced,
@@ -134736,7 +134740,7 @@ nfB
 nfB
 gaT
 qaN
-rct
+vBy
 bmK
 frN
 dOg
