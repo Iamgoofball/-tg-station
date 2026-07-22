@@ -21231,11 +21231,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
-"gQm" = (
-/obj/machinery/camera,
-/obj/machinery/light/floor,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "gQo" = (
 /obj/machinery/firealarm/directional/north,
 /obj/structure/disposalpipe/segment{
@@ -112868,7 +112863,7 @@ gnk
 way
 oVF
 gfr
-gQm
+ahc
 wOY
 dGX
 tyI

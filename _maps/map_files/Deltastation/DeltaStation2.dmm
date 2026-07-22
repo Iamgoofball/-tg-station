@@ -20812,11 +20812,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
 /area/station/service/theater/abandoned)
-"fga" = (
-/obj/machinery/camera,
-/obj/machinery/light/floor,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "fgk" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall12";
@@ -123018,7 +123013,7 @@ ufo
 kcW
 bPk
 kcW
-fga
+sgF
 oWx
 aYU
 pzA
