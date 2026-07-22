@@ -1,7 +1,48 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aaa" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/engineering/network_operations)
+"aac" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/engineering/network_operations)
 "aad" = (
 /turf/closed/wall,
 /area/station/service/hydroponics)
+"aae" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/network_operations)
+"aaf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/start/network_engineer,
+/obj/machinery/network_operations_terminal,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/engineering/network_operations)
+"aag" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/event_spawn,
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/engineering/network_operations)
+"aah" = (
+/obj/machinery/rnd/production/protolathe/department/engineering,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/engineering/network_operations)
+"aai" = (
+/obj/machinery/rnd/production/circuit_imprinter,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/engineering/network_operations)
 "aas" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Laundromat"
@@ -4857,11 +4898,6 @@
 "blF" = (
 /turf/closed/wall,
 /area/station/maintenance/starboard/aft/upper)
-"blI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/network_engineer,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/storage)
 "blJ" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/line{
@@ -40596,14 +40632,6 @@
 "kNf" = (
 /turf/open/openspace,
 /area/station/ai/satellite/chamber)
-"kNj" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/machinery/status_display/evac/directional/north,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/dark,
-/area/station/engineering/storage)
 "kNx" = (
 /obj/machinery/door/morgue{
 	name = "Relic Closet";
@@ -42722,10 +42750,6 @@
 /obj/structure/sign/departments/maint/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore/upper)
-"lqa" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/storage)
 "lqd" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -54632,13 +54656,6 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/engine/hull/air,
 /area/station/maintenance/starboard/upper)
-"oyU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/event_spawn,
-/obj/machinery/holopad,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/storage)
 "ozk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -63505,10 +63522,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"qTa" = (
-/obj/machinery/rnd/production/circuit_imprinter,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/storage)
 "qTb" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners{
 	dir = 1
@@ -71897,12 +71910,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
-"thY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/storage)
 "tia" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
@@ -84193,12 +84200,6 @@
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore/upper)
-"wrd" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/storage)
 "wrf" = (
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
 	dir = 8
@@ -91581,53 +91582,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-"aaa" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/machinery/status_display/evac/directional/north,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron/dark,
-/area/station/engineering/network_operations)
-"aab" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations)
-"aac" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations)
-"aae" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/network_operations)
-"aaf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/start/network_engineer,
-/obj/machinery/network_operations_terminal,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations)
-"aag" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/landmark/event_spawn,
-/obj/machinery/holopad,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations)
-"aah" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations)
-"aai" = (
-/obj/machinery/rnd/production/circuit_imprinter,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations)
 
 (1,1,1) = {"
 dcE
@@ -134908,7 +134862,7 @@ lqH
 inQ
 eaV
 aaa
-aab
+rMr
 aac
 ufc
 rct
