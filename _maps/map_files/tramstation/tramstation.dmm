@@ -22927,12 +22927,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/circuit/green,
 /area/station/ai/upload/chamber)
-"hab" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "hae" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -46580,10 +46574,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
-"psD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "psU" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -101029,7 +101019,7 @@ jLD
 ezg
 jCi
 lZe
-psD
+jCi
 xWt
 kER
 uGy
@@ -101283,7 +101273,7 @@ bTm
 gLd
 wJt
 hfV
-hab
+jCi
 jCi
 ecb
 jCi

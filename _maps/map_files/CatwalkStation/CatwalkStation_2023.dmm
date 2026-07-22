@@ -56016,12 +56016,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
-"oSA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "oSE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -71317,12 +71311,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
-"taW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "taX" = (
 /obj/item/vending_refill/boozeomat{
 	pixel_x = -4;
@@ -134740,8 +134728,8 @@ lqH
 wHE
 gaT
 gaT
-oSA
-taW
+gaT
+gaT
 gaT
 qaN
 rct

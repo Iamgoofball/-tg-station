@@ -1130,6 +1130,11 @@
 /obj/structure/sign/warning/test_chamber/directional/south,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
+"awF" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/machinery/light/floor,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "awO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -14409,14 +14414,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"eWz" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
-/obj/machinery/light/floor,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "eWA" = (
 /obj/structure/toilet/greyscale{
 	dir = 8
@@ -14571,6 +14568,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"eYS" = (
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "eYT" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -45872,11 +45873,6 @@
 /obj/structure/light_construct/directional/east,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
-"pIh" = (
-/obj/item/kirbyplants/random/fullysynthetic,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "pIs" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -111517,7 +111513,7 @@ jQg
 mht
 mht
 cCD
-pIh
+eYS
 rCF
 soR
 nie
@@ -112544,7 +112540,7 @@ fTL
 jQg
 mht
 mht
-eWz
+awF
 mht
 wtU
 jQg
