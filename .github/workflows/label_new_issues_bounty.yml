@@ -1,25 +1,22 @@
-name: Label new issues as bounties
-
-on:
-  issues:
-    types: [opened]
-
-permissions:
-  contents: read
-
-jobs:
-  label:
-    permissions:
-      issues: write
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Add bounty label
-        uses: actions/github-script@v9
-        with:
-          script: |
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              labels: ['bounty'],
-            });
+name: Label new issues as bounties # Names the workflow in the Actions interface.
+on: # Declares the GitHub event that starts this workflow.
+  issues: # Limits the event source to repository issue activity.
+    types: [opened] # Runs only when a new issue is opened.
+permissions: # Sets the workflow token's default permissions.
+  contents: read # Allows only read access to repository contents by default.
+jobs: # Defines the work performed for each matching event.
+  label: # Identifies the single job that applies the label.
+    permissions: # Overrides token permissions only for this job.
+      issues: write # Allows this job to update labels on the new issue.
+    runs-on: ubuntu-24.04 # Uses GitHub's pinned Ubuntu runner image.
+    steps: # Lists the operations executed by the labeling job.
+      - name: Add bounty label # Describes the labeling operation in job logs.
+        uses: actions/github-script@v9 # Runs an authenticated GitHub API script.
+        with: # Supplies inputs to the github-script action.
+          script: | # Begins the JavaScript sent to github-script.
+            await github.rest.issues.addLabels({ // Calls GitHub's add-labels endpoint.
+              owner: context.repo.owner, // Targets the repository owner from the event.
+              repo: context.repo.repo, // Targets the repository name from the event.
+              issue_number: context.issue.number, // Targets the newly opened issue.
+              labels: ['bounty'], // Applies the repository's existing bounty label.
+            }); // Waits for the label request to complete before the job exits.
