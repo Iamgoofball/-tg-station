@@ -55,6 +55,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	var/mob/living/pirate = mob_override || owner.current
 	pirate?.add_faction(FACTION_PIRATE)
 
+/// Removes the shuttle-turret faction when the Signal Pirate role is lost, mirroring the effect applied on gain.
 /datum/antagonist/signal_pirate/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/pirate = mob_override || owner.current

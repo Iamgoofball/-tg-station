@@ -33,6 +33,7 @@
 	/// Prevents repeatedly claiming an already-completed route.
 	var/next_route_reward = 0
 
+/// Adds the live endpoint count and audit instructions to the terminal's examination text.
 /obj/machinery/network_operations_terminal/examine(mob/user)
 	. = ..()
 	. += span_notice("The endpoint directory reports [length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery))] registered machines; use a multitool to compile a station maintenance audit.")

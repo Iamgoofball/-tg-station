@@ -622,6 +622,7 @@
 	access_list += ACCESS_TCOMMS
 	return access_list
 
+/// Extends the general Engineering access set with the Network Operations office access flag.
 /obj/effect/mapping_helpers/airlock/access/all/engineering/network_operations/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_NETWORK_OPERATIONS
