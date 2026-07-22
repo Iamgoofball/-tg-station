@@ -21,6 +21,8 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	///if a click isn't delayed at all then it counts as 0 deciseconds.
 	var/average_click_delay = 0
 
+#define INPUT_QUEUE_BATCH_TIME 10 // ticks (deciseconds) max processing per tick
+
 /datum/controller/subsystem/verb_manager/input/Initialize()
 	setup_default_macro_sets()
 
@@ -74,20 +76,41 @@ VERB_MANAGER_SUBSYSTEM_DEF(input)
 	movements_per_second = MC_AVG_SECONDS(movements_per_second, moves_this_run, wait TICKS)
 
 /datum/controller/subsystem/verb_manager/input/run_verb_queue()
-	var/deferred_clicks_this_run = 0 //acts like current_clicks but doesn't count clicks that don't get processed by SSinput
+	// Safety: process in batches with timeout and exception isolation to prevent deadlocks
+	#define INPUT_QUEUE_BATCH_TIME 10 // ticks (deciseconds)
 
-	for(var/datum/callback/verb_callback/queued_click as anything in verb_queue)
+	var/deferred_clicks_this_run = 0
+	var/start_time = world.time
+	var/index = 1
+	var/queue_len = length(verb_queue)
+
+	while(index <= queue_len)
+		var/datum/callback/verb_callback/queued_click = verb_queue[index]
 		if(!istype(queued_click))
 			stack_trace("non /datum/callback/verb_callback instance inside SSinput's verb_queue!")
-			continue
+		else
+			// Update click delay metric before invocation
+			average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, TICKS2DS((DS2TICKS(world.time) - queued_click.creation_time)))
+			// Execute with exception isolation
+			try
+				queued_click.InvokeAsync()
+				current_clicks++
+				deferred_clicks_this_run++
+			catch(var/exception/e)
+				// Log error and continue; prevents a single bad callback from halting the queue
+				log_error("SSinput callback error: [e] - Callback: [queued_click]")
+				// Attempt to notify admins without throwing further errors
+				if(isnull(GLOB) || !GLOB) // safety, though GLOB always exists
+					message_admins("SSinput callback error: [e] in [queued_click]")
+			// Check if we've exceeded the batch time budget; if so, stop processing and leave remaining items for next tick
+			if(world.time - start_time >= INPUT_QUEUE_BATCH_TIME)
+				index++ // advance so we know where we stopped
+				break
+		index++
 
-		average_click_delay = MC_AVG_FAST_UP_SLOW_DOWN(average_click_delay, TICKS2DS((DS2TICKS(world.time) - queued_click.creation_time)))
-		queued_click.InvokeAsync()
-
-		current_clicks++
-		deferred_clicks_this_run++
-
-	verb_queue.Cut() //is ran all the way through every run, no exceptions
+	// Remove only the callbacks we processed (index-1 items)
+	if(index > 1)
+		verb_queue.Cut(1, index)
 
 	clicks_per_second = MC_AVG_SECONDS(clicks_per_second, current_clicks, wait SECONDS)
 	delayed_clicks_per_second = MC_AVG_SECONDS(delayed_clicks_per_second, deferred_clicks_this_run, wait SECONDS)

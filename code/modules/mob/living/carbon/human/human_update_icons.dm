@@ -593,6 +593,20 @@ generate/load female uniform sprites matching all previously decided variables
 	//Find a valid layer from variables+arguments
 	var/layer2use = alternate_worn_layer || default_layer
 
+	// If no icon_state, return empty appearance to avoid sending missing texture.
+	// For non-hand slots, also verify the icon file exists and contains the state.
+	if(!t_state)
+		return mutable_appearance()
+	if(!isinhands && (!file2use || !icon_exists(file2use, t_state)))
+		return mutable_appearance()
+
+	// If no icon_state, return empty appearance to avoid sending missing texture.
+	// For non-hand slots, also verify the icon file exists and contains the state.
+	if(!t_state)
+		return mutable_appearance()
+	if(!isinhands && (!file2use || !icon_exists(file2use, t_state)))
+		return mutable_appearance()
+
 	var/mutable_appearance/draw_target // MA of the item itself, not the final result
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
 	if(female_uniform)
