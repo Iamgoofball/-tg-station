@@ -1,64 +1,101 @@
-// TO DO: Replace this with job datum flags instead.
-GLOBAL_LIST_INIT(exp_specialmap, list(
-	EXP_TYPE_LIVING = list(), // all living mobs
-	EXP_TYPE_ANTAG = list(),
-	EXP_TYPE_SPECIAL = list(
-		ROLE_LIFEBRINGER,
-		ROLE_ASHWALKER,
-		ROLE_EXILE,
-		ROLE_SERVANT_GOLEM,
-		ROLE_FREE_GOLEM,
-		ROLE_HERMIT,
-		ROLE_ESCAPED_PRISONER,
-		ROLE_HOTEL_STAFF,
-		ROLE_SPACE_SYNDICATE,
-		ROLE_ANCIENT_CREW,
-		ROLE_SPACE_DOCTOR,
-		ROLE_SPACE_BARTENDER,
-		ROLE_BEACH_BUM,
-		ROLE_SKELETON,
-		ROLE_ZOMBIE,
-		ROLE_SPACE_BAR_PATRON,
-		ROLE_LAVALAND_SYNDICATE,
-		ROLE_MAINTENANCE_DRONE,
-		ROLE_DERELICT_DRONE,
-		ROLE_SYNDICATE_DRONE,
-		ROLE_VENUSHUMANTRAP,
-		ROLE_GHOST_ROLE,
-		), // Ghost roles
-	EXP_TYPE_GHOST = list() // dead people, observers
-))
-GLOBAL_PROTECT(exp_specialmap)
-
-/proc/get_full_job_name(job)
-	var/static/regex/cap_expand = new("cap(?!tain)")
-	var/static/regex/cmo_expand = new("cmo")
-	var/static/regex/hos_expand = new("hos")
-	var/static/regex/hop_expand = new("hop")
-	var/static/regex/rd_expand = new("rd")
-	var/static/regex/ce_expand = new("ce")
-	var/static/regex/qm_expand = new("qm")
-	var/static/regex/sec_expand = new("(?<!security )officer")
-	var/static/regex/engi_expand = new("(?<!station )engineer")
-	var/static/regex/atmos_expand = new("atmos tech")
-	var/static/regex/doc_expand = new("(?<!medical )doctor|medic(?!al)")
-	var/static/regex/mine_expand = new("(?<!shaft )miner")
-	var/static/regex/chef_expand = new("chef")
-	var/static/regex/borg_expand = new("(?<!cy)borg")
-
-	job = LOWER_TEXT(job)
-	job = cap_expand.Replace(job, "captain")
-	job = cmo_expand.Replace(job, "chief medical officer")
-	job = hos_expand.Replace(job, "head of security")
-	job = hop_expand.Replace(job, "head of personnel")
-	job = rd_expand.Replace(job, "research director")
-	job = ce_expand.Replace(job, "chief engineer")
-	job = qm_expand.Replace(job, "quartermaster")
-	job = sec_expand.Replace(job, "security officer")
-	job = engi_expand.Replace(job, "station engineer")
-	job = atmos_expand.Replace(job, "atmospheric technician")
-	job = doc_expand.Replace(job, "medical doctor")
-	job = mine_expand.Replace(job, "shaft miner")
-	job = chef_expand.Replace(job, "cook")
-	job = borg_expand.Replace(job, "cyborg")
-	return job
+/obj/job/fish_doctor = /obj/job
+    name = "Fish Doctor"
+    department = "Medical"
+    access = list("Medical", "Fish Care")
+    description = "A specialized medical role focused on the care and treatment of aquatic patients."
+    icon = 'icons/job_icons/fish_doctor.dmi'
+    spawn_possible = /datum/round_start/medical
+    spawn_weight = 10
+    spawn_minimum = 1
+    spawn_maximum = 2
+    can_antag_hijack = 0
+    can_suicide = 1
+    can_transfer = 1
+    can_be_ghost_role = 1
+    can_be_antag = 0
+    antag_advice = "You are a Fish Doctor. Your job is to care for fish patients and maintain the aquarium."
+    antag_failure = "You have failed to care for the fish patients properly."
+    antag_hud_icon = 'icons/mob/actions/actions.dmi'
+    antag_hud_icon_state = "fish_doctor"
+    antag_hud_icon_tooltip = "Fish Doctor"
+    antag_hud_icon_color = "#00FF00"
+    antag_hud_icon_alpha = 255
+    antag_hud_icon_offset = (0, 0)
+    antag_hud_icon_scale = (1, 1)
+    antag_hud_icon_rotation = 0
+    antag_hud_icon_flip = 0
+    antag_hud_icon_anchor = (0, 0)
+    antag_hud_icon_layer = 0
+    antag_hud_icon_visible = 1
+    antag_hud_icon_enabled = 1
+    antag_hud_icon_active = 1
+    antag_hud_icon_hover = 1
+    antag_hud_icon_pressed = 1
+    antag_hud_icon_disabled = 1
+    antag_hud_icon_focused = 1
+    antag_hud_icon_selected = 1
+    antag_hud_icon_highlighted = 1
+    antag_hud_icon_checked = 1
+    antag_hud_icon_expanded = 1
+    antag_hud_icon_collapsed = 1
+    antag_hud_icon_maximized = 1
+    antag_hud_icon_minimized = 1
+    antag_hud_icon_closed = 1
+    antag_hud_icon_opened = 1
+    antag_hud_icon_locked = 1
+    antag_hud_icon_unlocked = 1
+    antag_hud_icon_loading = 1
+    antag_hud_icon_loaded = 1
+    antag_hud_icon_error = 1
+    antag_hud_icon_warning = 1
+    antag_hud_icon_info = 1
+    antag_hud_icon_question = 1
+    antag_hud_icon_exclamation = 1
+    antag_hud_icon_success = 1
+    antag_hud_icon_failure = 1
+    antag_hud_icon_neutral = 1
+    antag_hud_icon_positive = 1
+    antag_hud_icon_negative = 1
+    antag_hud_icon_unknown = 1
+    antag_hud_icon_custom = 1
+    antag_hud_icon_custom_state = "fish_doctor"
+    antag_hud_icon_custom_tooltip = "Fish Doctor"
+    antag_hud_icon_custom_color = "#00FF00"
+    antag_hud_icon_custom_alpha = 255
+    antag_hud_icon_custom_offset = (0, 0)
+    antag_hud_icon_custom_scale = (1, 1)
+    antag_hud_icon_custom_rotation = 0
+    antag_hud_icon_custom_flip = 0
+    antag_hud_icon_custom_anchor = (0, 0)
+    antag_hud_icon_custom_layer = 0
+    antag_hud_icon_custom_visible = 1
+    antag_hud_icon_custom_enabled = 1
+    antag_hud_icon_custom_active = 1
+    antag_hud_icon_custom_hover = 1
+    antag_hud_icon_custom_pressed = 1
+    antag_hud_icon_custom_disabled = 1
+    antag_hud_icon_custom_focused = 1
+    antag_hud_icon_custom_selected = 1
+    antag_hud_icon_custom_highlighted = 1
+    antag_hud_icon_custom_checked = 1
+    antag_hud_icon_custom_expanded = 1
+    antag_hud_icon_custom_collapsed = 1
+    antag_hud_icon_custom_maximized = 1
+    antag_hud_icon_custom_minimized = 1
+    antag_hud_icon_custom_closed = 1
+    antag_hud_icon_custom_opened = 1
+    antag_hud_icon_custom_locked = 1
+    antag_hud_icon_custom_unlocked = 1
+    antag_hud_icon_custom_loading = 1
+    antag_hud_icon_custom_loaded = 1
+    antag_hud_icon_custom_error = 1
+    antag_hud_icon_custom_warning = 1
+    antag_hud_icon_custom_info = 1
+    antag_hud_icon_custom_question = 1
+    antag_hud_icon_custom_exclamation = 1
+    antag_hud_icon_custom_success = 1
+    antag_hud_icon_custom_failure = 1
+    antag_hud_icon_custom_neutral = 1
+    antag_hud_icon_custom_positive = 1
+    antag_hud_icon_custom_negative = 1
+    antag_hud_icon_custom_unknown = 1
