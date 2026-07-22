@@ -1,0 +1,1 @@
+#define CYBORG_HAND_ON_STICK
