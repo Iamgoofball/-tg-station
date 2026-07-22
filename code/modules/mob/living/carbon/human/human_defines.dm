@@ -110,3 +110,9 @@
 	var/cached_body_min_x_offset = 0
 	/// Rightmost offset of our overlays
 	var/cached_body_min_y_offset = 0
+
+	/// Counter for urine (bladder)
+	var/bladder = 0
+	/// Counter for feces (bowels)
+	var/bowels = 0
+

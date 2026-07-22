@@ -44,6 +44,11 @@
 	handle_heart(seconds_per_tick)
 	// Handles liver failure effects, if we lack a liver
 	handle_liver(seconds_per_tick)
+
+	// Excretion needs accumulation
+	bladder += 1 * seconds_per_tick
+	bowels += 1 * seconds_per_tick
+
 	// Crit damage but specifically for people who don't get suffocate while in crit so they can actually die eventually
 	if(HAS_TRAIT(src, TRAIT_NOBREATH) && (health < crit_threshold) && !HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 		adjust_brute_loss(0.5 * seconds_per_tick)

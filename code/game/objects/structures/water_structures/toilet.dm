@@ -185,6 +185,18 @@
 		else
 			random_fish.forceMove(drop_location())
 		to_chat(user, span_notice("You take [random_fish] out of the toilet, poor thing."))
+		return
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.bladder > 0 || H.bowels > 0)
+			H.bladder = 0
+			H.bowels = 0
+			H.visible_message(span_notice("[H] uses the toilet."), span_notice("You use the toilet."))
+			return
+		else
+			to_chat(H, span_notice("You don't need to use the toilet right now."))
+			return
 
 /obj/structure/toilet/click_alt(mob/living/user)
 	if(flushing)
