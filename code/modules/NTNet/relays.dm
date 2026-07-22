@@ -34,7 +34,7 @@
 	. += span_notice("The endpoint directory reports [length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery))] registered machines; use a multitool to compile a station maintenance audit.")
 
 /// Compiles a station-wide maintenance queue so the Network Engineer hath useful work even when no hostile carrier appeareth.
-/obj/machinery/network_operations_terminal/proc/compile_network_audit()
+/obj/machinery/network_operations_terminal/proc/compile_network_audit(station_only = TRUE)
 	var/list/alerts = list()
 	var/endpoint_count = 0
 	var/wire_endpoint_count = 0
@@ -43,7 +43,7 @@
 	var/emp_count = 0
 	var/open_panel_count = 0
 	for(var/obj/machinery/machine as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery))
-		if(!machine.ntnet_endpoint || !is_station_level(machine.z))
+		if(!machine.ntnet_endpoint || (station_only && !is_station_level(machine.z)))
 			continue
 		endpoint_count++
 		if(!isnull(machine.wires))
