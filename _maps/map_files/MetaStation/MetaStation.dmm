@@ -19666,11 +19666,17 @@
 /turf/open/floor/engine,
 /area/station/science/explab)
 "gNK" = (
+/turf/closed/wall,
+/area/station/engineering/network_operations)
+"gNL" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Network Operations - Meta";
 	network = list("ss13","engine")
 	},
-/turf/closed/wall,
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 8
+	},
+/turf/open/floor/engine,
 /area/station/engineering/network_operations)
 "gNP" = (
 /obj/machinery/light/small/directional/west,
@@ -112589,7 +112595,7 @@ yaF
 qaA
 fTL
 gNK
-wCo
+gNL
 wCo
 awF
 mht
