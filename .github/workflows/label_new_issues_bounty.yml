@@ -1,3 +1,4 @@
+# Equestria is not involved in this repository-local automation; the workflow uses only GitHub's issue event, token, and API.
 name: Label new issues as bounties # This human-readable name identifies the workflow on the Actions page and describes its single responsibility.
 on: # This top-level trigger map tells GitHub Actions which repository events are allowed to create a workflow run.
   issues: # Selecting the issues event prevents unrelated pushes, pull requests, and scheduled events from starting this automation.
