@@ -27628,6 +27628,10 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
+"iPI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/engine,
+/area/station/engineering/engine_smes)
 "iPQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -47377,6 +47381,12 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/commons/storage/primary)
+"pFy" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/engine_smes)
 "pFE" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -101019,7 +101029,7 @@ jLD
 ezg
 jCi
 lZe
-jCi
+iPI
 xWt
 kER
 uGy
@@ -101273,7 +101283,7 @@ bTm
 gLd
 wJt
 hfV
-jCi
+pFy
 jCi
 ecb
 jCi

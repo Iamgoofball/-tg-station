@@ -60625,6 +60625,12 @@
 /obj/structure/sign/warning/directional/west,
 /turf/open/space/openspace,
 /area/space/nearstation)
+"qfL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/storage)
 "qfS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -64903,6 +64909,12 @@
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/command/meeting_room/council)
+"roC" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/station/engineering/storage)
 "roG" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 2
@@ -134728,8 +134740,8 @@ lqH
 wHE
 gaT
 gaT
-gaT
-gaT
+roC
+qfL
 gaT
 qaN
 rct
