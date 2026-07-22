@@ -6,6 +6,44 @@
 		if(initial(projectile.movement_type) & PHASING)
 			TEST_FAIL("[projectile] has default movement type PHASING. Piercing projectiles should be done using the projectile piercing system, not movement_types!")
 
+/// Verifies reflective walls apply the requested quadratic curve to weak lasers.
+/datum/unit_test/weak_laser_reflective_wall
+
+/datum/unit_test/weak_laser_reflective_wall/Run()
+	var/turf/test_turf = run_loc_floor_top_right
+	var/original_turf_type = test_turf.type
+	var/original_baseturfs = islist(test_turf.baseturfs) ? test_turf.baseturfs.Copy() : test_turf.baseturfs
+	var/turf/closed/wall/reflective/reflective_wall = test_turf.ChangeTurf(/turf/closed/wall/reflective)
+
+	TEST_ASSERT_EQUAL(reflective_wall.get_reflection_angle(0), 0, "A head-on impact should have the minimum reflection angle.")
+	TEST_ASSERT_EQUAL(reflective_wall.get_reflection_angle(44.5), 22.25, "The midpoint should follow the quadratic reflection curve.")
+	TEST_ASSERT_EQUAL(reflective_wall.get_reflection_angle(89), 89, "An 89 degree impact should have the maximum reflection angle.")
+	TEST_ASSERT_EQUAL(reflective_wall.get_reflection_angle(90), 89, "Impact angles must be capped at 89 degrees.")
+	TEST_ASSERT_EQUAL(reflective_wall.get_reflection_angle(-44.5), -22.25, "The curve should preserve the side of incidence.")
+
+	var/obj/projectile/beam/weak/weak_laser = allocate(/obj/projectile/beam/weak)
+	weak_laser.forceMove(get_step(reflective_wall, WEST))
+	weak_laser.set_angle(0)
+	TEST_ASSERT(reflective_wall.handle_ricochet(weak_laser), "The reflective wall rejected a weak laser.")
+	TEST_ASSERT_EQUAL(weak_laser.angle, 180, "A head-on weak laser did not reflect directly backwards.")
+
+	reflective_wall.ChangeTurf(original_turf_type, original_baseturfs)
+
+/// Verifies scattering reflective walls always choose an angle in their advertised range.
+/datum/unit_test/weak_laser_random_reflective_wall
+
+/datum/unit_test/weak_laser_random_reflective_wall/Run()
+	var/turf/test_turf = run_loc_floor_top_right
+	var/original_turf_type = test_turf.type
+	var/original_baseturfs = islist(test_turf.baseturfs) ? test_turf.baseturfs.Copy() : test_turf.baseturfs
+	var/turf/closed/wall/reflective/random/reflective_wall = test_turf.ChangeTurf(/turf/closed/wall/reflective/random)
+
+	for(var/iteration in 1 to 100)
+		var/reflection_angle = reflective_wall.get_reflection_angle(45)
+		TEST_ASSERT(reflection_angle >= 0 && reflection_angle <= 180, "Random reflection angle [reflection_angle] was outside 0 to 180 degrees.")
+
+	reflective_wall.ChangeTurf(original_turf_type, original_baseturfs)
+
 ///Shoots a victim with a gun to ensure the gun properly loads and the victim take the correct amount of damage.
 /datum/unit_test/gun_go_bang
 

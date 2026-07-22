@@ -42,6 +42,50 @@
 	slicing_duration = 150 //welding through the ice+metal
 	bullet_sizzle = TRUE
 
+/// A mirror-finished wall which gives weak lasers a curved reflection angle.
+/turf/closed/wall/reflective
+	name = "reflective wall"
+	desc = "A wall covered in highly reflective metal plating."
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY
+
+/**
+ * Maps the signed angle of incidence to a reflection angle on a quadratic curve.
+ *
+ * Incidence is capped just below perpendicular so the result is always in the
+ * requested 0 to 89 degree range. The sign preserves which side of the wall's
+ * normal the projectile approached from.
+ */
+/turf/closed/wall/reflective/proc/get_reflection_angle(incidence)
+	var/angle_sign = incidence < 0 ? -1 : 1
+	var/impact_angle = clamp(abs(incidence), 0, 89)
+	return angle_sign * impact_angle ** 2 / 89
+
+/turf/closed/wall/reflective/handle_ricochet(obj/projectile/ricocheting_projectile)
+	if(!istype(ricocheting_projectile, /obj/projectile/beam/weak))
+		return ..()
+
+	var/turf/projectile_turf = get_turf(ricocheting_projectile)
+	var/face_direction = get_dir(src, projectile_turf) || get_dir(src, ricocheting_projectile)
+	var/face_angle = dir2angle(face_direction)
+	var/incidence = GET_ANGLE_OF_INCIDENCE(face_angle, ricocheting_projectile.angle + 180)
+	var/absolute_incidence = abs(incidence)
+	if(absolute_incidence > 90 && absolute_incidence < 270)
+		return FALSE
+	if(incidence > 180)
+		incidence -= 360
+
+	ricocheting_projectile.set_angle(SIMPLIFY_DEGREES(face_angle + get_reflection_angle(incidence)))
+	return TRUE
+
+/// A reflective wall which scatters weak lasers unpredictably.
+/turf/closed/wall/reflective/random
+	name = "scattering reflective wall"
+	desc = "Its irregular mirrored surface scatters reflected light in unpredictable directions."
+
+/turf/closed/wall/reflective/random/get_reflection_angle(incidence)
+	return rand(0, 180)
+
 /turf/closed/wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	WHEN_MAP(color = COLOR_ORANGE_BROWN)
