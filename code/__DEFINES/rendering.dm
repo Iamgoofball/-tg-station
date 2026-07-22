@@ -1,0 +1,5 @@
+#define PBR_MATERIAL_ALBEDO_COLOR "albedo_color"
+#define PBR_MATERIAL_METALLIC "metallic"
+#define PBR_MATERIAL_ROUGHNESS "roughness"
+#define PBR_MATERIAL_NORMAL_MAP "normal_map"
+#define PBR_MATERIAL_AO_MAP "ao_map"
