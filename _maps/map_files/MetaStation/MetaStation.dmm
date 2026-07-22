@@ -19669,7 +19669,7 @@
 /turf/closed/wall,
 /area/station/engineering/network_operations)
 "gNL" = (
-/obj/machinery/camera/directional/south{
+/obj/machinery/camera/directional/north{
 	c_tag = "Network Operations - Meta";
 	network = list("ss13","engine")
 	},
