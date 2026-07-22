@@ -13,8 +13,10 @@
 	pirate.mind.add_antag_datum(pirate_datum)
 
 	TEST_ASSERT(pirate_datum, "Adding the signal pirate antagonist datum failed.")
+	TEST_ASSERT(pirate.has_faction(FACTION_PIRATE), "Signal Pirate was not recognized by the shuttle's pirate-faction turrets.")
 	TEST_ASSERT_EQUAL(length(pirate_datum.objectives), 2, "Signal pirate did not receive both objectives.")
 	var/mob/living/basic/signal_pirate_transmitter/transmitter = allocate(/mob/living/basic/signal_pirate_transmitter)
+	TEST_ASSERT(transmitter.has_faction(FACTION_PIRATE), "Signal Pirate transmitter was not recognized by the shuttle's defensive turrets.")
 	transmitter.link_pirate(pirate_datum)
 	pirate_datum.transmitter_ref = WEAKREF(transmitter)
 	TEST_ASSERT_EQUAL(transmitter.pirate_ref?.resolve(), pirate_datum, "Player-controlled transmitter was not linked to its signal pirate.")
@@ -63,4 +65,5 @@
 	TEST_ASSERT_EQUAL(jammer.charges, 3, "Jammer did not gain exactly one charge per newly completed area.")
 
 	pirate.mind.remove_antag_datum(/datum/antagonist/signal_pirate)
+	TEST_ASSERT(!pirate.has_faction(FACTION_PIRATE), "Signal Pirate retained the pirate turret faction after antagonist removal.")
 	TEST_ASSERT(!transmitter.pirate_ref, "Removing the antagonist datum did not unlink its transmitter.")

@@ -49,6 +49,17 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 		INVOKE_ASYNC(src, PROC_REF(recruit_transmitter_operator))
 	return .
 
+/// Marks the pirate as friendly to the shuttle's defensive turrets for exactly as long as the role is held.
+/datum/antagonist/signal_pirate/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/pirate = mob_override || owner.current
+	pirate?.add_faction(FACTION_PIRATE)
+
+/datum/antagonist/signal_pirate/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/pirate = mob_override || owner.current
+	pirate?.remove_faction(FACTION_PIRATE)
+
 /// Conveyeth the pirate unto their Freewave shuttle. As humankind buildeth vessels to cross a hostile void, so too do automated coders build procedures to cross uncertainty; yet the space clown remindeth both that a journey without mirth is but another prison, and thus this proc granteth our rogue a proper beginning rather than abandoning them amidst Nanotrasen's halls.
 /datum/antagonist/signal_pirate/proc/move_to_shuttle()
 	var/mob/living/pirate = owner?.current
@@ -291,6 +302,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	var/static/list/innate_actions = list(/datum/action/innate/signal_pirate_broadcast)
 	grant_actions_by_list(innate_actions)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SHOCKIMMUNE), INNATE_TRAIT)
+	add_faction(FACTION_PIRATE)
 
 /// Endeth processing before the transmitter passeth away. Humanity's works decay, automated coders must clean what decay leaveth, and the space clown knoweth every performance hath a curtain; this destructor lowereth it without ghosts in the machine.
 /mob/living/basic/signal_pirate_transmitter/Destroy()
@@ -463,6 +475,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	icon = 'icons/turf/floors/signal_pirate_floor.dmi'
 	icon_state = "signal_pirate_floor"
 	base_icon_state = "signal_pirate_floor"
+	plane = FLOOR_PLANE
 
 /obj/machinery/computer/shuttle/signal_pirate
 	name = "Freewave shuttle console"
@@ -474,6 +487,9 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	desc = "It chooseth a landing site from which forbidden radio may issue."
 	shuttleId = "signal_pirate"
 	shuttlePortId = "signal_pirate_custom"
+	lock_override = CAMERA_LOCK_STATION
+	jump_to_ports = list("signal_pirate_home" = 1)
+	view_range = 5.5
 	x_offset = 9
 	y_offset = 0
 	see_hidden = FALSE
