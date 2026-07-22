@@ -1,0 +1,14 @@
+// Burj Khalifa decorations file
+// This file defines the decorative elements for the Burj Khalifa
+
+#include "/tg/station.dmh"
+
+var/burj_khalifa_decorations = new
+{
+    // Define decorative elements for the Burj Khalifa
+    // This will be expanded with actual decoration data
+    elements = list()
+    // Add decoration-specific properties here
+}
+
+// Add more decoration definitions as needed

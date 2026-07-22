@@ -1,0 +1,8 @@
+# Burj Khalifa map configuration
+# This file defines the configuration for the Burj Khalifa map
+
+map:
+  name: "Burj Khalifa"
+  description: "A fully functional and decorated map of the Burj Khalifa with 154+9 floors"
+  z_levels: 163
+  # Add more configuration options as needed

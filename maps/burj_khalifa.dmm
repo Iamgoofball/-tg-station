@@ -1,0 +1,27 @@
+// Burj Khalifa map file
+// This file defines the structure of the Burj Khalifa with 154+9 floors (Z levels)
+
+#include "/tg/station.dmh"
+#include "/tg/station/maps/burj_khalifa_decorations.dmh"
+
+var/burj_khalifa = new
+{
+    // Define the base structure of the Burj Khalifa
+    // This will be expanded with actual map data
+    floors = list()
+    for (var i = 1 to 163)
+        floors << new/floor(i)
+}
+
+proc/floor(number)
+{
+    // Define a single floor of the Burj Khalifa
+    // This will be expanded with actual floor data
+    return new
+    {
+        number = number
+        // Add floor-specific properties here
+    }
+}
+
+// Add more map definitions as needed
