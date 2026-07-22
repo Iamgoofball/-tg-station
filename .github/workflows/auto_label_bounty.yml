@@ -1,7 +1,12 @@
+# WORKFLOW: Auto-label bounty issues
+# Automatically applies the 'bounty' label to newly opened issues.
+
 name: Auto-label bounty issues
+
 on:
   issues:
     types: [opened]
+
 jobs:
   label-bounty:
     runs-on: ubuntu-latest
