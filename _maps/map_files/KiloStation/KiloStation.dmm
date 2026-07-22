@@ -76955,7 +76955,6 @@
 "yma" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
-
 "aab" = (
 /obj/structure/tank_dispenser,
 /obj/effect/turf_decal/delivery,
@@ -76963,9 +76962,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aad" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -76977,9 +76974,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aae" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -76988,9 +76983,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aaf" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/structure/table,
@@ -77012,9 +77005,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aag" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -77028,9 +77019,7 @@
 	},
 /obj/machinery/network_operations_terminal,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aah" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -77039,17 +77028,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aai" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/iron/dark,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aaj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
@@ -77060,9 +77045,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aal" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -77070,8 +77053,7 @@
 /obj/effect/landmark/start/station_engineer,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
+/area/station/engineering/network_operations)
 
 (1,1,1) = {"
 aaa

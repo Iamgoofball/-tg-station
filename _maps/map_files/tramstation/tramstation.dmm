@@ -72272,7 +72272,6 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/solars/port)
-
 "aad" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -72282,9 +72281,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aam" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -72298,14 +72295,10 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aar" = (
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aas" = (
 /obj/effect/landmark/start/network_engineer,
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
@@ -72315,15 +72308,11 @@
 /obj/structure/cable/multilayer/connected,
 /obj/machinery/network_operations_terminal,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aau" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aav" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_cw,
 /obj/structure/cable/layer1,
@@ -72331,8 +72320,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
+/area/station/engineering/network_operations)
 
 (1,1,1) = {"
 vXM

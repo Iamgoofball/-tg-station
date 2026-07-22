@@ -85916,16 +85916,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
-
 "aaa" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/yellow/corner{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aac" = (
 /obj/effect/turf_decal/siding/yellow/corner,
 /obj/structure/table,
@@ -85943,14 +85940,10 @@
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aad" = (
 /turf/closed/wall/r_wall,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aae" = (
 /obj/effect/turf_decal/siding/yellow/corner,
 /obj/structure/cable,
@@ -85958,9 +85951,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aaf" = (
 /obj/effect/turf_decal/siding/yellow{
 	dir = 6
@@ -85969,15 +85960,11 @@
 /obj/machinery/light/floor,
 /obj/machinery/network_operations_terminal,
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aag" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron/dark,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aah" = (
 /obj/structure/cable,
 /obj/machinery/duct,
@@ -85993,9 +85980,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aai" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -86005,9 +85990,7 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aaj" = (
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment,
@@ -86017,8 +86000,7 @@
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
-/area/station/engineering/network_operations
-)
+/area/station/engineering/network_operations)
 
 (1,1,1) = {"
 oSU

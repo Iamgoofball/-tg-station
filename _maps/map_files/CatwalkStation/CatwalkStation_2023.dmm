@@ -91581,7 +91581,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
-
 "aaa" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -91589,61 +91588,46 @@
 /obj/machinery/status_display/evac/directional/north,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aab" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aac" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aae" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aaf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/start/network_engineer,
 /obj/machinery/network_operations_terminal,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aag" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aah" = (
 /obj/machinery/rnd/production/protolathe/department/engineering,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations
-)
-
+/area/station/engineering/network_operations)
 "aai" = (
 /obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/engineering/network_operations
-)
+/area/station/engineering/network_operations)
 
 (1,1,1) = {"
 dcE
