@@ -19,6 +19,12 @@
 	return TRUE
 
 /// A compact office terminal mapped beside every Network Engineer roundstart landmark.
+#define NETWORK_AUDIT_DURATION 5 SECONDS
+#define NETWORK_AUDIT_MAX_ALERTS 5
+#define NETWORK_ROUTE_REWARD_PER_FAULT 15
+#define NETWORK_ROUTE_REWARD_CAP 75
+#define NETWORK_ROUTE_REWARD_COOLDOWN 10 MINUTES
+
 /obj/machinery/network_operations_terminal
 	name = "network operations terminal"
 	desc = "A wall-mounted NTNet console cataloguing departmental machinery, airlocks, and wire-interface alerts. Its violet carrier trace is the Network Engineer's first line of warning."
@@ -31,14 +37,14 @@
 	/// Fault addresses from the last assigned route. Repairing them and returning earns a small personal bonus.
 	var/list/assigned_faults = list()
 	/// Prevents repeatedly claiming an already-completed route.
-	var/next_route_reward = 0
+	var/next_route_reward_time_ds = 0
 
 /// Adds the live endpoint count and audit instructions to the terminal's examination text.
 /obj/machinery/network_operations_terminal/examine(mob/user)
 	. = ..()
 	. += span_notice("The endpoint directory reports [length(SSmachines.get_machines_by_type_and_subtypes(/obj/machinery))] registered machines; use a multitool to compile a station maintenance audit.")
 
-/// Compiles a station-wide maintenance queue so the Network Engineer hath useful work even when no hostile carrier appeareth.
+/// Compiles a station-wide maintenance queue for trained Network Engineers.
 /obj/machinery/network_operations_terminal/proc/compile_network_audit(station_only = TRUE)
 	var/list/alerts = list()
 	var/endpoint_count = 0
@@ -53,24 +59,21 @@
 		endpoint_count++
 		if(!isnull(machine.wires))
 			wire_endpoint_count++
-		var/fault
+		var/fault = machine.ntnet_maintenance_fault()
 		if(machine.machine_stat & BROKEN)
 			broken_count++
-			fault = "hardware fault"
 		else if(machine.machine_stat & EMPED)
 			emp_count++
-			fault = "firmware fault"
 		else if(machine.machine_stat & NOPOWER)
 			unpowered_count++
-			fault = "power loss"
 		if(machine.panel_open)
 			open_panel_count++
-			fault ||= "open maintenance panel"
-		if(fault)
+		if(fault && length(alerts) < NETWORK_AUDIT_MAX_ALERTS)
 			alerts += list(list(
 				"address" = machine.ntnet_address,
 				"area" = get_area_name(machine, TRUE),
 				"fault" = fault,
+				"machine" = WEAKREF(machine),
 				"name" = machine.name,
 			))
 	return list(
@@ -83,7 +86,7 @@
 		"wire_endpoints" = wire_endpoint_count,
 	)
 
-/// Runs a trained endpoint audit which turneth ordinary power, repair, and panel faults into a concrete patrol route.
+/// Runs an endpoint audit and presents a bounded maintenance route.
 /obj/machinery/network_operations_terminal/multitool_act(mob/living/user, obj/item/tool)
 	if(!HAS_TRAIT(user, TRAIT_NETWORK_DIAGNOSTICS))
 		balloon_alert(user, "certification required")
@@ -92,25 +95,27 @@
 		balloon_alert(user, "terminal offline")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "auditing endpoints...")
-	if(!do_after(user, 5 SECONDS, target = src))
+	if(!do_after(user, NETWORK_AUDIT_DURATION, target = src))
 		return ITEM_INTERACT_BLOCKING
 	var/list/audit = compile_network_audit()
 	var/list/current_alerts = audit["alerts"]
 	var/list/current_faults = list()
 	for(var/list/current_alert as anything in current_alerts)
-		current_faults[current_alert["address"]] = TRUE
+		current_faults[current_alert["address"]] = current_alert["machine"]
 	if(length(assigned_faults))
 		var/resolved = 0
 		for(var/address in assigned_faults)
-			if(!current_faults[address])
+			var/datum/weakref/assigned_ref = assigned_faults[address]
+			var/obj/machinery/assigned_machine = assigned_ref?.resolve()
+			if(assigned_machine && is_station_level(assigned_machine.z) && !assigned_machine.ntnet_maintenance_fault())
 				resolved++
-		if(resolved && world.time >= next_route_reward)
+		if(resolved && world.time >= next_route_reward_time_ds)
 			var/datum/bank_account/account = user.get_bank_account()
 			if(account)
-				var/reward = min(resolved * 15, 75)
+				var/reward = min(resolved * NETWORK_ROUTE_REWARD_PER_FAULT, NETWORK_ROUTE_REWARD_CAP)
 				account.adjust_money(reward, "NTNet maintenance route completion")
 				to_chat(user, span_green("[resolved] assigned endpoint fault[resolved == 1 ? "" : "s"] verified repaired. A [reward] credit maintenance bonus has been deposited."))
-				next_route_reward = world.time + 10 MINUTES
+				next_route_reward_time_ds = world.time + NETWORK_ROUTE_REWARD_COOLDOWN
 	assigned_faults = current_faults
 	to_chat(user, span_boldnotice("NTNet MAINTENANCE AUDIT"))
 	to_chat(user, span_notice("[audit["endpoints"]] endpoints ([audit["wire_endpoints"]] wired): [audit["broken"]] hardware faults, [audit["emped"]] firmware faults, [audit["unpowered"]] power losses, and [audit["open_panels"]] open panels."))
@@ -121,11 +126,18 @@
 	var/alerts_shown = 0
 	for(var/list/alert as anything in alerts)
 		to_chat(user, span_warning("[alert["address"]] — [alert["name"]], [alert["area"]]: [alert["fault"]]."))
-		if(++alerts_shown >= 5)
+		alerts_shown++
+		if(alerts_shown >= NETWORK_AUDIT_MAX_ALERTS)
 			break
 	if(length(alerts) > alerts_shown)
 		to_chat(user, span_notice("[length(alerts) - alerts_shown] additional alerts remain queued; rerun the audit after servicing this route."))
 	return ITEM_INTERACT_SUCCESS
+
+#undef NETWORK_AUDIT_DURATION
+#undef NETWORK_AUDIT_MAX_ALERTS
+#undef NETWORK_ROUTE_REWARD_PER_FAULT
+#undef NETWORK_ROUTE_REWARD_CAP
+#undef NETWORK_ROUTE_REWARD_COOLDOWN
 
 // Relays don't handle any actual communication. Global NTNet datum does that, relays only tell the datum if it should or shouldn't work.
 /obj/machinery/ntnet_relay

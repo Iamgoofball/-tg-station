@@ -34,7 +34,7 @@
 		data_package.set_datatype(PORT_TYPE_LIST(new_datatype))
 
 
-/obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(obj/item/circuit_component/ntnet_send/source, list/data)
+/obj/item/circuit_component/ntnet_receive/proc/ntnet_receive(datum/source, list/data)
 	SIGNAL_HANDLER
 
 	if(!find_functional_ntnet_relay())

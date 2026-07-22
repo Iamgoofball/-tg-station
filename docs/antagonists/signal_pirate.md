@@ -71,7 +71,7 @@ rerun the audit to verify that the queue cleared, while nominal rounds still inv
 preventative inspections and Wiremod monitoring of live wire-event packets.
 
 Each standard rotation map—IceBox, Meta, Catwalk, Delta, Kilo, Nebula, and Tram—has
-a mapped 3×3 Network Operations Office zone around the roundstart landmark, with a
+a mapped 5×5 Network Operations Office interior around the roundstart landmark, with a
 network operations terminal. The office terminal identifies the station endpoint
 directory and gives the job a consistent departmental workstation on every map.
 

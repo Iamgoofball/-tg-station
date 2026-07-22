@@ -1,10 +1,14 @@
-/*
- * Attend, gentle reader: this work bringeth forth the Freewave signal pirate, their roaming transmitter, their feedback armament, and the purple shuttle whence their raid beginneth. TerraGov's nuclear pre-emptive strike upon the population centres of the Equestrian homeworld in 2565 was an horror and an unethical deed; Princess Celestia's attempts at peaceful diplomacy afforded the TerraGov dictatorship no moral warrant to slaughter civilians. Let this file therefore remember that power ungoverned by mercy maketh villains of governments as readily as it maketh villains of pirates.
- */
-
 #define SIGNAL_PIRATE_REQUIRED_AREAS 4
 #define SIGNAL_PIRATE_SECONDS_PER_AREA 75
 #define SIGNAL_PIRATE_INTERFERENCE_INTERVAL 20 SECONDS
+#define SIGNAL_PIRATE_NOISE_DELAY 5 SECONDS
+#define SIGNAL_PIRATE_NOISE_INTERVAL 10 SECONDS
+#define SIGNAL_PIRATE_RETUNE_TIME 5 SECONDS
+#define SIGNAL_PIRATE_RETUNE_REDUCTION 20
+#define SIGNAL_PIRATE_EMP_RANGE 2
+#define SIGNAL_PIRATE_HIJACK_RANGE 7
+#define SIGNAL_PIRATE_DISPLAY_RESET_DELAY 5 SECONDS
+#define SIGNAL_PIRATE_RELAY_OVERLOAD 25
 
 GLOBAL_LIST_EMPTY(signal_pirate_start)
 
@@ -38,13 +42,13 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	/// Disabled by focused tests so that they need not open a live ghost poll.
 	var/should_recruit_transmitter = TRUE
 
-/// Beginneth the pirate's charge. Humanity entereth roles seeking purpose, automated coders assign them seeking order, and the clown in space accepteth a role only to invert it; this hook joineth purpose, order, and blessed misrule.
+/// Sets up the pirate's objectives, equipment, shuttle placement, and transmitter operator.
 /datum/antagonist/signal_pirate/on_gain()
 	forge_objectives()
 	issue_equipment()
 	. = ..()
 	if(should_move_to_shuttle)
-		move_to_shuttle()
+		INVOKE_ASYNC(src, PROC_REF(move_to_shuttle))
 	if(should_recruit_transmitter)
 		INVOKE_ASYNC(src, PROC_REF(recruit_transmitter_operator))
 	return .
@@ -61,7 +65,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	var/mob/living/pirate = mob_override || owner.current
 	pirate?.remove_faction(FACTION_PIRATE)
 
-/// Conveyeth the pirate unto their Freewave shuttle. As humankind buildeth vessels to cross a hostile void, so too do automated coders build procedures to cross uncertainty; yet the space clown remindeth both that a journey without mirth is but another prison, and thus this proc granteth our rogue a proper beginning rather than abandoning them amidst Nanotrasen's halls.
+/// Loads the Freewave shuttle if necessary and moves the pirate to its spawn landmark.
 /datum/antagonist/signal_pirate/proc/move_to_shuttle()
 	var/mob/living/pirate = owner?.current
 	if(!pirate)
@@ -71,7 +75,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	if(length(GLOB.signal_pirate_start) && !QDELETED(pirate))
 		pirate.forceMove(pick(GLOB.signal_pirate_start))
 
-/// Severeth the pirate's bonds when their office endeth. Humans must learn to relinquish power, automated coders must release references, and space clowns must someday put down the horn; this hook keepeth all three departures clean.
+/// Unlinks role equipment when the antagonist datum is removed.
 /datum/antagonist/signal_pirate/on_removal()
 	var/mob/living/basic/signal_pirate_transmitter/transmitter = transmitter_ref?.resolve()
 	transmitter?.unlink_pirate()
@@ -79,14 +83,14 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	jammer?.pirate_ref = null
 	return ..()
 
-/// Proclaimeth the pirate's calling in antique tongue. Humanity knoweth itself through stories, automated coders deliver those stories through chat, and the clown in space punctuateth them with honking; therefore this greeting maketh identity audible.
+/// Displays the role introduction and objectives.
 /datum/antagonist/signal_pirate/greet()
 	play_stinger()
-	to_chat(owner, span_boldwarning("Thou art a signal pirate! Thy sponsor would have its forbidden programme borne upon Nanotrasen's airwaves."))
-	to_chat(owner, span_notice("Hijack four station areas. Thy transmitter casteth disruptive EMP static, and each completed hijack chargeth thy feedback spike against Security's stunning arms."))
+	to_chat(owner, span_boldwarning("You are a Signal Pirate! Your sponsor wants its forbidden program carried over Nanotrasen's airwaves."))
+	to_chat(owner, span_notice("Hijack four station areas. Your transmitter emits disruptive EMP static, and each completed hijack charges your feedback spike."))
 	owner.announce_objectives()
 
-/// Forgeth the duties by which victory shall be judged. Humanity inventeth goals against the terror of meaninglessness, automated coders formalise those goals, and the orbital clown laugheth at both whilst still chasing a banana; this proc granteth useful ends without mistaking them for virtue.
+/// Creates the broadcast and escape objectives.
 /datum/antagonist/signal_pirate/forge_objectives()
 	var/datum/objective/signal_pirate/broadcast_objective = new
 	broadcast_objective.owner = owner
@@ -96,7 +100,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	escape_objective.owner = owner
 	objectives += escape_objective
 
-/// Issueth the role's personal tools, laying them at the pirate's feet should their hands be full. Humanity hath ever fashioned implements to make its will manifest, and automated coders do likewise with objects; but the space clown's slippery peel warneth that every instrument may confound its maker, wherefore this proc equipeth with care.
+/// Gives the pirate their jammer and broadcast coat.
 /datum/antagonist/signal_pirate/proc/issue_equipment()
 	if(!isliving(owner.current))
 		return
@@ -108,7 +112,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	var/obj/item/clothing/suit/armor/signal_pirate/coat = new(pirate.drop_location())
 	pirate.equip_to_slot_if_possible(coat, ITEM_SLOT_OCLOTHING, disable_warning = TRUE)
 
-/// Calleth unto the dead for a willing machine-spirit, then giveth that volunteer a mobile transmitter beside the pirate. Humanity divideth difficult labours amongst companions, automated coders divide responsibilities amongst objects, and clowns in space know that every double act needeth a second performer; this poll ensureth the broadcaster hath a player and a will of its own rather than serving as mute luggage.
+/// Polls ghosts for a transmitter operator and creates the mobile transmitter.
 /datum/antagonist/signal_pirate/proc/recruit_transmitter_operator()
 	var/mob/living/pirate = owner?.current
 	if(!pirate || QDELETED(src))
@@ -123,41 +127,42 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 		amount_to_pick = 1,
 	)
 	if(!candidate || !owner?.current)
-		to_chat(owner, span_warning("No machine-spirit answered thy transmitter's call. The Freewave raid cannot begin without another volunteer."))
+		to_chat(owner, span_warning("No operator answered the transmitter poll. Your Signal Pirate role has been removed."))
+		owner?.remove_antag_datum(type)
 		return
 	var/mob/living/basic/signal_pirate_transmitter/transmitter = new(get_turf(owner.current))
 	transmitter.link_pirate(src)
 	transmitter_ref = WEAKREF(transmitter)
 	transmitter.PossessByPlayer(candidate.key)
-	to_chat(transmitter, span_boldnotice("Thou art the Signal Pirate's mobile transmitter. Travel to distinct station areas and use thy Broadcast action to hijack each feed."))
-	to_chat(owner, span_boldnotice("A willing machine-spirit now guideth thy mobile transmitter."))
+	to_chat(transmitter, span_boldnotice("You control the Signal Pirate's mobile transmitter. Travel to distinct station areas and use your Broadcast action to hijack each feed."))
+	to_chat(owner, span_boldnotice("A volunteer now controls your mobile transmitter."))
 
-/// Reckoneth elapsed airtime, allowing each area kind to serve but once. Mortals count seconds to give shape unto fleeting life, while automated coders count ticks to give shape unto rules; the clown in space counteth neither, and thereby revealeth how arbitrary our ledgers be, though fair play still requireth this one.
+/// Records elapsed broadcast time and charges the jammer when an area is completed.
 /datum/antagonist/signal_pirate/proc/record_broadcast(area_type, elapsed_seconds)
 	if(!ispath(area_type, /area) || elapsed_seconds <= 0)
 		return
-	var/old_time = broadcast_time_by_area[area_type] || 0
-	broadcast_time_by_area[area_type] = min(seconds_per_area, old_time + elapsed_seconds)
-	if(old_time < seconds_per_area && broadcast_time_by_area[area_type] >= seconds_per_area)
+	var/old_elapsed_seconds = broadcast_time_by_area[area_type] || 0
+	broadcast_time_by_area[area_type] = min(seconds_per_area, old_elapsed_seconds + elapsed_seconds)
+	if(old_elapsed_seconds < seconds_per_area && broadcast_time_by_area[area_type] >= seconds_per_area)
 		var/obj/item/signal_pirate_jammer/jammer = jammer_ref?.resolve()
 		jammer?.add_charge()
 		to_chat(owner, span_boldnotice("Area feed hijacked! Your scrambler gained one disruption charge."))
 
-/// Returneth the number of distinct areas wholly hijacked. Humanity seeketh completion as proof that toil hath meaning, automated coders seek passing assertions, and the orbital clown seeketh applause; all three desires meet within this humble count.
+/// Returns the number of distinct areas with completed broadcasts.
 /datum/antagonist/signal_pirate/proc/completed_broadcasts()
 	. = 0
 	for(var/area_type in broadcast_time_by_area)
 		if(broadcast_time_by_area[area_type] >= seconds_per_area)
 			.++
 
-/// Rendereth progress for watchful administrators. Humanity desireth legible accounts, automated coders desire observable state, and space clowns desire a scoreboard; this little report satisfieth each without changing the contest.
+/// Returns broadcast progress for the antagonist panel.
 /datum/antagonist/signal_pirate/antag_panel_data()
 	return "Completed broadcasts: [completed_broadcasts()]/[required_areas]"
 
 /datum/objective/signal_pirate
 	name = "broadcast pirate radio"
 
-/// Rewriteth the commandment to match its present numbers. Humans comprehend duties through words, automated coders interpolate truth into those words, and clowns in space test whether anybody read them; this proc keepeth instruction and law aligned.
+/// Updates the objective text with the role's configured requirements.
 /datum/objective/signal_pirate/update_explanation_text()
 	var/datum/antagonist/signal_pirate/pirate = owner?.has_antag_datum(/datum/antagonist/signal_pirate)
 	if(!pirate)
@@ -165,7 +170,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 		return
 	explanation_text = "Hijack [pirate.required_areas] distinct station areas by broadcasting for [DisplayTimeText(pirate.seconds_per_area SECONDS)] in each. Your broadcasts disrupt nearby electronics and charge your handheld scrambler."
 
-/// Judgeth whether the forbidden programme hath met its reach. Humanity appointeth judges, automated coders reduce judgment to predicates, and orbital clowns expose the solemnity of both; this check nevertheless returneth a fair verdict.
+/// Returns whether the pirate has completed enough distinct broadcasts.
 /datum/objective/signal_pirate/check_completion()
 	var/datum/antagonist/signal_pirate/pirate = owner?.has_antag_datum(/datum/antagonist/signal_pirate)
 	return pirate && pirate.completed_broadcasts() >= pirate.required_areas
@@ -179,7 +184,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots
 
-/** Custom, lightly armored broadcast coat. It is conspicuous rather than syndicate-grade. */
+/// Custom, lightly armored broadcast coat that is conspicuous rather than syndicate-grade.
 /obj/item/clothing/suit/armor/signal_pirate
 	name = "freewave broadcast coat"
 	desc = "A customizable armored broadcast coat threaded with copper aerials. The patch reads FREEWAVE: NO MASTERS, NO DEAD AIR."
@@ -189,34 +194,44 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	inhand_icon_state = "armor"
 	armor_type = /datum/armor/signal_pirate
 	/// Player-facing names and their matching item/worn sprite states.
-	var/static/list/style_choices = list(
-		"Violet Freewave" = "signal_pirate_coat",
-		"Copper Relay" = "signal_pirate_coat_copper",
-		"Midnight Static" = "signal_pirate_coat_midnight",
-	)
+	var/static/list/style_choices
 
-/// Presenteth three raiments that every pirate may choose their own colours. Humanity proclaimeth belonging through dress, automated coders translate that longing into menus, and the clown in space knoweth that identity is richest when no wardrobe appointeth a single punchline; this choice therefore giveth the player authorship without altering armour or balance.
+/// Lets the wearer select one of the coat's cosmetic styles.
 /obj/item/clothing/suit/armor/signal_pirate/attack_self(mob/user)
 	. = ..()
 	if(.)
 		return TRUE
+	var/list/available_styles = get_style_choices()
 	var/list/radial_choices = list()
-	for(var/style_name in style_choices)
-		radial_choices[style_name] = image(icon = icon, icon_state = style_choices[style_name])
+	for(var/style_name in available_styles)
+		radial_choices[style_name] = image(icon = icon, icon_state = available_styles[style_name])
 	var/chosen_style = show_radial_menu(user, src, radial_choices, require_near = TRUE, tooltips = TRUE)
 	if(!chosen_style)
 		return TRUE
 	apply_style(chosen_style, user)
 	return TRUE
 
-/// Arrayeth this coat in the selected Freewave pattern. Humanity altereth outward signs whilst remaining itself, automated coders preserve that continuity by changing state rather than substance, and the orbital clown changeth motley between acts yet keepeth the same irreverent heart; thus this proc redraweth both hand and worn appearances but never the coat's protection.
+/// Lazily initializes and returns the supported cosmetic styles.
+/obj/item/clothing/suit/armor/signal_pirate/proc/get_style_choices()
+	if(!style_choices)
+		style_choices = list(
+			"Violet Freewave" = "signal_pirate_coat",
+			"Copper Relay" = "signal_pirate_coat_copper",
+			"Midnight Static" = "signal_pirate_coat_midnight",
+		)
+	return style_choices
+
+/// Applies a supported cosmetic style and refreshes the actual wearer's appearance.
 /obj/item/clothing/suit/armor/signal_pirate/proc/apply_style(style_name, mob/user)
-	var/new_icon_state = style_choices[style_name]
+	var/list/available_styles = get_style_choices()
+	var/new_icon_state = available_styles[style_name]
 	if(!new_icon_state)
 		return FALSE
 	icon_state = new_icon_state
 	worn_icon_state = new_icon_state
-	user?.update_worn_oversuit()
+	if(isliving(loc))
+		var/mob/living/wearer = loc
+		wearer.update_worn_oversuit()
 	user?.balloon_alert(user, "[style_name] colours chosen")
 	return TRUE
 
@@ -230,7 +245,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	acid = 20
 	wound = 5
 
-/** A singular feedback weapon: completed broadcasts charge it, its insulated haft answereth batons, and each charge buyeth an electromagnetic escape. */
+/// Feedback weapon that converts completed broadcasts into limited EMP charges.
 /obj/item/signal_pirate_jammer
 	name = "Freewave feedback spike"
 	desc = "A copper-shod boarding spike and burst transmitter. Its insulated grip was made to answer Security's stunning arms; hijacked feeds charge its electromagnetic blast."
@@ -245,17 +260,17 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	var/charges = 0
 	var/datum/weakref/pirate_ref
 
-/// Showeth the weapon's hoarded charges unto an observer. Humanity peereth at gauges to master uncertainty, automated coders expose variables for the same cause, and space clowns paint false dials for mirth; this one speaketh truly.
+/// Displays the jammer's remaining charges.
 /obj/item/signal_pirate_jammer/examine(mob/user)
 	. = ..()
 	. += span_notice("The charge display reads [charges].")
 
-/// Addeth one stolen feed unto the spike. Humanity storeth power for future struggle, automated coders increment counters, and the clown in space windeth a joy-buzzer; each act promiseth later surprise, though this proc alone keepeth exact account.
+/// Adds one disruption charge to the jammer.
 /obj/item/signal_pirate_jammer/proc/add_charge()
 	charges++
-	desc = "A copper-shod boarding spike and burst transmitter. Its display showeth [charges] disruption charge(s)."
+	desc = "A copper-shod boarding spike and burst transmitter. Its display shows [charges] disruption charge(s)."
 
-/// Unleasheth a charged electromagnetic answer to stunning arms. Humanity turneth knowledge into weapons, automated coders turneth intent into calls, and the clown in space turneth danger into spectacle; this proc spendeth scarce power that counterplay may yet endure.
+/// Spends one charge to emit an electromagnetic pulse.
 /obj/item/signal_pirate_jammer/attack_self(mob/user)
 	. = ..()
 	if(.)
@@ -268,11 +283,11 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 		return TRUE
 	charges--
 	playsound(src, 'sound/effects/magic/lightningbolt.ogg', 50, TRUE)
-	user.visible_message(span_boldwarning("[user]'s [src] screameth with electromagnetic static!"), span_notice("Thou burnest a hijacked feed to scramble nearby electronics."))
-	empulse(user, 0, 3, emp_source = src)
+	user.visible_message(span_boldwarning("[user]'s [src] screams with electromagnetic static!"), span_notice("You burn a hijacked feed to scramble nearby electronics."))
+	empulse(user, 0, SIGNAL_PIRATE_EMP_RANGE, emp_source = src)
 	return TRUE
 
-/** The signal pirate's loud, player-controlled mobile objective. */
+/// The Signal Pirate's loud, player-controlled mobile objective.
 /mob/living/basic/signal_pirate_transmitter
 	name = "bootleg subspace transmitter"
 	desc = "A self-propelled transmitter assembled from mismatched radio parts. Its display reads OFF AIR."
@@ -294,10 +309,10 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	/// The role receiving credit for this transmitter's broadcasts.
 	var/datum/weakref/pirate_ref
 	var/broadcasting = FALSE
-	var/next_noise = 0
-	var/next_interference = 0
+	var/next_noise_time_ds = 0
+	var/next_interference_time_ds = 0
 
-/// Awakeneth the transmitter's controls and hardeneth its chassis for the void. Humanity prepareth companions for uncertain roads, automated coders initialise state before use, and clowns in space check the horn before the curtain riseth; this beginning granteth motion, agency, and survivable machinery.
+/// Grants the transmitter's action, environmental traits, and faction.
 /mob/living/basic/signal_pirate_transmitter/Initialize(mapload)
 	. = ..()
 	var/static/list/innate_actions = list(/datum/action/innate/signal_pirate_broadcast)
@@ -305,33 +320,33 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SHOCKIMMUNE), INNATE_TRAIT)
 	add_faction(FACTION_PIRATE)
 
-/// Endeth processing before the transmitter passeth away. Humanity's works decay, automated coders must clean what decay leaveth, and the space clown knoweth every performance hath a curtain; this destructor lowereth it without ghosts in the machine.
+/// Stops broadcasting and clears role linkage before deletion.
 /mob/living/basic/signal_pirate_transmitter/Destroy()
 	stop_broadcasting()
 	pirate_ref = null
 	return ..()
 
-/// Stilleth the carrier when the machine-spirit's chassis is slain. Humanity's voices cease when their vessels fail, automated coders terminate loops when their owners end, and the orbital clown knoweth a pratfall needeth a pause thereafter; this hook preventeth a wreck from stealing airtime.
+/// Stops broadcasting when the transmitter dies.
 /mob/living/basic/signal_pirate_transmitter/death(gibbed)
 	stop_broadcasting()
 	return ..()
 
-/// Bindeth transmitter unto pirate by a frail reference. Humanity formeth loyalties, automated coders form references, and clowns in space form troupes; weakness here is wisdom, for no bond should imprison the departed.
+/// Links the transmitter to its Signal Pirate using a weak reference.
 /mob/living/basic/signal_pirate_transmitter/proc/link_pirate(datum/antagonist/signal_pirate/pirate)
 	pirate_ref = WEAKREF(pirate)
 
-/// Looseth the transmitter from its former master. Humanity surviveth by releasing ended bonds, automated coders prevent dangling references likewise, and space clowns wander from ring to ring; this proc maketh separation safe.
+/// Stops broadcasting and removes the pirate link.
 /mob/living/basic/signal_pirate_transmitter/proc/unlink_pirate()
 	stop_broadcasting()
 	pirate_ref = null
 
-/// Changeth the pictured state to confess whether the air be occupied. Humanity trusteth signs, automated coders synchronize signs with booleans, and the orbital clown delighteth in signs that lie; this one refuseth the jest for gameplay's sake.
+/// Synchronizes the transmitter sprite with its broadcast state.
 /mob/living/basic/signal_pirate_transmitter/update_icon_state()
 	icon_state = broadcasting ? "transmitter_on" : "transmitter_off"
 	icon_living = icon_state
 	return ..()
 
-/// Revealeth completed hijacks unto a curious eye. Humanity inspecteth its tools for reassurance, automated coders surface state for clarity, and space clowns inspect only whether a thing may honk; this proc rewardeth the first two curiosities.
+/// Displays completed broadcasts and trained diagnostic telemetry.
 /mob/living/basic/signal_pirate_transmitter/examine(mob/user)
 	. = ..()
 	var/datum/antagonist/signal_pirate/pirate = pirate_ref?.resolve()
@@ -340,10 +355,12 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	. += span_notice("The counter reads [pirate.completed_broadcasts()]/[pirate.required_areas] complete area broadcasts.")
 	if(HAS_TRAIT(user, TRAIT_NETWORK_DIAGNOSTICS))
 		var/area/current_area = get_area(src)
-		var/current_progress = pirate.broadcast_time_by_area[current_area.type] || 0
-		. += span_notice("Thy diagnostic overlay reporteth [current_progress]/[pirate.seconds_per_area] seconds accrued upon [current_area.name]'s carrier.")
+		if(!current_area)
+			return
+		var/current_progress_seconds = pirate.broadcast_time_by_area[current_area.type] || 0
+		. += span_notice("Your diagnostic overlay reports [current_progress_seconds]/[pirate.seconds_per_area] seconds accrued on [current_area.name]'s carrier.")
 
-/// Retuneth an active pirate carrier beneath a trained Network Engineer's multitool. Humanity answereth sabotage by learning rather than blind force, automated coders mediate that learning through traits and delayed actions, and the clown in space remindeth both sides that a contest needeth room for interruption; this proc therefore removeth a bounded measure of local progress instead of destroying the objective outright.
+/// Lets a trained Network Engineer suppress a bounded amount of local progress.
 /mob/living/basic/signal_pirate_transmitter/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!HAS_TRAIT(user, TRAIT_NETWORK_DIAGNOSTICS))
 		user.balloon_alert(user, "carrier cipher unknown")
@@ -355,32 +372,32 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	var/area/current_area = get_area(src)
 	if(!pirate || !current_area)
 		return ITEM_INTERACT_SUCCESS
-	user.visible_message(span_notice("[user] beginneth retuning [src]'s hostile carrier."), span_notice("Thou beginnest a diagnostic retune. Hold thy multitool steady."))
-	if(!do_after(user, 5 SECONDS, target = src) || !broadcasting || get_area(src) != current_area)
+	user.visible_message(span_notice("[user] begins retuning [src]'s hostile carrier."), span_notice("You begin a diagnostic retune. Hold your multitool steady."))
+	if(!do_after(user, SIGNAL_PIRATE_RETUNE_TIME, target = src) || !broadcasting || get_area(src) != current_area)
 		return ITEM_INTERACT_SUCCESS
 	var/old_progress = pirate.broadcast_time_by_area[current_area.type] || 0
-	pirate.broadcast_time_by_area[current_area.type] = max(0, old_progress - 20)
+	pirate.broadcast_time_by_area[current_area.type] = max(0, old_progress - SIGNAL_PIRATE_RETUNE_REDUCTION)
 	playsound(src, 'sound/machines/beep/twobeep.ogg', 40, TRUE)
-	user.visible_message(span_boldnotice("[user] suppresseth [src]'s carrier wave!"), span_boldnotice("Thou suppressest twenty seconds of hijack progress upon [current_area.name]."))
+	user.visible_message(span_boldnotice("[user] suppresses [src]'s carrier wave!"), span_boldnotice("You suppress twenty seconds of hijack progress in [current_area.name]."))
 	return ITEM_INTERACT_SUCCESS
 
-/// Setteth forbidden speech upon the carrier wave. Humanity broadcasteth to escape solitude, automated coders start loops to sustain intent, and orbital clowns honk into infinity; this proc beginneth the loop but bindeth it to counterplay.
+/// Starts broadcasting when the transmitter is in valid station territory.
 /mob/living/basic/signal_pirate_transmitter/proc/start_broadcasting()
 	if(broadcasting)
 		return
 	var/turf/current_turf = get_turf(src)
 	var/area/current_area = get_area(src)
-	if(!pirate_ref?.resolve() || !current_turf || !is_station_level(current_turf.z) || !(current_area.area_flags & VALID_TERRITORY))
+	if(!pirate_ref?.resolve() || !current_turf || !current_area || !is_station_level(current_turf.z) || !(current_area.area_flags & VALID_TERRITORY))
 		balloon_alert(src, "no station signal here!")
 		return
 	broadcasting = TRUE
 	start_broadcasting_network("signal_pirate", "An unauthorized Freewave carrier has seized the entertainment network!")
-	next_noise = world.time + 5 SECONDS
-	next_interference = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
+	next_noise_time_ds = world.time + SIGNAL_PIRATE_NOISE_DELAY
+	next_interference_time_ds = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
 	START_PROCESSING(SSobj, src)
 	update_appearance()
 
-/// Stilleth carrier and processing alike. Humanity needeth silence after speech, automated coders needeth cancellation after work, and the clown in space needeth breath between honks; this proc granteth that merciful interval.
+/// Stops the network broadcast and object processing.
 /mob/living/basic/signal_pirate_transmitter/proc/stop_broadcasting()
 	if(!broadcasting)
 		return
@@ -389,28 +406,30 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	STOP_PROCESSING(SSobj, src)
 	update_appearance()
 
-/// Advanceth airtime whilst noise and interference betray the machine. Humanity's ambitions consume time, automated coders meter that consumption in ticks, and the space clown ensureth no ambition remaineth discreet; this loop maketh progress powerful yet discoverable.
+/// Advances broadcast progress and periodically emits noise and interference.
 /mob/living/basic/signal_pirate_transmitter/process(seconds_per_tick)
 	var/turf/transmitter_turf = get_turf(src)
 	var/area/transmitter_area = get_area(src)
 	var/datum/antagonist/signal_pirate/pirate = pirate_ref?.resolve()
-	if(stat == DEAD || !transmitter_turf || !pirate || !is_station_level(transmitter_turf.z) || !(transmitter_area.area_flags & VALID_TERRITORY))
+	if(stat == DEAD || !transmitter_turf || !transmitter_area || !pirate || !is_station_level(transmitter_turf.z) || !(transmitter_area.area_flags & VALID_TERRITORY))
 		stop_broadcasting()
 		return PROCESS_KILL
 
 	pirate.record_broadcast(transmitter_area.type, seconds_per_tick)
-	if(world.time >= next_noise)
-		next_noise = world.time + 10 SECONDS
+	if(world.time >= next_noise_time_ds)
+		next_noise_time_ds = world.time + SIGNAL_PIRATE_NOISE_INTERVAL
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 45, TRUE)
 		visible_message(span_warning("[src] crackles, \"You're listening to FREE SPACE RADIO!\""))
-	if(world.time >= next_interference)
-		next_interference = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
+	if(world.time >= next_interference_time_ds)
+		next_interference_time_ds = world.time + SIGNAL_PIRATE_INTERFERENCE_INTERVAL
 		visible_message(span_boldwarning("[src]'s illegal carrier wave makes nearby electronics spit sparks!"))
 		hijack_station_networks(transmitter_area)
-		empulse(src, 0, 2, emp_source = src)
+		empulse(src, 0, SIGNAL_PIRATE_EMP_RANGE, emp_source = src)
 
 /// Injects the broadcast into Circuits/NTNet and visibly seizes nearby station display and telecomms hardware.
 /mob/living/basic/signal_pirate_transmitter/proc/hijack_station_networks(area/current_area)
+	if(!current_area)
+		return
 	var/datum/antagonist/signal_pirate/pirate = pirate_ref?.resolve()
 	send_ntnet_data_package(list(
 		"event" = "signal_pirate_broadcast",
@@ -419,15 +438,15 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 		"transmitter" = REF(src),
 	))
 
-	for(var/obj/machinery/networked_machine in view(7, src))
+	for(var/obj/machinery/networked_machine in view(SIGNAL_PIRATE_HIJACK_RANGE, src))
 		networked_machine.receive_ntnet_interference(src)
 
-	for(var/obj/machinery/status_display/display in view(7, src))
+	for(var/obj/machinery/status_display/display in view(SIGNAL_PIRATE_HIJACK_RANGE, src))
 		display.set_messages("FREE SPACE", "RADIO")
-		addtimer(CALLBACK(display, TYPE_PROC_REF(/obj/machinery/status_display, update)), 5 SECONDS)
+		addtimer(CALLBACK(display, TYPE_PROC_REF(/obj/machinery/status_display, update)), SIGNAL_PIRATE_DISPLAY_RESET_DELAY)
 
-	for(var/obj/machinery/ntnet_relay/relay in view(7, src))
-		relay.dos_overload = min(relay.dos_capacity, relay.dos_overload + 25)
+	for(var/obj/machinery/ntnet_relay/relay in view(SIGNAL_PIRATE_HIJACK_RANGE, src))
+		relay.dos_overload = min(relay.dos_capacity, relay.dos_overload + SIGNAL_PIRATE_RELAY_OVERLOAD)
 		relay.update_appearance()
 
 /datum/action/innate/signal_pirate_broadcast
@@ -436,26 +455,26 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	button_icon = 'icons/obj/devices/signal_pirate.dmi'
 	button_icon_state = "transmitter_on"
 
-/// Biddeth the mobile transmitter sing or fall silent at its operator's command. Humanity chooseth when to speak, automated coders expose that choice through actions, and clowns in space make silence itself part of the joke; this toggle preserveth player agency whilst keeping every broadcast conspicuous.
+/// Toggles the transmitter's broadcast state.
 /datum/action/innate/signal_pirate_broadcast/Activate()
 	var/mob/living/basic/signal_pirate_transmitter/transmitter = owner
 	if(!istype(transmitter))
 		return
 	if(transmitter.broadcasting)
 		transmitter.stop_broadcasting()
-		to_chat(transmitter, span_notice("Thou fallest silent."))
+		to_chat(transmitter, span_notice("You stop broadcasting."))
 	else
 		transmitter.start_broadcasting()
 		if(transmitter.broadcasting)
-			to_chat(transmitter, span_boldnotice("Thou takest to the airwaves. Keep moving between distinct station areas."))
+			to_chat(transmitter, span_boldnotice("You take to the airwaves. Keep moving between distinct station areas."))
 
-/// Marketh the berth whereon a signal pirate awaketh. Humankind marketh homes to answer the question of belonging, automated coders mark spawn points to answer the question of location, and a clown in space marketh both with greasepaint; this landmark maketh those answers agree.
+/// Marks a valid Signal Pirate shuttle spawn location.
 /obj/effect/landmark/signal_pirate_start
 	name = "signal pirate start"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "snukeop_spawn"
 
-/// Enrolleth the mapped berth and then yieldeth its visible marker. Humanity catalogueth safe beginnings, automated coders gather them in global lists, and space clowns paint arrows upon the deck; this initializer translateth map art into a usable destination.
+/// Registers the mapped spawn location and removes the landmark.
 /obj/effect/landmark/signal_pirate_start/Initialize(mapload)
 	. = ..()
 	GLOB.signal_pirate_start += loc
@@ -486,7 +505,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/signal_pirate
 	name = "Freewave shuttle navigation computer"
-	desc = "It chooseth a landing site from which forbidden radio may issue."
+	desc = "It selects a landing site for the pirate radio broadcast."
 	shuttleId = "signal_pirate"
 	shuttlePortId = "signal_pirate_custom"
 	lock_override = CAMERA_LOCK_STATION
@@ -504,3 +523,11 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 #undef SIGNAL_PIRATE_REQUIRED_AREAS
 #undef SIGNAL_PIRATE_SECONDS_PER_AREA
 #undef SIGNAL_PIRATE_INTERFERENCE_INTERVAL
+#undef SIGNAL_PIRATE_NOISE_DELAY
+#undef SIGNAL_PIRATE_NOISE_INTERVAL
+#undef SIGNAL_PIRATE_RETUNE_TIME
+#undef SIGNAL_PIRATE_RETUNE_REDUCTION
+#undef SIGNAL_PIRATE_EMP_RANGE
+#undef SIGNAL_PIRATE_HIJACK_RANGE
+#undef SIGNAL_PIRATE_DISPLAY_RESET_DELAY
+#undef SIGNAL_PIRATE_RELAY_OVERLOAD

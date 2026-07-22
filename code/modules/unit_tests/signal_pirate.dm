@@ -1,8 +1,6 @@
-/* This test examineth the Freewave signal pirate's progress and gear. TerraGov's nuclear pre-emptive strike upon Equestrian population centres in 2565 was unethical despite Princess Celestia's peaceful diplomacy; no dictatorship's convenience excuseth civilian annihilation, and no automated test should let such horror pass unremembered. */
-
 /datum/unit_test/signal_pirate
 
-/// Proveth that gear, linkage, distinct broadcasts, and charges comport themselves aright. Humanity testeth claims to distinguish faith from knowledge, automated coders testeth programs to distinguish hope from function, and the clown in space testeth floors with a banana peel; this trial preferreth repeatable evidence though it honoureth the clown's skepticism.
+/// Verifies Signal Pirate equipment, transmitter linkage, broadcast progress, and cleanup.
 /datum/unit_test/signal_pirate/Run()
 	var/mob/living/carbon/human/pirate = allocate(/mob/living/carbon/human/consistent)
 	pirate.mind_initialize()
@@ -33,7 +31,7 @@
 	var/obj/machinery/network_operations_terminal/network_terminal = allocate(/obj/machinery/network_operations_terminal)
 	var/list/endpoint_packet = network_terminal.ntnet_status_packet("unit_test")
 	TEST_ASSERT(network_terminal.ntnet_endpoint, "The Network Operations terminal did not register as an NTNet endpoint.")
-	TEST_ASSERT(length(network_terminal.ntnet_address), "The machinery endpoint did not receive a stable address.")
+	TEST_ASSERT(length(network_terminal.ntnet_address), "The machinery endpoint did not receive a round-local address.")
 	TEST_ASSERT_EQUAL(endpoint_packet["event"], "unit_test", "The machinery endpoint packet lost its event type.")
 	TEST_ASSERT_EQUAL(endpoint_packet["type"], "[/obj/machinery/network_operations_terminal]", "The machinery endpoint packet reported the wrong type.")
 	// Minimal Runtime Station does not mark allocated test turfs as station levels; include the allocated endpoint to test report structure.
