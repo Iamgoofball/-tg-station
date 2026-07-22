@@ -8,7 +8,7 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ab" = (
 /obj/structure/table,
@@ -24,13 +24,13 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ac" = (
 /obj/machinery/computer/shuttle/signal_pirate,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/half/contrasted,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ad" = (
 /obj/structure/table,
@@ -44,14 +44,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ae" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "af" = (
 /turf/template_noop,
@@ -60,14 +60,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ah" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ai" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -75,7 +75,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aj" = (
 /turf/closed/wall/mineral/plastitanium/signal_pirate,
@@ -103,7 +103,7 @@
 /obj/item/food/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "al" = (
 /obj/machinery/loot_locator,
@@ -111,12 +111,12 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 1
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "am" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "an" = (
 /obj/structure/chair/comfy/shuttle{
@@ -129,7 +129,7 @@
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ao" = (
 /obj/structure/chair/comfy/shuttle{
@@ -140,7 +140,7 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ap" = (
 /obj/machinery/door/airlock/hatch{
@@ -149,7 +149,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aq" = (
 /obj/structure/chair/stool/directional/south,
@@ -158,7 +158,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ar" = (
 /obj/effect/decal/cleanable/dirt,
@@ -191,7 +191,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "au" = (
 /obj/machinery/door/airlock/hatch{
@@ -201,7 +201,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "av" = (
 /obj/machinery/door/airlock/hatch{
@@ -210,7 +210,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -218,7 +218,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ax" = (
 /obj/machinery/firealarm/directional/north,
@@ -226,7 +226,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ay" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -235,7 +235,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "az" = (
 /obj/effect/decal/cleanable/dirt,
@@ -244,7 +244,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aC" = (
 /obj/machinery/shuttle_scrambler,
@@ -252,14 +252,14 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aF" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -269,7 +269,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aG" = (
 /obj/effect/turf_decal/stripes/line{
@@ -280,17 +280,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aH" = (
 /obj/machinery/power/shuttle_engine/propulsion/left,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aI" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aJ" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -301,24 +301,24 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aK" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aM" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aN" = (
 /obj/machinery/light/small/directional/south,
@@ -335,7 +335,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aO" = (
 /obj/machinery/light/small/directional/south,
@@ -347,7 +347,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aQ" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -365,7 +365,7 @@
 "aS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aU" = (
 /obj/structure/sign/departments/engineering,
@@ -377,7 +377,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "aW" = (
 /obj/machinery/light/small/directional/west,
@@ -389,7 +389,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "be" = (
 /obj/machinery/space_heater,
@@ -399,7 +399,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bf" = (
 /obj/structure/chair/comfy/shuttle{
@@ -415,7 +415,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bg" = (
 /obj/effect/turf_decal/stripes/line,
@@ -429,7 +429,7 @@
 	pixel_y = 3
 	},
 /obj/machinery/recharger,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bk" = (
 /obj/effect/turf_decal/stripes/line{
@@ -438,7 +438,7 @@
 /obj/machinery/power/smes/ship,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bl" = (
 /obj/effect/turf_decal/stripes/line{
@@ -451,16 +451,16 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/power_store/cell/high,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bo" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/warning/vacuum/external/directional/east,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "br" = (
 /obj/structure/table/wood,
@@ -477,7 +477,7 @@
 /obj/item/cigarette/cigar,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bt" = (
 /obj/effect/turf_decal/stripes/line{
@@ -499,7 +499,7 @@
 	pixel_x = 13;
 	pixel_y = 6
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bu" = (
 /obj/machinery/firealarm/directional/north,
@@ -507,14 +507,14 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -522,24 +522,24 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "by" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/piratepad,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bC" = (
 /obj/machinery/airalarm/directional/east,
@@ -550,7 +550,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bF" = (
 /obj/effect/decal/cleanable/dirt,
@@ -563,19 +563,19 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bH" = (
 /obj/machinery/vending/boozeomat,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bI" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/computer/piratepad_control{
 	dir = 1
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -583,7 +583,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -595,7 +595,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -605,7 +605,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bO" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -614,12 +614,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/apc/cut_AI_wire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -627,7 +627,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bX" = (
 /obj/effect/decal/cleanable/dirt,
@@ -651,7 +651,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "bZ" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -661,7 +661,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "df" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -677,7 +677,7 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "dU" = (
 /obj/machinery/light/small/directional/west,
@@ -685,7 +685,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ek" = (
 /obj/effect/turf_decal/stripes/line,
@@ -702,55 +702,55 @@
 	pixel_x = 5
 	},
 /obj/structure/sign/poster/contraband/bountyhunters/directional/north,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ep" = (
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
 	},
 /obj/machinery/power/shuttle_engine/heater,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "er" = (
 /obj/machinery/power/shuttle_engine/propulsion/right,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "et" = (
 /obj/structure/grille,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "eu" = (
 /obj/structure/girder,
 /obj/item/stack/rods{
 	amount = 3
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ew" = (
 /obj/structure/girder,
 /obj/item/stack/rods{
 	amount = 5
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ex" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/machine,
 /obj/item/wrench,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ey" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "signalpiratebridge"
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ez" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil/cut,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "eA" = (
 /obj/structure/window/reinforced/spawner/directional/north{
@@ -760,14 +760,14 @@
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "eE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "fW" = (
 /turf/closed/wall/mineral/plastitanium/signal_pirate,
@@ -776,27 +776,27 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "gY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "km" = (
 /obj/machinery/atmospherics/components/tank/air,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "mD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "mU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -805,7 +805,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "np" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -813,7 +813,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "sP" = (
 /obj/machinery/light/small/directional/east,
@@ -826,7 +826,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "vB" = (
 /obj/effect/turf_decal/stripes/line{
@@ -841,7 +841,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "wf" = (
 /obj/machinery/door/airlock{
@@ -852,7 +852,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "wR" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -870,7 +870,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "zw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -879,13 +879,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "ED" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "Gk" = (
 /obj/effect/decal/cleanable/dirt,
@@ -897,7 +897,7 @@
 /obj/machinery/door/window/left/directional/south{
 	name = "Decontamination"
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "JT" = (
 /obj/effect/turf_decal/stripes/line{
@@ -916,7 +916,7 @@
 	pixel_x = 2;
 	pixel_y = -1
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "Ni" = (
 /obj/effect/turf_decal/stripes/line,
@@ -924,25 +924,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "Oe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "OD" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/structure/sign/poster/contraband/random/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "OL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "RY" = (
 /obj/effect/decal/cleanable/dirt{
@@ -952,7 +952,7 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/contraband/random/directional/west,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "TU" = (
 /obj/machinery/door/airlock/external/glass/ruin{
@@ -976,13 +976,13 @@
 	width = 17
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 "Ur" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/turf/open/floor/pod/signal_pirate,
+/turf/open/indestructible/signal_pirate,
 /area/shuttle/signal_pirate)
 
 (1,1,1) = {"

@@ -469,7 +469,7 @@ GLOBAL_LIST_EMPTY(signal_pirate_start)
 	desc = "A violet plastitanium wall embossed with branching copper aerials."
 	icon = 'icons/turf/walls/signal_pirate_wall.dmi'
 
-/turf/open/floor/pod/signal_pirate
+/turf/open/indestructible/signal_pirate
 	name = "Freewave transmitter deck"
 	desc = "A dark violet deck plate scored into the likeness of a carrier wave."
 	icon = 'icons/turf/floors/signal_pirate_floor.dmi'

@@ -46,7 +46,7 @@
 	var/obj/item/clothing/head/utility/hardhat/network_engineer/network_hardhat = allocate(/obj/item/clothing/head/utility/hardhat/network_engineer)
 	network_hardhat.update_icon_state()
 	TEST_ASSERT_EQUAL(network_hardhat.icon_state, "hardhat0_network", "Network Engineer hardhat did not use its dedicated unlit sprite.")
-	var/turf/open/floor/pod/signal_pirate/pirate_floor = allocate(/turf/open/floor/pod/signal_pirate)
+	var/turf/open/indestructible/signal_pirate/pirate_floor = allocate(/turf/open/indestructible/signal_pirate)
 	TEST_ASSERT_EQUAL(pirate_floor.plane, FLOOR_PLANE, "Signal Pirate deck was not rendered on the floor plane.")
 	TEST_ASSERT_EQUAL(pirate_floor.layer, LOW_FLOOR_LAYER, "Signal Pirate deck could render above standing mobs.")
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/signal_pirate/nav_console = allocate(/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/signal_pirate)
