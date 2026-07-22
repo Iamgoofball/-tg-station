@@ -42770,10 +42770,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"nEr" = (
-/obj/machinery/firealarm/directional/west,
-/turf/open/floor/engine,
-/area/station/engineering/network_operations)
 "nEs" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
@@ -112594,7 +112590,7 @@ way
 ctK
 uYD
 way
-nEr
+way
 cgF
 eOW
 cBb
