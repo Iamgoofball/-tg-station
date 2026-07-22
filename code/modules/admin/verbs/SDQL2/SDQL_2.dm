@@ -1117,7 +1117,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 	if(SDQL2_query_too_long(query_text))
 		return null
 
-	var/list/whitespace = list(" ", "\n", "	")
+	var/list/whitespace = list(" ", "\n", "\t")
 	var/list/single = list("(", ")", ",", "+", "-", ".", "\[", "]", "{", "}", ";", ":")
 	var/list/multi = list(
 					"=" = list("", "="),
