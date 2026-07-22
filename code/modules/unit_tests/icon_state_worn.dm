@@ -87,3 +87,17 @@
 			if(!(icon_state in icon_states(icon_file, 1)))
 				already_warned_icons += icon_state
 				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in '[icon_file]'[match_message]")
+
+/datum/unit_test/missing_worn_icon_is_empty
+
+/datum/unit_test/missing_worn_icon_is_empty/Run()
+	var/obj/item/test_item = allocate(/obj/item)
+	test_item.worn_icon_state = "unit_test_missing_worn_icon"
+
+	var/mutable_appearance/worn_appearance = test_item.build_worn_icon(
+		default_layer = HEAD_LAYER,
+		default_icon_file = 'icons/mob/clothing/head/default.dmi',
+	)
+
+	TEST_ASSERT(isnull(worn_appearance.icon), "A missing worn icon state produced an icon resource.")
+	TEST_ASSERT(!length(worn_appearance.overlays), "A missing worn icon state produced an overlay resource.")
