@@ -17670,6 +17670,11 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
+"gfT" = (
+/obj/machinery/door/airlock/engineering/glass,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "gfU" = (
 /turf/closed/wall/r_wall,
 /area/station/ai/satellite/exterior)
@@ -19585,6 +19590,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
+"gML" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "gMN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19653,6 +19665,13 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/engine,
 /area/station/science/explab)
+"gNK" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Network Operations - Meta";
+	network = list("ss13","engine")
+	},
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "gNP" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/camera/directional/west{
@@ -20408,6 +20427,11 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/storage/gas)
+"hbS" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "hcc" = (
 /obj/structure/sign/warning/secure_area/directional/north,
 /obj/effect/turf_decal/stripes/line{
@@ -22608,6 +22632,10 @@
 	dir = 1
 	},
 /area/station/service/chapel)
+"hQP" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "hQY" = (
 /obj/machinery/door/window/right/directional/north{
 	name = "Petting Zoo"
@@ -36115,6 +36143,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/security/holding_cell)
+"mrM" = (
+/obj/item/radio/intercom/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "mrN" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -36374,6 +36406,10 @@
 /obj/machinery/incident_display/bridge/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"mwc" = (
+/obj/machinery/light_switch/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "mwj" = (
 /obj/machinery/computer/records/security{
 	dir = 4
@@ -56608,6 +56644,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
+"tpe" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/door/airlock/engineering/glass,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "tpg" = (
 /obj/structure/showcase/cyborg/old{
 	dir = 8;
@@ -66513,6 +66557,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
+"wCo" = (
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "wCq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -111510,7 +111560,7 @@ cnK
 jPe
 dPy
 poc
-jQg
+mwc
 mht
 mht
 cCD
@@ -111767,7 +111817,7 @@ bRn
 xAW
 lia
 aXK
-hIi
+hbS
 pia
 mht
 aJt
@@ -112024,7 +112074,7 @@ mfh
 ncx
 dRp
 txa
-dtI
+hQP
 oIr
 mht
 fih
@@ -112281,7 +112331,7 @@ fbf
 rPe
 rPe
 fbf
-soR
+gML
 rCF
 rCF
 rCF
@@ -112538,9 +112588,9 @@ djk
 yaF
 qaA
 fTL
-jQg
-mht
-mht
+gNK
+wCo
+wCo
 awF
 mht
 wtU
@@ -112795,10 +112845,10 @@ kYG
 kYG
 sGC
 wBM
+mrM
 jQg
 jQg
-jQg
-jQg
+gfT
 rpo
 eSK
 jQg

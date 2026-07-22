@@ -803,6 +803,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
 /area/space/nearstation)
+"alj" = (
+/obj/machinery/door/airlock/engineering/glass,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "alr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -2260,6 +2265,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
+"aIJ" = (
+/obj/item/radio/intercom/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "aJh" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -4588,6 +4597,11 @@
 /obj/structure/sign/departments/security,
 /turf/closed/wall,
 /area/station/maintenance/fore)
+"bAm" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "bAs" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/food/grown/poppy/geranium{
@@ -7209,6 +7223,12 @@
 "cqr" = (
 /turf/closed/wall/r_wall/rust,
 /area/station/science/ordnance/storage)
+"cqs" = (
+/obj/machinery/light/floor,
+/obj/machinery/door/airlock/engineering/glass,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "cqA" = (
 /obj/machinery/atmospherics/components/tank/plasma{
 	dir = 4
@@ -16919,6 +16939,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"fyN" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Network Operations - Kilo";
+	network = list("ss13","engine")
+	},
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "fyS" = (
 /obj/structure/closet/wardrobe/miner,
 /obj/effect/turf_decal/delivery,
@@ -18057,6 +18084,12 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/lesser)
+"fPB" = (
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "fPN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -24201,6 +24234,14 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
+"hMu" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable,
+/obj/machinery/modular_computer/preset/engineering{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "hMx" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/west,
@@ -26030,6 +26071,10 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/station/commons/fitness/recreation)
+"imi" = (
+/obj/machinery/light_switch/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "imo" = (
 /obj/structure/sign/directions/science{
 	dir = 4;
@@ -28410,6 +28455,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"iWv" = (
+/obj/structure/cable,
+/obj/machinery/airalarm/directional/south,
+/turf/closed/wall,
+/area/station/engineering/network_operations)
 "iWy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35447,6 +35497,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
+"lkw" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/engineering/network_operations)
 "lkB" = (
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance)
@@ -112328,7 +112383,7 @@ qZX
 qZX
 sxF
 xRm
-lOT
+iWv
 way
 ctK
 vjv
@@ -112842,7 +112897,7 @@ cwj
 cLx
 jNM
 ueJ
-kGW
+bAm
 gnk
 way
 gso
@@ -113099,9 +113154,9 @@ tzH
 sXC
 sdp
 hRa
-wDX
-qZo
-way
+fyN
+hMu
+fPB
 rgb
 way
 way
@@ -113356,7 +113411,7 @@ xjl
 vqg
 gYS
 eYE
-wDX
+aIJ
 mvu
 way
 ahc
@@ -113613,10 +113668,10 @@ qZX
 qZX
 poK
 xin
+imi
 wDX
 wDX
-wDX
-wDX
+alj
 wDX
 wDX
 wDX
