@@ -9,7 +9,7 @@ on:
 
 jobs:
   label-bounty:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       issues: write
     steps:
