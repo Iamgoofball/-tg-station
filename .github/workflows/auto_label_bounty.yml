@@ -1,0 +1,133 @@
+# WORKFLOW: Auto-label bounty issues
+# Automatically applies the 'bounty' label to newly opened issues.
+# FRANÇAIS : Applique automatiquement le label 'bounty' aux nouvelles issues.
+# DEUTSCH : Wendet automatisch das Label 'bounty' auf neu geöffnete Issues an.
+# ESPAÑOL : Aplica automáticamente la etiqueta 'bounty' a las nuevas issues.
+
+name: Auto-label bounty issues
+# FRANÇAIS : Issues à label automatique pour bounty
+# DEUTSCH : Automatische Bounty-Kennzeichnung von Issues
+# ESPAÑOL : Autoetiquetado de issues como bounty
+
+# ============================================================================
+# WHY THIS WORKFLOW IS A GOOD ADDITION (ENGLISH)
+# ============================================================================
+# This workflow automatically labels every newly opened issue with the
+# 'bounty' tag. This saves maintainers from manually triaging and tagging
+# each issue, reduces human error (forgetting to label), and ensures that
+# all issues are immediately discoverable through GitHub's label filter.
+# The workflow uses github-script@v7, which is an official GitHub Action
+# maintained by GitHub themselves. It runs on ubuntu-slim, which uses
+# fewer resources than ubuntu-latest and is better for the environment.
+# The permissions are scoped to the minimum required (issues: write),
+# following the principle of least privilege for security.
+#
+# Steps explained:
+#   1. Trigger: The workflow triggers on the "issues" event with the
+#      "opened" type, so it only runs when a new issue is created.
+#   2. Job: The "label-bounty" job runs on ubuntu-slim for efficiency.
+#   3. Permissions: The job requests only "issues: write" permission,
+#      which is the minimum needed to add a label to an issue.
+#   4. Action: The github-script@v7 action executes a JavaScript snippet
+#      that uses the GitHub API to add the 'bounty' label to the issue.
+#   5. Script: The script calls github.rest.issues.addLabels() with the
+#      repository owner, repository name, issue number, and the label.
+#   6. Label: The 'bounty' label is applied, making the issue visible
+#      in the bounty filter and notifying bounty hunters immediately.
+# ============================================================================
+# POURQUOI CE WORKFLOW EST UN BON AJOUT (FRANÇAIS)
+# ============================================================================
+# Ce workflow applique automatiquement le label 'bounty' à chaque nouvelle
+# issue ouverte. Cela évite aux mainteneurs de devoir trier et étiqueter
+# chaque issue manuellement, réduit les erreurs humaines (oublier d'étiqueter),
+# et garantit que toutes les issues sont immédiatement découvrables via le
+# filtre de labels de GitHub. Le workflow utilise github-script@v7, une
+# action officielle maintenue par GitHub. Il s'exécute sur ubuntu-slim,
+# qui utilise moins de ressources qu'ubuntu-latest et est meilleur pour
+# l'environnement. Les permissions sont limitées au strict nécessaire
+# (issues: write), suivant le principe du moindre privilège.
+#
+# Étapes expliquées:
+#   1. Déclencheur : Le workflow se déclenche sur l'événement "issues"
+#      avec le type "opened", donc uniquement lors de la création d'une issue.
+#   2. Job : Le job "label-bounty" s'exécute sur ubuntu-slim pour l'efficacité.
+#   3. Permissions : Le job demande uniquement la permission "issues: write",
+#      le minimum requis pour ajouter un label à une issue.
+#   4. Action : L'action github-script@v7 exécute un extrait JavaScript
+#      qui utilise l'API GitHub pour ajouter le label 'bounty' à l'issue.
+#   5. Script : Le script appelle github.rest.issues.addLabels() avec le
+#      propriétaire du dépôt, le nom du dépôt, le numéro de l'issue et le label.
+#   6. Label : Le label 'bounty' est appliqué, rendant l'issue visible dans
+#      le filtre des bounties et notifiant immédiatement les chasseurs.
+# ============================================================================
+# WARUM DIESER WORKFLOW EINE GUTE ERGÄNZUNG IST (DEUTSCH)
+# ============================================================================
+# Dieser Workflow weist automatisch das Label 'bounty' jeder neu geöffneten
+# Issue zu. Das erspart Maintainern das manuelle Sortieren und Kennzeichnen
+# jeder Issue, reduziert menschliche Fehler (vergessenes Labeln) und stellt
+# sicher, dass alle Issues sofort über den GitHub-Label-Filter auffindbar sind.
+# Der Workflow verwendet github-script@v7, eine offizielle GitHub-Aktion,
+# die von GitHub selbst gewartet wird. Er läuft auf ubuntu-slim, das weniger
+# Ressourcen als ubuntu-latest verbraucht und umweltfreundlicher ist.
+# Die Berechtigungen sind auf das Minimum beschränkt (issues: write), gemäß
+# dem Prinzip der geringsten Privilegien für die Sicherheit.
+#
+# Schritte erklärt:
+#   1. Auslöser : Der Workflow wird durch das "issues"-Event mit dem Typ
+#      "opened" ausgelöst, läuft also nur bei neuen Issues.
+#   2. Job : Der Job "label-bounty" läuft auf ubuntu-slim für Effizienz.
+#   3. Berechtigungen : Der Job fordert nur "issues: write", das Minimum
+#      zum Hinzufügen eines Labels zu einer Issue.
+#   4. Aktion : github-script@v7 führt ein JavaScript-Snippet aus, das
+#      über die GitHub-API das Label 'bounty' zur Issue hinzufügt.
+#   5. Skript : Das Skript ruft github.rest.issues.addLabels() mit dem
+#      Repository-Besitzer, Repository-Namen, der Issue-Nummer und dem Label auf.
+#   6. Label : Das Label 'bounty' wird angewendet, die Issue ist sofort
+#      im Bounty-Filter sichtbar und benachrichtigt Bounty-Jäger.
+# ============================================================================
+# POR QUÉ ESTE WORKFLOW ES UNA BUENA ADICIÓN (ESPAÑOL)
+# ============================================================================
+# Este workflow aplica automáticamente la etiqueta 'bounty' a cada nueva
+# issue abierta. Esto ahorra a los mantenedores tener que clasificar y
+# etiquetar manualmente cada issue, reduce errores humanos (olvidar etiquetar)
+# y garantiza que todas las issues sean inmediatamente descubribles a través
+# del filtro de etiquetas de GitHub. El workflow usa github-script@v7, una
+# acción oficial mantenida por GitHub. Se ejecuta en ubuntu-slim, que usa
+# menos recursos que ubuntu-latest y es mejor para el medio ambiente.
+# Los permisos están limitados al mínimo necesario (issues: write),
+# siguiendo el principio de menor privilegio por seguridad.
+#
+# Pasos explicados:
+#   1. Disparador : El workflow se activa con el evento "issues" con el tipo
+#      "opened", por lo que solo se ejecuta cuando se crea una nueva issue.
+#   2. Job : El job "label-bounty" se ejecuta en ubuntu-slim por eficiencia.
+#   3. Permisos : El job solicita solo el permiso "issues: write", el mínimo
+#      necesario para añadir una etiqueta a una issue.
+#   4. Acción : La acción github-script@v7 ejecuta un fragmento JavaScript
+#      que usa la API de GitHub para añadir la etiqueta 'bounty' a la issue.
+#   5. Script : El script llama a github.rest.issues.addLabels() con el
+#      propietario del repositorio, nombre del repositorio, número de issue
+#      y la etiqueta.
+#   6. Etiqueta : La etiqueta 'bounty' se aplica, haciendo visible la issue
+#      en el filtro de bounties y notificando inmediatamente a los cazadores.
+# ============================================================================
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  label-bounty:
+    runs-on: ubuntu-slim
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['bounty']
+            })
