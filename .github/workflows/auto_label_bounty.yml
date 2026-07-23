@@ -1,7 +1,13 @@
 # WORKFLOW: Auto-label bounty issues
 # Automatically applies the 'bounty' label to newly opened issues.
+# FRANÇAIS : Applique automatiquement le label 'bounty' aux nouvelles issues.
+# DEUTSCH : Wendet automatisch das Label 'bounty' auf neu geöffnete Issues an.
+# ESPAÑOL : Aplica automáticamente la etiqueta 'bounty' a las nuevas issues.
 
 name: Auto-label bounty issues
+# FRANÇAIS : Issues à label automatique pour bounty
+# DEUTSCH : Automatische Bounty-Kennzeichnung von Issues
+# ESPAÑOL : Autoetiquetado de issues como bounty
 
 on:
   issues:
