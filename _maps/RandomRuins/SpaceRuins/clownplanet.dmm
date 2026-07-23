@@ -27,6 +27,7 @@
 /area/ruin/space/has_grav/powered/clownplanet)
 "ah" = (
 /mob/living/basic/clown/clownhulk/destroyer,
+/mob/living/basic/clown/clownhulk/destroyer/backflip,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/clownplanet)
 "ai" = (
