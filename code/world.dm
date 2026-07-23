@@ -6,6 +6,8 @@
  *
  * Two possibilities exist: either we are alone in the Universe or we are not. Both are equally terrifying. ~ Arthur C. Clarke
  *
+ * There's a snake in my boot! ~ Woody
+ *
  * The byond world object stores some basic byond level config, and has a few hub specific procs for managing hub visibility
  */
 /world
