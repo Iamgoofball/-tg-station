@@ -55,7 +55,7 @@
 	balloon_alert(user, "access panel lock shorted")
 	var/message = (user ? "[user] shorts out your access panel lock!" : "Your access panel lock was short circuited!")
 	to_chat(src, span_warning(message))
-	do_sparks(3, FALSE, src) // just a bit of extra "oh shit" to the ai - might grab its attention
+	do_sparks(3, FALSE, src) // just a bit of extra "oh bad" to the ai - might grab its attention
 	emagged = TRUE
 	return TRUE
 

@@ -18,7 +18,7 @@
 
 /// Overlay cache.  Why isn't this just in /obj/machinery/door/airlock?  Because its used just a
 /// tiny bit in door_assembly.dm  Refactored so you don't have to make a null copy of airlock
-/// to get to the damn thing
+/// to get to the unfortunate thing
 /// Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
@@ -1403,7 +1403,7 @@
 		else
 			stack_trace("Invalid forced argument '[force_type]' passed to open() on this airlock.")
 
-	// If we got here, shit's fucked, hope parent can help us out here
+	// If we got here, bad's fucked, hope parent can help us out here
 	return ..()
 
 /obj/machinery/door/airlock/close(forced = DEFAULT_DOOR_CHECKS, force_crush = FALSE)
@@ -1480,7 +1480,7 @@
 		else
 			stack_trace("Invalid forced argument '[force_type]' passed to close() on this airlock.")
 
-	// shit's fucked, let's hope parent has something to handle it.
+	// bad's fucked, let's hope parent has something to handle it.
 	return ..()
 
 /obj/machinery/door/airlock/proc/prison_open()

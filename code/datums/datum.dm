@@ -144,7 +144,7 @@
 	#endif
 	#endif
 
-	//BEGIN: ECS SHIT
+	//BEGIN: ECS bad
 	var/list/dc = _datum_components
 	if(dc)
 		for(var/component_key in dc)
@@ -158,7 +158,7 @@
 		dc.Cut()
 
 	_clear_signal_refs()
-	//END: ECS SHIT
+	//END: ECS bad
 
 #ifndef DISABLE_DREAMLUAU
 	if(!(datum_flags & DF_STATIC_OBJECT))

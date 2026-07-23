@@ -370,7 +370,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	if(master_mob.back)
 		H.equip_to_slot_or_del(new master_mob.back.type, ITEM_SLOT_BACK)
 
-	//Operation: Fuck off and scare people
+	//Operation: bad off and scare people
 	var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/jaunt = new(owner)
 	jaunt.Grant(H)
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/teleport = new(owner)

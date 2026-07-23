@@ -114,7 +114,7 @@
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
-/// Supplementary work we do when we login. Done this way so we synchronize with the ai controller shutting off and all that jazz as well as allowing more shit to be passed in if need be in future.
+/// Supplementary work we do when we login. Done this way so we synchronize with the ai controller shutting off and all that jazz as well as allowing more bad to be passed in if need be in future.
 /mob/living/basic/regal_rat/proc/on_login()
 	SIGNAL_HANDLER
 	if(!special_moniker)

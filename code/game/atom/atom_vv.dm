@@ -168,7 +168,7 @@
 		SpinAnimation(1 SECONDS / spins_per_sec, num_spins, direction)
 
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
-		// Critical: Needs to be accessible in case of animation spam breaking shit
+		// Critical: Needs to be accessible in case of animation spam breaking bad
 		// Do not TGUIfy
 		var/result = input(usr, "Are you sure?", "Stop Animating") in list("Yes", "No")
 		if(result == "Yes")

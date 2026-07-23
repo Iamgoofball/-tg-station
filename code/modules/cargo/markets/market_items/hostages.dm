@@ -74,7 +74,7 @@
 		signaler = null
 	else if(prob(66)) // 29% chance of just cuffs
 		humie.equip_to_slot_or_del(new /obj/item/restraints/handcuffs, ITEM_SLOT_HANDCUFFED, indirect_action = TRUE)
-	else // 14% chance of just a tee souvenir and pin, no cuffs and shit.
+	else // 14% chance of just a tee souvenir and pin, no cuffs and bad.
 		var/obj/item/clothing/under/misc/syndicate_souvenir/souvenir = new(loc)
 		humie.equip_to_slot_if_possible(souvenir, ITEM_SLOT_ICLOTHING, indirect_action = TRUE)
 		var/obj/item/clothing/accessory/anti_sec_pin/pin = new(loc)

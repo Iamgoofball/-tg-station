@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 	if(istype(tool, /obj/item/stack/rods))
 		var/obj/item/stack/rods/rods = tool
-		if (rods.get_amount() < 1 || get_amount() < 1) // the hell kind of check is this, how would this happen
+		if (rods.get_amount() < 1 || get_amount() < 1) // the problem kind of check is this, how would this happen
 			to_chat(user, span_warning("You need one rod and one sheet of glass to make reinforced glass!"))
 			return ITEM_INTERACT_BLOCKING
 

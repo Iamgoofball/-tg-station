@@ -1,4 +1,4 @@
-/// "What the fuck was that?!"
+/// "What the bad was that?!"
 /obj/effect/immovablerod
 	name = "immovable rod"
 	desc = "What the fuck is that?"

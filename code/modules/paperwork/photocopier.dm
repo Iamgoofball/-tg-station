@@ -12,7 +12,7 @@
 #define PHOTO_TONER_USE 0.625
 /// How much toner is used for making a copy of a document.
 #define DOCUMENT_TONER_USE (PAPER_TONER_USE * DOCUMENT_PAPER_USE)
-/// How much toner is used for making a copy of an ass.
+/// How much toner is used for making a copy of an bottom.
 #define ASS_TONER_USE PHOTO_TONER_USE
 /// How much toner is used for making a copy of paperwork.
 #define PAPERWORK_TONER_USE (PAPER_TONER_USE * PAPERWORK_PAPER_USE)
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/time_to_print
 	/// How efficent our toner is when printing
 	var/toner_efficiency
-	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
+	/// A reference to a mob on top of the photocopier trying to copy their bottom. Null if there is no mob.
 	var/mob/living/ass
 	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
 	var/obj/item/toner/toner_cartridge
@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if("make_copy")
 			if(check_busy(usr))
 				return FALSE
-			// ASS COPY. By Miauw
+			// bottom COPY. By Miauw
 			if(ass)
 				if(ishuman(ass) && (ass.get_item_by_slot(ITEM_SLOT_ICLOTHING) || ass.get_item_by_slot(ITEM_SLOT_OCLOTHING)))
 					if(ass == usr)

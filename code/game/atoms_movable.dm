@@ -870,7 +870,7 @@
 		newtonian_move(dir2angle(movement_dir))
 	// If we ain't moving diagonally right now, update our parallax
 	// We don't do this all the time because diag movements should trigger one call to this, not two
-	// Waste of cpu time, and it fucks the animate
+	// Waste of cpu time, and it causes problems the animate
 	if (!moving_diagonally && client_mobs_in_contents)
 		update_parallax_contents()
 
@@ -1479,7 +1479,7 @@
 
 	if(blocking_signal & COMSIG_COMPONENT_PERMIT_PASSAGE)
 		return TRUE
-	else //we have a COMSIG_COMPONENT_REFUSE_PASSAGE but like its either this or that, unlike someone wanna adds half-passing through but fuck you
+	else //we have a COMSIG_COMPONENT_REFUSE_PASSAGE but like its either this or that, unlike someone wanna adds half-passing through but bad you
 		return FALSE
 
 /// called when this atom is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.

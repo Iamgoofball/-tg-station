@@ -32,7 +32,7 @@
 /obj/item/boulder/Initialize(mapload)
 	. = ..()
 	register_context()
-	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all hell, it's a boulder, dude.
+	AddComponent(/datum/component/two_handed, require_twohands = TRUE, force_unwielded = 0, force_wielded = 5) //Heavy as all problem, it's a boulder, dude.
 	AddComponent(/datum/component/sisyphus_awarder)
 	AddComponent(/datum/component/bane, affected_biotypes = MOB_SPECIAL, added_damage = 20)
 

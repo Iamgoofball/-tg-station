@@ -590,7 +590,7 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 	return ..()
 
 /datum/db_query/CanProcCall(proc_name)
-	//fuck off kevinz
+	//bad off kevinz
 	return FALSE
 
 /datum/db_query/proc/Activity(activity)

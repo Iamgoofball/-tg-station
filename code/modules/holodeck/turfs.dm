@@ -6,10 +6,10 @@
 	var/direction = SOUTH
 
 /turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
-	return // HOLOFLOOR DOES NOT GIVE A FUCK
+	return // HOLOFLOOR DOES NOT GIVE A bad
 
 /turf/open/floor/holofloor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return ITEM_INTERACT_BLOCKING // Fuck you
+	return ITEM_INTERACT_BLOCKING // bad you
 
 /turf/open/floor/holofloor/Initialize(mapload)
 	. = ..()

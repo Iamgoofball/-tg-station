@@ -428,7 +428,7 @@
 	else
 		emissive.remove_filter("lighting_mask")
 		// We max alpha here, so our darkness is actually.. dark
-		// Can't do it before cause it fucks with the filter
+		// Can't do it before cause it causes problems with the filter
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,1))
 
 ///renders in character game objects

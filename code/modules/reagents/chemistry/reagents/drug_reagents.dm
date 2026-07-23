@@ -149,7 +149,7 @@
 	affected_human.set_hairstyle("Bald", update = FALSE)
 	affected_mob.set_species(/datum/species/human/krokodil_addict)
 
-	if(affected_mob.adjust_brute_loss(25, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy shit your skin just FELL THE FUCK OFF
+	if(affected_mob.adjust_brute_loss(25, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy bad your skin just FELL THE bad OFF
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)

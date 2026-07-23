@@ -228,7 +228,7 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!istype(pack))
 		CRASH("Unknown supply pack id given by order console ui. ID: [id]")
-	if(amount > CARGO_MAX_ORDER || amount < 1) // Holy shit fuck off
+	if(amount > CARGO_MAX_ORDER || amount < 1) // Holy bad bad off
 		CRASH("Invalid amount passed into add_item")
 
 	if(((pack.order_flags & ORDER_EMAG_ONLY) && !(obj_flags & EMAGGED)) || ((pack.order_flags & ORDER_CONTRABAND) && !contraband) || (pack.order_flags & ORDER_POD_ONLY) || ((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED)))

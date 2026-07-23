@@ -319,7 +319,7 @@
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"
 	cure_text = /datum/reagent/consumable/condensedcapsaicin::name + " (not applied via vapor)"
-	cures = list(/datum/reagent/consumable/condensedcapsaicin) //beats the hippie crap right out of your system
+	cures = list(/datum/reagent/consumable/condensedcapsaicin) //beats the hippie poor quality right out of your system
 	cure_chance = 55
 	stage_prob = 2.5
 	agent = "Tranquility"

@@ -19,7 +19,7 @@
 	. = ..()
 	if(!.)
 		return
-	//buff our forms so this ascension ability isnt shit
+	//buff our forms so this ascension ability isnt bad
 	playsound(caster, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	var/mob/living/monster = .
 	monster.AddComponent(/datum/component/seethrough_mob)

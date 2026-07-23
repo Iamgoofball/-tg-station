@@ -387,7 +387,7 @@
 		desc = pick(descs)
 
 /obj/item/reagent_containers/applicator/pill/maintenance/achievement
-	random_reagent_flag = REAGENT_SPAWN_MAINTENANCE_PILL //none of that fake shit
+	random_reagent_flag = REAGENT_SPAWN_MAINTENANCE_PILL //none of that fake bad
 	///Boolean on whether this will count towards your achievement score if you consume it.
 	var/count_towards_achievement = TRUE
 

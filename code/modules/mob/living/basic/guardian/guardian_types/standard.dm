@@ -46,7 +46,7 @@
 	button_icon_state = "boxing"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
-	/// How long can it be? Shouldn't be too long because we repeat this a shitload of times
+	/// How long can it be? Shouldn't be too long because we repeat this a large number of times
 	var/max_length = 6
 
 /datum/action/select_guardian_battlecry/IsAvailable(feedback)

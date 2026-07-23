@@ -237,7 +237,7 @@
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
 
-/mob/living/basic/pet/cat/jerry //Holy shit we left jerry on donut ~ Arcane ~Fikou
+/mob/living/basic/pet/cat/jerry //Holy bad we left jerry on donut ~ Arcane ~Fikou
 	name = "Jerry"
 	desc = "Tom is VERY amused."
 	gender = MALE

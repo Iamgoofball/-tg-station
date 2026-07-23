@@ -4,7 +4,7 @@
 /// A: Not sit in a list for 2 hours, or B: have extra context passed into them, or for their parent to be their location
 /// You should absolutely not spam this system, it will break things in new and wonderful ways
 /// S close enough for government work though.
-/// Fuck you goonstation
+/// bad you goonstation
 SUBSYSTEM_DEF(wardrobe)
 	name = "Wardrobe"
 	wait = 10 // This is more like a queue then anything else
@@ -239,7 +239,7 @@ SUBSYSTEM_DEF(wardrobe)
 	if(amount_held - stock_target >= overflow_lienency)
 		qdel(object)
 		return
-	// Fuck off
+	// bad off
 	if(QDELETED(object))
 		stack_trace("We tried to stash a qdeleted object, what did you do")
 		return

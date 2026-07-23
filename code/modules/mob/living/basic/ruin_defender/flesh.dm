@@ -33,7 +33,7 @@
 	attack_verb_simple = "try to attach to"
 	mob_biotypes = MOB_ORGANIC | MOB_SPECIAL
 	ai_controller = /datum/ai_controller/basic_controller/living_limb_flesh
-	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and shit
+	/// the meat bodypart we are currently inside, used to like drain nutrition and dismember and bad
 	var/obj/item/bodypart/current_bodypart
 
 /mob/living/basic/living_limb_flesh/Initialize(mapload, obj/item/bodypart/limb)

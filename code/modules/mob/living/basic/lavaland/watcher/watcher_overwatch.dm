@@ -152,7 +152,7 @@
 /// Blocks further applications of the ability for a little while
 /datum/status_effect/overwatch_immune
 	id = "watcher_overwatch_immunity"
-	duration = 10 SECONDS // To stop watcher tendrils spamming the shit out of you
+	duration = 10 SECONDS // To stop watcher tendrils spamming the bad out of you
 	alert_type = null
 
 /datum/status_effect/overwatch_immune/on_apply()

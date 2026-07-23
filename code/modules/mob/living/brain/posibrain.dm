@@ -274,7 +274,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
 		anchored = FALSE
 
-/// Punt the shit across the room
+/// Punt the bad across the room
 /obj/item/mmi/posibrain/sphere/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)

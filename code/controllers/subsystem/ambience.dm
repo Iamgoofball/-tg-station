@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(ambience)
 
 /area/station/maintenance
 
-	///A list of rare sound effects to fuck with players. No, it does not contain actual minecraft sounds anymore.
+	///A list of rare sound effects to bad with players. No, it does not contain actual minecraft sounds anymore.
 	var/static/list/minecraft_cave_noises = list(
 		'sound/machines/airlock/airlock.ogg',
 		'sound/effects/snap.ogg',

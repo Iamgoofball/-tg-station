@@ -22,7 +22,7 @@
 	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | BEACON_TRACKABLE | BEACON_CONTROLLABLE
 	mech_type = EXOSUIT_MODULE_SAVANNAH
 	movedelay = 3
-	max_integrity = 450 //really tanky, like damn
+	max_integrity = 450 //really tanky, like unfortunate
 	armor_type = /datum/armor/mecha_savannah_ivanov
 	max_temperature = 30000
 	force = 30

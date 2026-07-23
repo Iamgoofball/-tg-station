@@ -95,7 +95,7 @@ ADMIN_VERB(enable_shuttle, R_ADMIN, "Enable Shuttle", "Those fuckers ARE getting
 	message_admins(span_adminnotice("[key_name_admin(user)] enabled the emergency shuttle."))
 	SSshuttle.admin_emergency_no_recall = FALSE
 	SSshuttle.emergency_no_recall = FALSE
-	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to shit, fix it.
+	if(SSshuttle.last_mode == SHUTTLE_DISABLED) //If everything goes to bad, fix it.
 		SSshuttle.last_mode = SHUTTLE_IDLE
 
 	SSshuttle.emergency.mode = SSshuttle.last_mode

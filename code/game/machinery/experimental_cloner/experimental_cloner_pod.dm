@@ -173,5 +173,5 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	SIGNAL_HANDLER
 	UnregisterSignal(clone, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	if (!QDELETED(clone))
-		qdel(clone) // Fuck you then
+		qdel(clone) // bad you then
 	fail_growing()

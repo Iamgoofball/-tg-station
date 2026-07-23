@@ -1083,7 +1083,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 					v = SSmatch
 				else
 					return null
-	else if(object == GLOB) // Shitty ass hack kill me.
+	else if(object == GLOB) // Shitty bottom hack kill me.
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")

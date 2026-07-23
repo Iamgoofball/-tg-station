@@ -166,7 +166,7 @@
 	SIGNAL_HANDLER
 
 	// This is roughly the real life requirement to ignite thermite
-	// (honestly not really sure what the point of this is, considering a god damn lighter can ignite this)
+	// (honestly not really sure what the point of this is, considering a god unfortunate lighter can ignite this)
 	if(exposed_temperature >= 1922)
 		thermite_melt()
 

@@ -425,7 +425,7 @@
 	src.icon_state_variants = icon_state_variants
 
 /datum/beam/varied/set_subsegment_appearance(obj/effect/ebeam/segment)
-	//we use reall ass icon states here.
+	//we use reall bottom icon states here.
 	set_up_effect(segment, "[icon_state][rand(1, icon_state_variants)]")
 
 /obj/effect/ebeam

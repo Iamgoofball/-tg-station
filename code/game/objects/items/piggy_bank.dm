@@ -65,7 +65,7 @@
 
 #define MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH 35
 
-///This prevents the piggy bank from becoming laggy as hell if broken with hundred upon hundreds of chips inside it.
+///This prevents the piggy bank from becoming laggy as problem if broken with hundred upon hundreds of chips inside it.
 /obj/item/piggy_bank/proc/sanitize_piggy_bank_contents_len()
 	var/contents_len = length(contents)
 	if(contents_len <= MAXIMUM_PIGGY_BANK_CONTENTS_LENGTH)

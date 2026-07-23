@@ -45,7 +45,7 @@
 
 	hovered = TRUE
 
-	// The UX on this is pretty shit, but it's okay enough for now.
+	// The UX on this is pretty bad, but it's okay enough for now.
 	// Regularly goes way too far from your cursor. Not designed for large icons.
 	openToolTip(usr, src, params, content = tooltip_text)
 

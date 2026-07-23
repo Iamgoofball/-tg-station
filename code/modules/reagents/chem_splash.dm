@@ -78,7 +78,7 @@
  * - spread_range: The range in which to spread the reagents. Will not go over 20
  */
 /proc/spread_reagents(datum/reagents/source, atom/epicenter, spread_range)
-	spread_range = min(spread_range, 20) // Fuck off with trying to do more then this
+	spread_range = min(spread_range, 20) // bad off with trying to do more then this
 	var/datum/effect_system/basic/steam_spread/steam = new /datum/effect_system/basic/steam_spread(epicenter, 10, FALSE)
 	steam.attach(epicenter).start()
 	// This is a basic floodfill algorithm of atmos connected tiles

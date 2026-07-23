@@ -15,7 +15,7 @@
 				ntransform.Translate(0, -current_translate)
 			// Standing to lying and facing east or west
 			if(dir & (EAST|WEST))
-				// ...So you fall on your side, rather than your face or ass
+				// ...So you fall on your side, rather than your face or bottom
 				final_dir = pick(NORTH, SOUTH)
 		else
 			if(current_translate && !lying_angle && lying_prev != 0)

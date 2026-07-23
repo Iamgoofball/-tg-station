@@ -382,7 +382,7 @@
 	if(bz_pp > BZ_brain_damage_min && prob(33))
 		breather.adjust_organ_loss(ORGAN_SLOT_BRAIN, 3, 150, ORGAN_ORGANIC)
 
-/// Breathing in refridgerator coolent, shit's caustic
+/// Breathing in refridgerator coolent, bad's caustic
 /obj/item/organ/lungs/proc/too_much_freon(mob/living/carbon/breather, datum/gas_mixture/breath, freon_pp, old_freon_pp)
 	// Inhale Freon. Exhale nothing.
 	breathe_gas_volume(breath, /datum/gas/freon)
@@ -695,7 +695,7 @@
 
 	if(has_moles)
 		handle_breath_temperature(breath, breather)
-		// Merge breath_out into breath. They're kept seprerate before now to ensure stupid like, order of operations shit doesn't happen
+		// Merge breath_out into breath. They're kept seprerate before now to ensure stupid like, order of operations bad doesn't happen
 		// But that time has passed
 		breath.merge(breath_out)
 		// Resets immutable gas_mixture to empty.

@@ -75,7 +75,7 @@
 #define SS_OK_TO_FAIL_INIT (1 << 6)
 
 //! SUBSYSTEM STATES
-#define SS_IDLE 0 /// ain't doing shit.
+#define SS_IDLE 0 /// ain't doing bad.
 #define SS_QUEUED 1 /// queued to run
 #define SS_RUNNING 2 /// actively running
 #define SS_PAUSED 3 /// paused by mc_tick_check

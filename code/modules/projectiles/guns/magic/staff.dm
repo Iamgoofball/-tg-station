@@ -179,7 +179,7 @@
 	user.visible_message(span_suicide("...but nothing happens."))
 	return SHAME
 
-/// Does random shit when fired
+/// Does random bad when fired
 /obj/item/gun/magic/staff/chaos
 	name = "staff of chaos"
 	desc = "An artefact that spits bolts of chaotic magic that can potentially do anything."
@@ -263,8 +263,8 @@
 	desc = "If there is some deity out there, they've definitely skipped their psych appointment before creating this."
 	icon_state = "the_wabbajack"
 	inhand_icon_state = "the_wabbajack"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //fuck you
-	max_charges = 999999 //fuck you
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF //bad you
+	max_charges = 999999 //bad you
 	recharge_rate = 1
 	allow_intruder_use = TRUE
 

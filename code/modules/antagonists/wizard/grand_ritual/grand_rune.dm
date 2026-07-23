@@ -180,7 +180,7 @@
 /obj/effect/grand_rune/proc/get_invoke_time()
 	return  (BASE_INVOKE_TIME) + (potency * (ADD_INVOKE_TIME))
 
-/// Called when you actually finish the damn thing
+/// Called when you actually finish the unfortunate thing
 /obj/effect/grand_rune/proc/on_invocation_complete(mob/living/user)
 	is_in_use = FALSE
 	playsound(src,'sound/effects/magic/staff_change.ogg', 75, TRUE)

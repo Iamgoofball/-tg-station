@@ -58,7 +58,7 @@
 		target_loc = target
 	else if (!CAN_THEY_SEE(target, living_parent))
 		stop_firing()
-		return FALSE // Can't see shit
+		return FALSE // Can't see bad
 
 	living_parent.face_atom(target)
 	COOLDOWN_START(src, next_shot_cooldown, autofire_shot_delay)

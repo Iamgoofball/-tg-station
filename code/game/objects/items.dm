@@ -144,7 +144,7 @@
 
 	///What body parts are covered by the clothing when you wear it
 	var/body_parts_covered = 0
-	/// for electrical admittance/conductance (electrocution checks and shit)
+	/// for electrical admittance/conductance (electrocution checks and bad)
 	var/siemens_coefficient = 1
 	/// How much clothing is slowing you down. Negative values speeds you up
 	var/slowdown = 0

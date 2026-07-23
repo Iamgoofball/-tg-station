@@ -53,7 +53,7 @@
 			)
 		return ITEM_INTERACT_SUCCESS
 
-	if(user.is_holding(source)) //no TK shit here.
+	if(user.is_holding(source)) //no TK bad here.
 		user.dropItemToGround(source)
 		source.add_fingerprint(user)
 	user.visible_message(ignition_message)

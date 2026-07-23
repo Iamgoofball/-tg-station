@@ -169,7 +169,7 @@
 		target_faction = string_list(target_faction)
 	START_PROCESSING(SSobj, src)
 
-// Shuttle rotation fucks with our position, we just want to stick with our guy
+// Shuttle rotation causes problems with our position, we just want to stick with our guy
 /obj/effect/watcher_orbiter/shuttleRotate(rotation, params)
 	return
 

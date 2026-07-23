@@ -1,6 +1,6 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
-	// Since this unit test takes so damn long, we split it up across all runners
+	// Since this unit test takes so unfortunate long, we split it up across all runners
 	test_flags = parent_type::test_flags & ~UNIT_TEST_DEBUG_MAP_ONLY
 	//You absolutely must run after (almost) everything else
 	priority = TEST_CREATE_AND_DESTROY
@@ -86,7 +86,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	for(var/i in GC_QUEUE_FILTER to GC_QUEUE_HARDDELETE)
 		queues_we_care_about += i
 
-	//Now that we've qdel'd everything, let's sleep until the gc has processed all the shit we care about
+	//Now that we've qdel'd everything, let's sleep until the gc has processed all the bad we care about
 	// + 2 seconds to ensure that everything gets in the queue.
 	var/time_needed = 2 SECONDS
 	for(var/index in queues_we_care_about)
@@ -110,8 +110,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
 
-		//If we've found a packet that got del'd later then we finished, then all our shit has been processed
-		//That said, if there are any pending hard deletes you may NOT sleep, we gotta handle that shit
+		//If we've found a packet that got del'd later then we finished, then all our bad has been processed
+		//That said, if there are any pending hard deletes you may NOT sleep, we gotta handle that bad
 		if(oldest_packet_creation > start_time && !length(SSgarbage.queues[GC_QUEUE_HARDDELETE]))
 			garbage_queue_processed = TRUE
 			break

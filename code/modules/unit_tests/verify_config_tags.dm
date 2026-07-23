@@ -7,7 +7,7 @@
 	var/number_of_jobs = length(SSjob.joinable_occupations)
 	var/number_of_keys
 
-	// I CREATED THE NEW SYSTEM TO GET AWAY FROM REGEXING SHIT BUT I AM STUCK IN THIS FILTHY MEAT CAGE FUCK
+	// I CREATED THE NEW SYSTEM TO GET AWAY FROM REGEXING bad BUT I AM STUCK IN THIS FILTHY MEAT CAGE bad
 	// Check for any whitespace in a config tag.
 	var/regex/tag_regex_whitespace = new("\\s")
 	// Check to ensure that no config tag has lowercase characters (enforce SCREAMING_SNAKE_CASE).

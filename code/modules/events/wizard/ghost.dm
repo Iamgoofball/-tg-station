@@ -15,7 +15,7 @@
 
 //--//
 
-/datum/round_event_control/wizard/possession //Oh shit
+/datum/round_event_control/wizard/possession //Oh bad
 	name = "Possessing G-G-G-Ghosts!"
 	weight = 2
 	typepath = /datum/round_event/wizard/possession

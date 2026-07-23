@@ -821,7 +821,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			atk_verb_continuous = "[drunken_martial_descriptor] [capitalize(atk_verb_continuous)]"
 
 		else if(user_drunkenness >= 60)
-			limb_accuracy = -limb_accuracy // good luck landing a punch now, you drunk fuck
+			limb_accuracy = -limb_accuracy // good luck landing a punch now, you drunk bad
 			user.adjust_disgust(5)
 
 		else if(user_drunkenness >= 30)

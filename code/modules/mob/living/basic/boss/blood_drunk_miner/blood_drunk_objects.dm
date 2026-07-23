@@ -21,7 +21,7 @@
 	our_matrix.Turn(pick(90, 270))
 	var/final_dir = dir
 	if(dir & (EAST|WEST)) //Facing east or west
-		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
+		final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or bottom
 
 	animate(src, transform = our_matrix, pixel_y = -6, dir = final_dir, time = 2, easing = QUAD_EASING)
 	sleep(0.5 SECONDS)

@@ -146,7 +146,7 @@
 			. += create_tube_overlay(direction ^ 12, WEST)
 
 /obj/structure/transit_tube/proc/create_tube_overlay(direction, shift_dir)
-	// We use image() because a mutable appearance will have its dir mirror the parent which sort of fucks up what we're doing here
+	// We use image() because a mutable appearance will have its dir mirror the parent which sort of causes problems up what we're doing here
 	var/image/tube_overlay = image(icon, dir = direction)
 	if(shift_dir)
 		tube_overlay.icon_state = "decorative_diag"

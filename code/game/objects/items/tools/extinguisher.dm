@@ -332,7 +332,7 @@
 		water_reagents.my_atom = water
 		reagents.trans_to(water, 1, transferred_by = user)
 
-	//Make em move dat ass, hun
+	//Make em move dat bottom, hun
 	move_particles(water_particles)
 	return ITEM_INTERACT_SKIP_TO_ATTACK // You can smack while spraying
 

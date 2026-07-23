@@ -639,7 +639,7 @@
 		if(HAS_TRAIT(screeched, TRAIT_DEAF)) // bit weaker if deaf. but its still psychic
 			power *= 0.5
 		var/affect_time = 15 SECONDS * power
-		// it really fucks you up
+		// it really causes problems you up
 		screeched.Knockdown(affect_time * 0.1)
 		screeched.adjust_disgust(affect_time)
 		screeched.adjust_stutter(affect_time)

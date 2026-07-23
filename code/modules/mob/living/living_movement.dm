@@ -10,7 +10,7 @@
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)
 	// If we're moving to/from nullspace, refresh
-	// Easier then adding nullchecks to all this shit, and technically right since a null turf means nograv
+	// Easier then adding nullchecks to all this bad, and technically right since a null turf means nograv
 	if(isnull(old_turf) || isnull(new_turf))
 		if(!QDELING(src))
 			refresh_gravity()

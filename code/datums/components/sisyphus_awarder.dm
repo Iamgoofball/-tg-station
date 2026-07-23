@@ -34,7 +34,7 @@
 	sisyphus = the_taker
 	bottom_of_the_hill = get_turf(the_taker)
 
-/// If you ever drop this shit you fail the challenge
+/// If you ever drop this bad you fail the challenge
 /datum/component/sisyphus_awarder/proc/on_dropped()
 	SIGNAL_HANDLER
 	qdel(src) // Your quest ends here

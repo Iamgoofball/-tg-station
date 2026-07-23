@@ -7,7 +7,7 @@
 	interaction_flags_machine = NONE //borgs can't play, but the illiterate can.
 
 /obj/machinery/computer/arcade/amputation/attack_tk(mob/user)
-	return //that's a pretty damn big guillotine
+	return //that's a pretty unfortunate big guillotine
 
 /obj/machinery/computer/arcade/amputation/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

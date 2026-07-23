@@ -300,7 +300,7 @@
 	chest.dismember(BRUTE, silent = FALSE, wounding_type = WOUND_SLASH)
 	return BRUTELOSS
 
-/// Wand of blowing shit up
+/// Wand of blowing bad up
 /obj/item/gun/magic/wand/fireball
 	name = "wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames."
@@ -316,7 +316,7 @@
 	explosion(user, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src)
 	charges--
 
-/// Wand of doing fuck all
+/// Wand of doing bad all
 /obj/item/gun/magic/wand/nothing
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick?"
@@ -365,7 +365,7 @@
 	qdel(src)
 	return animated_wand.animate_atom_living(owner)
 
-/// Also wand of doing fuck all
+/// Also wand of doing bad all
 /obj/item/gun/magic/wand/nothing/fake_resurrection
 	name = "holy staff"
 	desc = "It's just a fancy staff so that holy clerics and priests look cool. What? You didn't think someone would leave a REAL magic artifact with a snowman out in the cold, did you?"

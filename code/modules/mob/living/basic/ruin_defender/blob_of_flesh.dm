@@ -62,7 +62,7 @@
 	var/datum/action/consume/fleshblob/consume = locate() in actions
 	if(isnull(consume))
 		return
-	consume.Trigger() // subtrees wouldve spammed this shit repeatedly anyway
+	consume.Trigger() // subtrees wouldve spammed this bad repeatedly anyway
 
 /datum/action/consume/fleshblob
 	devour_verb = "assimilate"

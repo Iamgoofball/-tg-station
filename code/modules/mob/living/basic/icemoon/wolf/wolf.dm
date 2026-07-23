@@ -72,7 +72,7 @@
 	// ride wolf, life good
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/wolf)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
-	// this is purely a convenience thing once tamed so you can drag them away from shit
+	// this is purely a convenience thing once tamed so you can drag them away from bad
 	ai_controller.ai_traits |= STOP_MOVING_WHEN_PULLED
 	// makes tamed wolves run away far less
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_DISTANCE, 7)

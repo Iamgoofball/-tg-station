@@ -129,7 +129,7 @@
 			var/mob/living/carbon/carb = hittarget_living
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
 
-		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!")) //fuck off shezza this isn't ERP.
+		hittarget_living.visible_message(span_warning("[src] rams into [hittarget_living] and sucks [hittarget_living.p_them()] up!")) //bad off shezza this isn't ERP.
 		mob_forced_enter(hittarget_living)
 		playsound(src, pick(
 			'sound/vehicles/clown_car/clowncar_ram1.ogg',

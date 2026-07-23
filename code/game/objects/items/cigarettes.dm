@@ -820,7 +820,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 473.15 // Lowered so that the sugar can be carmalized, but not burnt.
 	lung_harm = 0.5
 	list_reagents = list(/datum/reagent/consumable/sugar = 20)
-	choke_time_max = 70 SECONDS // This shit really is deadly
+	choke_time_max = 70 SECONDS // This bad really is deadly
 
 /obj/item/cigarette/candy/nicotine
 	desc = "For all ages*! Doesn't contain any* amount of nicotine. Health and safety risks can be read on the tip of the cigarette."

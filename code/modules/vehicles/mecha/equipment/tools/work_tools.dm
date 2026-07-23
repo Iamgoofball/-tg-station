@@ -14,7 +14,7 @@
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_RIPLEY
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
-	///Bool for whether we beat the hell out of things we punch (and tear off their arms)
+	///Bool for whether we beat the problem out of things we punch (and tear off their arms)
 	var/killer_clamp = FALSE
 	///How much base damage this clamp does
 	var/clamp_damage = 20
@@ -128,7 +128,7 @@
 						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, carbon_victim, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
-	var/armor_check = clamp(victim.run_armor_check(null, MELEE) / 3, 0, 100) //our target only benefits from a third of their armor. Because it's a huge ass clamp
+	var/armor_check = clamp(victim.run_armor_check(null, MELEE) / 3, 0, 100) //our target only benefits from a third of their armor. Because it's a huge bottom clamp
 	victim.visible_message(span_danger("[chassis] squeezes [victim]!"), \
 						span_userdanger("[chassis] squeezes you!"),\
 						span_hear("You hear something crack."))

@@ -45,7 +45,7 @@
 	var/list/possible_turfs = list()
 	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
 	if(isnull(bridge))
-		return ..() //if no bridge, spawn on the arrivals shuttle (but also what the fuck)
+		return ..() //if no bridge, spawn on the arrivals shuttle (but also what the bad)
 	for (var/list/zlevel_turfs as anything in bridge.get_zlevel_turf_lists())
 		for (var/turf/possible_turf as anything in zlevel_turfs)
 			if(possible_turf.is_blocked_turf())

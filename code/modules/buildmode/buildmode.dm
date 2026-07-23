@@ -82,7 +82,7 @@
 	build_options_grid(GLOB.alldirs, dirswitch_buttons, /atom/movable/screen/buildmode/dirswitch)
 
 // this creates a nice offset grid for choosing between buildmode options,
-// because going "click click click ah hell" sucks.
+// because going "click click click ah problem" sucks.
 /datum/buildmode/proc/build_options_grid(list/elements, list/buttonslist, buttontype)
 	var/pos_idx = 0
 	for(var/thing in elements)

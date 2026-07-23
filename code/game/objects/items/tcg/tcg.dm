@@ -39,7 +39,7 @@
 	id = temp.id
 	series = temp.series
 
-// This totally isn't overengineered to hell, shut up
+// This totally isn't overengineered to problem, shut up
 /**
  * Alright so some brief details here, we store all "immutable" (Think like power) card variables in a global list, indexed by id
  * This proc gets the card's associated card datum to play with

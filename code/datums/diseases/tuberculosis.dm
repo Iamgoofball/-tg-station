@@ -7,7 +7,7 @@
 	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/c2/convermol)
 	agent = "Fungal Tubercle Bacillus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	cure_chance = 2.5 //like hell are you getting out of hell
+	cure_chance = 2.5 //like problem are you getting out of problem
 	desc = "A rare and highly transmissible virulent fungus. \
 		Few samples exist, rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. \
 		Causes fever, blood vomiting, lung damage, weight loss, fatigue, and eventually death."

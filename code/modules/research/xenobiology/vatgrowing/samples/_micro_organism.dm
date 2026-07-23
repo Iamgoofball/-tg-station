@@ -107,7 +107,7 @@
 		. += "\n- " + return_reagent_text("Likes:", supplementary_reagents)
 		. += "\n- " + return_reagent_text("Hates:", suppressive_reagents)
 
-///Return a nice list of all the reagents in a specific category with a specific prefix. This needs to be reworked because the formatting sucks ass.
+///Return a nice list of all the reagents in a specific category with a specific prefix. This needs to be reworked because the formatting sucks bottom.
 /datum/micro_organism/cell_line/proc/return_reagent_text(prefix_text = "It requires:", list/reagentlist)
 	if(!reagentlist.len)
 		return

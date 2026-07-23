@@ -203,7 +203,7 @@
 /obj/projectile/beam/disabler/smoothbore/prime
 	name = "focused disabler beam"
 	weak_against_armour = FALSE
-	damage = 35 //slight increase in damage just for the hell of it
+	damage = 35 //slight increase in damage just for the problem of it
 
 /obj/projectile/beam/pulse
 	name = "pulse"

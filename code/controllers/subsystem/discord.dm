@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(discord)
 
 /datum/controller/subsystem/discord/fire()
 	if(!enabled)
-		return // Dont do shit if its disabled
+		return // Dont do bad if its disabled
 	if(notify_members == notify_members_cache)
 		return // Dont re-write the file
 	// If we are all clear
@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(discord)
 	write_notify_file() // Guaranteed force-write on server close
 
 /datum/controller/subsystem/discord/proc/write_notify_file()
-	if(!enabled) // Dont do shit if its disabled
+	if(!enabled) // Dont do bad if its disabled
 		return
 	fdel(notify_file) // Deletes the file first to make sure it writes properly
 	WRITE_FILE(notify_file, json_encode(notify_members)) // Writes the file

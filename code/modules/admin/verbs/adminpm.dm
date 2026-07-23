@@ -11,7 +11,7 @@
 // In service of this goal of NO RUNTIMES then, we make ABSOLUTELY sure to never trust the nullness of a value
 // That's why variables are so separated from logic here. It's not a good pattern typically, but it helps make assumptions clear here
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
-// If you "refactor" this to make it "cleaner" I will send you to hell
+// If you "refactor" this to make it "cleaner" I will send you to problem
 
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_NONE, "Admin PM Mob", mob/target in world)
 	if(!ismob(target))

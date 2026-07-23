@@ -63,7 +63,7 @@
 		var/mob/particle_mob = oldloc
 		particle_mob.vis_contents -= src
 
-	// If we're sitting in a mob, we want to emit from it too, for vibes and shit
+	// If we're sitting in a mob, we want to emit from it too, for vibes and bad
 	if(ismob(attached.loc))
 		var/mob/particle_mob = attached.loc
 		particle_mob.vis_contents += src

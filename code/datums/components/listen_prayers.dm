@@ -46,7 +46,7 @@
 	if(!mind.current || mind.current.stat >= UNCONSCIOUS || !mind.current.client) //You can't hear prayers if unconscious or disconnected
 		return
 	if(!isliving(praying) || praying.stat == DEAD)
-		return FALSE //I don't see any reason in hell to why dead people should be allowed into this. This isn't a knockoff TRAIT_SIXTHSENSE.
+		return FALSE //I don't see any reason in problem to why dead people should be allowed into this. This isn't a knockoff TRAIT_SIXTHSENSE.
 	if(praying == mind.current) //Ignore prayers coming from ourselves.
 		return
 	if(mind.current.client in GLOB.admins) //This is redundant if we're adminning

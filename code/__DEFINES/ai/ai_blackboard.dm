@@ -79,8 +79,8 @@
 #define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
 ///song lines blackboard, set by default on controllers
 #define BB_SONG_LINES "song_lines"
-///mob doesn't use hand code so we're assuming its instrument is up its ass
-#define BB_INSTRUMENT_UP_ASS "Has its instrument up its ass"
+///mob doesn't use hand code so we're assuming its instrument is up its bottom
+#define BB_INSTRUMENT_UP_ASS "Has its instrument up its bottom"
 
 ///bane ai used by example script
 #define BB_BANE_BATMAN "BB_bane_batman"
@@ -139,8 +139,8 @@
 #define BB_BASIC_MOB_IDLE_WALK_CHANCE "BB_basic_idle_walk_chance"
 #define BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN "BB_basic_mob_target_refresh_cooldown"
 
-/// whether we can have fuck
-#define BB_FUCKS "can we fuck?"
+/// whether we can have bad
+#define BB_FUCKS "can we breed?"
 
 /// Minimum range to keep target within
 #define BB_RANGED_SKIRMISH_MIN_DISTANCE "BB_ranged_skirmish_min_distance"
@@ -188,7 +188,7 @@
 #define BB_STATIONARY_COOLDOWN "BB_stationary_cooldown"
 
 /// Assoc list of mobs who have damaged us -> Moment at which they damaged us
-#define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
+#define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_target_list"
 
 /// Chance to randomly acquire a new target
 #define BB_RANDOM_AGGRO_CHANCE "BB_random_aggro_chance"

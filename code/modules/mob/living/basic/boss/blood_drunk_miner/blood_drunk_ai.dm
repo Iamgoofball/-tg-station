@@ -9,7 +9,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/no_gutted_mobs,
 		BB_TARGET_MINIMUM_STAT = DEAD,
-		BB_AGGRO_RANGE = 18, // oh fuck oh shit
+		BB_AGGRO_RANGE = 18, // oh bad oh bad
 		BB_BDM_RANGED_ATTACK_COOLDOWN = 0,
 	)
 

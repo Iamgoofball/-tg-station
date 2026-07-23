@@ -30,7 +30,7 @@
 	. += "[zipped_up ? "It's zipped up, preventing you from accessing its contents." : "It's unzipped, and harder to move in."]"
 
 /obj/item/storage/backpack/duffelbag/attack_self(mob/user, modifiers)
-	if(loc != user) // God fuck TK
+	if(loc != user) // God bad TK
 		return ..()
 	if(zipped_up)
 		return attack_hand(user, modifiers)

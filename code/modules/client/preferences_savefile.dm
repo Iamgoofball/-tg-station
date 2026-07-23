@@ -50,7 +50,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
 //from these procs.
 //This only really meant to avoid annoying frequent players
-//if your savefile is 3 months out of date, then 'tough shit'.
+//if your savefile is 3 months out of date, then 'tough bad'.
 
 /datum/preferences/proc/update_preferences(current_version, datum/json_savefile/S)
 	if(current_version < 34)

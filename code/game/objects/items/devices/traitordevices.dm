@@ -84,7 +84,7 @@ effective or pretty fucking useless.
 		return .
 
 	var/mob/living/carbon/human/human_target = interacting_with
-	if(istype(human_target) && !used && SSradiation.wearing_rad_protected_clothing(human_target)) //intentionally not checking for TRAIT_RADIMMUNE here so that tatortot can still fuck up and waste their cooldown.
+	if(istype(human_target) && !used && SSradiation.wearing_rad_protected_clothing(human_target)) //intentionally not checking for TRAIT_RADIMMUNE here so that tatortot can still bad up and waste their cooldown.
 		to_chat(user, span_warning("[interacting_with]'s clothing is fully protecting [interacting_with.p_them()] from irradiation!"))
 		return . | ITEM_INTERACT_BLOCKING
 

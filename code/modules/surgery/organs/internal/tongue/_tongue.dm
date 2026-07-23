@@ -26,7 +26,7 @@
 	 */
 	var/list/languages_native
 	///changes the verbage of how you speak. (Permille -> says <-, "I just used a verb!")
-	///i hate to say it, but because of sign language, this may have to be a component. and we may have to do some insane shit like putting a component on a component
+	///i hate to say it, but because of sign language, this may have to be a component. and we may have to do some insane bad like putting a component on a component
 	var/say_mod = "says"
 	///for temporary overrides of the above variable.
 	var/temp_say_mod = ""
@@ -522,7 +522,7 @@
 	attack_verb_continuous = list("bites", "chatters", "chomps", "enamelles", "bones")
 	attack_verb_simple = list("bite", "chatter", "chomp", "enamel", "bone")
 	sense_of_taste = FALSE
-	liked_foodtypes = GROSS | MEAT | RAW | GORE | DAIRY //skeletons eat spooky shit... and dairy, of course
+	liked_foodtypes = GROSS | MEAT | RAW | GORE | DAIRY //skeletons eat spooky bad... and dairy, of course
 	disliked_foodtypes = NONE
 	modifies_speech = TRUE
 	var/chattering = FALSE

@@ -52,7 +52,7 @@
 	src.key = "[key]_[mock_client_uid++]"
 	ckey = ckey(key)
 
-#ifdef UNIT_TESTS // otherwise this shit can leak into production servers which is drather dbad
+#ifdef UNIT_TESTS // otherwise this bad can leak into production servers which is drather dbad
 	GLOB.directory[ckey] = src
 
 	if(GLOB.persistent_clients_by_ckey[ckey])

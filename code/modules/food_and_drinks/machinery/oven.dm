@@ -123,7 +123,7 @@
 		return used_tray.item_interaction_secondary(user, tool, modifiers)
 	return NONE
 
-///Adds a tray to the oven, making sure the shit can get baked.
+///Adds a tray to the oven, making sure the bad can get baked.
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)
 	used_tray = oven_tray
 	playsound(src, SFX_TRAY_INSERT, 50, TRUE)

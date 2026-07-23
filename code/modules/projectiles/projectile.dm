@@ -232,7 +232,7 @@
 	var/impact_effect_type
 	/// If the act of firing this projectile does not create logs
 	var/log_override = FALSE
-	/// If true, the projectile won't cause any logging whatsoever. Used for hallucinations and shit.
+	/// If true, the projectile won't cause any logging whatsoever. Used for hallucinations and bad.
 	var/do_not_log = FALSE
 	/// Turf that we have registered connect_loc signal - this is done for performance, as we're moving ~a dozen turfs per tick
 	/// and registering and unregistering signal for every single one of them is stupid. Unregistering the signal from the correct turf in case we get moved by smth else is important
@@ -1123,7 +1123,7 @@
 		QDEL_LIST_ASSOC(beam_points)
 		QDEL_NULL(last_point)
 	last_point = RETURN_PRECISE_POINT(src)
-	// If moving, increment its position a bit to prevent it from looking like its coming from firer's ass
+	// If moving, increment its position a bit to prevent it from looking like its coming from firer's bottom
 	if (offset && !isnull(movement_vector))
 		last_point.increment(movement_vector.pixel_x * MUZZLE_EFFECT_PIXEL_INCREMENT, movement_vector.pixel_y * MUZZLE_EFFECT_PIXEL_INCREMENT)
 	beam_points[last_point] = null

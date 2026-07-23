@@ -104,7 +104,7 @@
 
 /datum/action/cooldown/mob_cooldown/expel_gas/Activate(atom/target)
 	StartCooldown(360 SECONDS)
-	// Regeneated each time just in case someone fucks with our list
+	// Regeneated each time just in case someone causes problems with our list
 	var/list/gas_selection = list("None")
 	for(var/datum/gas/gas as anything in possible_gases)
 		gas_selection[initial(gas.name)] = gas

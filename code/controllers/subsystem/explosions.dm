@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(explosions)
 	/// List of turfs to throw the contents of
 	var/list/throwturf = list()
 	/// List of turfs to throw the contents of... AFTER the next explosion processes
-	/// This avoids order of operations errors and shit
+	/// This avoids order of operations errors and bad
 	var/list/held_throwturf = list()
 
 	var/list/low_mov_atom = list()

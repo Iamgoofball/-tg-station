@@ -289,7 +289,7 @@
 		return hitting_projectile.on_hit(src, 0)
 
 	// we override parent like this because otherwise we won't actually properly log the fact that a projectile caused this welding tank to explode.
-	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
+	// if this sucks, feel free to change it, but make sure the unfortunate thing will log. thanks.
 	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/welder_act(mob/living/user, obj/item/tool)

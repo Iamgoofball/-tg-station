@@ -41,7 +41,7 @@
 	appearance_ref = REF(appearance_father)
 
 // This means if the appearance loses refs before a click it's gone, but that's consistent to other datums so it's fine
-// Need to ref the APPEARANCE because we just free on our own, which sorta fucks this operation up you know?
+// Need to ref the APPEARANCE because we just free on our own, which sorta causes problems this operation up you know?
 /mutable_appearance/appearance_mirror/get_vv_link_ref()
 	return appearance_ref
 

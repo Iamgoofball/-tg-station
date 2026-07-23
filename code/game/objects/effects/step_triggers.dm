@@ -4,7 +4,7 @@
 	var/affect_ghosts = 0
 	var/stopper = 1 // stops throwers
 	var/mobs_only = FALSE
-	invisibility = INVISIBILITY_ABSTRACT // nope cant see this shit
+	invisibility = INVISIBILITY_ABSTRACT // nope cant see this bad
 	anchored = TRUE
 
 /obj/effect/step_trigger/Initialize(mapload)

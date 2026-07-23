@@ -57,7 +57,7 @@
 				addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, add_atom_colour), (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
 			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 101)
 			return MANUAL_SUICIDE
-		if(SKILL_LEVEL_LEGENDARY to INFINITY) //Holy shit, look at that janny go!
+		if(SKILL_LEVEL_LEGENDARY to INFINITY) //Holy bad, look at that janny go!
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has epically become one with the janicart, and they're even in overdrive mode! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
 			playsound(src, 'sound/effects/magic/lightning_chargeup.ogg', 50, TRUE, -1)

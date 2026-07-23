@@ -142,7 +142,7 @@
 	var/picked_turf = get_turf(picked_table)
 	if(length(tables))
 		var/another_table = pick(tables)
-		for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
+		for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other bad on the table, get that off
 			if(thing_on_table == picked_table)
 				continue
 			if(HAS_TRAIT(thing_on_table, TRAIT_WALLMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1) || thing_on_table.layer < TABLE_LAYER)
@@ -219,7 +219,7 @@
 		return
 	var/picked_table = pick_n_take(tables)
 	var/picked_turf = get_turf(picked_table)
-	for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
+	for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other bad on the table, get that off
 		if(thing_on_table == picked_table)
 			continue
 		if(HAS_TRAIT(thing_on_table, TRAIT_WALLMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1) || thing_on_table.layer < TABLE_LAYER)

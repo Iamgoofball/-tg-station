@@ -102,13 +102,13 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define BIO_STANDARD_ALIEN (BIO_CHITIN|BIO_BONE|BIO_BLOODED|BIO_JOINTED)
 
 // "Where" a specific biostate is within a given limb
-// Interior is hard shit, the last line, shit like bones
-// Exterior is soft shit, targeted by slashes and pierces (usually), protects exterior
+// Interior is hard bad, the last line, bad like bones
+// Exterior is soft bad, targeted by slashes and pierces (usually), protects exterior
 // A limb needs both mangled interior and exterior to be dismembered, but slash/pierce must mangle exterior to attack the interior
 // Not having exterior/interior counts as mangled exterior/interior for the purposes of dismemberment
-/// The given biostate is on the "interior" of the limb - hard shit, protected by exterior
+/// The given biostate is on the "interior" of the limb - hard bad, protected by exterior
 #define ANATOMY_INTERIOR (1<<0)
-/// The given biostate is on the "exterior" of the limb - soft shit, protects interior
+/// The given biostate is on the "exterior" of the limb - soft bad, protects interior
 #define ANATOMY_EXTERIOR (1<<1)
 #define ANATOMY_EXTERIOR_AND_INTERIOR (ANATOMY_EXTERIOR|ANATOMY_INTERIOR)
 

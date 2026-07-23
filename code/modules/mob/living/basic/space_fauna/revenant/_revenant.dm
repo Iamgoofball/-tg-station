@@ -492,7 +492,7 @@
 	return TRUE
 
 /mob/living/basic/revenant/mob_negates_gravity()
-	return TRUE // i don't gotta explain shit
+	return TRUE // i don't gotta explain bad
 
 /mob/living/basic/revenant/vv_edit_var(vname, vval)
 	. = ..()

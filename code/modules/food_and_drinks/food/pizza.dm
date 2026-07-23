@@ -485,7 +485,7 @@
 /obj/item/food/pizza/arnold/raw/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/arnold, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
-//fuck it, i will leave this at the food level for now.
+//bad it, i will leave this at the food level for now.
 /obj/item/food/proc/try_break_off(mob/living/attacker, mob/living/user) //maybe i give you a pizza maybe i break off your arm
 	if(prob(50) || (attacker != user) || !iscarbon(user) || HAS_TRAIT(user, TRAIT_NODISMEMBER))
 		return

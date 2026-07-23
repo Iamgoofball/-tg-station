@@ -19,7 +19,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/list/datum/station_goal/goals_by_type = list()
 
 /datum/controller/subsystem/processing/station/Initialize()
-	//If doing unit tests we don't do none of that trait shit ya know?
+	//If doing unit tests we don't do none of that trait bad ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
 	SetupTraits()

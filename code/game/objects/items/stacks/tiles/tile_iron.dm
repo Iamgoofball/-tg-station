@@ -142,7 +142,7 @@
 /obj/item/stack/tile/iron/base //this subtype should be used for most stuff
 	merge_type = /obj/item/stack/tile/iron/base
 
-/obj/item/stack/tile/iron/base/cyborg //cant reskin these, fucks with borg code
+/obj/item/stack/tile/iron/base/cyborg //cant reskin these, causes problems with borg code
 	tile_reskin_types = null
 
 /obj/item/stack/tile/iron/edge

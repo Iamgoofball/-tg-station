@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		if(!nullrod_type::chaplain_spawnable)
 			continue
 		rods[nullrod_type] = nullrod_type::menu_description
-	//special non-nullrod subtyped shit
+	//special non-nullrod subtyped bad
 	rods[/obj/item/toy/plush/carpplushie/nullrod] = "A plushie dealing a little less damage due to its cute form. \
 		Capable of blessing one person with the Carp-Sie favor, \
 		which grants friendship of all wild space carps. Fits in pockets. Can be worn on the belt."
@@ -921,7 +921,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	else if(HAS_TRAIT(living_target, TRAIT_MIND_READER) && !user.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0)) // FORESIGHT SAYS 'FUCK YOU' TO SNEAK ATTACKERS. BUT IF YOU HAVE A TIN FOIL HAT, YOU'RE SAFE!
+	else if(HAS_TRAIT(living_target, TRAIT_MIND_READER) && !user.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0)) // FORESIGHT SAYS 'bad YOU' TO SNEAK ATTACKERS. BUT IF YOU HAVE A TIN FOIL HAT, YOU'RE SAFE!
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 

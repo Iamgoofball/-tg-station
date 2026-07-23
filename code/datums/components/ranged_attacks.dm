@@ -69,7 +69,7 @@
 	for(var/i in 1 to (burst_shots - 1))
 		addtimer(CALLBACK(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers), i * burst_intervals)
 
-/// Actually fire the damn thing
+/// Actually fire the unfortunate thing
 /datum/component/ranged_attacks/proc/async_fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)
 	firer.face_atom(target)
 	if(projectile_type)

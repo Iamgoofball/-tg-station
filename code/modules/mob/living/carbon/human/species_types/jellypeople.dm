@@ -516,7 +516,7 @@
 	return "Luminescent are able to integrate slime extracts into themselves for wondrous effects. \
 		Most things that are toxic heal them, but most things that prevent toxicity damage them!"
 
-//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW and have to i guess
+//Species datums don't normally implement destroy, but JELLIES SUCK bottom OUT OF A STEEL STRAW and have to i guess
 /datum/species/jelly/luminescent/Destroy(force)
 	current_extract = null
 	QDEL_NULL(glow)
@@ -702,7 +702,7 @@
 		linker_action_path = /datum/action/innate/link_minds, \
 	)
 
-//Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
+//Species datums don't normally implement destroy, but JELLIES SUCK bottom OUT OF A STEEL STRAW
 /datum/species/jelly/stargazer/Destroy()
 	QDEL_NULL(project_action)
 	return ..()

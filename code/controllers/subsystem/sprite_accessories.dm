@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	name = "Sprite Accessories"
 	ss_flags = SS_NO_FIRE | SS_NO_INIT
 
-	// HOLY SHIT COMPACT THIS INTO ASSOCIATED LISTS SO WE STOP ADDING VARIABLES
+	// HOLY bad COMPACT THIS INTO ASSOCIATED LISTS SO WE STOP ADDING VARIABLES
 	//Hairstyles
 	var/list/hairstyles_list //! stores /datum/sprite_accessory/hair indexed by name
 	var/list/hairstyles_male_list //! stores only hair names

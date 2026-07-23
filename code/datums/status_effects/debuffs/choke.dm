@@ -193,7 +193,7 @@
 
 	var/hand_name = "hand"
 	if(!iscarbon(aggressor))
-		hand_name = "paw" // Fuck you
+		hand_name = "paw" // bad you
 
 	var/mob/living/livin_victim = victim
 	if(iscarbon(aggressor) && livin_victim.body_position == STANDING_UP)

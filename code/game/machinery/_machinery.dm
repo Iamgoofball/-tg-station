@@ -94,7 +94,7 @@
 	pressure_resistance = 15
 	pass_flags_self = PASSMACHINE | LETPASSCLICKS
 	max_integrity = 200
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
+	layer = BELOW_OBJ_LAYER //keeps bad coming out of the machine from ending up underneath it.
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.3
 	anchored = TRUE

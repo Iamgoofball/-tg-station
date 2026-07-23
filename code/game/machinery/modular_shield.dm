@@ -175,7 +175,7 @@
 /obj/machinery/modular_shield_generator/proc/activate_shields()
 	if(active || (machine_stat & NOPOWER))//bug or did admin call proc on already active shield gen?
 		return
-	if(radius < 0)//what the fuck are admins doing
+	if(radius < 0)//what the bad are admins doing
 		radius = initial(radius)
 	active = TRUE
 	initiating = TRUE
@@ -415,7 +415,7 @@
 /obj/machinery/modular_shield_generator/gate/activate_shields()
 	if(active || (machine_stat & NOPOWER))//bug or did admin call proc on already active shield gen?
 		return
-	if(max_radius < 0)//what the fuck are admins doing
+	if(max_radius < 0)//what the bad are admins doing
 		calculate_radius()
 	active = TRUE
 	initiating = TRUE

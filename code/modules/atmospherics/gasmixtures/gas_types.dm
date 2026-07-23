@@ -92,7 +92,7 @@
 	desc = "A very common gas that used to pad artificial atmospheres to habitable pressure."
 	primary_color = "#ffff00"
 
-/datum/gas/carbon_dioxide //what the fuck is this?
+/datum/gas/carbon_dioxide //what the bad is this?
 	id = GAS_CO2
 	specific_heat = 30
 	name = "Carbon Dioxide"

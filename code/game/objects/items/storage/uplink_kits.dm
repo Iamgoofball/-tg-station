@@ -62,7 +62,7 @@
 			new /obj/item/encryptionkey/syndicate(src) // 2 tc
 			new /obj/item/storage/box/syndie_kit/mulligan(src) // 4 tc
 			new /obj/item/switchblade(src) //basically 1 tc as it can be bought from BM kits
-			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
+			new /obj/item/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this bad heals
 			new /obj/item/flashlight/emp(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 			new /obj/item/implanter/storage(src) // 6 tc
@@ -150,7 +150,7 @@
 			new /obj/item/pizzabox/bomb(src) // 6 tc
 			new /obj/item/storage/box/syndie_kit/emp(src) // 2 tc
 
-		if(KIT_SNIPER) //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
+		if(KIT_SNIPER) //This bad is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/rifle/sniper_rifle(src) // 12 tc
 			new /obj/item/ammo_box/magazine/sniper_rounds/penetrator(src) // 5 tc
 			new /obj/item/clothing/glasses/thermal/syndi(src) // 4 tc

@@ -452,7 +452,7 @@
 
 /// Attaches an assembly holder to the tank to create a bomb.
 /obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
-	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
+	//Check if either part of the assembly has an igniter, but if both parts are igniters, then bad it
 	var/igniter_count = 0
 	for(var/obj/item/assembly/igniter/attached_assembly in assembly.assemblies)
 		igniter_count++

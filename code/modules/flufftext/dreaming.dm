@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 
 /datum/dream/hear_something/OnDreamEnd(mob/living/carbon/dreamer)
 	. = ..()
-	// In case we play some long ass music track
+	// In case we play some long bottom music track
 	addtimer(CALLBACK(src, PROC_REF(StopSound), dreamer), 5 SECONDS)
 
 /datum/dream/hear_something/proc/ReserveSoundChannel()

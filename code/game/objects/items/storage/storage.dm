@@ -6,7 +6,7 @@
 	interaction_flags_click = ALLOW_RESTING | FORBID_TELEKINESIS_REACH
 	action_slots = ALL
 	/// Should we preload the contents of this type?
-	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
+	/// BE CAREFUL, THERE'S SOME REALLY NASTY bad IN THIS TYPEPATH
 	/// SANTA IS EVIL
 	var/preload = FALSE
 	/// What storage type to use for this item

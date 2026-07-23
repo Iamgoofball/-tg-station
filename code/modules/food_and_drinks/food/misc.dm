@@ -211,7 +211,7 @@
 	if(stink_particles)
 		add_shared_particles(stink_particles)
 
-///Prevents grilling burnt shit from well, burning.
+///Prevents grilling burnt bad from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
 	SIGNAL_HANDLER
 	return COMPONENT_HANDLED_GRILLING

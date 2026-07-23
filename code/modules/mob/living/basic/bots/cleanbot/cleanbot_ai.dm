@@ -46,7 +46,7 @@
 	var/list/type_filter = typecacheof(final_hunt_list)
 	return typecache_filter_list(oview(range, pawn), type_filter)
 
-///clean that shit bro fr fr 67
+///clean that bad bro fr fr 67
 /datum/bt_node/ai_behavior/execute_clean
 	var/target_key
 

@@ -106,7 +106,7 @@ SUBSYSTEM_DEF(job)
 
 	return SS_INIT_SUCCESS
 
-/// Returns a list of jobs that we are allowed to fuck with during random events
+/// Returns a list of jobs that we are allowed to bad with during random events
 /datum/controller/subsystem/job/proc/get_valid_overflow_jobs()
 	var/static/list/overflow_jobs
 	if (!isnull(overflow_jobs))

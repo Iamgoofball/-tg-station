@@ -1,5 +1,5 @@
 
-///Destroy shit int he way
+///Destroy bad int he way
 /datum/bt_node/ai_behavior/attack_obstructions
 	var/target_key
 	time_between_perform = 2 SECONDS

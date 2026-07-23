@@ -111,7 +111,7 @@
 		muted.computer.alert_call(muted, "You have been muted from [title]!")
 
 /datum/ntnet_conversation/proc/ping_user(datum/computer_file/program/chatclient/pinger, datum/computer_file/program/chatclient/pinged)
-	if(pinger in muted_clients) //oh my god fuck off
+	if(pinger in muted_clients) //oh my god bad off
 		return
 	add_status_message("[pinger.username] pinged [pinged.username].")
 	pinged.computer.alert_call(pinged, "You have been pinged in [title] by [pinger.username]!", 'sound/machines/ping.ogg')

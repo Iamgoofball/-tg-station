@@ -221,7 +221,7 @@
 	if(!isnull(old_current))
 		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current, src)
 
-//I cannot trust you fucks to do this properly
+//I cannot trust you causes problems to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
 	original_character = WEAKREF(new_original_character)
 

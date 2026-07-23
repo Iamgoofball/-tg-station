@@ -34,7 +34,7 @@
 	var/metabolization_rate = REAGENTS_METABOLISM
 	/// above this overdoses happen
 	var/overdose_threshold = 0
-	/// You fucked up and this is now triggering its overdose effects, purge that shit quick.
+	/// You fucked up and this is now triggering its overdose effects, purge that bad quick.
 	var/overdosed = FALSE
 	///if false stops metab in liverless mobs
 	var/self_consuming = FALSE

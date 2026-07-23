@@ -204,7 +204,7 @@
 //call_query: 'CALL' call_function ['ON' object_selectors]
 /datum/sdql_parser/proc/call_query(i, list/node)
 	var/list/func = list()
-	i = variable(i + 1, func) // Yes technically does anything variable() matches but I don't care, if admins fuck up this badly then they shouldn't be allowed near SDQL.
+	i = variable(i + 1, func) // Yes technically does anything variable() matches but I don't care, if admins bad up this badly then they shouldn't be allowed near SDQL.
 
 	node["call"] = func
 

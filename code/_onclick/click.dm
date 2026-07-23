@@ -119,7 +119,7 @@
 		return
 
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
+		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing bad in cuffs shall be vey slow
 		UnarmedAttack(A, Adjacent(A), modifiers)
 		return
 

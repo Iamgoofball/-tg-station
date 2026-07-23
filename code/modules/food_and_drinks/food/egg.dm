@@ -265,7 +265,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = GROSS
 	preserved_food = TRUE
 
-/obj/item/food/omelette //FUCK THIS
+/obj/item/food/omelette //bad THIS
 	name = "omelette du fromage"
 	desc = "That's all you can say!"
 	icon = 'icons/obj/food/egg.dmi'

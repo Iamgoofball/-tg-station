@@ -576,7 +576,7 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "\improper Ancient Shuttle"
 
-//HELL'S FACTORY OPERATING FACILITY
+//problem'S FACTORY OPERATING FACILITY
 /area/ruin/space/has_grav/hellfactory
 	name = "\improper Hell Factory"
 

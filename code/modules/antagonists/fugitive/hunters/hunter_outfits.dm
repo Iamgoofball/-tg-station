@@ -289,7 +289,7 @@
 
 /obj/item/card/id/advanced/bountyhunter
 	assignment = "Bounty Hunter"
-	icon_state = "card_flame" //oh SHIT
+	icon_state = "card_flame" //oh bad
 	trim = /datum/id_trim/bounty_hunter
 
 /datum/outfit/bountyarmor/ert

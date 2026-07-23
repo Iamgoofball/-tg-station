@@ -258,7 +258,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
-/obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
+/obj/structure/closet/supplypod/ex_act() //Explosions dont do bad TO US! This is because supplypods create explosions when they land.
 	return FALSE
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
@@ -351,7 +351,7 @@
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
 			target_living.adjust_brute_loss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
 			if (!QDELETED(target_living))
-				target_living.gib(DROP_ALL_REMAINS) //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
+				target_living.gib(DROP_ALL_REMAINS) //After adjusting the bad outta that brute loss we finish the job with some satisfying gibs
 		else
 			target_living.adjust_brute_loss(damage)
 
@@ -363,7 +363,7 @@
 		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
 	if (landingSound)
 		playsound(turf_underneath, landingSound, soundVolume, FALSE, FALSE)
-	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
+	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking bad up w explosions, we should delete
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
 		qdel(src)
 		return

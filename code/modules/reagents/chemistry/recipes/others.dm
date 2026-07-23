@@ -792,7 +792,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_PLANT
 
 /datum/chemical_reaction/laughter
-	results = list(/datum/reagent/consumable/laughter = 10) // Fuck it. I'm not touching this one.
+	results = list(/datum/reagent/consumable/laughter = 10) // bad it. I'm not touching this one.
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/banana = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 

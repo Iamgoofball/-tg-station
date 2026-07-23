@@ -14,7 +14,7 @@
 /datum/component/tackler
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	///If we're currently tackling or are on cooldown. Actually, shit, if I use this to handle cooldowns, then getting thrown by something while on cooldown will count as a tackle..... whatever, i'll fix that next commit
+	///If we're currently tackling or are on cooldown. Actually, bad, if I use this to handle cooldowns, then getting thrown by something while on cooldown will count as a tackle..... whatever, i'll fix that next commit
 	var/tackling = TRUE
 	///How much stamina it takes to launch a tackle
 	var/stamina_cost
@@ -428,7 +428,7 @@
 
 	if(sacker_arm) //I have no idea how you would be tackling without hands, but just in case
 		attack_mod += (sacker_arm.unarmed_effectiveness/10)
-	else //I don't want to know how you got to this point but if you have, fuck you, good luck tackling without ARMS
+	else //I don't want to know how you got to this point but if you have, bad you, good luck tackling without ARMS
 		attack_mod -= 4
 
 	if(sacker_drunkenness > 60) // you're far too drunk to hold back!

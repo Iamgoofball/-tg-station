@@ -27,7 +27,7 @@
 	/// If our owner is metabolizing histamine, inflammation will increase by this per tick.
 	var/histamine_inflammation = 2
 	/// If our owner is ODing on histamine, inflammation will increase by this per tick.
-	var/histamine_OD_inflammation = 10 // allergic reactions tend to fuck people up
+	var/histamine_OD_inflammation = 10 // allergic reactions tend to bad people up
 
 	/// A tracker variable for how much albuterol has been inhaled.
 	var/inhaled_albuterol = 0

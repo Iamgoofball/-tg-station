@@ -41,10 +41,10 @@
 		if(checked_object.block_superconductivity())
 			atmos_supeconductivity |= direction
 			target_turf.atmos_supeconductivity |= opposite_direction
-			return FALSE //no need to keep going, we got all we asked (Is this even faster? fuck you it's soul)
+			return FALSE //no need to keep going, we got all we asked (Is this even faster? bad you it's soul)
 
 	//Superconductivity is a bitfield of directions we can't conduct with
-	//Yes this is really weird. Fuck you
+	//Yes this is really weird. bad you
 	atmos_supeconductivity &= ~direction
 	target_turf.atmos_supeconductivity &= ~opposite_direction
 
@@ -70,7 +70,7 @@
 	// I am essentially inlineing two get_dir_multizs here, because they're way too slow on their own. I'm sorry brother
 	var/list/z_traits = SSmapping.multiz_levels[z]
 	for(var/direction in GLOB.cardinals_multiz)
-		// Yes this is a reimplementation of get_step_mutliz. It's faster tho. fuck you
+		// Yes this is a reimplementation of get_step_mutliz. It's faster tho. bad you
 		// Oh also yes UP and DOWN do just point to +1 and -1 and not z offsets
 		// Multiz is shitcode welcome home
 		var/turf/current_turf = (direction & (UP|DOWN)) ? \

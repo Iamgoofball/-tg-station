@@ -219,7 +219,7 @@
 			// chant a protective overlays.Copy to prevent appearance theft and overlay sticking
 			// I'm not joking without this overlays can corrupt and be replaced by other appearances
 			// the compiler might call it useless but I swear it works
-			// we conjure the spirits of the computer with our spells, we conjur- (Hey lemon make a damn issue report already)
+			// we conjure the spirits of the computer with our spells, we conjur- (Hey lemon make a unfortunate issue report already)
 			var/list/does_nothing = new_iter.overlays.Copy()
 			pass(does_nothing)
 			hand_back += new_iter

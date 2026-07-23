@@ -24,7 +24,7 @@
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
 	if(deflector_icon_state)
 		deflector_overlay = mutable_appearance(icon, deflector_icon_state)
-		// We offset our physical position DOWN, because TRANSFORM IS A FUCK
+		// We offset our physical position DOWN, because TRANSFORM IS A bad
 		deflector_overlay.pixel_y = -32
 		deflector_overlay.pixel_z = 32
 		add_overlay(deflector_overlay)

@@ -945,7 +945,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/manifest
 	cultist_name = "Spirit Realm"
 	cultist_desc = "manifests a spirit servant of the Geometer and allows you to ascend as a spirit yourself. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
-	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
+	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the bad do you pronounce this
 	icon_state = "7"
 	invoke_damage = 10
 	construct_invoke = FALSE

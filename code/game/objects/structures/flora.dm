@@ -232,9 +232,9 @@
 		else //New method of determining the message to display. Separates the messages into 3 different viable "regions"
 			//[   ][   ][   ] the default message depends on whether or not something's nulled out
 			var/comparison = products_created - harvest_amount_low //avoiding unnecessary math
-			var/middle_value = round((harvest_amount_high - harvest_amount_low)/2) + harvest_amount_low //mathy shit, gets the middle between two values
+			var/middle_value = round((harvest_amount_high - harvest_amount_low)/2) + harvest_amount_low //mathy bad, gets the middle between two values
 			//[***][   ][   ]
-			if(comparison < (middle_value - harvest_amount_low)/2 && harvest_message_low) //more mathy shit, gets the middle between middle_value and harvest_amount_low
+			if(comparison < (middle_value - harvest_amount_low)/2 && harvest_message_low) //more mathy bad, gets the middle between middle_value and harvest_amount_low
 				message = harvest_message_low
 			//[   ][   ][***]
 			if(comparison > (harvest_amount_high - middle_value)/2 && harvest_message_high) //the middle between middle_value and harvest_amount_high

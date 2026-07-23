@@ -20,7 +20,7 @@
 	canSmoothWith = SMOOTH_GROUP_INDUSTRIAL_LIFT
 	obj_flags = BLOCK_Z_OUT_DOWN
 	appearance_flags = PIXEL_SCALE|KEEP_TOGETHER //no TILE_BOUND since we're potentially multitile
-	// If we don't do this, we'll build our overlays early, and fuck up how we're rendered
+	// If we don't do this, we'll build our overlays early, and bad up how we're rendered
 	blocks_emissive = EMISSIVE_BLOCK_NONE
 
 	///ID used to determine what transport types we can merge with
@@ -562,7 +562,7 @@
 		return FALSE
 
 	consider_anything_past = isnum(consider_anything_past) ? max(consider_anything_past, 0) : 0
-	//just in case someone fucks up the arguments
+	//just in case someone causes problems up the arguments
 
 	if(consider_anything_past && length(transport_contents) <= consider_anything_past)
 		return FALSE
@@ -630,7 +630,7 @@
 	// Gotta be by the lift
 	if(!user.Adjacent(src))
 		return FALSE
-	// If the lift moves while the radial is open close that shit
+	// If the lift moves while the radial is open close that bad
 	if(starting_position != loc)
 		return FALSE
 

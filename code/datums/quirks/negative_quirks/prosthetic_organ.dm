@@ -37,7 +37,7 @@
 		possible_organ_slots -= ORGAN_SLOT_LIVER
 	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
-	if(!length(organ_slots)) //what the hell
+	if(!length(organ_slots)) //what the problem
 		return
 
 	var/organ_slot = pick(possible_organ_slots)

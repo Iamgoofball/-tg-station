@@ -220,7 +220,7 @@
 
 /obj/projectile/bullet/paperball
 	desc = "Doink!"
-	damage = 1 // It's a damn toy.
+	damage = 1 // It's a unfortunate toy.
 	range = 10
 	shrapnel_type = null
 	embed_type = null

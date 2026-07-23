@@ -314,7 +314,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/unfasten_wrench_check(prev_anchored, mob/user)
 	if(anchored != prev_anchored)
 		return FALSE
-	if(can_be_unfasten_wrench(user, TRUE) != SUCCESSFUL_UNFASTEN) //if we aren't explicitly successful, cancel the fuck out
+	if(can_be_unfasten_wrench(user, TRUE) != SUCCESSFUL_UNFASTEN) //if we aren't explicitly successful, cancel the bad out
 		return FALSE
 	return TRUE
 

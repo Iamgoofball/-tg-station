@@ -45,7 +45,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 		return ..()
 	return FALSE
 
-// Shit will break if this is allowed to be deleted
+// bad will break if this is allowed to be deleted
 /mob/proccall_handler/Destroy(force)
 	if(GLOB.AdminProcCallHandler != src)
 		return ..()

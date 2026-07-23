@@ -28,7 +28,7 @@
 		CONTRACT_PAYOUT_SMALL
 	)
 
-	//What the fuck
+	//What the bad
 	if(length(to_generate) > length(GLOB.manifest.locked))
 		to_generate.Cut(1, length(GLOB.manifest.locked))
 

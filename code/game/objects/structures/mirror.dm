@@ -383,7 +383,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 			selectable_races[initial(species_type.name)] = species_type
 	selectable_races = sort_list(selectable_races)
 
-/obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
+/obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the unfortunate beard
 	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
 	if(isnull(new_style) || !can_use_mirror(beard_dresser))
 		return
@@ -417,7 +417,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	to_chat(race_changer, span_alert("You feel quite intelligent."))
 	// Prevents wizards from being soft locked out of everything
-	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain shit
+	// If this stays after the species was changed once more, well, the magic mirror did it. It's magic i aint gotta explain bad
 	race_changer.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
 
 /obj/structure/mirror/magic/lesser

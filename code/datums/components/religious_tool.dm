@@ -138,7 +138,7 @@
 	switch(action)
 		if("sect_select")
 			select_sect(usr, params["path"])
-			return TRUE //they picked a sect lets update so some weird spammy shit doesn't happen
+			return TRUE //they picked a sect lets update so some weird spammy bad doesn't happen
 		if("perform_rite")
 			if(!ispath(text2path(params["path"]), /datum/religion_rites))
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")

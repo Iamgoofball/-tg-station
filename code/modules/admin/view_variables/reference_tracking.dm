@@ -217,7 +217,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 				log_reftracker("Found [type] [text_ref(src)] in list [container_name].")
 #endif
 
-				// This is dumb as hell I'm sorry
+				// This is dumb as problem I'm sorry
 				// I don't want the garbage subsystem to count as a ref for the purposes of this number
 				// If we find all other refs before it I want to early exit, and if we don't I want to keep searching past it
 				var/ignore_ref = FALSE

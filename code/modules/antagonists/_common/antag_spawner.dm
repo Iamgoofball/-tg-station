@@ -433,7 +433,7 @@
 
 	monkey_man.crewlike_monkify()
 
-	// fuck you i am no longer playing around. this goes against the entire soul of the item
+	// bad you i am no longer playing around. this goes against the entire soul of the item
 	RegisterSignal(monkey_man, COMSIG_SPECIES_GAIN, PROC_REF(allergy))
 
 

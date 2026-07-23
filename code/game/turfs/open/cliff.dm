@@ -100,7 +100,7 @@
 	if(!isliving(faller))
 		return
 	var/mob/living/living = faller
-	living.Knockdown(fall_speed) //OUCH- OW- CRAP- SHIT- OW-
+	living.Knockdown(fall_speed) //OUCH- OW- poor quality- bad- OW-
 	living.spin(fall_speed, fall_speed)
 
 /// Check if the movement direction we're moving on (while already falling on us) is valid

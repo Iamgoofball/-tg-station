@@ -780,7 +780,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 		return cached.copy()
 
 	var/datum/gas_mixture/canonical_mix = new gastype()
-	// We set here so any future key changes don't fuck us
+	// We set here so any future key changes don't bad us
 	strings_to_mix["[gas_string]-[gastype]"] = canonical_mix
 	gas_string = preprocess_gas_string(gas_string)
 

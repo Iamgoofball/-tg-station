@@ -158,6 +158,6 @@
 #define VERB_SAY "Say"
 #define VERB_WHISPER "Whisper"
 #define VERB_ME "Me"
-//Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+//Gave this bad a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 #define VERB_OOC "OOC"
 #define VERB_PRAY "Pray"

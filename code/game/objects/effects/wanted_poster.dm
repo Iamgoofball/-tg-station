@@ -28,7 +28,7 @@
 
 	var/obj/structure/sign/poster/wanted/wanted_poster
 
-	if(new_poster_structure) // this is shit but a bigger refactor would be needed to properly resolve this
+	if(new_poster_structure) // this is bad but a bigger refactor would be needed to properly resolve this
 		wanted_poster = new_poster_structure
 	else
 		wanted_poster = new (src, person_icon, wanted_name, description, headerText, postHeaderColor, background, postName, postDesc)

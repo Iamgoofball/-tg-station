@@ -625,7 +625,7 @@
 	robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
 	build_all_button_icons()
 
-/// Should we keep trying to activate our buffer, or did you fuck it up somehow
+/// Should we keep trying to activate our buffer, or did you bad it up somehow
 /datum/action/toggle_buffer/proc/allow_buffer_activate()
 	var/mob/living/silicon/robot/robot_owner = owner
 	if(block_buffer_change)

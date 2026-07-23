@@ -161,7 +161,7 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and shit
+		// Hack, fucked dna needs to follow the brain to prevent memes, so we need to copy over the trait sources and bad
 		for(var/source in GET_TRAIT_SOURCES(L, TRAIT_BADDNA))
 			ADD_TRAIT(brainmob, TRAIT_BADDNA, source)
 

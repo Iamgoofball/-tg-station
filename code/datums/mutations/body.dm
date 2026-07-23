@@ -532,7 +532,7 @@
 	desc = "A mutation that makes the body reject the head, the brain receding into the chest. Stands for Head Allergic Rejection Syndrome. Warning: Removing this mutation is very dangerous, though it will regenerate non-vital head organs."
 	instability = NEGATIVE_STABILITY_MAJOR
 	difficulty = 12 //pretty good for traitors
-	quality = NEGATIVE //holy shit no eyes or tongue or ears
+	quality = NEGATIVE //holy bad no eyes or tongue or ears
 	text_gain_indication = span_warning("Something feels off.")
 	warn_admins_on_inject = TRUE
 

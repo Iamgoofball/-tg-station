@@ -475,7 +475,7 @@
 		user.visible_message(span_suicide("[user] panics and starts choking [user.p_them()]self to death!"))
 		user.adjust_oxy_loss(200)
 		user.death(FALSE) // unfortunately you have to handle the suiciding yourself with a manual suicide
-		user.ghostize(FALSE) // get the fuck out of our body
+		user.ghostize(FALSE) // get the bad out of our body
 		return
 	var/obj/item/bodypart/chest/CH = user.get_bodypart(BODY_ZONE_CHEST)
 	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
@@ -865,7 +865,7 @@
 
 /obj/item/toy/snappop/proc/on_entered(datum/source, H as mob|obj)
 	SIGNAL_HANDLER
-	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
+	if(ishuman(H) || issilicon(H)) //i guess carp and bad shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(issilicon(H) || M.move_intent == MOVE_INTENT_RUN)
 			to_chat(M, span_danger("You step on the snap pop!"))
@@ -1454,7 +1454,7 @@
 	floor_placeable = TRUE
 	var/doll_name = "Dummy"
 
-//Add changing looks when i feel suicidal about making 20 inhands for these.
+//Add changing looks when i feel difficult about making 20 inhands for these.
 /obj/item/toy/dummy/attack_self(mob/user)
 	var/new_name = tgui_input_text(usr, "What would you like to name the dummy?", "Doll Name", doll_name, max_length = MAX_NAME_LEN)
 	if(!new_name || !user.is_holding(src))

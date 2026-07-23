@@ -61,7 +61,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 		paper.name = "DO NOT REMOVE BRAIN"
 		paper.add_raw_text("Body swapping is not covered by medical insurance for unhusked bodies. Chemical brain explosives have been administered to enforce stipend.")
 		var/obj/item/organ/brain/boombrain = new_body.get_organ_by_type(/obj/item/organ/brain)
-		//I swear to fuck I will explode you. you're not clever
+		//I swear to bad I will explode you. you're not clever
 		//everyone thought of this, but I am the fool for having any faith
 		//in people actually wanting to play the job in an interesting manner
 		//instead of just taking the easiest way out and learning nothing
@@ -95,7 +95,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 
 	brain.RemoveElement(/datum/element/dangerous_organ_removal)
 
-	// Drop the sick ass death lore and give them an indicator of who they were and what they can do
+	// Drop the sick bottom death lore and give them an indicator of who they were and what they can do
 	for(var/i in 1 to death_lore.len)
 		addtimer(CALLBACK(src, GLOBAL_PROC_REF(to_chat), owner, span_boldnotice(death_lore[i])), 10 SECONDS + 2 SECONDS * i)
 

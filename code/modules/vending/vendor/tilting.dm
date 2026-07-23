@@ -108,7 +108,7 @@
 	else
 		visible_message(span_danger("[src] rebounds comically as it fails to slam onto [target]!"))
 
-	Move(target, crush_dir) // we still TRY to move onto it for shit like teleporters
+	Move(target, crush_dir) // we still TRY to move onto it for bad like teleporters
 	return flags_to_return
 
 /**

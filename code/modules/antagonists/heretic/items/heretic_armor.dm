@@ -46,7 +46,7 @@
 
 /// Applies a punishment to the user when the robes are equipped
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/robes_side_effect(mob/living/user)
-	SHOULD_NOT_SLEEP(TRUE) // sleep here would fuck over the timing
+	SHOULD_NOT_SLEEP(TRUE) // sleep here would bad over the timing
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/proc/is_equipped(mob/wearer)
 	return wearer.get_slot_by_item(src) & slot_flags
@@ -699,7 +699,7 @@
 	victim.visible_message(span_danger(visible_message), span_userdanger(self_message), span_danger(blind_message))
 	return SIGNAL_MESSAGE_MODIFIED
 
-/// Once you reach this point you're completely brain dead, so lets play our effects before you eat shit
+/// Once you reach this point you're completely brain dead, so lets play our effects before you eat bad
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/kill_wearer(mob/living/carbon/human/wearer)
 	if(IS_HERETIC(wearer))
 		var/datum/action/cooldown/spell/aoe/moon_ringleader/temp_spell = new(wearer)

@@ -1181,7 +1181,7 @@
 		holder.remove_reagent(/datum/reagent/medicine/coagulant, 5 * metabolization_ratio * seconds_per_tick)
 	return ..()
 
-/datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
+/datum/reagent/toxin/rotatium //Rotatium. causes problems up your rotation and is hilarious
 	name = "Rotatium"
 	description = "A constantly swirling, oddly colourful fluid. Causes the patient's sense of direction and hand-eye coordination to become wild."
 	silent_toxin = TRUE
@@ -1640,7 +1640,7 @@
 	. = ..()
 	var/merged_total = amount + volume
 	if(merged_total >= CRITICAL_CAPACITY)
-		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as HELL can't store it.
+		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as problem can't store it.
 		var/atom/container = holder.my_atom
 		var/damage_mult = 1
 		if(ismachinery(container))

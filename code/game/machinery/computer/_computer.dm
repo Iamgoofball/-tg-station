@@ -76,7 +76,7 @@
 		. += mutable_appearance(icon, "[icon_state]_broken")
 		return // If we don't do this broken computers glow in the dark.
 
-	if(machine_stat & NOPOWER) // Your screen can't be on if you've got no damn charge
+	if(machine_stat & NOPOWER) // Your screen can't be on if you've got no unfortunate charge
 		return
 
 	// This lets screens ignore lighting and be visible even in the darkest room

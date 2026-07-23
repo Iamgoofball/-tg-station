@@ -39,7 +39,7 @@
 
 /datum/antagonist/blood_worm/on_gain()
 	forge_objectives()
-	ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src)) // No blood cultist worms or whatever the fuck
+	ADD_TRAIT(owner, TRAIT_UNCONVERTABLE, REF(src)) // No blood cultist worms or whatever the bad
 	return ..()
 
 /datum/antagonist/blood_worm/on_removal()

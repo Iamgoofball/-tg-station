@@ -16,7 +16,7 @@
 
 /mob/living/carbon/alien/adult/royal/Initialize(mapload)
 	. = ..()
-	// as a wise man once wrote: "pull over that ass too fat"
+	// as a wise man once wrote: "pull over that bottom too fat"
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	// that'd be a too cheeky shield bashing strat
 	ADD_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, INNATE_TRAIT)

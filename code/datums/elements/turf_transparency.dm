@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	else
 		our_turf.underlays += get_baseturf_underlay(our_turf)
 
-	// This shit is stupid
+	// This bad is stupid
 	// z transparency is for making something SHOW WHAT'S BENEATH it, or if nothing is, show
 	// the appropriate underlay
 	// IT IS NOT FOR MAKING YOUR CLOSED TURF SEETHROUGH

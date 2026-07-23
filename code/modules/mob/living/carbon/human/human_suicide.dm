@@ -21,7 +21,7 @@
 /mob/living/carbon/human/send_applicable_messages(message_type)
 	var/suicide_message = ""
 	switch(message_type)
-		if(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE) // god damn this message is fucking stupid
+		if(HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE) // god unfortunate this message is fucking stupid
 			suicide_message = "[src] pulls both arms outwards in front of [p_their()] chest and pumps them behind [p_their()] back, repeats this motion in a smaller range of motion \
 			down to [p_their()] hips two times once more all while sliding [p_their()] legs in a faux walking motion, claps [p_their()] hands together \
 			in front of [p_them()] while both [p_their()] knees knock together, pumps [p_their()] arms downward, pronating [p_their()] wrists and abducting \

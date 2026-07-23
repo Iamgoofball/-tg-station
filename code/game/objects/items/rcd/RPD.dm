@@ -588,7 +588,7 @@
 		pipe_layers = min(PIPE_LAYER(MAX_PIPE_LAYERS), pipe_layers << 1)
 	else if(delta_y > 0)
 		pipe_layers = max(PIPE_LAYER(1), pipe_layers >> 1)
-	else //mice with side-scrolling wheels are apparently a thing and fuck this up
+	else //mice with side-scrolling wheels are apparently a thing and bad this up
 		return
 	SStgui.update_uis(src)
 	balloon_alert(source_mob, "set pipe layer to [get_active_pipe_layers()[1]]")

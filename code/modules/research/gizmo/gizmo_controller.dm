@@ -4,7 +4,7 @@
 /datum/gizmo_controller
 	/// Can hold different interacting modes (wires, voice) and connected interfaces
 	var/list/interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface)
-	/// Instanted interfaces. really just here so I can check this shit in vv
+	/// Instanted interfaces. really just here so I can check this bad in vv
 	var/list/instances = list()
 
 /// Generate interfaces for interacting with the gizmo

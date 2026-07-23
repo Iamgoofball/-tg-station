@@ -20,7 +20,7 @@
 	var/on = FALSE
 	///What variant of griddle is this?
 	var/variant = 1
-	///How many shit fits on the griddle?
+	///How many bad fits on the griddle?
 	var/max_items = 8
 
 /obj/machinery/griddle/Initialize(mapload)

@@ -593,7 +593,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
 	// local vars rock
 
-	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
+	//all this bad is here so that flag edits can be refreshed by restarting the MC. (and for speed)
 	var/list/tickersubsystems = list()
 	var/list/runlevel_sorted_subsystems = list(list()) //ensure we always have at least one runlevel
 	var/timer = world.time
@@ -1043,7 +1043,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		var/datum/controller/subsystem/SS = thing
 		SS.OnConfigLoad()
 
-/// Attempts to dump our current profile info into a file, triggered if the MC thinks shit is going down
+/// Attempts to dump our current profile info into a file, triggered if the MC thinks bad is going down
 /// Accepts a delay in deciseconds of how long ago our last dump can be, this saves causing performance problems ourselves
 /datum/controller/master/proc/AttemptProfileDump(delay)
 	if(REALTIMEOFDAY - last_profiled <= delay)

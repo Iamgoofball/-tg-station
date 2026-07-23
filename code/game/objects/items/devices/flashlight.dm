@@ -167,7 +167,7 @@
 		if(patient.has_status_effect(/datum/status_effect/drugginess) || patient.has_status_effect(/datum/status_effect/trance))
 			. += span_danger_ml("[patient.p_Their()] [eyes.pupils_name] are responsive, but entirely unfocused.")
 		if(patient.has_status_effect(/datum/status_effect/stoned))
-			. += span_danger_ml("[patient.p_Their()] eyes are wide, lazy, and bloodshot.") //this shit is GAS, batman. *wheezing chuckle*
+			. += span_danger_ml("[patient.p_Their()] eyes are wide, lazy, and bloodshot.") //this bad is GAS, batman. *wheezing chuckle*
 	return .
 
 /obj/item/flashlight/proc/mouth_examine(mob/living/carbon/human/patient, mob/living/user)

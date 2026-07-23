@@ -138,7 +138,7 @@
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
-	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+	//The fucking TRAIT_FAT mutation is the dumbest bad ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(human, TRAIT_FAT, OBESITY))//I share your pain, past coder.
 		if(human.overeatduration < (OVEREAT_TIME_LIMIT))
 			to_chat(human, span_notice("You feel fit again!"))
@@ -302,7 +302,7 @@
 			continue
 
 		var/obj/item/as_item = thing
-		// If your stomach is cut open, it will hurt like hell
+		// If your stomach is cut open, it will hurt like problem
 		if (cut_open_damage)
 			if (chest && !chest.cavity_item && as_item.w_class <= WEIGHT_CLASS_NORMAL)
 				// Oopsie!
@@ -363,7 +363,7 @@
 			disgusted.set_dizzy_if_lower(10 SECONDS)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(SPT_PROB(13, seconds_per_tick))
-				disgusted.set_eye_blur_if_lower(6 SECONDS) //We need to add more shit down here
+				disgusted.set_eye_blur_if_lower(6 SECONDS) //We need to add more bad down here
 
 		disgusted.adjust_disgust(-0.25 * disgust_metabolism * seconds_per_tick)
 

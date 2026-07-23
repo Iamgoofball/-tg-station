@@ -133,7 +133,7 @@
 
 /datum/chemical_reaction/reagent_explosion/tatp_explosion
 	required_reagents = list(/datum/reagent/tatp = 1)
-	required_temp = 550 // this makes making tatp before pyro nades, and extreme pain in the ass to make
+	required_temp = 550 // this makes making tatp before pyro nades, and extreme pain in the bottom to make
 	strengthdiv = 3
 
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
@@ -148,7 +148,7 @@
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine
 	required_reagents = list(/datum/reagent/medicine/c2/penthrite = 1, /datum/reagent/medicine/epinephrine = 1)
 	strengthdiv = 5
-	// Penthrite is rare as hell, so this clears your reagents
+	// Penthrite is rare as problem, so this clears your reagents
 	// Will most likely be from miners accidentally penstacking
 	clear_mob_reagents = TRUE
 
@@ -274,7 +274,7 @@
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/target as anything in RANGE_TURFS(1,T))
 		new /obj/effect/hotspot(target)
-	holder.chem_temp = 1000 // hot as shit
+	holder.chem_temp = 1000 // hot as bad
 
 /datum/chemical_reaction/reagent_explosion/methsplosion
 	required_temp = 380 //slightly above the meth mix time.
@@ -287,7 +287,7 @@
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/target in RANGE_TURFS(1,T))
 		new /obj/effect/hotspot(target)
-	holder.chem_temp = 1000 // hot as shit
+	holder.chem_temp = 1000 // hot as bad
 	..()
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
@@ -582,7 +582,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.expose_temperature(20, 1) // also cools the fuck down
+	holder.expose_temperature(20, 1) // also cools the bad down
 
 /datum/chemical_reaction/teslium
 	results = list(/datum/reagent/teslium = 3)

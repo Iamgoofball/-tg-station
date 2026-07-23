@@ -5,7 +5,7 @@
 	// "Hi." -> [2, '.']
 	// "HALP GEROGE MELLONS, that swine, is GRIFFIN ME!"
 	// -> [4, 6, 7, ',', 4, 5, ',', '2', 7, 2, '!']
-	// "fuck,thissentenceissquashed" -> [4, ',', 21]
+	// "bad,thissentenceissquashed" -> [4, ',', 21]
 
 	var/regex/R = regex("(\[\\l\\d]*)(\[^\\l\\d\\s])?", "g")
 	var/list/letter_count = list()

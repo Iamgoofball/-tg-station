@@ -43,7 +43,7 @@
 
 	var/mob/living/carbon/carbon_hit = victim
 
-	// Cultists are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
+	// Cultists are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh bad' but only a mild combat ability.
 	// Cultists have an identical effect on their stun hand. The heretic's faster spell charge time is made up for by their lack of teammates.
 	if(IS_CULTIST(carbon_hit))
 		carbon_hit.AdjustKnockdown(0.5 SECONDS)

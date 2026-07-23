@@ -185,7 +185,7 @@
 			back.adjust_fire_loss(amount, forced = forced)
 		if(TOX)
 			back.adjust_tox_loss(amount, forced = forced)
-		if(OXY) // If all segments are suffocating we pile damage backwards until our ass starts dying forwards
+		if(OXY) // If all segments are suffocating we pile damage backwards until our bottom starts dying forwards
 			back.adjust_oxy_loss(amount, forced = forced)
 	return COMPONENT_IGNORE_CHANGE
 

@@ -1,4 +1,4 @@
-/datum/round_event_control/wizard/rpgloot //its time to minmax your shit
+/datum/round_event_control/wizard/rpgloot //its time to minmax your bad
 	name = "RPG Loot"
 	weight = 3
 	typepath = /datum/round_event/wizard/rpgloot

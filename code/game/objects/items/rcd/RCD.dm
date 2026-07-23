@@ -114,7 +114,7 @@
 /obj/item/construction/rcd/suicide_act(mob/living/user)
 	var/turf/T = get_turf(user)
 
-	if(!isopenturf(T)) // Oh fuck
+	if(!isopenturf(T)) // Oh bad
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return BRUTELOSS
 

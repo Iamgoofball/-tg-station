@@ -111,7 +111,7 @@ among other potential differences. This granularity is helpful for things like t
 	if(issilicon(target)) //if the target is a borg, just give them one of these to make it loud, most of the damage is in the projectile itself
 		explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		return
-	if(isstructure(target) || isvehicle (target) || isclosedturf (target) || ismachinery (target)) //if the target is a structure, machine, vehicle or closed turf like a wall, explode that shit
+	if(isstructure(target) || isvehicle (target) || isclosedturf (target) || ismachinery (target)) //if the target is a structure, machine, vehicle or closed turf like a wall, explode that bad
 		if(target.density) //Dense objects get blown up a bit harder
 			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 			return

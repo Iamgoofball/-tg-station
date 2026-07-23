@@ -1,4 +1,4 @@
-///Pricks people with a big needle and gives the user a bunch of info about bloodtype, tox damage, other such stuff. if you fuck up it stabs the guy a bit.
+///Pricks people with a big needle and gives the user a bunch of info about bloodtype, tox damage, other such stuff. if you bad up it stabs the guy a bit.
 /obj/item/blood_scanner
 	name = "hemoanalytic scanner"
 	icon = 'icons/obj/devices/scanner.dmi'

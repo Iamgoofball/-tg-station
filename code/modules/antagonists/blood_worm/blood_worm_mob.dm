@@ -385,7 +385,7 @@
 	obj_damage = 50 // You are not getting away.
 	melee_damage_lower = 25
 	melee_damage_upper = 30 // Turns out adults regularly end up encountering advanced weapons like cap's sabre, lasguns + armor, eswords, etc. They need a strong melee.
-	armour_penetration = 50 // Adults will 100% encounter sec, they are shit out of luck without proper armor pen.
+	armour_penetration = 50 // Adults will 100% encounter sec, they are bad out of luck without proper armor pen.
 
 	wound_bonus = 0 // Able to cause critical wounds.
 	sharpness = SHARP_POINTY

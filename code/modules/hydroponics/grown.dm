@@ -75,7 +75,7 @@
 	// For reference, your average 100 potency tomato has 14u of reagents - So, with no modifier it is eaten in 3 bites
 	bite_consumption = 1 + round(max((seed.potency * BITE_SIZE_POTENCY_MULTIPLIER), 1) * (max_volume * BITE_SIZE_VOLUME_MULTIPLIER) * bite_consumption_mod)
 
-	. = ..() //Only call it here because we want all the genes and shit to be applied before we add edibility. God this code is a mess.
+	. = ..() //Only call it here because we want all the genes and bad to be applied before we add edibility. God this code is a mess.
 
 	reagents.clear_reagents()
 	seed.prepare_result(src)

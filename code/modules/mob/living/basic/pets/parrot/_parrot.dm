@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 )))
 
 
-/// Parrots! Klepto bastards that imitate your speech and hoard your shit.
+/// Parrots! Klepto bastards that imitate your speech and hoard your bad.
 /mob/living/basic/parrot
 	name = "parrot"
 	desc = "The parrot squawks, \"They're a Parrot! BAWWK!\""
@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		balloon_alert(src, "nothing to drop!")
 		return
 
-	if(stat != CONSCIOUS) // don't gotta do shit
+	if(stat != CONSCIOUS) // don't gotta do bad
 		return
 
 	if(!gently && isgrenade(get_active_held_item()))

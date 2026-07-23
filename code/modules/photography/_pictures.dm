@@ -134,7 +134,7 @@
 		return
 	var/datum/picture/P = new
 
-	// Old photos were saved as, and I shit you not, encoded JSON strings.
+	// Old photos were saved as, and I bad you not, encoded JSON strings.
 	if (istext(json[id]))
 		P.deserialize_json(json[id])
 	else

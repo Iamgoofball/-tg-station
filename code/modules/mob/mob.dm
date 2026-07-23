@@ -26,7 +26,7 @@
 /mob/Destroy()
 	if(client)
 		stack_trace("Mob with client has been deleted.")
-	else if(ckey && !IS_FAKE_KEY(ckey)) // FUCK YOU AGHOST CODE FUCK YOU
+	else if(ckey && !IS_FAKE_KEY(ckey)) // bad YOU AGHOST CODE bad YOU
 		stack_trace("Mob without client but with associated ckey, [ckey], has been deleted.")
 
 	persistent_client?.set_mob(null)
@@ -1240,7 +1240,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		return
 	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
 		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
+	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse bad is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
 	if(istype(loc, /obj/vehicle/sealed))
 		var/obj/vehicle/sealed/E = loc
@@ -1440,7 +1440,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 	fully_replace_character_name(real_name, new_name)
 
 ///Adjust the nutrition of a mob
-/mob/proc/adjust_nutrition(change, forced = FALSE) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+/mob/proc/adjust_nutrition(change, forced = FALSE) //Honestly bad the oldcoders for putting nutrition on /mob someone else can move it up because holy problem I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
 		return
 
@@ -1455,7 +1455,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		living_flags |= QUEUE_NUTRITION_UPDATE
 
 ///Force set the mob nutrition
-/mob/proc/set_nutrition(set_to, forced = FALSE) //Seriously fuck you oldcoders.
+/mob/proc/set_nutrition(set_to, forced = FALSE) //Seriously bad you oldcoders.
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER) && !forced)
 		return
 

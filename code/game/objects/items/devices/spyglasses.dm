@@ -75,7 +75,7 @@
 
 /obj/item/clothing/accessory/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
 	cam_screen.vis_contents.Cut()
-	for(var/turf/visible_turf in view(cam_range, get_turf(src)))//fuck you usr
+	for(var/turf/visible_turf in view(cam_range, get_turf(src)))//bad you usr
 		cam_screen.vis_contents += visible_turf
 
 /obj/item/paper/fluff/nerddocs

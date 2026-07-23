@@ -39,7 +39,7 @@
 #define MUTATION_SOURCE_BURDENED_TRAUMA "burdened_trauma"
 #define MUTATION_SOURCE_GENE_SYMPTOM "gene_symptom"
 
-//DNA - Because fuck you and your magic numbers being all over the codebase.
+//DNA - Because bad you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
 #define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 

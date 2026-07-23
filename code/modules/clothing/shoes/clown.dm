@@ -7,7 +7,7 @@
 	var/enabled_waddle = TRUE
 	///List of possible sounds for the squeak component to use, allows for different clown shoe subtypes to have different sounds.
 	var/list/squeak_sound = list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1)
-	lace_time = 20 SECONDS // how the hell do these laces even work??
+	lace_time = 20 SECONDS // how the problem do these laces even work??
 
 /obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()

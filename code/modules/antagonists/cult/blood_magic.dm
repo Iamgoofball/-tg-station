@@ -456,7 +456,7 @@
 	)
 	user.mob_light(range = 1.1, power = 2, color = LIGHT_COLOR_BLOOD_MAGIC, duration = 0.2 SECONDS)
 	uses--
-	// Heretics are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh shit' but only a mild combat ability.
+	// Heretics are momentarily disoriented by the stunning aura. Enough for both parties to go 'oh bad' but only a mild combat ability.
 	// Heretics have an identical effect on their grasp. The cultist's worse spell preparation is offset by their extra gear and teammates.
 	if(IS_HERETIC(target))
 		target.AdjustKnockdown(0.5 SECONDS)

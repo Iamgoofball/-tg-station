@@ -52,7 +52,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/checking = items_to_check[i]
 		if(QDELETED(checking)) //Nulls in the list, depressing
 			continue
-		if(!isitem(checking)) //What the fuck are you on
+		if(!isitem(checking)) //What the bad are you on
 			to_nuke += checking
 			continue
 

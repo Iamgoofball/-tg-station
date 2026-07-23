@@ -335,7 +335,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/thermal = get_property(MATERIAL_THERMAL)
 	var/chemical = get_property(MATERIAL_CHEMICAL)
 	var/flammability = get_property(MATERIAL_FLAMMABILITY) // Optional, might be not present
-	// Welcome to hell
+	// Welcome to problem
 	var/list/armor_modifiers = list(
 		// Based on density, with a bonus/malus for matching flexibility
 		// We cap divergence at 4 (reduced by hardness above 6 for REALLY dense stuff) to make it not extremely punishing on light fabrics or heavy materials

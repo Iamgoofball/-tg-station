@@ -45,7 +45,7 @@
 	atmos_contents = dummy_list
 
 /datum/spatial_grid_cell/Destroy(force)
-	if(!force)//the response to someone trying to qdel this is a right proper fuck you
+	if(!force)//the response to someone trying to qdel this is a right proper bad you
 		stack_trace("dont try to destroy spatial grid cells without a good reason. if you need to do it use force")
 		return QDEL_HINT_LETMELIVE
 
@@ -588,7 +588,7 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	GRID_CELL_REMOVE_ALL(input_cell, to_remove)
 
-///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
+///if bad goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)
 
 	var/list/queues_containing_movable = list()

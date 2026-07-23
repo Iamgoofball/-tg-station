@@ -36,7 +36,7 @@
 		if(!is_valid_z_level(victim_turf, sm_turf))
 			continue
 		victim.playsound_local(victim_turf, 'sound/effects/magic/charge.ogg')
-		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess. tg issue #69687
+		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n bad i guess. tg issue #69687
 			var/message = ""
 			var/location = victim.loc
 			if(istype(location, /obj/structure/disposalholder)) // sometimes your loc can be a disposalsholder when you're inside a disposals type, so let's just pass a message that makes sense.

@@ -259,7 +259,7 @@
 
 	// Either us or the location is somewhere it shouldn't be
 	if (!our_z || !area_z)
-		// "Hell if I know"
+		// "problem if I know"
 		balloon_message = "on another plane!"
 	// It's not on the same z-level as us
 	else if (our_z != area_z)

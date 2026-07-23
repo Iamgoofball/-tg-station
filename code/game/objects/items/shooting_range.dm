@@ -39,7 +39,7 @@
 	var/is_safe = !hitting_projectile.is_hostile_projectile()
 	var/is_generic_projectile = !is_type_in_typecache(hitting_projectile, always_leave_marks)
 	if(is_generic_projectile && (is_invalid_damage || is_safe))
-		return ..() // Don't bother unless it's real shit
+		return ..() // Don't bother unless it's real bad
 
 	var/p_x = hitting_projectile.p_x + pick(0, 0, 0, 0, 0, -1, 1) // really ugly way of coding "sometimes offset p_x!"
 	var/p_y = hitting_projectile.p_y + pick(0, 0, 0, 0, 0, -1, 1)

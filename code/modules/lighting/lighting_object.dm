@@ -72,7 +72,7 @@
 
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
-	// Well my man, it's because the loop performed like shit.
+	// Well my man, it's because the loop performed like bad.
 	// And there's no way to improve it because
 	// without a loop you can make the list all at once which is the fastest you're gonna get.
 	// Oh it's also shorter line wise.

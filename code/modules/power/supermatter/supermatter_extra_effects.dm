@@ -123,7 +123,7 @@
 			//Machines go boom
 			flags |= (ZAP_MOB_STUN | ZAP_MACHINE_EXPLOSIVE | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
 			zap_count = 4
-	//Now we deal with damage shit
+	//Now we deal with damage bad
 	if (damage > danger_point && prob(20))
 		zap_count += 1
 

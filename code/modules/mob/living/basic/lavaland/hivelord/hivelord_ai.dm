@@ -1,4 +1,4 @@
-/// Basically just keep away and shit out worms
+/// Basically just keep away and bad out worms
 /datum/ai_controller/basic_controller/hivelord
 	behavior_tree_json = "code/modules/mob/living/basic/lavaland/hivelord/hivelord.bt.json"
 	blackboard = list(

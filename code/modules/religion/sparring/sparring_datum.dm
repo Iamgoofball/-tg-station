@@ -274,7 +274,7 @@
 			to_chat(winner, span_nicegreen("You've won [loser]'s SOUL!"))
 
 /datum/sparring_match/proc/lose(mob/living/carbon/human/loser, mob/living/carbon/human/winner)
-	if(!loser) //shit happened?
+	if(!loser) //bad happened?
 		return
 	switch(stakes_condition)
 		if(STAKES_HOLY_MATCH)

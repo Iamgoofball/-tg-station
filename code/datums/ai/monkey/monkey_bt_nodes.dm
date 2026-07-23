@@ -369,7 +369,7 @@
 		if(locate_path)
 			if(istype(potential_candidate, locate_path))
 				candidates += potential_candidate
-				break //found a bell fuck everything else
+				break //found a bell bad everything else
 		candidates += potential_candidate
 	return candidates
 

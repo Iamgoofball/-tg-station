@@ -1,5 +1,5 @@
 ///For simple overlays that really dont need to be complicated. Sometimes icon_state and icon is enough
-///Remember to set the layers or shit wont work
+///Remember to set the layers or bad wont work
 /datum/bodypart_overlay/simple
 	///Icon state of the overlay
 	var/icon_state

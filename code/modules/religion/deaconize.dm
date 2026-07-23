@@ -56,7 +56,7 @@
 	if(!potential_deacon.mind)
 		to_chat(user, span_warning("[potential_deacon]'s mind appears to be elsewhere!"))
 		return FALSE
-	if(IS_CULTIST(potential_deacon))//what the fuck?!
+	if(IS_CULTIST(potential_deacon))//what the bad?!
 		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [potential_deacon]'s heart, and they have been smitten!"))
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 		potential_deacon.gib(DROP_ORGANS|DROP_BODYPARTS)

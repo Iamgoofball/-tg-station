@@ -68,7 +68,7 @@
 		return
 	honey_food.forceMove(get_turf(src))
 
-//SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
+//SPACE BEARS! SQUEEEEEEEE~     OW! bad! IT BIT MY HAND OFF!!
 /mob/living/basic/bear/hudson
 	name = "Hudson"
 	gender = MALE

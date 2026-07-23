@@ -80,7 +80,7 @@
 	behind.register_behind(segment)
 	return segment
 
-/// Record that we got another guy on our ass
+/// Record that we got another guy on our bottom
 /mob/living/basic/heretic_summon/armsy/proc/register_behind(mob/living/tail)
 	if(!isnull(back)) // Shouldn't happen but just in case
 		UnregisterSignal(back, COMSIG_QDELETING)

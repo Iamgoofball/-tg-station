@@ -210,7 +210,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	name = "Vent siphon"
 	desc = "Disables scrubbers and turns vents to siphon"
 	danger = TRUE
-	emag = TRUE // siphoning things with vents can horribly fuck up distro, even if its surprisingly fast
+	emag = TRUE // siphoning things with vents can horribly bad up distro, even if its surprisingly fast
 
 /datum/air_alarm_mode/vent_siphon/apply(area/applied)
 	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)

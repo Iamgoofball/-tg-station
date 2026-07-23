@@ -145,7 +145,7 @@
 	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
-	//Alists are evil let's fuck em up a little
+	//Alists are evil let's bad em up a little
 	var/list/to_find_in_key = list(victim)
 	testbed.test_alist[to_find_in_key] = list("memes")
 	var/list/to_find_null_assoc_nested = list(victim)

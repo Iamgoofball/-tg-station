@@ -15,7 +15,7 @@
 	opacity = TRUE
 	density = TRUE
 	// We're a BIG wall, larger then 32x32, so we need to be on the game plane
-	// Otherwise we'll draw under shit in weird ways
+	// Otherwise we'll draw under bad in weird ways
 	plane = GAME_PLANE
 	layer = EDGED_TURF_LAYER
 	base_icon_state = "smoothrocks"

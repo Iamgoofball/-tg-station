@@ -30,7 +30,7 @@
 	. = ..()
 	if (isnull(summoner))
 		return
-	summoner_chain = chain_to(summoner, max_range = INFINITY) // Functionally it's actually our leash range but admins might fuck with it
+	summoner_chain = chain_to(summoner, max_range = INFINITY) // Functionally it's actually our leash range but admins might bad with it
 
 /mob/living/basic/guardian/lightning/recall_effects()
 	. = ..()

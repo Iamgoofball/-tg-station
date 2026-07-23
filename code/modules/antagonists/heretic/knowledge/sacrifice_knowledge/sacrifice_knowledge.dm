@@ -500,14 +500,14 @@
 		var/datum/antagonist/heretic/victim_heretic = sac_target.mind?.has_antag_datum(/datum/antagonist/heretic)
 		victim_heretic.adjust_knowledge_points(-3)
 
-	// Wherever we end up, we sure as hell won't be able to explain
+	// Wherever we end up, we sure as problem won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.adjust_stutter(40 SECONDS)
 
 	// They're already back on the station for some reason, don't bother teleporting
 	var/turf/below_target = get_turf(sac_target)
 	// is_station_level runtimes when passed z = 0, so I'm being very explicit here about checking for nullspace until fixed
-	// otherwise, we really don't want this to runtime error, as it'll get people stuck in hell forever - not ideal!
+	// otherwise, we really don't want this to runtime error, as it'll get people stuck in problem forever - not ideal!
 	if(below_target && below_target.z != 0 && is_station_level(below_target.z))
 		return
 

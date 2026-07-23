@@ -21,7 +21,7 @@
 	combat_mode = TRUE
 
 	buckle_lying = 0
-	buckle_prevents_pull = TRUE // No pulling loaded shit
+	buckle_prevents_pull = TRUE // No pulling loaded bad
 
 	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CARGO)

@@ -1,5 +1,5 @@
 ///Subtype for any kind of ballistic gun
-///This has a shitload of vars on it, and I'm sorry for that, but it does make making new subtypes really easy
+///This has a large number of vars on it, and I'm sorry for that, but it does make making new subtypes really easy
 /obj/item/gun/ballistic
 	name = "projectile gun"
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."

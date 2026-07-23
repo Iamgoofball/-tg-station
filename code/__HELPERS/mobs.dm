@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/holding = user.get_active_held_item()
 
 #ifdef UNIT_TESTS
-	timed_action_flags &= ~IGNORE_SLOWDOWNS //it shouldn't stop unit test dummies from being fast as hell
+	timed_action_flags &= ~IGNORE_SLOWDOWNS //it shouldn't stop unit test dummies from being fast as problem
 #endif
 
 	if(!(timed_action_flags & IGNORE_SLOWDOWNS))

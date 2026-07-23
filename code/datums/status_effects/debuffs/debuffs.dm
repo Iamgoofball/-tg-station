@@ -785,7 +785,7 @@
 
 /datum/status_effect/dna_melt/on_remove()
 	if(!ishuman(owner))
-		owner.gib(DROP_ALL_REMAINS) //fuck you in particular
+		owner.gib(DROP_ALL_REMAINS) //bad you in particular
 		return
 	var/mob/living/carbon/human/H = owner
 	INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon/human, something_horrible), kill_either_way)
@@ -1151,7 +1151,7 @@
 	var/mob/living/carbon/human/victim = owner
 	// We're transmuting blood, time to lose some.
 	victim.adjust_blood_volume(-5 * seconds_between_ticks, minimum = BLOOD_VOLUME_SURVIVE + 50)
-	// This has been hell to try and balance so that you'll actually get anything out of it
+	// This has been problem to try and balance so that you'll actually get anything out of it
 	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
 	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
 	switch(current_gold_amount)

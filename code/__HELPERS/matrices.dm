@@ -35,7 +35,7 @@
 	decompose_matrix.rotation = arctan(cossine, sine) * flip_sign
 
 /matrix/proc/TurnTo(old_angle, new_angle)
-	return Turn(new_angle - old_angle) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
+	return Turn(new_angle - old_angle) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE bad
 
 /**
  * Shear the transform on either or both axes.

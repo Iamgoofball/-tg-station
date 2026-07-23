@@ -271,7 +271,7 @@
 	base_icon_state = "ratvarian_repeater"
 	loading_message = "gun charged"
 	anchored = FALSE
-	accepted_ammo_types = list() // We don't want any of that shit
+	accepted_ammo_types = list() // We don't want any of that bad
 	load_delay = 3 SECONDS
 	max_shots_per_fire = 12
 	shots_per_load = 12

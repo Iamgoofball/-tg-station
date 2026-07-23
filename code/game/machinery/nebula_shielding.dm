@@ -112,7 +112,7 @@
 /obj/machinery/nebula_shielding/radiation/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(user, tool)
 
-///Emergency shielding so people aren't permanently in a radstorm if shit goes very wrong in engineering
+///Emergency shielding so people aren't permanently in a radstorm if bad goes very wrong in engineering
 /obj/machinery/nebula_shielding/emergency/radiation
 	name = "emergency nebula radiation shielder"
 	desc = "Generates a field around the station to protect it from a radioactive nebula."

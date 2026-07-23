@@ -192,7 +192,7 @@
 		var/vend_response = vend_reply || "Thank you for shopping with [src]!"
 		speak(vend_response)
 		purchase_message_cooldown = world.time + 5 SECONDS
-		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is fuck low
+		//This is not the best practice, but it's safe enough here since the chances of two people using a machine with the same ref in 5 seconds is bad low
 		last_shopper = REF(user)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend, src)

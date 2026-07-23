@@ -426,7 +426,7 @@ All ShuttleMove procs go here
 /obj/docking_port/stationary/onShuttleMove()
 	return FALSE
 
-// Holy shit go away
+// Holy bad go away
 /obj/effect/abstract/z_holder/onShuttleMove()
 	return FALSE
 

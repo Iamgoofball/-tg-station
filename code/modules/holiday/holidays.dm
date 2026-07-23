@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	/// The default pattern of the holiday, if the requested pattern is null.
 	var/holiday_pattern = PATTERN_DEFAULT
 
-// This proc gets run before the game starts when the holiday is activated. Do festive shit here.
+// This proc gets run before the game starts when the holiday is activated. Do festive bad here.
 /datum/holiday/proc/celebrate()
 	if(no_mail_holiday)
 		SSeconomy.mail_blocked = TRUE
@@ -779,7 +779,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = NOVEMBER
 
 /datum/holiday/lifeday/get_station_name()
-	return pick("Itchy", "Lumpy", "Malla", "Kazook") //he really pronounced it "Kazook", I wish I was making shit up
+	return pick("Itchy", "Lumpy", "Malla", "Kazook") //he really pronounced it "Kazook", I wish I was making bad up
 
 /datum/holiday/kindness
 	name = "Kindness Day"

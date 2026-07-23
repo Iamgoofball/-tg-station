@@ -415,7 +415,7 @@ GAME_VERB_HIDDEN(/client, fix_stat_panel, "Fix Stat Panel")
 
 GAME_VERB_PROC_DESC(/client, export_preferences, "Export Preferences", "Export your current preferences to a file.", "OOC")
 
-	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
+	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the bad
 
 	prefs.savefile.export_json_to_client(usr, ckey)
 

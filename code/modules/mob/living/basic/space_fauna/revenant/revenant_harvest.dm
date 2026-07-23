@@ -28,7 +28,7 @@
 
 /// Harvest; activated by clicking a target, will try to drain their essence. Handles all messages and handling of the target.
 /// Returns FALSE if we exit out of the harvest, TRUE if it is fully done.
-/mob/living/basic/revenant/proc/harvest_soul(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy shit it's long
+/mob/living/basic/revenant/proc/harvest_soul(mob/living/carbon/human/target) // this isn't in the main revenant code file because holyyyy bad it's long
 	if(QDELETED(target)) // what
 		return FALSE
 

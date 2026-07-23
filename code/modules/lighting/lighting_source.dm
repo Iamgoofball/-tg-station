@@ -315,7 +315,7 @@ GLOBAL_LIST_EMPTY(lighting_sheets)
 		output += column_seperator
 	to_chat(usr, "\n[output.Join("\n")]")
 
-/// Debug proc, for when lighting sheets fuck up
+/// Debug proc, for when lighting sheets bad up
 /// Accepts the sheet (2 or 3 (multiz) dimensional list of lighting values at some offset)
 /// alongside x and y delta values and the sheet's "offset", which is the amount required to ensure everything indexes at 1
 /// Optionally, you can pass similar values for multiz stuff

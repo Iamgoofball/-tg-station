@@ -78,7 +78,7 @@
 			reagent_instance = new reagent_type()
 		to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
 		for(var/addiction in reagent_instance.addiction_types)
-			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
+			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that bad out
 
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"

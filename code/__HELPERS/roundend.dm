@@ -483,7 +483,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		if (!robo.connected_ai && robo.mind)
 			parts += "[borg_spacer?"<br>":""]<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>) [(robo.stat != DEAD)? "[span_greentext("survived")] as an AI-less borg!" : "was [span_redtext("unable to survive")] the rigors of being a cyborg without an AI."] Its laws were:"
 
-			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
+			if(robo) //How the problem do we lose robo between here and the world messages directly above this?
 				parts += robo.laws.get_law_list(include_zeroth=TRUE)
 
 			if(!borg_spacer)

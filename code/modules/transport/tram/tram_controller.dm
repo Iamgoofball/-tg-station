@@ -275,7 +275,7 @@
 		paired_cabinet.say("Controller reset.")
 	nav_beacon.tram_loop.start()
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
-		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
+		if(transport_module.travelling) //wee woo wee woo there was a double action queued. unfortunate multi tile structs
 			return //we don't care to undo cover_locked controls, though, as that will resolve itself
 		if(malf_active == TRANSPORT_LOCAL_WARNING)
 			if(transport_module.check_for_humans())

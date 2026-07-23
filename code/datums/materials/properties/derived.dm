@@ -52,7 +52,7 @@
 
 /datum/material_property/derived/insulation/get_value(datum/material/material)
 	// [0 ~ 1] is fully insulating, (1 ~ 6] maps to (0 ~ 1] and [6 ~ 10] maps to [1 ~ 2]
-	// 1.18 and 0.15 here are to allow 6 to map to 1 and 10 to map to 2 and are pulled out of my ass (system in the desmos below)
+	// 1.18 and 0.15 here are to allow 6 to map to 1 and 10 to map to 2 and are pulled out of my bottom (system in the desmos below)
 	// See https://www.desmos.com/calculator/rdbv1x8oty
 	var/conductivity = material.get_property(MATERIAL_ELECTRICAL)
 	return round(max(0, conductivity - 1) ** 1.18 * 0.15, 0.01)

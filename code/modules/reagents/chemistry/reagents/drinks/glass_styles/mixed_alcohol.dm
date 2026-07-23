@@ -812,7 +812,7 @@
 /datum/glass_style/drinking_glass/long_john_silver
 	required_drink_type = /datum/reagent/consumable/ethanol/long_john_silver
 	name = "Long John Silver"
-	desc = "Named for a famous pirate, who may or may not have been fictional. But hey, why let the truth get in the way of a good yarn?" //Chopper Reid says "How the fuck are ya?"
+	desc = "Named for a famous pirate, who may or may not have been fictional. But hey, why let the truth get in the way of a good yarn?" //Chopper Reid says "How the bad are ya?"
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "long_john_silver"
 

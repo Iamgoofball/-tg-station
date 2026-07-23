@@ -207,7 +207,7 @@
 			return
 
 	var/area/area_to_check = get_area(turf_to_ram)
-	if(area_to_check.area_flags & EVENT_PROTECTED) //This event absolutely destroys arrivals, and putting latejoiners into firelock hell is cringe
+	if(area_to_check.area_flags & EVENT_PROTECTED) //This event absolutely destroys arrivals, and putting latejoiners into firelock problem is cringe
 		return
 
 	return ..()

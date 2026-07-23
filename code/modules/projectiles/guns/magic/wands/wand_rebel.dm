@@ -24,7 +24,7 @@
 /obj/item/gun/magic/wand/rebel/do_suicide(mob/living/user)
 	. = ..()
 	if (user.stat != DEAD)
-		return SHAME // God damn dullahans
+		return SHAME // God unfortunate dullahans
 	return BRUTELOSS
 
 /obj/item/ammo_casing/magic/rebellion

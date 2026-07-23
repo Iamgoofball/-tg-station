@@ -244,7 +244,7 @@
 		user.visible_message(span_notice("[user] makes [Kisser] nuzzle [src]!"),
 									span_notice("You make [Kisser] nuzzle [src]!"))
 
-	//then oh fuck something unexpected happened
+	//then oh bad something unexpected happened
 	else
 		user.show_message(span_warning("[Kisser] and [src] don't know what to do with one another."), NONE)
 

@@ -111,7 +111,7 @@
 	var/critical_threshold_proximity = 0
 	///Store the integrity for calculations
 	var/critical_threshold_proximity_archived = 0
-	///Our "Shit is no longer fucked" message. We send it when critical_threshold_proximity is less then critical_threshold_proximity_archived
+	///Our "bad is no longer fucked" message. We send it when critical_threshold_proximity is less then critical_threshold_proximity_archived
 	var/safe_alert = "Main containment field returning to safe operating parameters."
 	///The point at which we should start sending messeges about the critical_threshold_proximity to the engi channels.
 	var/warning_point = 50

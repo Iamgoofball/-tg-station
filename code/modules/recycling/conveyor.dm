@@ -260,7 +260,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/movable/convayable)
 	SIGNAL_HANDLER
-	if(convayable.loc != loc) // If we are not on the same turf (order of operations memes) go to hell
+	if(convayable.loc != loc) // If we are not on the same turf (order of operations memes) go to problem
 		return
 	if(operating == CONVEYOR_OFF)
 		GLOB.move_manager.stop_looping(convayable, SSconveyors)

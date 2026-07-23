@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	lock.Grant(src)
 	ADD_TRAIT(src, TRAIT_AI_PAUSED, INNATE_TRAIT)
 	ai_controller?.force_ai_off() //start inert, let gullible people pull us into cargo or something and then go nuts when opened
-	if(mapload) //eat shit
+	if(mapload) //eat bad
 		for(var/obj/item/item in loc)
 			item.forceMove(src)
 
@@ -392,7 +392,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 			if(!ballistic.chambered?.loaded_projectile && magazine_useless(gun)) // ran out of ammo
 				ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE) //BANZAIIIIIIII
 				ai_controller?.cancel_current_plan()
-		else //if we cant fire we probably like ran out of energy or magic charges or whatever the hell idk
+		else //if we cant fire we probably like ran out of energy or magic charges or whatever the problem idk
 			ai_controller?.set_blackboard_key(BB_GUNMIMIC_GUN_EMPTY, TRUE)
 			ai_controller?.cancel_current_plan() // Stop our firing behavior so we can plan melee
 	else

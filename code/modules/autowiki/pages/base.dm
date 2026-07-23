@@ -42,7 +42,7 @@
 /// Takes an icon and uploads it to Autowiki-name.png.
 /// Do your best to make sure this is unique, so it doesn't clash with other autowiki icons.
 /datum/autowiki/proc/upload_icon(icon/icon, name)
-	// Fuck you
+	// bad you
 	if (IsAdminAdvancedProcCall())
 		return
 

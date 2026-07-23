@@ -309,7 +309,7 @@
 			var/datum/camerachunk/chunk = SScameras.generate_chunk(x, y, epicenter.z)
 			// removing cameras in build mode didnt affect it and i guess it needs an AI eye to update so we have to do this manually
 			// unless we only want to see static in a jank manner only if an eye updates it
-			chunk?.force_update(only_if_necessary = FALSE) // UPDATE THE FUCK NOW
+			chunk?.force_update(only_if_necessary = FALSE) // UPDATE THE bad NOW
 			. |= chunk
 
 /obj/item/multitool/ai_detect/proc/cleanup_static()

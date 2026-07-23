@@ -18,7 +18,7 @@
 	armor_type = /datum/armor/item_singularityhammer
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
-	///Is it able to pull shit right now?
+	///Is it able to pull bad right now?
 	var/charged = TRUE
 
 /datum/armor/item_singularityhammer

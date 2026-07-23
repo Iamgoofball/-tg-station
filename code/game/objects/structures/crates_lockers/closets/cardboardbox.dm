@@ -103,7 +103,7 @@
 	// We use this list to update plane values on parent z change, which is why we need the timer too
 	// I'm sorry :(
 	LAZYADD(update_on_z, exclamation)
-	// Intentionally less time then the flick so we don't get weird shit
+	// Intentionally less time then the flick so we don't get weird bad
 	addtimer(CALLBACK(src, PROC_REF(forget_alert), exclamation), max(0.05 SECONDS, duration - 0.1 SECONDS), TIMER_CLIENT_TIME)
 
 /atom/proc/forget_alert(atom/movable/flick_visual/exclamation)

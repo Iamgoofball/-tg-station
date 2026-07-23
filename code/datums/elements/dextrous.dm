@@ -48,7 +48,7 @@
 	hand_owner.set_num_hands(hands_count)
 	hand_owner.set_usable_hands(hands_count)
 
-/// Drop our shit when we die
+/// Drop our bad when we die
 /datum/element/dextrous/proc/on_death(mob/living/died, gibbed)
 	SIGNAL_HANDLER
 	died.drop_all_held_items()

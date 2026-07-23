@@ -1,5 +1,5 @@
 /// Allows a mob to assume the form of another item or mob.
-/// Warning, this will likely shit the bricks if you add this action to anything more sophisticated than a basic mob- this isn't built for anything carbon-wise.
+/// Warning, this will likely bad the bricks if you add this action to anything more sophisticated than a basic mob- this isn't built for anything carbon-wise.
 /datum/action/cooldown/mob_cooldown/assume_form
 	name = "Assume Form"
 	desc = "Choose something that you wish to blend into the environment as. Click on yourself to reset your appearance."

@@ -32,7 +32,7 @@
 	// Base "natural" eye color
 	var/eye_color_left = COLOR_BLACK
 	var/eye_color_right = COLOR_BLACK
-	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite shit
+	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite bad
 	var/eye_color_heterochromatic = FALSE
 	// Eye color overrides assoc lists - priority key to hex color
 	var/list/eye_color_left_overrides

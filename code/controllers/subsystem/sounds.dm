@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(sounds)
 
 /// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
 /datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/D)
-	if(!D) //i don't like typechecks but someone will fuck it up
+	if(!D) //i don't like typechecks but someone will bad it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)

@@ -83,7 +83,7 @@
 /obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
 	if(QDELETED(user) || QDELETED(src))
 		return
-	if(src.loc != user) //how the hell did you manage this
+	if(src.loc != user) //how the problem did you manage this
 		to_chat(user, span_warning("Something happened to [src]..."))
 		return
 	Expand()

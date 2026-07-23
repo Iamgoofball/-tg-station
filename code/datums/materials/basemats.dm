@@ -528,7 +528,7 @@
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 9,
 		MATERIAL_BEAUTY = 0.5,
-		MATERIAL_INTEGRITY = 2, // This is magic, I ain't gotta explain shit
+		MATERIAL_INTEGRITY = 2, // This is magic, I ain't gotta explain bad
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT

@@ -774,7 +774,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			// Saves like 1.5 deciseconds
 			var/atom_def = text2path(path_to_init) //path definition, e.g /obj/foo/bar
 
-			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your poor quality, mappers!
 				if(bad_paths)
 					// Rare case, avoid the var to save time most of the time
 					LAZYOR(bad_paths[copytext(line, 1, -1)], model_key)
@@ -843,7 +843,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			var/path_text = trim(copytext(member_string, 1, variables_start))
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 
-			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your poor quality, mappers!
 				if(bad_paths)
 					LAZYOR(bad_paths[path_text], model_key)
 				continue
@@ -1015,7 +1015,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = find_next_delimiter_position(text, old_position, "=")
 		var/trim_left = trim(copytext(text, old_position, (equal_position ? equal_position : position)))
-		if(!trim_left) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+		if(!trim_left) // unfortunate newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
 			if(position)
 				old_position = position + length(text[position])
 			continue

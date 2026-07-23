@@ -34,4 +34,4 @@
 	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
 
 
-// Fuck guest accounts, and fuck language testing.
+// bad guest accounts, and bad language testing.

@@ -82,7 +82,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	tastes = list("tomato" = 7, "tin" = 1)
-	foodtypes = VEGETABLES //fuck you, real life!
+	foodtypes = VEGETABLES //bad you, real life!
 
 /obj/item/food/canned/pine_nuts
 	name = "canned pine nuts"

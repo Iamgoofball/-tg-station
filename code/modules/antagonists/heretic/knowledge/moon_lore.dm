@@ -288,7 +288,7 @@
 
 		if(carbon_sanity >= 10)
 			continue
-		// So our sanity is dead, time to fuck em up
+		// So our sanity is dead, time to bad em up
 		if(SPT_PROB(20, seconds_per_tick))
 			to_chat(carbon_view, span_warning("it echoes through you!"))
 		visible_hallucination_pulse(

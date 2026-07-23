@@ -583,7 +583,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	user.visible_message(span_warning("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older."), vision_distance = 2)
 	if(ishuman(user))
 		var/mob/living/carbon/human/fool = user
-		fool.age = clamp(fool.age + 10, AGE_MIN, AGE_MAX) //Fuck you
+		fool.age = clamp(fool.age + 10, AGE_MIN, AGE_MAX) //bad you
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/shun_the_corp(mob/user)
 	can_spawn_lore = FALSE
@@ -834,7 +834,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 
 /obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
 	busy = FALSE
-	if(!draw_from) //What the fuck did you do
+	if(!draw_from) //What the bad did you do
 		return
 
 	if(machine_stat)

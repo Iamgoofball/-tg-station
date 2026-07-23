@@ -576,7 +576,7 @@
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
 	if(!direction) //can't go this way.
 		return
-	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
+	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase bad bug
 		return
 
 	// We want to support holding two directions at once, so we do this

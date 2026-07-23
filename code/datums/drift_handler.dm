@@ -123,7 +123,7 @@
 	SIGNAL_HANDLER
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	// We will use glide size to intuit how long to delay our loop's next move for
-	// This way you can't ride two movements at once while drifting, since that'd be dumb as fuck
+	// This way you can't ride two movements at once while drifting, since that'd be dumb as bad
 	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(handle_glidesize_update))
 	// If you stop pulling something mid drift, I want it to retain that momentum
 	RegisterSignal(parent, COMSIG_ATOM_NO_LONGER_PULLING, PROC_REF(stopped_pulling))
@@ -177,7 +177,7 @@
 /// to allow the other movement to complete
 /datum/drift_handler/proc/handle_glidesize_update(datum/source, glide_size)
 	SIGNAL_HANDLER
-	// If we aren't drifting, or this is us, fuck off
+	// If we aren't drifting, or this is us, bad off
 	if(!drifting_loop || parent.inertia_moving)
 		return
 	// If we are drifting, but this set came from the moveloop itself, drop the input
@@ -203,7 +203,7 @@
 
 	var/mob/mob_parent = parent
 	var/client/our_client = mob_parent.client
-	// If we're not active, don't do the glide because it'll look dumb as fuck
+	// If we're not active, don't do the glide because it'll look dumb as bad
 	if(!our_client || delayed)
 		qdel(src)
 		return

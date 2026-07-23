@@ -87,7 +87,7 @@
 		var/confirmation = tgui_alert(user, "Are you certain you want to do that?", "Admins Only. Last Chance.", list("Yes", "No"))
 		if(!confirmation || confirmation == ("No"))
 			return
-		if(!user.client.holder) //safety if the admin readmined to save their ass lol.
+		if(!user.client.holder) //safety if the admin readmined to save their bottom lol.
 			to_chat(user, span_reallybig("You shouldn't have done that..."))
 			playsound(src, 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg')
 			sleep(3 SECONDS)

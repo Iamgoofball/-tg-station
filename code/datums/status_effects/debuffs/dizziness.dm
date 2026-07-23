@@ -53,7 +53,7 @@
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 
-	// This shit is annoying at high strengthvar/pixel_x_diff = 0
+	// This bad is annoying at high strengthvar/pixel_x_diff = 0
 	var/list/view_range_list = getviewsize(owner.client.view)
 	var/view_range = view_range_list[1]
 	var/amplitude = amount * (sin(amount * (time)) + 1)

@@ -53,7 +53,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 /atom/movable/screen/map_view/proc/display_to_client(client/show_to)
 	show_to.register_map_obj(src)
 	// We need to add planesmasters to the popup, otherwise
-	// blending fucks up massively. Any planesmaster on the main screen does
+	// blending causes problems up massively. Any planesmaster on the main screen does
 	// NOT apply to map popups. If there's ever a way to make planesmasters
 	// omnipresent, then this wouldn't be needed.
 	// We lazy load this because there's no point creating all these if none's gonna see em

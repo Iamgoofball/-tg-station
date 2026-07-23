@@ -1,7 +1,7 @@
 /obj/projectile/bullet/foam_dart
 	name = "foam dart"
 	desc = "I hope you're wearing eye protection."
-	damage = 0 // It's a damn toy.
+	damage = 0 // It's a unfortunate toy.
 	damage_type = OXY
 	icon = 'icons/obj/weapons/guns/toy.dmi'
 	icon_state = "foamdart_proj"

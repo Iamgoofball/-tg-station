@@ -214,7 +214,7 @@
 		/datum/reagent/baldium,
 		/datum/reagent/mulligan,
 		/datum/reagent/growthserum,
-		// op shit
+		// op bad
 		/datum/reagent/romerol,
 		/datum/reagent/gondola_mutation_toxin,
 		/datum/reagent/metalgen,

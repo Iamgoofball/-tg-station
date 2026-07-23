@@ -203,7 +203,7 @@
 
 /datum/outfit/spy
 	name = "Spy (Preview only)"
-	// Balaclava sprite is ass, otherwise I would use it for this
+	// Balaclava sprite is bottom, otherwise I would use it for this
 	uniform = /obj/item/clothing/under/suit/black
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/jackboots

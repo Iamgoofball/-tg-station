@@ -7,13 +7,13 @@
 	hitpwr = EXPLODE_DEVASTATE
 	heavy = TRUE
 	meteorsound = 'sound/effects/curse/curse1.ogg'
-	meteordrop = list(/obj/singularity/dark_matter) //what the FUCK
+	meteordrop = list(/obj/singularity/dark_matter) //what the bad
 	dropamt = 1
 	threat = 100
 	signature = "dark matter"
-	/// distortion to really give you that sense of oh shit
+	/// distortion to really give you that sense of oh bad
 	var/atom/movable/warp_effect/warp
-	/// and another oh shit in the form of quantum sparks
+	/// and another oh bad in the form of quantum sparks
 	var/datum/effect_system/basic/spark_spread/quantum/spark_system
 	/// in case we miss, we can go back to the previous security level
 	var/previous_security_level

@@ -102,7 +102,7 @@
 
 	var/list/assigned_oranges_ears = SSspatial_grid.assign_oranges_ears(hearables_from_grid)
 
-	//this is the ENTIRE reason all this shit is worth it due to how view()-like procs and the contents list works and can be optimized
+	//this is the ENTIRE reason all this bad is worth it due to how view()-like procs and the contents list works and can be optimized
 	//internally, the contents list is secretly two linked lists, one for /obj's and one for /mob's (/atom/movable counts as /obj here)
 	//by default, for(var/atom/name in view()) iterates through both the /obj linked list then the /mob linked list of each turf
 	//but because what we want are only a tiny proportion of all movables, most of the things in the /obj contents list are not what we're looking for

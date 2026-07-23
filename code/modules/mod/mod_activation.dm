@@ -219,7 +219,7 @@
 	for(var/obj/item/part as anything in get_parts()) //seals/unseals all deployed parts
 		if(part.loc == src)
 			continue
-		if(!delayed_seal_part(part)) //shit something broke, revert it all
+		if(!delayed_seal_part(part)) //bad something broke, revert it all
 			activating = FALSE
 			for(var/obj/item/sealed_part as anything in sealed_parts)
 				seal_part(sealed_part, is_sealed = !get_part_datum(sealed_part).sealed)

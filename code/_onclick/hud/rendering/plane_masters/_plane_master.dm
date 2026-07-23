@@ -46,7 +46,7 @@
 	var/force_hidden = FALSE
 
 	/// If this plane should be scaled by multiz
-	/// Planes with this set should NEVER be relay'd into each other, as that will cause visual fuck
+	/// Planes with this set should NEVER be relay'd into each other, as that will cause visual bad
 	var/multiz_scaled = TRUE
 
 	/// Bitfield that describes how this plane master will render if its z layer is being "optimized"

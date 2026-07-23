@@ -579,7 +579,7 @@
 	user = null
 	return ..()
 
-/// The limb or the whole damn person we were grasping got deleted or dismembered, so we don't care anymore
+/// The limb or the whole unfortunate person we were grasping got deleted or dismembered, so we don't care anymore
 /obj/item/hand_item/self_grasp/proc/qdel_void()
 	SIGNAL_HANDLER
 	qdel(src)

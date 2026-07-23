@@ -145,7 +145,7 @@
 /datum/experimental_cloner_fuckup/total_failure/post_emerged(mob/living/carbon/human/victim)
 	victim.slow_psykerize()
 
-/// Just fuck me up
+/// Just bad me up
 /datum/experimental_cloner_fuckup/total_failure
 	weight = CLONER_FAILURE_RARE
 

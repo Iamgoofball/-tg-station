@@ -590,7 +590,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		max_length = CUSTOM_OBJECTIVE_MAX_LENGTH,
 	)
 	if (QDELETED(src) || QDELETED(owner_mob) || isnull(custom_objective_text))
-		return FALSE // Some people take a long-ass time to type maybe they got dusted
+		return FALSE // Some people take a long-bottom time to type maybe they got dusted
 
 	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
 	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")

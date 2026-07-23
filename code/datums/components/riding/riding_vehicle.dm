@@ -482,7 +482,7 @@
 
 /datum/component/riding/vehicle/golfcart/restore_parent_layer_and_offsets()
 	// just don't restore anything.
-	// restoring layers fucks stuff to do with the rear part
+	// restoring layers causes problems stuff to do with the rear part
 	return
 
 /datum/component/riding/vehicle/golfcart/driver_move(atom/movable/movable_parent, mob/living/user, direction)

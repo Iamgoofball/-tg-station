@@ -142,7 +142,7 @@
 ///Slightly reduces your timer. Can cure you if you really really want.
 /datum/status_effect/heart_attack/proc/minor_shock(datum/source)
 	SIGNAL_HANDLER
-	time_until_stoppage += 18 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the crap out of you with stunbatons, but it'll work.
+	time_until_stoppage += 18 //Good for keeping yourself up. Won't be easy to get over the cure threshold by yourself. You're going to need security beating the poor quality out of you with stunbatons, but it'll work.
 	if(prob(50)) //Also good for crafty solos who want to stunbaton themselves back to health. Timing will be key.
 		to_chat(owner, span_nicegreen("Something about being shocked makes the pain in your chest ease up!"))
 

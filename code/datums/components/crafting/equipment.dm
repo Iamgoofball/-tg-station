@@ -40,7 +40,7 @@
 
 /datum/crafting_recipe/radio_containing/New()
 	if(isnull(radio_types_blacklist))
-		// because we got shit like /obj/item/radio/off ... WHY!?!
+		// because we got bad like /obj/item/radio/off ... WHY!?!
 		radio_types_blacklist = typecacheof(list(/obj/item/radio/headset, /obj/item/radio/intercom))
 	blacklist = radio_types_blacklist
 	return ..()

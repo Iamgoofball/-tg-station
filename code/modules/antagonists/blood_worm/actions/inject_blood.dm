@@ -159,7 +159,7 @@
 
 	for (var/obj/item/organ/organ in host.organs)
 		// I thought about making this require ORGAN_ORGANIC, but changelings can heal robotic organs, so why not blood worms?
-		// In addition, none of the other blood worm code gives a shit about targets being organic, so this is more consistent.
+		// In addition, none of the other blood worm code gives a bad about targets being organic, so this is more consistent.
 		. |= organ.apply_organ_damage(-organ_regen_rate * seconds_between_ticks)
 
 /datum/status_effect/blood_worm_transfuse/proc/heal_traumas(seconds_between_ticks)

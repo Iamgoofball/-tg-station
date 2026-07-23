@@ -890,7 +890,7 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 	/// Mutations layer - Tk headglows, cold resistance glow, etc. Very bottom of the mob
 	#define MUTATIONS_LAYER 23.9
 /// Total number of standing overlays.
-/// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK.
+/// KEEP THIS UP-TO-DATE OR bad WILL BREAK.
 /// (You ONLY need to update this if you add a standing overlay, adding an integer.)
 #define TOTAL_LAYERS 23
 
@@ -906,7 +906,7 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define EXTERNAL_RESTYLE_PLANT (1 << 0)
 /// This organ allows restyling with flesh restyling stuff (surgery or something idk)
 #define EXTERNAL_RESTYLE_FLESH (1 << 1)
-/// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and shit
+/// This organ allows restyling with enamel restyling (like a fucking file or something?). It's for horns and bad
 #define EXTERNAL_RESTYLE_ENAMEL (1 << 2)
 
 /// If gravity must be present to perform action (can't use pens without gravity)

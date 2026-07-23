@@ -1315,7 +1315,7 @@
 
 	. += limb
 
-	if(aux_zone) //Hand shit
+	if(aux_zone) //Hand bad
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, dir = image_dir)
 		. += aux
 
@@ -1595,7 +1595,7 @@
 		cached_bleed_rate += 0.5
 
 	// In 99% of situations we won't get to this point if we aren't wired or blooded
-	// But I'm covering my ass in case someone adds some weird new species
+	// But I'm covering my bottom in case someone adds some weird new species
 	var/surgery_bloodloss = 0
 	if(biological_state & BIOSTATE_HAS_VESSELS)
 		// better clamp those up quick

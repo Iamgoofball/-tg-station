@@ -233,7 +233,7 @@
 		/obj/effect/decal/cleanable/ash = "[initial(name)] with INCREDIBLY IMPORTANT ARTIFACT- DELIVER TO SCIENCE DIVISION. HANDLE WITH CARE.",
 	)
 
-	color = pick(department_colors) //eh, who gives a shit.
+	color = pick(department_colors) //eh, who gives a bad.
 	name = special_name ? junk_names[junk] : "important [initial(name)]"
 
 	junk = new junk(src)

@@ -1093,7 +1093,7 @@
 		crawl.exit_blood_effect(source)
 		return
 
-	// Fuck it, just eject them, thanks to some split second cleaning
+	// bad it, just eject them, thanks to some split second cleaning
 	source.forceMove(get_turf(source))
 	source.visible_message(span_warning("[source] appears from nowhere, covered in blood!"))
 	crawl.exit_blood_effect(source)
@@ -1815,7 +1815,7 @@
 
 /datum/reagent/consumable/ethanol/sugar_rush/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	drinker.satiety -= 10 * metabolization_ratio * seconds_per_tick //junky as hell! a whole glass will keep you from being able to eat junk food
+	drinker.satiety -= 10 * metabolization_ratio * seconds_per_tick //junky as problem! a whole glass will keep you from being able to eat junk food
 
 /datum/reagent/consumable/ethanol/crevice_spike
 	name = "Crevice Spike"
@@ -2160,7 +2160,7 @@
 		if(0 to 20)
 			alcohol_description = "sweet"
 		else
-			alcohol_description = "watery" //How the hell did you get negative boozepwr?
+			alcohol_description = "watery" //How the problem did you get negative boozepwr?
 
 	var/list/fruits = list()
 	if(names_in_order.len <= 3)
@@ -2181,7 +2181,7 @@
 		flavor += english_list(secondary_tastes)
 	taste_description = flavor
 
-/datum/reagent/consumable/ethanol/champagne //How the hell did we not have champagne already!?
+/datum/reagent/consumable/ethanol/champagne //How the problem did we not have champagne already!?
 	name = "Champagne"
 	description = "A sparkling wine known for its ability to strike fast and hard."
 	color = "#ffffc1"

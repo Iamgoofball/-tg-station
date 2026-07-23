@@ -1,4 +1,4 @@
-/// Moves organs in and out of bodyparts, and moves the bodyparts around to see if someone didn't fuck up their movement
+/// Moves organs in and out of bodyparts, and moves the bodyparts around to see if someone didn't bad up their movement
 /datum/unit_test/organ_bodypart_shuffle
 
 /datum/unit_test/organ_bodypart_shuffle/Run()

@@ -13,7 +13,7 @@
 	if(wings?.can_fly())
 		wings.toggle_flight(human)
 
-///The true wings that you can use to fly and shit (you cant actually shit with them)
+///The true wings that you can use to fly and bad (you cant actually bad with them)
 /obj/item/organ/wings/functional
 	///The flight action object
 	var/datum/action/innate/flight/fly

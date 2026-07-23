@@ -223,7 +223,7 @@
 			name = "damaged [initial(name)]"
 		if(2)
 			name = "mangy [initial(name)]"
-		if(3 to INFINITY) // take better care of your shit, dude
+		if(3 to INFINITY) // take better care of your bad, dude
 			name = "tattered [initial(name)]"
 
 	update_clothes_damaged_state(CLOTHING_DAMAGED)

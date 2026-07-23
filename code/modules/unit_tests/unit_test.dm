@@ -42,7 +42,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	/// How many times this unit test will run. Use the TEST_REPEAT() macro
 	var/times_to_run = 1
 
-	// internal shit
+	// internal bad
 	/// If this test has passed or not
 	var/succeeded = TRUE
 	/// The bottom left floor turf of the testing zone
@@ -353,7 +353,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/docking_port)
 	//Asks for a shuttle that may not exist, let's leave it alone
 	returnable_list += typesof(/obj/item/pinpointer/shuttle)
-	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and fucks us. It's only a problem here because the beam sleeps with CHECK_TICK
+	//This spawns beams as a part of init, which can sleep past an async proc. This hangs a ref, and causes problems us. It's only a problem here because the beam sleeps with CHECK_TICK
 	returnable_list += typesof(/obj/structure/alien/resin/flower_bud)
 	//Needs a linked mecha
 	returnable_list += typesof(/obj/effect/skyfall_landingzone)
@@ -420,7 +420,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	var/list/test_results = list()
 
-	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
+	//problem code, we're bound to end the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
 	for(var/datum/unit_test/unit_path as anything in tests_to_run)
 		var/loop_count = unit_path::times_to_run

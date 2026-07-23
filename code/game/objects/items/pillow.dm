@@ -160,7 +160,7 @@
 	. = ..()
 	variation = rand(1, 4)
 	icon_state = "pillow_[variation]_t"
-	//random pillows spawn bricked sometimes, fuck you
+	//random pillows spawn bricked sometimes, bad you
 	if(prob(1))
 		become_bricked()
 

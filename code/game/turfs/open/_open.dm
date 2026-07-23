@@ -588,7 +588,7 @@
 		if(lube & (SLIDE|WEAK_SLIDE))
 			slipper.AddComponent(/datum/component/force_move, target, TRUE)
 		else if(lube & SLIDE_ICE)
-			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, fucks up the next dir
+			slipper.AddComponent(/datum/component/force_move, target, FALSE)//spinning would be bad for ice, causes problems up the next dir
 	return TRUE
 
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = MAXIMUM_WET_TIME, permanent = FALSE, should_display_overlay = TRUE)

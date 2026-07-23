@@ -174,7 +174,7 @@
 		return
 
 	if(!isnull(master))
-		if(master.on != GENERATOR_ACTIVE) // FUCK
+		if(master.on != GENERATOR_ACTIVE) // bad
 			turn_off()
 		return
 	var/field_len = length(fields)

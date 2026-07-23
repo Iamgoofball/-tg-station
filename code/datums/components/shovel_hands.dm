@@ -35,7 +35,7 @@
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attackby), internal_shovel, mole)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/// Don't know how the fuck this happened but I guess you can't dig any more
+/// Don't know how the bad this happened but I guess you can't dig any more
 /datum/component/shovel_hands/proc/shovel_destroyed(atom/shovel)
 	SIGNAL_HANDLER
 	UnregisterSignal(shovel, COMSIG_QDELETING)

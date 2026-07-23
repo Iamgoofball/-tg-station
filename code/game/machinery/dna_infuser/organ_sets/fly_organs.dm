@@ -52,9 +52,9 @@
 	icon = 'icons/obj/medical/organs/fly_organs.dmi'
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
-	liked_foodtypes = GROSS | GORE // nasty ass
+	liked_foodtypes = GROSS | GORE // nasty bottom
 	disliked_foodtypes = NONE
-	toxic_foodtypes = NONE // these fucks eat vomit, i am sure they can handle drinking bleach or whatever too
+	toxic_foodtypes = NONE // these causes problems eat vomit, i am sure they can handle drinking bleach or whatever too
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/buzzwords)
 	var/static/list/speech_replacements = list(
@@ -135,7 +135,7 @@
 /obj/item/organ/appendix/fly/update_appearance(updates=ALL)
 	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
 
-//useless organs we throw in just to fuck with surgeons a bit more. they aren't part of a bonus, just the (absolute) state of flies
+//useless organs we throw in just to bad with surgeons a bit more. they aren't part of a bonus, just the (absolute) state of flies
 /obj/item/organ/fly
 	desc = FLY_INFUSED_ORGAN_DESC
 

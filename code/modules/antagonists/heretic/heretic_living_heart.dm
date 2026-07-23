@@ -198,7 +198,7 @@
 
 	// One of us is in somewhere we shouldn't be
 	if(!our_z || !their_z)
-		// "Hell if I know"
+		// "problem if I know"
 		balloon_message = "on another plane!"
 
 	// They're not on the same z-level as us

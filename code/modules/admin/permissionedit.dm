@@ -885,7 +885,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		message_admins(m1)
 		log_admin(m2)
 		return
-	// Shit check for conflicts
+	// bad check for conflicts
 	var/datum/db_query/query_rank_in_db = SSdbcore.NewQuery(
 		"SELECT 1 FROM [format_table_name("admin_ranks")] WHERE `rank` = :new_rank",
 		list("new_rank" = custom_rank.name)
@@ -1072,7 +1072,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 			return
 		use_db = TRUE
 
-	// Similarly, I want to shit check flags. This is sort of... paranoid but I want to be careful here
+	// Similarly, I want to bad check flags. This is sort of... paranoid but I want to be careful here
 	var/working_rights = NONE
 	var/working_exclude_rights = NONE
 	var/working_can_edit_rights = NONE

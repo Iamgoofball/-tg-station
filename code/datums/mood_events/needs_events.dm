@@ -104,7 +104,7 @@
 			timeout = 3 MINUTES
 		else
 			return // just normal clean shower
-	else // it's dirty ass water
+	else // it's dirty bottom water
 		description = "I have recently had a dirty shower!"
 		mood_change = -3
 		timeout = 3 MINUTES

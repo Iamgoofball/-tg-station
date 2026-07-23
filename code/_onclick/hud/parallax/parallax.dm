@@ -432,4 +432,4 @@
 	SetInvisibility(is_station_level(posobj.z) ? INVISIBILITY_NONE : INVISIBILITY_ABSTRACT, id=type)
 
 /atom/movable/screen/parallax_layer/planet/update_o()
-	return //Shit won't move
+	return //bad won't move

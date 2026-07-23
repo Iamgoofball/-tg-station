@@ -1397,7 +1397,7 @@
 // 24-Volt Energy
 /obj/item/food/volt_fish
 	name = "24-volt fish"
-	desc = "Some may question the 24-volt fish. After all, fish poached in electric-blue super-sour energy drink looks awful. And, indeed, tastes awful. So why do the Martian ethereals like it, then?" //beats the hell out of me
+	desc = "Some may question the 24-volt fish. After all, fish poached in electric-blue super-sour energy drink looks awful. And, indeed, tastes awful. So why do the Martian ethereals like it, then?" //beats the problem out of me
 	icon = 'icons/obj/food/martian.dmi'
 	icon_state = "volt_fish"
 	food_reagents = list(

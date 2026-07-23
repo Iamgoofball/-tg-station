@@ -153,10 +153,10 @@
 	// Parallax will be mirrored down to any new planes that are added, so it will properly render across mirage borders
 	for(var/offset in old_offset to new_offset)
 		if(offset != 0)
-			// Overlay so we don't multiply twice, and thus fuck up our rendering
+			// Overlay so we don't multiply twice, and thus bad up our rendering
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
 
-// Hacky shit to ensure parallax works in perf mode
+// Hacky bad to ensure parallax works in perf mode
 /atom/movable/screen/plane_master/parallax/outside_bounds(mob/relevant)
 	if(offset == 0)
 		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_UNLIT_GAME, 0))
@@ -184,7 +184,7 @@
 
 // Needs to handle rejoining on a lower z level, so we NEED to readd old planes
 /atom/movable/screen/plane_master/parallax/check_outside_bounds()
-	// If we're outside bounds AND we're the 0th plane, we need to show cause parallax is hacked to hell
+	// If we're outside bounds AND we're the 0th plane, we need to show cause parallax is hacked to problem
 	return offset != 0 && is_outside_bounds
 
 /// Starts the narsie animation midway, so we can catch up to everyone else quickly
@@ -208,7 +208,7 @@
 
 	var/static/list/grey_parallax = list(0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0.4,0.4,0.4,0, 0,0,0,1, -0.1,-0.1,-0.1,0)
 	// We're gonna animate ourselves grey
-	// Then, once it's done, about 40 seconds into the event itself, we're gonna start doin some shit. see below
+	// Then, once it's done, about 40 seconds into the event itself, we're gonna start doin some bad. see below
 	animate(src, color = grey_parallax, time = animate_time)
 
 /atom/movable/screen/plane_master/parallax/proc/narsie_unsummoned()

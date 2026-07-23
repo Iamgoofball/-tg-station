@@ -684,7 +684,7 @@
 	var/mob/living/creature = pinged_person?.resolve()
 	if(creature)
 		UnregisterSignal(creature, COMSIG_MOVABLE_MOVED)
-	// Null so we don't shit the bed when we delete
+	// Null so we don't bad the bed when we delete
 	QDEL_NULL(modsuit_image)
 	return ..()
 

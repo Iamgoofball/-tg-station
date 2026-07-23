@@ -553,7 +553,7 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[hud_type]
 	if (!holder)
 		return
-	if (!istype(holder)) // Can contain lists for HUD_LIST_LIST hinted HUDs, if someone fucks up and passes this here we wanna know about it
+	if (!istype(holder)) // Can contain lists for HUD_LIST_LIST hinted HUDs, if someone causes problems up and passes this here we wanna know about it
 		CRASH("[src] ([type]) had a HUD_LIST_LIST hud_type [hud_type] passed into set_hud_image_state!")
 	holder.icon_state = hud_state
 	adjust_hud_position(holder)

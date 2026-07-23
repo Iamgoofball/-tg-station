@@ -682,7 +682,7 @@
 
 /datum/chemical_reaction/drink/ramos_gin_fizz
 	results = list(/datum/reagent/consumable/ethanol/ramos_gin_fizz = 25)
-	//yes, this is intentionally a pain in the ass
+	//yes, this is intentionally a pain in the bottom
 	required_reagents = list(/datum/reagent/consumable/ethanol/ginfizz = 12, /datum/reagent/consumable/lemonjuice = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/eggwhite = 3, /datum/reagent/consumable/cream = 3, /datum/reagent/consumable/ethanol/triple_sec = 1)
 	mix_message = "The drink forms a rising head of foam that begins to creep out of the top of the glass."
 

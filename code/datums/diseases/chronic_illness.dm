@@ -26,7 +26,7 @@
 
 	switch(stage)
 		if(1)
-			carrier = FALSE // Go fuck yourself
+			carrier = FALSE // Go bad yourself
 		if(2)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel dizzy."))

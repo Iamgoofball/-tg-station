@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage")), 0.5 SECONDS * iteration)
 		iteration++
 
-/// This command forces the listeners to get the fuck up, resetting all stuns.
+/// This command forces the listeners to get the bad up, resetting all stuns.
 /datum/voice_of_god_command/getup
 	trigger = "get\\s*up"
 	cooldown = COOLDOWN_DAMAGE
@@ -447,7 +447,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/target as anything in listeners)
 		target.SpinAnimation(speed = 10, loops = 5)
 
-/// Supertype of all those commands that make people emote and nothing else. Fuck copypasta.
+/// Supertype of all those commands that make people emote and nothing else. bad copypasta.
 /datum/voice_of_god_command/emote
 	/// The emote to run.
 	var/emote_name = "dance"

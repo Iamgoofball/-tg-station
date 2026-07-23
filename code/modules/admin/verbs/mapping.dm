@@ -342,7 +342,7 @@ ADMIN_VERB(check_for_obstructed_atmospherics, R_DEBUG, "Check For Obstructed Atm
 	// Ignore out stuff we see in normal and standard mapping that we don't care about (false alarms). Typically stuff that goes directionally off turfs or other undertile objects that we don't want to care about.
 	var/list/ignore_list = list(
 		/obj/effect,
-		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter. fuck.
+		/obj/item/shard, // it's benign enough to where we don't need to error, yet common enough to filter. bad.
 		/obj/machinery/airalarm,
 		/obj/machinery/atmospherics/components/unary, //don't wanna flag on the vent or scrubber itself.
 		/obj/machinery/atmospherics/pipe,

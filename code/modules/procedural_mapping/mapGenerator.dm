@@ -147,7 +147,7 @@ ADMIN_VERB(debug_nature_map_generator, R_DEBUG, "Test Nature Map Generator", "Te
 	if (isnull(endInput))
 		return
 
-	//maxx maxy and current z so that if you fuck up, you only fuck up one entire z level instead of the entire universe
+	//maxx maxy and current z so that if you bad up, you only bad up one entire z level instead of the entire universe
 	if(!startInput || !endInput)
 		to_chat(user, "Missing Input")
 		return

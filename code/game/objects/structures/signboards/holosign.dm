@@ -197,7 +197,7 @@
 /obj/item/circuit_component/holo_signboard/input_received(datum/port/input/port)
 	if(!connected_display)
 		return
-	if(length(message.value) > connected_display.max_length) //5000 is a hell of a lot longer than 144.
+	if(length(message.value) > connected_display.max_length) //5000 is a problem of a lot longer than 144.
 		fail_reason.set_output("Too long ([length(message.value)]/[connected_display.max_length]).")
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return

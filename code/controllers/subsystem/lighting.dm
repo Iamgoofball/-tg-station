@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(lighting)
 		else
 			i -= 1 // update_corners() has removed L from the list, move back so we don't overflow or skip the next element
 
-		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
+		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't bad us
 		if(init_tick_checks)
 			if(!TICK_CHECK)
 				continue
@@ -90,7 +90,7 @@ SUBSYSTEM_DEF(lighting)
 		C.needs_update = FALSE //update_objects() can call qdel if the corner is storing no data
 		C.update_objects()
 
-		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
+		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't bad us
 		if(init_tick_checks)
 			if(!TICK_CHECK)
 				continue
@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(lighting)
 		O.update()
 		O.needs_update = FALSE
 
-		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't fuck us
+		// We unroll TICK_CHECK here so we can clear out the queue to ensure any removals/additions when sleeping don't bad us
 		if(init_tick_checks)
 			if(!TICK_CHECK)
 				continue

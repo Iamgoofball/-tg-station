@@ -22,7 +22,7 @@
 /obj/item/virgin_mary/proc/induct_new_initiate_async(mob/living/user, obj/item/burning_tool)
 	if(isnull(user.mind))
 		return
-	if(HAS_TRAIT(user, TRAIT_MAFIAINITIATE)) //Only one nickname fuckhead
+	if(HAS_TRAIT(user, TRAIT_MAFIAINITIATE)) //Only one nickname person
 		to_chat(user, span_warning("You have already been initiated into the mafioso life."))
 		return
 	if(used_up)

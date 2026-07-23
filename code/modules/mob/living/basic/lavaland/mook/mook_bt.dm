@@ -94,7 +94,7 @@
 	controller.set_blackboard_key(destination_key, destination)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-///OH SHIT STORM COMING (or maybe we found ore :3)
+///OH bad STORM COMING (or maybe we found ore :3)
 /datum/bt_node/decorator/mook_has_flee_reason
 
 /datum/bt_node/decorator/mook_has_flee_reason/register_observe_signals(atom/pawn)

@@ -164,7 +164,7 @@
 	returned.hidden_nodes = hidden_nodes.Copy()
 	return returned
 
-/datum/techweb/proc/get_visible_nodes() //The way this is set up is shit but whatever.
+/datum/techweb/proc/get_visible_nodes() //The way this is set up is bad but whatever.
 	return visible_nodes - hidden_nodes
 
 /datum/techweb/proc/get_available_nodes()

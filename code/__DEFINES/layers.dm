@@ -128,7 +128,7 @@
 
 //-------------------- Rendering ---------------------
 #define RENDER_PLANE_GAME 50
-/// If fov is enabled we'll draw game to this and do shit to it
+/// If fov is enabled we'll draw game to this and do bad to it
 #define RENDER_PLANE_GAME_MASKED 51
 /// The bit of the game plane that is let alone is sent here
 #define RENDER_PLANE_GAME_UNMASKED 52

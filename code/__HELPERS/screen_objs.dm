@@ -95,7 +95,7 @@
 	if(base_y + target_offset < view_size[2])
 		return offset_to_screen_loc(base_x, base_y + target_offset, view)
 	stack_trace("You passed in a scren location {[target_loc]} and offset {[target_offset]} that can't be fit in the viewport Width {[view_size[1]]}, Height {[view_size[2]]}. what did you do lad")
-	return null // The fuck did you do lad
+	return null // The bad did you do lad
 
 /// Takes a screen_loc string and cut out any directions like NORTH or SOUTH
 /proc/cut_relative_direction(fragment)

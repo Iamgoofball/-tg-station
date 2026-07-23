@@ -131,7 +131,7 @@
 	icon_state = "plastic_arrow"
 	base_icon_state = "plastic_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/plastic
-	reusable = FALSE //cheap shit
+	reusable = FALSE //cheap bad
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /// plastic arrow projectile

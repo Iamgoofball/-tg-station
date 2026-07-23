@@ -507,7 +507,7 @@
 /obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 
-	if(isnull(loc)) // aw hell naw
+	if(isnull(loc)) // aw problem naw
 		return
 
 	for(var/mob/living/living_mob in old_loc.contents)//Kidnap everyone on top

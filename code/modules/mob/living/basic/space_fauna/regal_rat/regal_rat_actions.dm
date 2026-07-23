@@ -59,7 +59,7 @@
 
 	build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
 
-/// Stop spreading shit when one of these events happens
+/// Stop spreading bad when one of these events happens
 /datum/action/cooldown/mob_cooldown/domain/proc/cancel_on_signal()
 	SIGNAL_HANDLER
 	set_domain_active(FALSE)

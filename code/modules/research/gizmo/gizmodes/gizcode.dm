@@ -96,7 +96,7 @@
 // By default, all of these gizmos tell the user how many attempts are left
 /datum/gizmodes/code_crack/proc/feedback(atom/movable/holder)
 	SHOULD_CALL_PARENT(TRUE)
-	// This is kind of ass, but there's probably no way around it
+	// This is kind of bottom, but there's probably no way around it
 	var/static/list/digit_to_name = list("one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
 	if(attempts_left <= 0 || attempts_left >= 10)
 		return
