@@ -35,7 +35,31 @@
 	// Swapping out feline ears for normal ol' human ears if they have invisible cat ears.
 	if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
 		mutantears = /obj/item/organ/ears
+	RegisterSignal(human_who_gained_species, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	return ..()
+
+/datum/species/human/felinid/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(!message)
+		return
+
+	// OwO what's this? Replace l and r with w
+	message = replacetext(message, "l", "w")
+	message = replacetext(message, "L", "W")
+	message = replacetext(message, "r", "w")
+	message = replacetext(message, "R", "W")
+
+	// ~15% chance to add :3 at the end
+	if(prob(15))
+		message += " :3"
+
+	// ~8% chance to add a random owo-ism
+	if(prob(8))
+		message += " " + pick("nya~", "owo", "uwu", "rawr", "mrrp")
+
+	speech_args[SPEECH_MESSAGE] = message
 
 /datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
 	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
