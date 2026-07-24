@@ -66,7 +66,7 @@
 		for(var/distance_counter in 0 to (abs_x_distance - 1))//It'll take abs_x_distance steps to get there
 			y += abs_y_distance
 
-			if(y >= abs_x_distance) // Every abs_y_distance steps, step once in why direction
+			if(y >= abs_x_distance) // Every abs_y_distance steps, step once in y direction
 				y -= abs_x_distance
 				current_y_step += y_distance_sign
 

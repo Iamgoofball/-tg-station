@@ -140,7 +140,7 @@
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
 	var/list/held_items = list()
-	/// How many hands this mob has by default, which we divide by to know what why offset to give open inventories.
+	/// How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
 	var/default_hand_amount = 2
 
 	//HUD things

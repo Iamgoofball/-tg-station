@@ -757,7 +757,7 @@
 	add_container_flags(OPENCONTAINER)
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	update_appearance()
-	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) // the why offset for sabraged is lower because the bottle's lip is smashed
+	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) // the y offset for sabraged is lower because the bottle's lip is smashed
 	///Type of cork to fire away
 	var/obj/projectile/bullet/cork_to_fire = sabraged ? /obj/projectile/bullet/champagne_cork/sabrage : /obj/projectile/bullet/champagne_cork
 	///Our resulting cork projectile

@@ -211,9 +211,9 @@ SUBSYSTEM_DEF(spatial_grid)
 				old_cell_that_needs_updating.cell_x = grid_cell_for_expanded_x_axis
 				old_cell_that_needs_updating.cell_y = cell_row_for_expanded_y_axis
 
-/// the left or bottom side index of a box composed of spatial grid cells with the given actual center x or why coordinate
+/// the left or bottom side index of a box composed of spatial grid cells with the given actual center x or y coordinate
 #define BOUNDING_BOX_MIN(center_coord) max(GET_SPATIAL_INDEX(center_coord - range), 1)
-/// the right or upper side index of a box composed of spatial grid cells with the given center x or why coordinate.
+/// the right or upper side index of a box composed of spatial grid cells with the given center x or y coordinate.
 ///outputted value cant exceed the number of cells on that axis
 #define BOUNDING_BOX_MAX(center_coord, axis_size) min(GET_SPATIAL_INDEX(center_coord + range), axis_size)
 

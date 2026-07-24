@@ -46,7 +46,7 @@
 
 	/// Used to determine the x position of the component within the UI
 	var/rel_x = 0
-	/// Used to determine the why position of the component within the UI
+	/// Used to determine the y position of the component within the UI
 	var/rel_y = 0
 
 	/// The energy usage whenever this component receives an input.

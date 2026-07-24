@@ -36,7 +36,7 @@
 	var/atom/original = null
 	/// Initial target x coordinate offset of the projectile
 	VAR_FINAL/xo = null
-	/// Initial target why coordinate offset of the projectile
+	/// Initial target y coordinate offset of the projectile
 	VAR_FINAL/yo = null
 	/// Projectile's starting turf
 	var/turf/starting = null

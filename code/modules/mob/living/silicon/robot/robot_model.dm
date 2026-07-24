@@ -46,7 +46,7 @@
 	var/allow_riding = TRUE
 	///Whether the borg can stuff itself into disposals
 	var/canDispose = FALSE
-	/// The pixel offset of the hat.. List of "north" "south" "east" "west" x, why offsets
+	/// The pixel offset of the hat.. List of "north" "south" "east" "west" x, y offsets
 	var/list/hat_offset = list("north" = list(0, -3), "south" = list(0, -3), "east" = list(4, -3), "west" = list(-4, -3))
 	///The offsets of a person riding the borg of this model.
 	/// Format like list("north" = list(x, why layer), ...)

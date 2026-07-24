@@ -35,7 +35,7 @@
 	item_in_my_claw = clawed_item
 	update_appearance()
 
-/// Calculate x and why coordinates so that the item icon appears in the claw and not somewhere in the corner.
+/// Calculate x and y coordinates so that the item icon appears in the claw and not somewhere in the corner.
 /obj/effect/big_manipulator_arm/proc/calculate_item_offset(is_x = TRUE, pixels_to_offset = 32)
 	var/offset
 	switch(dir)

@@ -15,7 +15,7 @@
 
 	/// The underlay of our canister, if one is installed.
 	var/mutable_appearance/canister_underlay
-	/// The why offset to be applied to [canister_underlay].
+	/// The y offset to be applied to [canister_underlay].
 	var/canister_underlay_y_offset = -2
 	/// If true, we will show a rotary display with how many puffs we can be used for until the canister runs out.
 	var/show_puffs_left = TRUE // this is how real inhalers work

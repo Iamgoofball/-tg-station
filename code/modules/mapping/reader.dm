@@ -378,7 +378,7 @@
 	var/list/bounds
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 
-	// Building why coordinate ranges
+	// Building y coordinate ranges
 	var/y_relative_to_absolute = y_offset - 1
 	var/x_relative_to_absolute = x_offset - 1
 

@@ -110,7 +110,7 @@
 	var/feedback = TRUE
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
-	/// Cyclelinking for airlocks that aren't on the same x or why coord as the target.
+	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/closeOtherId
 	var/obj/machinery/door/airlock/closeOther
 	var/list/obj/machinery/door/airlock/close_others = list()

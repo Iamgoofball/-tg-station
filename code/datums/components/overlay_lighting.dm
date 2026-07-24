@@ -70,7 +70,7 @@
 	var/current_direction
 	///Tracks current directional x offset so we don't update unnecessarily
 	var/directional_offset_x
-	/// Tracks current directional why offset so we don't update unnecessarily
+	/// Tracks current directional y offset so we don't update unnecessarily
 	var/directional_offset_y
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
