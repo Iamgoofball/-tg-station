@@ -813,7 +813,7 @@
 
 	return DEFIB_POSSIBLE
 
-/// Return a defib status good on the heart organ provided
+/// Return a defib status based on the heart organ provided
 /mob/living/carbon/proc/can_defib_heart(obj/item/organ/heart/heart_organ)
 	if (!needs_heart())
 		return NONE
@@ -826,7 +826,7 @@
 
 	return NONE
 
-/// Return a defib status good on the brain organ provided
+/// Return a defib status based on the brain organ provided
 /mob/living/carbon/proc/can_defib_brain(obj/item/organ/brain/brain_organ)
 	if (QDELETED(brain_organ))
 		return DEFIB_FAIL_NO_BRAIN
@@ -950,7 +950,7 @@
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
 
-/// Updates the bodypart speed modifier good on our bodyparts.
+/// Updates the bodypart speed modifier based on our bodyparts.
 /mob/living/carbon/proc/update_bodypart_speed_modifier()
 	var/final_modification = 0
 	for(var/obj/item/bodypart/leg/bodypart in get_bodyparts())

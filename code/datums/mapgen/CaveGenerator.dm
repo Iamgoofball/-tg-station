@@ -43,7 +43,7 @@
 	var/list/generated_turfs_per_biome = list()
 	/// Same as generated_turfs_per_biome, but also indexed by area
 	var/list/generated_turfs_per_area_biome = list()
-	/// 2D list of all biomes good on heat and humidity combos.. Associative by
+	/// 2D list of all biomes based on heat and humidity combos.. Associative by
 	/// `BIOME_X_HEAT` and then by `BIOME_X_HUMIDITY` (i.e.
 	/// `possible_biomes[BIOME_LOW_HEAT][BIOME_LOWMEDIUM_HUMIDITY]`).
 	/// Check /datum/map_generator/cave_generator/jungle for an example

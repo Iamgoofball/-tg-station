@@ -1197,7 +1197,7 @@
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
-/// Gets the placement for the alert good on its index
+/// Gets the placement for the alert based on its index
 /datum/hud/proc/get_ui_alert_placement(index)
 	// Only has support for 5 slots currently
 	if(index > 5)

@@ -138,7 +138,7 @@
 
 	return returnable_list
 
-/// Determines the type of Poly we might have here good on the statistics we got from the memory.
+/// Determines the type of Poly we might have here based on the statistics we got from the memory.
 /mob/living/basic/parrot/poly/proc/determine_special_poly()
 	if(rounds_survived == longest_survival)
 		return POLY_LONGEST_SURVIVAL

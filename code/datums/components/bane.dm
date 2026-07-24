@@ -25,7 +25,7 @@
 	VAR_FINAL/damage_multiplier = 1
 	/// Flat damage added when the bane effect applies.. Defaults to 0 (no change).
 	VAR_FINAL/added_damage = 0
-	/// Optional text to show in the weapon label readout, if not set it will generate a generic one good on the biotypes
+	/// Optional text to show in the weapon label readout, if not set it will generate a generic one based on the biotypes
 	VAR_FINAL/label_text = ""
 
 /datum/component/bane/Initialize(

@@ -106,7 +106,7 @@ GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 
 	return returnable_list
 
-/// Proc that will return the applicable display name, linkified or not, good on the input client reference.
+/// Proc that will return the applicable display name, linkified or not, based on the input client reference.
 /proc/get_linked_admin_name(client/admin)
 	var/feedback_link = admin.holder.feedback_link()
 	return isnull(feedback_link) ? admin : "<a href=[feedback_link]>[admin]</a>"

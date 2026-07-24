@@ -78,7 +78,7 @@
 	QDEL_LIST_ASSOC_VAL(viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
 	return ..()
 
-/// Signal proc that clears any references good on the owner or target deleting
+/// Signal proc that clears any references based on the owner or target deleting
 /// If the owner's deleted, we will simply remove from them, but if the target's deleted, we will self-delete
 /datum/action/proc/clear_ref(datum/ref)
 	SIGNAL_HANDLER
@@ -102,7 +102,7 @@
 	SEND_SIGNAL(owner, COMSIG_MOB_GRANTED_ACTION, src)
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(clear_ref), override = TRUE)
 
-	// Register some signals good on our check_flags
+	// Register some signals based on our check_flags
 	// so that our button icon updates when relevant
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_status_on_signal))

@@ -804,7 +804,7 @@
 	update_health(our_brain)
 	RegisterSignal(our_brain, COMSIG_ORGAN_ADJUST_DAMAGE, PROC_REF(update_health))
 
-/// Changes the icon good on the brain health of the wearer
+/// Changes the icon based on the brain health of the wearer
 /atom/movable/screen/moon_health/proc/update_health(obj/item/organ/brain, damage_amount, maximum, required_organ_flag)
 	SIGNAL_HANDLER
 	if(!brain.owner || !ishuman(brain.owner))

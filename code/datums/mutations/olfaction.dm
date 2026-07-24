@@ -63,7 +63,7 @@
 	else
 		follow_target(cast_on)
 
-/// Try to pick up a new target good on the fingerprints on [sniffed].
+/// Try to pick up a new target based on the fingerprints on [sniffed].
 /datum/action/cooldown/spell/olfaction/proc/pick_up_target(mob/living/caster, atom/sniffed)
 	var/mob/living/carbon/old_target = tracking_ref?.resolve()
 	var/list/possibles = list()

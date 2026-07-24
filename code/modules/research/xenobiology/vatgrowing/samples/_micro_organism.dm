@@ -50,25 +50,25 @@
 		reagents.remove_reagent(i, consumption_rate)
 	return TRUE
 
-/// Apply modifiers on growth_rate good on supplementary and supressive reagents.. Reagents is the growing vats reagents
+/// Apply modifiers on growth_rate based on supplementary and supressive reagents.. Reagents is the growing vats reagents
 /datum/micro_organism/cell_line/proc/calculate_growth(datum/reagents/reagents, datum/biological_sample/biological_sample)
 	. = growth_rate
 
-	// Handle growth good on supplementary reagents here.
+	// Handle growth based on supplementary reagents here.
 	for(var/i in supplementary_reagents)
 		if(!reagents.has_reagent(i, consumption_rate))
 			continue
 		. += supplementary_reagents[i]
 		reagents.remove_reagent(i, consumption_rate)
 
-	// Handle degrowth good on supressive reagents here.
+	// Handle degrowth based on supressive reagents here.
 	for(var/i in suppressive_reagents)
 		if(!reagents.has_reagent(i, consumption_rate))
 			continue
 		. += suppressive_reagents[i]
 		reagents.remove_reagent(i, consumption_rate)
 
-	// Handle debuffing growth good on viruses here.
+	// Handle debuffing growth based on viruses here.
 	for(var/datum/micro_organism/virus/active_virus in biological_sample.micro_organisms)
 		if(reagents.has_reagent(/datum/reagent/medicine/spaceacillin, consumption_rate))
 			reagents.remove_reagent(/datum/reagent/medicine/spaceacillin, consumption_rate)

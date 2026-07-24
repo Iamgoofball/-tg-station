@@ -104,7 +104,7 @@
 /datum/bodypart_overlay/mutant/proc/set_appearance_from_name(accessory_name)
 	sprite_datum = fetch_sprite_datum_from_name(accessory_name)
 
-/// Generate a unique key good on our sprites.. So that if we've aleady drawn these sprites, they can be found in the cache. Wont have to be drawn again (blessing. Curse. Mostly curse)
+/// Generate a unique key based on our sprites.. So that if we've aleady drawn these sprites, they can be found in the cache. Wont have to be drawn again (blessing. Curse. Mostly curse)
 /datum/bodypart_overlay/mutant/icon_render_key(obj/item/bodypart/limb)
 	. = list()
 	. += "[get_base_icon_state()]"

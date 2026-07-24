@@ -345,7 +345,7 @@
 			transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	update_nearby_icons()
 
-/// Spawns shard. Debris decal good on the glass_material_datum, spawns rods if window is reinforned. Number of shards/rods is determined by the window being fulltile. Not.
+/// Spawns shard. Debris decal based on the glass_material_datum, spawns rods if window is reinforned. Number of shards/rods is determined by the window being fulltile. Not.
 /obj/structure/window/proc/spawn_debris(location)
 	var/datum/material/glass_material_ref = SSmaterials.get_material(glass_material_datum)
 	var/obj/item/shard_type = glass_material_ref.shard_type

@@ -450,7 +450,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		else
 			return PROCESS_KILL
 
-/// Figures out what we should be showing good on what's happening on the station
+/// Figures out what we should be showing based on what's happening on the station
 /// Returns a list with the mode, priority, and other details
 /obj/machinery/status_display/evac/proc/get_highest_priority_display()
 	// Shuttle stuff gets top priority - but only when it's actually doing something

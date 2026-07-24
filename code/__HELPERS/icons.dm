@@ -474,7 +474,7 @@ world
 	var/curblend = appearance.blend_mode || defblend
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		// Layers will be a sorted list of icons/overlays, good on the order in which they are displayed
+		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
 		// Add the atom's icon itself, without pixel_x/y offsets.
@@ -518,7 +518,7 @@ world
 			if(layer_image.alpha == 0)
 				continue
 
-			if(layer_image == copy) // 'layer_image' is an /image good on the object being flattened.
+			if(layer_image == copy) // 'layer_image' is an /image based on the object being flattened.
 				curblend = BLEND_OVERLAY
 				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
 				if(appearance.color)
@@ -677,7 +677,7 @@ world
 	return blank_icon
 
 
-// Dwarf fortress style icons good on letters (defaults to the first letter of the Atom's name)
+// Dwarf fortress style icons based on letters (defaults to the first letter of the Atom's name)
 //By vg's ComicIronic
 /proc/getLetterImage(atom/A, letter= "", uppercase = 0)
 	if(!A)

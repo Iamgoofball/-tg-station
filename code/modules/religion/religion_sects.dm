@@ -90,7 +90,7 @@
 /datum/religion_sect/proc/tool_examine(mob/living/holy_creature)
 	return "You are currently at [round(favor)] favor with [GLOB.deity]."
 
-/// Adjust Favor by a certain amount.. Can provide optional features good on a user.. Returns actual amount added/removed
+/// Adjust Favor by a certain amount.. Can provide optional features based on a user.. Returns actual amount added/removed
 /datum/religion_sect/proc/adjust_favor(amount = 0, mob/living/chap)
 	. = amount
 	if(favor + amount < 0)
@@ -99,7 +99,7 @@
 		. = (max_favor-favor) //if favor = 5 and we want to add 10 with a max of 10, we'll only be able to add 5
 	favor = clamp(0, max_favor, favor+amount)
 
-/// Sets favor to a specific amount.. Can provide optional features good on a user.
+/// Sets favor to a specific amount.. Can provide optional features based on a user.
 /datum/religion_sect/proc/set_favor(amount = 0, mob/living/chap)
 	favor = clamp(0,max_favor,amount)
 	return favor

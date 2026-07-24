@@ -261,7 +261,7 @@
 		var/translate_prob = mutual_languages?[type] || 0
 		var/base_word = strip_outer_punctuation(html_decode(word))
 		if(translate_prob > 0)
-			// the probability of managing to understand a word is good on how common it is (up to +20%, though -5% for very uncommon words)
+			// the probability of managing to understand a word is based on how common it is (up to +20%, though -5% for very uncommon words)
 			// 1000 words in the list, so words outside the list are just treated as "the 1250th most common word"
 			var/commonness = GLOB.most_common_words_frequency[LOWER_TEXT(base_word)] || 1250
 			translate_prob += max(20 - (commonness / 1000) * 20, -5)

@@ -161,7 +161,7 @@ DEFINE_BITFIELD(operation_flags, list(
 #define SURGERY_MODIFIER_FAILURE_THRESHOLD 2.5
 /// There is an x percent chance of failure per second beyond 2.5x the base surgery time
 #define FAILURE_CHANCE_PER_SECOND 10
-/// Calculates failure chance of an operation good on the base time and the effective speed modifier
+/// Calculates failure chance of an operation based on the base time and the effective speed modifier
 /// This may look something like: Base time 1 second.. 4x effective multiplier -> 4 seconds - 2.5 seconds = 1.5 seconds * 10 = 15% failure chance
 /// Or: Base time 2 seconds.. 1x effective multiplier -> 2 seconds - 5 seconds = -3 seconds * 10 = -30% failure chance (clamped to 0%)
 #define GET_FAILURE_CHANCE(base_time, speed_mod) (FAILURE_CHANCE_PER_SECOND * (((speed_mod * (base_time)) - (SURGERY_MODIFIER_FAILURE_THRESHOLD * (base_time))) / (1 SECONDS)))

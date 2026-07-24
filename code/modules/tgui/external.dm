@@ -187,7 +187,7 @@ GAME_VERB_HIDDEN(/client, uiclose, "uiclose", window_id as text)
 	var/mob/user = src?.mob
 	if(!user)
 		return
-	// Close all tgui datums good on window_id.
+	// Close all tgui datums based on window_id.
 	SStgui.force_close_window(user, window_id)
 
 /**

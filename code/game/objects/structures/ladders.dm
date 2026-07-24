@@ -440,7 +440,7 @@
 	else //goes both ways
 		show_options(user, is_ghost = TRUE)
 
-// Indestructible away mission ladders which link good on a mapped ID and height value rather than X/Y/Z.
+// Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
 /obj/structure/ladder/unbreakable
 	name = "sturdy ladder"
 	desc = "An extremely sturdy metal ladder."
@@ -449,7 +449,7 @@
 	var/height = 0  // higher numbers are considered physically higher
 
 /obj/structure/ladder/unbreakable/LateInitialize()
-	// Override the parent to find ladders good on being height-linked
+	// Override the parent to find ladders based on being height-linked
 	if (!id || (up && down))
 		update_appearance()
 		return

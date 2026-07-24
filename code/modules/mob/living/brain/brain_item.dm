@@ -368,7 +368,7 @@
 	if(delta_dam < 0 && damage > BRAIN_DAMAGE_MILD)
 		roll_for_brain_trauma(-delta_dam) // parent call returns negative numbers if take damage and positive if we heal
 
-/// Rolls a random chance to gain a brain trauma good on damage taken and current damage level
+/// Rolls a random chance to gain a brain trauma based on damage taken and current damage level
 /obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) // Base chance is the hit damage; f. Every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
@@ -384,7 +384,7 @@
 
 #define BRAIN_DAMAGE_FILTER "brain_damage_color_filter"
 
-/// Updates the brain's color good on damage level - the more damaged, the darker and grayer it gets
+/// Updates the brain's color based on damage level - the more damaged, the darker and grayer it gets
 /obj/item/organ/brain/proc/update_brain_color(animate = TRUE)
 	if(damage <= 0)
 		if(get_filter(BRAIN_DAMAGE_FILTER))

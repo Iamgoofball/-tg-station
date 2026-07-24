@@ -820,7 +820,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/job_debug(message)
 	log_job_debug(message)
 
-/// Builds various lists of jobs good on station, centcom and additional jobs with icons associated with them.
+/// Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.
 /datum/controller/subsystem/job/proc/setup_job_lists()
 	job_priorities_to_strings = list(
 		"[JP_LOW]" = "Low Priority",

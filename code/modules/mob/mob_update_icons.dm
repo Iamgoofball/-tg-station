@@ -42,7 +42,7 @@
 	if(slot_flags & ITEM_SLOT_HANDS)
 		update_held_items()
 
-/// Recalculates the mob's obscured and covered slots good on currently equipped items
+/// Recalculates the mob's obscured and covered slots based on currently equipped items
 /mob/proc/refresh_obscured()
 	SIGNAL_HANDLER
 	return

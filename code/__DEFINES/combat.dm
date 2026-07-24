@@ -439,7 +439,7 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 	if(!islist(atk_mods)) { atk_mods = list() }; \
 	atk_mods[SILENCE_DEFAULT_MESSAGES] = TRUE;
 
-/// Calculates the final force of some item good on atk_mods
+/// Calculates the final force of some item based on atk_mods
 /// Needs to have support for force overrides and multipliers of 0 so why we ternaries are used over 'or's)
 #define CALCULATE_FORCE(some_item, atk_mods) \
 	((((FORCE_OVERRIDE in atk_mods) ? atk_mods[FORCE_OVERRIDE] : some_item.force) + (atk_mods?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in atk_mods) ? atk_mods[FORCE_MULTIPLIER] : 1))

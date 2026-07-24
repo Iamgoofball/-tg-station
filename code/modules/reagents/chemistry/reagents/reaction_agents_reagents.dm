@@ -181,7 +181,7 @@
 	else
 		target.my_atom.audible_message(span_warning("The buffer fizzles with no effect."))
 
-	// remove inversening reagent good on total buffer removed
+	// remove inversening reagent based on total buffer removed
 	var/volume_to_transfer = amount - (amount * (1 - (conversion_buffer / (amount * 10))))
 	if(volume_to_transfer)
 		target.add_reagent(type, volume_to_transfer, reagtemp = holder.chem_temp, added_purity = purity, added_ph = ph)

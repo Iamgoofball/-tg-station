@@ -180,7 +180,7 @@
 		rating = H.rating
 	if(yield == 0)//Oh god don't divide by zero you'll doom us all.
 		adjust_yield(1 * rating)
-	else if(prob(1/(yield * yield) * 100))// This formula gives you diminishing returns good on yield.. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+	else if(prob(1/(yield * yield) * 100))// This formula gives you diminishing returns based on yield.. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 		adjust_yield(1 * rating)
 	return BULLET_ACT_HIT
 
@@ -317,7 +317,7 @@
 			T.reagents.handle_reactions()
 			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
 
-/// Returns reagent purity good on seed stats
+/// Returns reagent purity based on seed stats
 /obj/item/seeds/proc/get_reagent_purity()
 	var/purity_from_lifespan = lifespan / 400 //up to +25% for lifespan
 	var/purity_from_endurance = endurance / 400 //up to +25% for endurance
@@ -572,7 +572,7 @@
 	else
 		new_trait = null
 
-	// Adjust stats good on graft stats
+	// Adjust stats based on graft stats
 	set_lifespan(round(max(lifespan, (lifespan + (2/3)*(snip.plant_dna.lifespan - lifespan)))))
 	set_endurance(round(max(endurance, (endurance + (2/3)*(snip.plant_dna.endurance - endurance)))))
 	set_production(round(max(production, (production + (2/3)*(snip.plant_dna.production - production)))))

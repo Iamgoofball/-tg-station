@@ -91,7 +91,7 @@
 	if(istype(gathered_ore) && gathered_ore.refined_type)
 		points += gathered_ore.points * point_upgrade * gathered_ore.amount
 
-/// Returns the amount of a specific alloy design, good on the accessible materials
+/// Returns the amount of a specific alloy design, based on the accessible materials
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/design)
 	var/datum/material_container/mat_container = materials.mat_container
 	if(!mat_container || design.make_reagent)

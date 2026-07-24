@@ -410,7 +410,7 @@
 	if(rider.has_status_effect(/datum/status_effect/staggered))
 		rider.Knockdown(2 SECONDS)
 
-/// Calculates chance to be thrown off the mount good on mob state
+/// Calculates chance to be thrown off the mount based on mob state
 /datum/component/riding/proc/get_disarm_chance(mob/living/disarmed)
 	if(!isliving(disarmed))
 		return 0

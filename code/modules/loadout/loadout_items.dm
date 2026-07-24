@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Doesn't verify that the item_path actually has these reskins
 	var/datum/atom_skin/reskin_datum
 	/// A list of greyscale colors that are used for items that have greyscale support, but don't allow full customization.
-	/// This is an assoc list of /datum/job_department -> colors, or /datum/job -> colors, allowing for preset colors good on player chosen job.
+	/// This is an assoc list of /datum/job_department -> colors, or /datum/job -> colors, allowing for preset colors based on player chosen job.
 	/// Jobs are prioritized over departments.
 	/// Note: You don't need to set a color for every job or department!
 	var/list/job_greyscale_palettes

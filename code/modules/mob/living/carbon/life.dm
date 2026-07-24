@@ -396,7 +396,7 @@
 
 	breath.garbage_collect()
 
-/// Applies suffocation side-effects to a given Human, scaling good on ratio of needed pressure VS "true" pressure.
+/// Applies suffocation side-effects to a given Human, scaling based on ratio of needed pressure VS "true" pressure.
 /// If pressure is greater than 0, the return value will represent the amount of gas successfully breathed.
 /mob/living/carbon/proc/handle_suffocation(breath_pp = 0, safe_breath_min = 0, true_pp = 0)
 	. = 0

@@ -584,7 +584,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/mutation = pick(candidates)
 	. = dna.add_mutation(mutation, MUTATION_SOURCE_MUTATOR)
 
-/// Returns a random mutation typepath good on the given arguments.. By default, all available mutations in the dna sequence but the monkey one.
+/// Returns a random mutation typepath based on the given arguments.. By default, all available mutations in the dna sequence but the monkey one.
 /mob/living/carbon/proc/get_random_mutation_path(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
 	if(!has_dna())
 		return null
@@ -602,7 +602,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	possible -= excluded_mutations
 	return length(possible) ? pick(possible) : null //prevent runtimes from picking null
 
-/// Gives the mob a random mutation good on the given arguments.
+/// Gives the mob a random mutation based on the given arguments.
 /mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
 	var/mutation_path = get_random_mutation_path(quality, scrambled, sequence, excluded_mutations)
 	if(!mutation_path)

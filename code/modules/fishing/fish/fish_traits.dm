@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/new_amount = max(round((new_weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * mult, 0.1), mult)
 	source.AddElement(/datum/element/venomous, venom_path, new_amount)
 
-/// Proc that changes the venomous element good on if the fish is alive or dead (basically dead fish are weaker).
+/// Proc that changes the venomous element based on if the fish is alive or dead (basically dead fish are weaker).
 /datum/fish_trait/proc/change_venom(obj/item/fish/source, venom_path, live_mult, dead_mult, just_remove = FALSE)
 	var/live_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * live_mult, 0.1), live_mult)
 	var/dead_amount = max(round((source.weight/FISH_GRIND_RESULTS_WEIGHT_DIVISOR) * dead_mult, 0.1), dead_mult)

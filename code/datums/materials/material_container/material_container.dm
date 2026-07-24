@@ -704,7 +704,7 @@
 		if(!target)
 			return 0
 
-	// eject sheets good on available amount after each iteration
+	// eject sheets based on available amount after each iteration
 	var/count = 0
 	while(stack_amt > 0)
 		// don't merge yet.. we need to do stuff with it first

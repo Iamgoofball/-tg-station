@@ -72,7 +72,7 @@
 	if(row < 0)
 		return null
 
-	// Could use >= here, but I think it's worth noting that the two start at different places, since row is good on number here
+	// Could use >= here, but I think it's worth noting that the two start at different places, since row is based on number here
 	if(row > max_rows - 1)
 		if(!landing) // If you're not a landing, go away please.. thanks
 			return null

@@ -8,7 +8,7 @@
 	var/alien_ear_damage = 0
 
 /datum/unit_test/explosion_action/Run()
-	// We split up this `Run()` into multiple parts good on the over-arching parent type.. This is because all of them have different core implementations of `EX_ACT()`, and we want to test all.
+	// We split up this `Run()` into multiple parts based on the over-arching parent type.. This is because all of them have different core implementations of `EX_ACT()`, and we want to test all.
 	// All procs also have varying levels of bulkiness to them. It's valuable to have this level of organization because otherwise it would blend all-together. Be an entangled mess.
 	execute_mob_tests()
 	execute_turf_tests()
@@ -86,7 +86,7 @@
 	var/mob/living/basic/pet/dog/corgi/test_dog = set_up_test_dog()
 
 	// those two items should give us a 100% arm. Rating, so let's test that to make sure it works (all ex_act checks should now be prob(100)), no room f. Error.
-	EX_ACT(test_dog, EXPLODE_LIGHT) // should do 20 damage (basic animals do a prob() check good on the armor rating, and divide the expected brute loss by 1.5).
+	EX_ACT(test_dog, EXPLODE_LIGHT) // should do 20 damage (basic animals do a prob() check based on the armor rating, and divide the expected brute loss by 1.5).
 	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 20, "EX_ACT() with EXPLODE_LIGHT severity should have done 20 damage to a corgi with an immune helmet and vest!")
 	test_dog.revive(ADMIN_HEAL_ALL)
 

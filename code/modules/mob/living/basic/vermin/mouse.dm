@@ -245,7 +245,7 @@
 	INVOKE_ASYNC(regalrat, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)
 
-/// Creates a new mouse good on this mouse's subtype.
+/// Creates a new mouse based on this mouse's subtype.
 /mob/living/basic/mouse/proc/create_a_new_rat()
 	new /mob/living/basic/mouse(loc, HAS_TRAIT(src, TRAIT_TAMED))
 

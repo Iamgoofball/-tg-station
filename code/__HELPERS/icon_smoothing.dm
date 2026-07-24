@@ -281,7 +281,7 @@ xxx xxx xxx
 #define DEFAULT_UNDERLAY_ICON 'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE "plating"
 
-/// Changes the icon state good on the new junction bitmask
+/// Changes the icon state based on the new junction bitmask
 /atom/proc/set_smoothed_icon_state(new_junction)
 	. = smoothing_junction
 	smoothing_junction = new_junction

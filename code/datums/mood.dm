@@ -515,7 +515,7 @@
 	else
 		clear_mood_event("area")
 
-/// Updates the mob's given beauty moodie, good on the area
+/// Updates the mob's given beauty moodie, based on the area
 /datum/mood/proc/update_beauty(area/area_to_beautify)
 	SIGNAL_HANDLER
 	if (area_to_beautify.outdoors) // if we're outside, we don't care

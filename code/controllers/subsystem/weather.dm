@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(weather)
 		particle_holders[offset] += holder_list
 
 		// We add it to vis_contents of planemasters rather than client screen as planemasters already
-		// manage their own visibility good on owner's z level
+		// manage their own visibility based on owner's z level
 		for (var/atom/movable/screen/plane_master/plane_master as anything in particle_planemasters)
 			var/mob/owner = plane_master.home.our_hud?.mymob
 			if (!owner) // Vibecheck

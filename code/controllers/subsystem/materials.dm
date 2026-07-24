@@ -179,7 +179,7 @@ SUBSYSTEM_DEF(materials)
 	return list2params(fullid)
 
 
-/// Returns a list to be used as an object's custom_materials.. Lists will be cached and re-used good on the parameters.
+/// Returns a list to be used as an object's custom_materials.. Lists will be cached and re-used based on the parameters.
 /datum/controller/subsystem/materials/proc/get_material_set_cache(list/materials_declaration, multiplier = 1)
 	if(!LAZYLEN(materials_declaration))
 		return null // If we get a null we pass it right back, we don't want to generate stack traces just because something is clearing out its materials list.

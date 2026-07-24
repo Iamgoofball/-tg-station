@@ -7,7 +7,7 @@
 	var/id = -1
 	/// Cooldown of the controller.. Updates when pressed (activate())
 	var/cooldown = FALSE
-	/// Should we toggle open/close of doors good on their current state
+	/// Should we toggle open/close of doors based on their current state
 	/// Also used for curtains
 	var/sync_doors = TRUE
 	/// If this controller's ID should be adjustable by players through multitools.

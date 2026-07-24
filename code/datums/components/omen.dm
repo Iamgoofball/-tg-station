@@ -101,7 +101,7 @@
 	if(incidents_left < 1)
 		qdel(src)
 
-/// Roll an accident happening, factoring in a few things, good on some base change.
+/// Roll an accident happening, factoring in a few things, based on some base change.
 /datum/component/omen/proc/roll_for_accident(base_chance = 4)
 	var/chance = base_chance * luck_mod
 	for(var/mob/viewer in viewers(parent))

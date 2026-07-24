@@ -452,9 +452,9 @@
 
 	return FALSE
 
-/// Determines the rate at which Plasma Fixation heals good on the amount of plasma in the air
+/// Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
 #define HEALING_PER_MOL 1.1
-/// Determines the rate at which Plasma Fixation heals good on the amount of plasma being breathed through internals
+/// Determines the rate at which Plasma Fixation heals based on the amount of plasma being breathed through internals
 #define HEALING_PER_BREATH_PRESSURE 0.05
 /// Determines the highest amount you can be healed for when breathing plasma from internals
 #define MAX_HEAL_COEFFICIENT_INTERNALS 0.75

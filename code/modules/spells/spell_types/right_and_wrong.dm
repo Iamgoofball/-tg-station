@@ -326,7 +326,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	return affected
 
 /// Signal proc from [COMSIG_GLOB_CREWMEMBER_JOINED].
-/// Calls give_proc_path on latejoiners a number of times good on num_to_give_to_latejoiners)
+/// Calls give_proc_path on latejoiners a number of times based on num_to_give_to_latejoiners)
 /datum/summon_things_controller/proc/on_latejoin(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
 

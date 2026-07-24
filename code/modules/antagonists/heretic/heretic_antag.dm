@@ -187,7 +187,7 @@
 	var/list/shop_knowledge = list()
 
 	// This should be cached in some way, but the fact that final knowledge
-	// has to update its disabled state good on whether all objectives are complete,
+	// has to update its disabled state based on whether all objectives are complete,
 	// makes this very difficult.. I'll figure it out one day maybe
 	for(var/knowledge_path in researched_knowledge)
 		var/list/knowledge_info = researched_knowledge[knowledge_path]

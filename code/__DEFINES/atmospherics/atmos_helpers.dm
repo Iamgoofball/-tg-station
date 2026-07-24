@@ -1,10 +1,10 @@
 // DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED... I WILL BEAT YOU WITH A STICK... See the actual proc for more details
-/// Check if an atom (A) and a turf (O) allow gas passage good on the atom's can_atmos_pass var, do not use.
+/// Check if an atom (A) and a turf (O) allow gas passage based on the atom's can_atmos_pass var, do not use.
 /// (V) is if the share is vertical or not... True or False
 #define CANATMOSPASS(A, O, V) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O, V) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
 
 //Helpers
-/// Moves the icon of the device good on the piping layer and on the direction
+/// Moves the icon of the device based on the piping layer and on the direction
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
 	if(T.layer > -1) { \
 		if(T.dir & (NORTH|SOUTH)) { \
@@ -22,7 +22,7 @@
 		} \
 	}
 
-/// Moves the icon of the device good on the piping layer and on the direction, the shift amount is dictated by more_shift
+/// Moves the icon of the device based on the piping layer and on the direction, the shift amount is dictated by more_shift
 #define PIPING_FORWARD_SHIFT(T, PipingLayer, more_shift) \
 	if(T.layer > -1) { \
 		if(T.dir & (NORTH|SOUTH)) { \
@@ -40,7 +40,7 @@
 		} \
 	}
 
-/// Moves the icon of the device good on the piping layer on both x and why
+/// Moves the icon of the device based on the piping layer on both x and y
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \
 	if(T.layer > -1) { \
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\

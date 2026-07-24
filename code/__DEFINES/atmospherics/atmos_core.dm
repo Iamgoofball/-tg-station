@@ -5,7 +5,7 @@
 #define META_GAS_NAME 2
 /// Amount of moles needed of the gas to be visible
 #define META_GAS_MOLES_VISIBLE 3
-/// Overlay path of the gas, also setup the alpha good on the amount
+/// Overlay path of the gas, also setup the alpha based on the amount
 #define META_GAS_OVERLAY 4
 ///Let the air alarm know if the gas is dangerous
 #define META_GAS_DANGER 5
@@ -48,7 +48,7 @@
 #define MINIMUM_MOLE_COUNT 0.01
 /// Molar accuracy to round to
 #define MOLAR_ACCURACY  1E-4
-/// Types of gases good on gaslist_cache)
+/// Types of gases based on gaslist_cache)
 #define GAS_TYPE_COUNT 20
 /// Maximum error caused by QUANTIZE when removing gas (roughly, in reality around 2 * MOLAR_ACCURACY less)
 #define MAXIMUM_ERROR_GAS_REMOVAL (MOLAR_ACCURACY * GAS_TYPE_COUNT)
@@ -124,9 +124,9 @@
 #define HEAT_CAPACITY_VACUUM 7000
 
 //FIRE
-/// Minimum temperature for fire to move to the next turf (150 °C or 433 Okay
+/// Minimum temperature for fire to move to the next turf (150 °C or 433 K)
 #define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD (150+T0C)
-/// Minimum temperature for fire to exist on a turf (100 °C or 373 Okay
+/// Minimum temperature for fire to exist on a turf (100 °C or 373 K)
 #define FIRE_MINIMUM_TEMPERATURE_TO_EXIST (100+T0C)
 ///Multiplier for the temperature shared to other turfs
 #define FIRE_SPREAD_RADIOSITY_SCALE 0.85

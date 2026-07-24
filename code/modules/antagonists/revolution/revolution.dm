@@ -414,7 +414,7 @@
 	return clamp(round(length(heads) - ((8 - length(sec)) / 3)), 1, max_headrevs)
 
 /// Tries to make sure an appropriate number of headrevs are part of the revolution.
-/// Will promote up revs to headrevs as necessary good on the hard max_headrevs cap. The soft cap good on the number of heads of staff. Sec.
+/// Will promote up revs to headrevs as necessary based on the hard max_headrevs cap. The soft cap based on the number of heads of staff. Sec.
 /datum/team/revolution/proc/update_rev_heads()
 	var/list/datum/mind/head_revolutionaries = get_head_revolutionaries()
 

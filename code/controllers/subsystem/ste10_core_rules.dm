@@ -1,532 +1,432 @@
 /**
- * # STE-100: 10 Core Rules for /tg/station
+ * # STE-100: 10 Core Rules — Nova Sector Community Standards
  *
- * This module codifies the 10 core rules from the tgstation style guide.
- * Each rule has a validation proc, a rule definition, and an enforcement mechanism.
- * These rules come from the STYLE.md coding standards document.
+ * This module codifies the Host-mandated 10 Core Rules (CR1-CR10) that govern
+ * player conduct, server policy, and the social contract on Nova Sector.
  *
- * Rules are numbered 1 through 10. Each rule has:
- * - A unique identifier (STE_RULE_1 through STE_RULE_10)
- * - A definition constant with rule text
- * - A validation proc
- * - An auto-fix proc where applicable
+ * These are COMMUNITY STANDARDS, not code standards. They define how players
+ * interact with each other, the setting, and Staff. Each rule is backed by
+ * the Host and enforced by the moderation team.
+ *
+ * Source: Issue #224 (Host-mandated community standards)
+ *
+ * Each rule is structured as a datum with:
+ * - A unique identifier (CR1 through CR10)
+ * - A full rule description
+ * - Sub-rules that expand on specific expectations
+ * - A display proc for in-game rule reference
  */
 
-/// Master list of all 10 core rules.
-/// Each entry maps rule name to its definition constant.
+/// Master lookup table mapping rule numbers to their datums.
+/// Use this for runtime rule display, enforcement hooks, and ahelp integration.
 GLOBAL_LIST_INIT(ste10_core_rules, list(
-	"rule_1" = /datum/ste_rule/tabs_not_spaces,
-	"rule_2" = /datum/ste_rule/control_statement_format,
-	"rule_3" = /datum/ste_rule/operator_spacing,
-	"rule_4" = /datum/ste_rule/static_not_global,
-	"rule_5" = /datum/ste_rule/early_returns,
-	"rule_6" = /datum/ste_rule/no_magic_numbers,
-	"rule_7" = /datum/ste_rule/use_time_defines,
-	"rule_8" = /datum/ste_rule/full_byond_paths,
-	"rule_9" = /datum/ste_rule/type_path_slash_and_snake,
-	"rule_10" = /datum/ste_rule/descriptive_variable_names,
+	"CR1" = /datum/ste_rule/social_contract,
+	"CR2" = /datum/ste_rule/vibe_check,
+	"CR3" = /datum/ste_rule/setting_immersion,
+	"CR4" = /datum/ste_rule/separation_of_identity,
+	"CR5" = /datum/ste_rule/shift_integrity,
+	"CR6" = /datum/ste_rule/style_points,
+	"CR7" = /datum/ste_rule/consent_and_agency,
+	"CR8" = /datum/ste_rule/antagonistic_conduct,
+	"CR9" = /datum/ste_rule/station_infrastructure,
+	"CR10" = /datum/ste_rule/rule_of_cool,
 ))
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule Definitions
+// Rule Definitions — the Host-mandated community standards verbatim.
 // ─────────────────────────────────────────────────────────────────────────────
 
-/// Rule 1: Tabs not spaces
-/// You must use tabs to indent your code.. Do not use spaces for indentation.
-#define STE_RULE_1 "Use tabs for indentation. Do not use spaces. This keeps the code format the same for all developers."
+/// CR1: The Social Contract
+/// Conduct yourself with the maturity expected of an 18+ server.
+/// Take the environment seriously. Follow Staff instructions and rulings.
+/// Seek permission, not forgiveness. Self-report to Staff if you feel you
+/// made a mistake. You are responsible for knowing the rules.
+/// Ignorance is not an excuse.
+#define STE_CR1_TITLE "CR1: The Social Contract"
+#define STE_CR1_BODY "Conduct yourself with the maturity expected of an 18+ server. Take the environment seriously. Follow Staff instructions and rulings. Seek permission, not forgiveness. Self-report to Staff if you feel you made a mistake. You are responsible for knowing the rules. Ignorance is not an excuse."
 
-/// Rule 2: Control statement format
-/// Control statements (if, while, for, and so on must not contain code on the same line.
-/// All comparisons must use: thing operator number (not number operator thing).
-#define STE_RULE_2 "Put control statement bodies on a new line. Write comparisons as: variable operator number."
+#define STE_CR1_1 "Be Proactively Honest — Do not lie, omit context, or misrepresent facts in official channels. Provide all relevant information immediately."
+#define STE_CR1_2 "If You See Something, Say Something — Please report perceived rule-breaks as they occur. While you may finish an active scene or moment before providing full details, you must not use this delay to escalate or seek retribution. Once a ticket is pending, all conflict with the accused parties must cease immediately. If you disagree with a ruling, remain civil and make a Staff Report ticket on Discord."
+#define STE_CR1_3 "The Tap Out Rule — Your OOC consent to involvement in targeted content from another Crewmate, including any erotic content directed at you, may be retracted at any time, for any reason, and must be immediately respected by those involved. Using Local-OOC, state you are \"Invoking the Tap Out Rule\" or similar, disengage or ignore them, and ensure your own actions don't hinder their round in turn. If either party fails to comply, immediately Admin Help. This rule protects you from unpleasant interactions being forced on you, it is not a shield against the IC consequences of your own actions, nor does it override ERP-G-4's on-station exposure risks."
+#define STE_CR1_4 "Leave Real History in the Past — Do not reference real political figures, governments, legislation, wars, or historical events that remain a source of active controversy or heavy discussion or debate to this day. Our Setting is 540 years in the future and these events are ancient history to your character. If you wouldn't expect your character to have a strong personal stake in something that happened in centuries past, do not bring it into the game."
+#define STE_CR1_5 "Maintain Separation of Self and Character — Keep personal struggles out of roleplay. We recognize that life can be difficult and we genuinely care about our players' wellbeing, but your characters should not be a vehicle for real-life distress. We take this seriously not to punish people who are struggling, but to make sure the game doesn't become a substitute for real support, putting unfair emotional weight on other players. If you are going through something hard, please reach out to a trusted person or support resource."
+#define STE_CR1_6 "Anguish With Intent — If you wish to explore your character's mental health as a subject for roleplay such as through psychology, mental breakdowns, or ongoing story arcs, it must be done with immersion in mind and escalated in a realistic way. Mental health topics should be used to elevate roleplay for all players, not used to excuse characters' bad behavior. Treat your character's mental health journey seriously to the best of your ability. If your character's arc appears to draw directly on disclosed real-life struggles rather than fictional characterization, Staff may intercede."
+#define STE_CR1_7 "Suicide and Self-Harm Content Is Tightly Restricted — Intentional suicide as a resolved IC outcome is prohibited outside of the Die a Glorious Death antagonist objective. Discussion of suicide or self-harm must be kept strictly to use of the Subtler Verb and requires LOOC consent from everyone involved in the scene."
+#define STE_CR1_8 "No Meta-Gaming — Information gained outside of IC experience in the current round is Metaknowledge. Using this information for an IC advantage is Metagaming and is prohibited. Playing with friends is welcome."
 
-/// Rule 3: Operator spacing
-/// Boolean and logic operators (&&, ||, <, >, ==, and so on must have spaces around them.
-/// Bitwise AND (&) must have spaces.. Assignment operators (=, +=, and so on must have spaces.
-/// Bitwise OR (|), access operators (., :), parentheses, and logical NOT (!) must NOT have spaces.
-#define STE_RULE_3 "Add spaces around boolean, logic, and assignment operators. Do not add spaces around access operators and parentheses."
+/// CR2: The Vibe Check
+/// Carry yourself in good faith. Play and behave altruistically for the benefit
+/// of everyone. You don't have to respect the character, but you must respect
+/// the writer and the larger game environment.
+#define STE_CR2_TITLE "CR2: The Vibe Check"
+#define STE_CR2_BODY "Carry yourself in good faith. Play and behave altruistically for the benefit of everyone. You don't have to respect the character, but you must respect the writer and the larger game environment."
 
-/// Rule 4: Use static instead of global
-/// Use the `static` keyword instead of `global` for type-level variables.
-/// Both keywords have the same behavior, but `static` is less confusing.
-#define STE_RULE_4 "Use the 'static' keyword instead of 'global'. This name describes the behavior more clearly."
+#define STE_CR2_1 "Safe Zones Must Be Respected — The Arrival Shuttle and Arrivals itself, the Escape Shuttle, the Interlink, and Ghost Cafés are Safe Zones. Conflict should not be instigated in or brought to these areas."
+#define STE_CR2_2 "End of Round Grief and the Curtain Call — IC Expectations are ended when the Title Card / Credits / Shift Recap popup displays or becomes available. As we are actors, when the shift is over, so is our acting. Feel free to address each other as participants in a stageplay on an OOC level after the round ends. You are encouraged to maintain your character and complete a scene if you wish, but there is not an expectation to resolve any standing conflict or narrative at the title card. Remember the expectations of Safe Zones. Intentional griefing or continuation of mechanics with non-reciprocating parties is still considered EORG. Blowing up the Station, delaminating the Supermatter, or any other similar plans need to be cleared by Admin Help prior to the Title Card / Credits."
+#define STE_CR2_3 "Respect Unresponsive Players — Characters not reacting to their environment are considered to have Space Sleeping Disorder. Do not touch or interfere with SSD players except to save them from immediate danger, or to relocate them to cryogenics after 30 minutes have passed, which you may do yourself if you wish, unless the character is a known suspect or actively wanted by Security, in which case Staff should be notified instead. If a Command or Security role-holder goes SSD, report it to Staff as these roles carry outsized narrative weight and shouldn't sit vacant unnoticed."
+#define STE_CR2_4 "Don't Be Anti-Roleplay — Do not head to cryogenics or disconnect to evade IC consequences."
+#define STE_CR2_5 "Mind Your Mouth — Slurs and hate speech that are directed at non-consenting parties are not welcome on Nova Sector. We understand that some players reclaim language as part of their identity, that is yours to own and not ours to police. However, the moment that language is turned outward at another person, it becomes our business. In-universe slurs against fictional species are fine for flavor, but must never be a vehicle or genuine disguise for equivalent real-world bigotry. If something said to you makes you uncomfortable, invoke the Tap Out Rule in Local-OOC. Real world racial epithets or direct fictional exchanges for those terms, when directed at another person rather than reclaimed self-reference, will result in administrative action."
+#define STE_CR2_6 "Real Lives Are Valuable — Outright telling someone to kill themselves in any IC or OOC channel will result in administrative action. This is the difference between 'walk yourself out an airlock' and 'kill yourself'."
+#define STE_CR2_7 "Don't Be An Agitator — Unwelcome harassment, targeted rumor-spreading, or OOC fear-mongering against individuals or groups is prohibited. Do not organize as a group against an individual."
 
-/// Rule 5: Use early returns
-/// Do not wrap a proc in an if-block when returning on a condition works better.
-/// Early returns stop nesting from becoming too deep.
-#define STE_RULE_5 "Use early returns instead of deep nesting. This makes code easier to read and maintain."
+/// CR3: Setting Immersion and Safety
+/// Play a setting excusable adult Original Character with personality and
+/// knowledge that respects our Lore, Narrative Setting, and your current Role.
+#define STE_CR3_TITLE "CR3: Setting Immersion and Safety"
+#define STE_CR3_BODY "Play a setting excusable adult Original Character with personality and knowledge that respects our Lore, Narrative Setting, and your current Role."
 
-/// Rule 6: No magic numbers or strings
-/// Use #define constants instead of literal numbers or strings.
-/// A variable set to 1 or 2 tells the reader nothing.. A named define shows the purpose.
-#define STE_RULE_6 "Replace magic numbers and strings with named define constants. This makes code self-documenting."
+#define STE_CR3_1 "Use English — Keep primarily to English and only in the Latin alphabet. You may use transliterated or loan words from other languages as additive spice and character gimmick. If confronted or misunderstood, clarify yourself ICly. Do not circumvent our rules with this allowance."
+#define STE_CR3_2 "No Netspeak — (lol, kek, chudling, 67, etc.) in IC speech, though it is permitted by PDA. Bitrunners that are on the Manifest, TTS Device users, and everyone within or spawning from a Bitdomain are excluded from this, assuming they remain high effort about it. This exemption never extends to 1337speak, which remains banned for all characters without exception."
+#define STE_CR3_3 "Respawning Maintains the Story — Respawning as the same character, as the same job or as an assistant, is permitted if you left the round by cryogenics and would like to rejoin. Do not rejoin as the same or as a similar or related character if you died."
+#define STE_CR3_4 "Post Mortality Blackout — In the likely event of your death or destruction, if you are revived, you retain no knowledge of the events preceding or individuals involved in your demise."
+#define STE_CR3_5 "Respect Per-Shift Narrative Blackout — Shifts are loosely canon. You may remember interactions and events, but you must not recall specific names or faces tied to antagonistic actions or roles. Blackout can only be waived per shift by the person protected by the blackout. You can choose not to remember your involvement, even if you are named, and the Tap Out Rule can be invoked in this context. Do not target or treat a player differently IC due to OOC disagreements or events from previous rounds. Crew are not allowed to establish precedence or apply expectations for future rounds, such as stating that something must always be done a particular way. Keep the slate clean every shift."
 
-/// Rule 7: Use time defines
-/// Use the time macro defines (SECONDS, MINUTES, HOURS) for time values.
-/// Do not use literal decisecond amounts.. The macros make the intent clear.
-#define STE_RULE_7 "Use SECONDS, MINUTES, and HOURS defines. Do not write time values as raw deciseconds."
+/// CR4: You, Your Character, and Separation of Identity
+/// Maintain a strict separation between your character and yourself.
+/// Your character is a narrative tool. Do not allow OOC opinions, conflicts,
+/// or personal moods to dictate their actions in a way that breaks immersion.
+#define STE_CR4_TITLE "CR4: You, Your Character, and Separation of Identity"
+#define STE_CR4_BODY "Maintain a strict separation between your character and yourself. Your character is a narrative tool. Do not allow OOC opinions, conflicts, or personal moods to dictate their actions in a way that breaks immersion. Set limitations for what your Character knows and can accomplish. Be prepared to justify your Character's actions and knowledge. No one is perfect and all knowing, and your Character shouldn't be either."
 
-/// Rule 8: Full BYOND paths
-/// All type paths must be absolute.. Use the full path from the root.
-/// Do not nest type keywords inside blocks.. This makes text search work for finding definitions.
-#define STE_RULE_8 "Write full absolute type paths. Do not nest type definitions. This helps text search find definitions."
+#define STE_CR4_1 "Play the Job That You Have — We have limited tolerance for characters that Departmentally job-hop across shifts. Be prepared to explain to the Crew and Staff why your Chief Engineer understands advanced surgery and organic chemistry enough to be a Chief Medical Officer too."
+#define STE_CR4_2 "No Real Life Characters — You cannot play or recreate a character which resembles real life people, even for fun."
+#define STE_CR4_3 "No Joke Characters In IC Spaces — You may not play jokey or meme characters."
+#define STE_CR4_4 "No Stolen IP — You may not copy characters from pre-existing media. Adapted concepts are okay."
+#define STE_CR4_5 "Take a Deep Breath — If Staff believe that you are bleeding harmful or combative emotions from yourself into your gameplay, regardless if you believe that you are, Staff may intercede."
 
-/// Rule 9: Type paths begin with / and use snake_case
-/// Every type path must start with a forward slash.
-/// Type paths must use snake_case (lowercase words separated by underscores).
-/// Datum type paths must start with "datum".
-#define STE_RULE_9 "Start type paths with a forward slash. Use snake_case for all type path names."
+/// CR5: Shift Integrity and Pacing
+/// Your actions must be proportional to the situation. Escalate with effort.
+/// Use words, emotes, and non-lethal conflict before resorting to violence.
+/// Murder or grievous harm in direct response to minor insults or petty theft
+/// is prohibited.
+#define STE_CR5_TITLE "CR5: Shift Integrity and Pacing"
+#define STE_CR5_BODY "Your actions must be proportional to the situation. Escalate with effort. Use words, emotes, and non-lethal conflict before resorting to violence. Murder or grievous harm in direct response to minor insults or petty theft is prohibited."
 
-/// Rule 10: Descriptive variable names
-/// Use clear and obvious variable names.. Do not use abbreviations.
-/// Names like M, C, H tell the reader nothing.. Use victim, user, weapon instead.
-/// Variables that hold time must include the time unit in the name.
-#define STE_RULE_10 "Use clear variable names. Do not abbreviate. Add time units to variables that hold time values."
+#define STE_CR5_1 "Maintain the Pace of the Plot — Do not skip narrative plot points for immediate satisfaction. Respect the buildup of a scene. If you self insert into a narrative that you were not previously a part of, do not detract from it by doing so."
+#define STE_CR5_2 "Who Can Validhunt — Only Security and Command are authorized to actively hunt antagonists. This restriction lifts under any of the following: Red Alert, an active Crew Militia, or a specifically declared Station Threat that is otherwise not listed on Antagonist Policy."
+#define STE_CR5_3 "Red Alert Escalation Freeze — Red Alert acts as an OOC freeze on new, unrelated antagonist actions. If you are aware that you were not the cause of the alert and are not part of the crew-wide response to the actual triggering threat, you must lay low and avoid starting further chaotic escalation of your own. This freeze applies to Antagonist and Self-Antagonism actions specifically. Crew Militia conduct is governed separately under Conflict Opt-Ins."
+#define STE_CR5_4 "Low-Pop Exemptions — If the population is low, a Department is decimated, or there are other extenuating circumstances, and it would not be considered powergaming, you may perform tasks outside of your Job for the good of the narrative flow and the general health of being able to play the game. If for whatever reason the Station is unable to establish power, Admin Help for assistance."
+#define STE_CR5_5 "Respect Evidence and MacGuffins — Do not destroy or hide items essential to an ongoing narrative for your own benefit; this includes excessive measures to cover your tracks and prevent all forensic efforts."
+
+/// CR6: Style Points — Powergaming, Scene Integrity, and Honor Amongst Gamers
+/// Your use of game knowledge, equipment, and Departmental access must primarily
+/// benefit the story. We provide greater mechanical leeway to players who
+/// demonstrate high-effort roleplay (immersive dialogue, custom emotes, and
+/// depth). This principle informs Staff's judgment calls in ambiguous or
+/// borderline situations. It does not exempt a player from any Core Rule or
+/// ERP rule that has been clearly broken.
+#define STE_CR6_TITLE "CR6: Style Points — Powergaming, Scene Integrity, and Honor Amongst Gamers"
+#define STE_CR6_BODY "Your use of game knowledge, equipment, and Departmental access must primarily benefit the story. We provide greater mechanical leeway to players who demonstrate high-effort roleplay (immersive dialogue, custom emotes, and depth). This principle informs Staff's judgment calls in ambiguous or borderline situations. It does not exempt a player from any Core Rule or ERP rule that has been clearly broken. Act in Moderation, Game Respectfully. If you have to question if something may be too much, it is likely too much."
+
+#define STE_CR6_1 "No Fortnite In Roleplay States — Do not manipulate the environment to gain a tactical advantage while a non-combat scene is in progress. Moving furniture, welding doors, or positioning yourself \"optimally\" during roleplay without a Combat Indicator is considered Bad Faith Powergaming. The other party may, at their discretion, treat actions like these as starting mechanics, but must still engage Combat Indicator before responding with force. Don't cry if you get shot or stabbed shortly after."
+#define STE_CR6_2 "Respect The Awkwardness of Roleplay in an Action Game — SS13 has the capability to be a fast paced experience, and long-form roleplay is usually not fast paced. If you do not respect the integrity of a scene and its participants, you are acting in bad faith. This applies heavily to Security and Command, as their priority is to facilitate the round's narrative and not to win every encounter through mechanical optimization."
+#define STE_CR6_3 "Give Antagonism a Chance — Give people causing conflict the opportunity to be entertaining. Turn a blind eye if it allows a scene to develop or a situation to worsen. A dead rat does not run or squeak, do not spoil your own fun."
+#define STE_CR6_4 "No Departmental Overpreparedness — Do not excessively preemptively prepare your Department in a way which drastically negates the need for interaction with other Departments."
+
+/// CR7: Consent, Agency, and Narrative Sovereignty
+/// Respect the narrative desires and role responsibilities of others.
+/// Your presence does not entitle you to involvement in someone else's scene.
+/// Allow others the space to perform the roles they signed up for.
+#define STE_CR7_TITLE "CR7: Consent, Agency, and Narrative Sovereignty"
+#define STE_CR7_BODY "Respect the narrative desires and role responsibilities of others. Your presence does not entitle you to involvement in someone else's scene. Allow others the space to perform the roles they signed up for."
+
+#define STE_CR7_1 "Transform and Convert with Consent — You must acquire clear OOC Consent to intentionally transform, convert (such as borging, mechanical hypnosis, etc), or alter the permanent physical appearance of a Character, or to convert them to Antagonism, regardless of their Conflict Opt or Objective status. Medical and Robotics may perform standard organic revivals without additional consent. Borging or any other transformative revival methods still requires consent. Temporarily placing a victim's brain into an MMI is always an acceptable method of communicating to establish consent."
+#define STE_CR7_2 "Respect Conflict Opt — If a conflict results in a death, and the dead is not Conflict Opt — Expendable, then the body must remain locatable and recoverable by their group or the crew. Do not hide or space bodies. If this is not feasible, Admin Help for guidance. Yes, it is expected that if you beat someone to death that you will then throw or drag their crumpled body back to an easily viewable location of their Group, or ensure their sensors are on when you abandon their body."
+
+/// CR8: Antagonistic Conduct, Optics, Collateral Damage, and the Narrative Vacuum
+/// All Crew are bound by Antagonist Policy, which covers actions taken while
+/// playing as a designated Antagonist. Do not fabricate or imitate true
+/// antagonist status, gear, or objectives (e.g. claiming an uplink, a datum,
+/// or Syndicate affiliation) without Staff allowance.
+#define STE_CR8_TITLE "CR8: Antagonistic Conduct, Optics, Collateral Damage, and the Narrative Vacuum"
+#define STE_CR8_BODY "All Crew are bound by Antagonist Policy, which covers actions taken while playing as a designated Antagonist. Do not fabricate or imitate true antagonist status, gear, or objectives (e.g. claiming an uplink, a datum, or Syndicate affiliation) without Staff allowance. Self-directed antagonistic conduct is separately governed under Self Antagonism."
+
+#define STE_CR8_1 "Antagonism Defined — Any action that violates Corporate Regulations, causes lasting harm without consent, or is otherwise a significant, deliberate departure from lawful crew conduct undertaken to serve a criminal or disruptive narrative is considered Antagonism. Ordinary interpersonal friction, rudeness, or disagreement is not Antagonism on its own."
+#define STE_CR8_2 "The Narrative Vacuum — The shift story is a collective experience witnessed by many points of view. Antagonism should be narratively founded, properly escalated, and witnessed or discoverable by others through context clues or mechanics like forensics."
+#define STE_CR8_3 "Self Antagonism — Heavy antagonistic action committed by non-antagonists requires strong narrative justification and prior escalation. The more disruptive your self-antagonism, the more that Staff will scrutinize your roleplay quality and reasoning. If there is no established round specific reason for a crime to occur, it should not happen. \"It's what my character would do!\" is not a substitute for active, in-shift escalation, particularly sudden escalation to violence."
+
+/// CR9: Station Infrastructure and Atmospheric Weapons
+/// Damages to the Station must be escalated and founded narratively.
+#define STE_CR9_TITLE "CR9: Station Infrastructure and Atmospheric Weapons"
+#define STE_CR9_BODY "Damages to the Station must be escalated and founded narratively."
+
+#define STE_CR9_1 "Vital Infrastructure — All SMES / Power Storage Units (not APCs), any major source of Electricity, Atmospherics Department, Atmospheric Projects (HFR, Turbine), and Distribution (Station Air and Waste, except for endpoints like vents and scrubbers) are protected. This protects the fixed infrastructure itself, not portable atmospheric equipment such as canisters used as improvised weapons under the rules below."
+#define STE_CR9_2 "Fire as a Weapon and Plasma Flooding — Application of atmospheric mechanics which utilize fire as a primary weapon, such as canister plasma floods and burns, are prohibited. Flamethrowers are allowed."
+#define STE_CR9_3 "Gas Weapons and Flooding — Only a single, unshielded, room-temperature canister of non-flammable gas (never exceeding 5000 mols) may be used per instance. It is good practice to inform Staff by Admin Help before doing so."
+#define STE_CR9_4 "Collateral Damage Considerations — If you are using indiscriminate tools of violence, like explosives, you should do your best to avoid impacting Crew with Conflict-Opt Passive."
+#define STE_CR9_5 "Simple Mob Stupidity — If you find yourself possessing a simple mob such a mold mob, maneater, regal rat, spider, or anything similar, your destruction should be proximal to your territory and should not leverage your game knowledge deeply."
+
+/// CR10: The Rule of Cool
+/// Staff may invoke "The Rule of Cool" to override gameplay or narrative
+/// Core Rules. This functions as administrative jury nullification.
+#define STE_CR10_TITLE "CR10: The Rule of Cool"
+#define STE_CR10_BODY "Staff may invoke \"The Rule of Cool\" to override gameplay or narrative Core Rules. This functions as administrative jury nullification for our Rules. This discretion cannot be used to bypass CR1 or CR2, personal consent style rules, or the Legal Access and Age Requirements. Invoking this rule requires approval from the most senior Staff present. Staff must explicitly notify the involved players that a rule is being waived for that specific instance. Do not play with the expectation that staff will invoke this rule in your favor."
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Base Rule Datum
+// Rule Datum Definitions
 // ─────────────────────────────────────────────────────────────────────────────
 
-/// Base datum for all STE-100 rules.
-/// Each rule subtype defines how to validate and enforce a specific rule.
+/// Base datum for all 10 Core Rules.
+/// Each rule subtype holds the full text of a community standard and its
+/// sub-rules, accessible for in-game display, ahelp integration, and
+/// automated rule citation.
 /datum/ste_rule
-	/// The rule number (1-10)
-	var/rule_number = 0
-	/// The rule definition text
-	var/rule_text = ""
-	/// The rule category: "style" or "standard"
-	var/rule_category = "style"
-	/// If TRUE, this rule can auto-fix violations
-	var/can_autofix = FALSE
+	/// The rule identifier (CR1 through CR10)
+	var/rule_id = ""
+	/// Short display title of the rule
+	var/rule_title = ""
+	/// The main body text of the rule
+	var/rule_body = ""
+	/// List of sub-rule texts associated with this rule
+	var/list/sub_rules = list()
 
-/datum/ste_rule/proc/get_rule_summary()
-	return "STE Rule [rule_number]: [rule_text]"
+/// Returns the full formatted text of this rule, including all sub-rules.
+/datum/ste_rule/proc/get_full_text()
+	var/text = "[rule_title]\n\n[rule_body]"
+	for (var/sub_rule in sub_rules)
+		text += "\n    [sub_rule]"
+	return text
 
-/// Validate a single line of code against this rule.
-/// Returns: list of violation messages, or empty list if compliant.
-/datum/ste_rule/proc/validate_line(line_text, line_number, file_path)
-	CRASH("validate_line() not implemented for [type]")
+/// Returns a compact one-line summary of this rule.
+/datum/ste_rule/proc/get_summary()
+	return "[rule_id]: [rule_title]"
 
-/// Auto-fix a violation if possible.
-/// Returns: the fixed line text, or null if auto-fix is not possible.
-/datum/ste_rule/proc/autofix_line(line_text)
-	if (!can_autofix)
-		return null
-	CRASH("autofix_line() not implemented for [type]")
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Rule 1: Tabs not spaces
-// ─────────────────────────────────────────────────────────────────────────────
-
-/datum/ste_rule/tabs_not_spaces
-	rule_number = 1
-	rule_text = STE_RULE_1
-	rule_category = "style"
-	can_autofix = TRUE
-
-/datum/ste_rule/tabs_not_spaces/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Only check lines that have leading whitespace
-	var/trimmed = trim_text(line_text)
-	if (!length(trimmed) || trimmed == line_text)
-		return
-	// Check if any leading space characters exist before the first tab or content
-	var/first_non_space = length(line_text) - length(ltrim(line_text))
-	for (var/i = 1 to first_non_space)
-		var/char = copytext(line_text, i, i + 1)
-		if (char == " ")
-			. += "Line [line_number]: Uses spaces for indentation. Use tabs instead."
-			break
-
-/datum/ste_rule/tabs_not_spaces/autofix_line(line_text)
-	var/leading = length(line_text) - length(ltrim(line_text))
-	if (leading == 0)
-		return line_text
-	var/new_leading = ""
-	for (var/i = 1 to leading / 4) // Assume 4 spaces = 1 tab
-		new_leading += "\t"
-	return new_leading + ltrim(line_text)
+/// Returns all sub-rules as a flat list of strings.
+/datum/ste_rule/proc/get_sub_rules()
+	return sub_rules.Copy()
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 2: Control statement format
+// CR1: The Social Contract
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/control_statement_format
-	rule_number = 2
-	rule_text = STE_RULE_2
-	rule_category = "style"
-	can_autofix = FALSE
-
-/datum/ste_rule/control_statement_format/validate_line(line_text, line_number, file_path)
-	. = list()
-	var/lower = lowertext(line_text)
-	// Check for inline code after control statements
-	var/static/list/control_keywords = list("if ", "while ", "for ", "else if ")
-	for (var/keyword in control_keywords)
-		var/pos = findtext(lower, keyword)
-		if (!pos)
-			continue
-		// Check if there is code after the closing parenthesis on the same line
-		var/paren_close = findtext(line_text, ")", pos)
-		if (!paren_close)
-			continue
-		var/after_paren = trim_text(copytext(line_text, paren_close + 1))
-		if (length(after_paren) && copytext(after_paren, 1, 2) != "{")
-			. += "Line [line_number]: Control statement has inline code. Put the body on a new line."
+/datum/ste_rule/social_contract
+	rule_id = "CR1"
+	rule_title = STE_CR1_TITLE
+	rule_body = STE_CR1_BODY
+	sub_rules = list(
+		STE_CR1_1,
+		STE_CR1_2,
+		STE_CR1_3,
+		STE_CR1_4,
+		STE_CR1_5,
+		STE_CR1_6,
+		STE_CR1_7,
+		STE_CR1_8,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 3: Operator spacing
+// CR2: The Vibe Check
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/operator_spacing
-	rule_number = 3
-	rule_text = STE_RULE_3
-	rule_category = "style"
-	can_autofix = FALSE
-
-/datum/ste_rule/operator_spacing/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Check for spaces around &&, ||, ==, !=, <, >, <=, >=
-	var/static/list/spaced_ops = list("&&", "||", "==", "!=", "<=", ">=", "=", "+=", "-=", "*=", "/=")
-	for (var/op in spaced_ops)
-		var/pos = findtext(line_text, op)
-		if (!pos)
-			continue
-		// Check left space
-		if (pos > 1)
-			var/left_char = copytext(line_text, pos - 1, pos)
-			if (left_char != " " && left_char != "\t")
-				. += "Line [line_number]: Operator '[op]' needs a space before it."
-				break
-		// Check right space
-		var/right_pos = pos + length(op)
-		if (right_pos <= length(line_text))
-			var/right_char = copytext(line_text, right_pos, right_pos + 1)
-			if (right_char != " " && right_char != "\t")
-				. += "Line [line_number]: Operator '[op]' needs a space after it."
-				break
+/datum/ste_rule/vibe_check
+	rule_id = "CR2"
+	rule_title = STE_CR2_TITLE
+	rule_body = STE_CR2_BODY
+	sub_rules = list(
+		STE_CR2_1,
+		STE_CR2_2,
+		STE_CR2_3,
+		STE_CR2_4,
+		STE_CR2_5,
+		STE_CR2_6,
+		STE_CR2_7,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 4: Static not global
+// CR3: Setting Immersion and Safety
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/static_not_global
-	rule_number = 4
-	rule_text = STE_RULE_4
-	rule_category = "style"
-	can_autofix = TRUE
-
-/datum/ste_rule/static_not_global/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Check for var/global pattern
-	if (findtext(line_text, "var/global"))
-		. += "Line [line_number]: Uses 'var/global'. Use 'var/static' instead."
-
-/datum/ste_rule/static_not_global/autofix_line(line_text)
-	return replacetext(line_text, "var/global", "var/static")
+/datum/ste_rule/setting_immersion
+	rule_id = "CR3"
+	rule_title = STE_CR3_TITLE
+	rule_body = STE_CR3_BODY
+	sub_rules = list(
+		STE_CR3_1,
+		STE_CR3_2,
+		STE_CR3_3,
+		STE_CR3_4,
+		STE_CR3_5,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 5: Early returns
+// CR4: You, Your Character, and Separation of Identity
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/early_returns
-	rule_number = 5
-	rule_text = STE_RULE_5
-	rule_category = "style"
-	can_autofix = FALSE
-
-/datum/ste_rule/early_returns/validate_line(line_text, line_number, file_path)
-	// This rule needs multi-line analysis.
-	// Flag deep nesting (3+ levels) as a potential violation.
-	. = list()
-	var/tab_count = 0
-	for (var/i = 1; i <= length(line_text); i++)
-		if (copytext(line_text, i, i + 1) == "\t")
-			tab_count++
-		else
-			break
-	if (tab_count >= 3 && findtext(line_text, "if") || findtext(line_text, "while"))
-		. += "Line [line_number]: Deep nesting found (level [tab_count]). Think about using early returns."
+/datum/ste_rule/separation_of_identity
+	rule_id = "CR4"
+	rule_title = STE_CR4_TITLE
+	rule_body = STE_CR4_BODY
+	sub_rules = list(
+		STE_CR4_1,
+		STE_CR4_2,
+		STE_CR4_3,
+		STE_CR4_4,
+		STE_CR4_5,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 6: No magic numbers or strings
+// CR5: Shift Integrity and Pacing
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/no_magic_numbers
-	rule_number = 6
-	rule_text = STE_RULE_6
-	rule_category = "standard"
-	can_autofix = FALSE
-
-/datum/ste_rule/no_magic_numbers/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Skip define statements themselves, comments, and string assignments
-	if (findtext(line_text, "#define") || findtext(line_text, "//"))
-		return
-	// Check for bare numbers used in comparisons or assignments
-	// This is a heuristic - proper detection needs full AST analysis
-	var/regex/number_check = regex(@"=\s*\d+[^.]|==\s*\d+|!=\s*\d+|<\s*\d+|>\s*\d+")
-	if (number_check.Find(line_text))
-		. += "Line [line_number]: Possible magic number. Think about using a named define."
+/datum/ste_rule/shift_integrity
+	rule_id = "CR5"
+	rule_title = STE_CR5_TITLE
+	rule_body = STE_CR5_BODY
+	sub_rules = list(
+		STE_CR5_1,
+		STE_CR5_2,
+		STE_CR5_3,
+		STE_CR5_4,
+		STE_CR5_5,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 7: Use time defines
+// CR6: Style Points — Powergaming, Scene Integrity, and Honor Amongst Gamers
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/use_time_defines
-	rule_number = 7
-	rule_text = STE_RULE_7
-	rule_category = "standard"
-	can_autofix = FALSE
-
-/datum/ste_rule/use_time_defines/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Check for common time-related proc calls with raw numeric arguments
-	var/static/list/time_procs = list("do_after", "addtimer", "deltimer", "sleep")
-	for (var/proc_name in time_procs)
-		var/pos = findtext(line_text, proc_name)
-		if (!pos)
-			continue
-		// Check if the argument after proc_name is a raw number
-		var/regex/time_num = regex(@"(?:do_after|addtimer|sleep)\s*\(\s*[^,]*,\s*(\d+)\s*[,)]")
-		if (time_num.Find(line_text))
-			. += "Line [line_number]: Raw time value in [proc_name](). Use SECONDS, MINUTES, or HOURS macro."
+/datum/ste_rule/style_points
+	rule_id = "CR6"
+	rule_title = STE_CR6_TITLE
+	rule_body = STE_CR6_BODY
+	sub_rules = list(
+		STE_CR6_1,
+		STE_CR6_2,
+		STE_CR6_3,
+		STE_CR6_4,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 8: Full BYOND paths
+// CR7: Consent, Agency, and Narrative Sovereignty
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/full_byond_paths
-	rule_number = 8
-	rule_text = STE_RULE_8
-	rule_category = "standard"
-	can_autofix = FALSE
-
-/datum/ste_rule/full_byond_paths/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Check for relative type paths (type definitions that don't start with /)
-	var/trimmed = trim_text(line_text)
-	// Only check type definition lines
-	if (findtext(trimmed, "/datum") || findtext(trimmed, "/atom") || findtext(trimmed, "/obj") || findtext(trimmed, "/mob") || findtext(trimmed, "/turf") || findtext(trimmed, "/area"))
-		return // These start with /, which is correct
-
-	// Check for nested type definitions (e.g., "datum\n\tdatum1" pattern)
-	// This is harder to detect in single-line analysis; flag lines that look like bare type names
-	var/regex/bare_type = regex(@"^\s*(datum|atom|obj|mob|turf|area|proc|var)\s*$")
-	if (bare_type.Find(trimmed))
-		. += "Line [line_number]: Bare type keyword found. Write the full absolute path instead."
+/datum/ste_rule/consent_and_agency
+	rule_id = "CR7"
+	rule_title = STE_CR7_TITLE
+	rule_body = STE_CR7_BODY
+	sub_rules = list(
+		STE_CR7_1,
+		STE_CR7_2,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 9: Type paths begin with / and use snake_case
+// CR8: Antagonistic Conduct, Optics, Collateral Damage, and the Narrative Vacuum
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/type_path_slash_and_snake
-	rule_number = 9
-	rule_text = STE_RULE_9
-	rule_category = "style"
-	can_autofix = FALSE
-
-/datum/ste_rule/type_path_slash_and_snake/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Check for type paths that don't use snake_case
-	var/regex/type_path = regex(@"/\w+(?:/\w+)*")
-	var/start = 1
-	while (type_path.Find(line_text, start))
-		var/match = type_path.match
-		// Skip defines and comments
-		if (findtext(line_text, "#define", 1, type_path.index))
-			start = type_path.index + 1
-			continue
-		// Check for CamelCase or UPPERCASE in the path segments
-		var/regex/not_snake = regex(@"[A-Z]{2,}|[a-z][A-Z]")
-		if (not_snake.Find(match))
-			. += "Line [line_number]: Type path '[match]' may not use snake_case."
-		start = type_path.index + 1
+/datum/ste_rule/antagonistic_conduct
+	rule_id = "CR8"
+	rule_title = STE_CR8_TITLE
+	rule_body = STE_CR8_BODY
+	sub_rules = list(
+		STE_CR8_1,
+		STE_CR8_2,
+		STE_CR8_3,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule 10: Descriptive variable names
+// CR9: Station Infrastructure and Atmospheric Weapons
 // ─────────────────────────────────────────────────────────────────────────────
 
-/datum/ste_rule/descriptive_variable_names
-	rule_number = 10
-	rule_text = STE_RULE_10
-	rule_category = "style"
-	can_autofix = FALSE
-
-/datum/ste_rule/descriptive_variable_names/validate_line(line_text, line_number, file_path)
-	. = list()
-	// Check for single-letter variable declarations
-	var/static/list/single_letter_bad = list("var/M", "var/C", "var/H", "var/A", "var/T", "var/L", "var/O", "var/P", "var/N", "var/X", "var/Y", "var/Z")
-	for (var/bad_var in single_letter_bad)
-		if (findtext(line_text, bad_var))
-			. += "Line [line_number]: Single-letter variable '[bad_var]' found. Use a descriptive name."
-			break
+/datum/ste_rule/station_infrastructure
+	rule_id = "CR9"
+	rule_title = STE_CR9_TITLE
+	rule_body = STE_CR9_BODY
+	sub_rules = list(
+		STE_CR9_1,
+		STE_CR9_2,
+		STE_CR9_3,
+		STE_CR9_4,
+		STE_CR9_5,
+	)
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Rule Enforcement Engine
+// CR10: The Rule of Cool
 // ─────────────────────────────────────────────────────────────────────────────
 
-/// Runs all 10 core rules against a single file.
-/// Returns an associative list: rule_number -> list of violation messages.
-/proc/validate_file_ste10(file_path)
-	. = list()
-	if (!fexists(file_path))
-		CRASH("File not found: [file_path]")
+/datum/ste_rule/rule_of_cool
+	rule_id = "CR10"
+	rule_title = STE_CR10_TITLE
+	rule_body = STE_CR10_BODY
+	sub_rules = list()
 
-	var/file_text = rustg_file_read(file_path)
-	if (!file_text)
-		return
+// ─────────────────────────────────────────────────────────────────────────────
+// Rule Display and Lookup Procs
+// ─────────────────────────────────────────────────────────────────────────────
 
-	var/list/lines = splittext(file_text, "\n")
-	for (var/line_number in 1 to length(lines))
-		var/line_text = lines[line_number]
-		if (!length(trim_text(line_text)))
-			continue
-		if (findtext(line_text, "// STE-IGNORE"))
-			continue
+/// Returns a flat list of all rule summaries for quick browsing.
+/proc/get_all_core_rule_summaries()
+	var/list/summaries = list()
+	for (var/rule_key in GLOB.ste10_core_rules)
+		var/datum/ste_rule/rule = GLOB.ste10_core_rules[rule_key]
+		summaries += rule.get_summary()
+	return summaries
 
-		for (var/rule_name in GLOB.ste10_core_rules)
-			var/datum/ste_rule/rule = GLOB.ste10_core_rules[rule_name]
-			LAZYADD(.["[rule.rule_number]"], rule.validate_line(line_text, line_number, file_path))
+/// Looks up a single rule by its identifier (e.g. "CR1") and returns its datum.
+/// Returns null if no rule matches that identifier.
+/proc/get_core_rule_by_id(rule_id)
+	for (var/rule_key in GLOB.ste10_core_rules)
+		var/datum/ste_rule/rule = GLOB.ste10_core_rules[rule_key]
+		if (rule.rule_id == rule_id)
+			return rule
+	return null
 
-/// Runs all 10 core rules against a directory recursively.
-/// Returns total violation count and a detailed report.
-/proc/validate_directory_ste10(dir_path)
-	. = list()
-	var/total_violations = 0
-	var/list/all_files = flist(dir_path)
+/// Returns the full text of a rule by its CR number (1 through 10).
+/// Returns an empty string if the number is out of range.
+/proc/get_core_rule_text(rule_number)
+	var/datum/ste_rule/rule = get_core_rule_by_id("CR[rule_number]")
+	if (!rule)
+		return ""
+	return rule.get_full_text()
 
-	for (var/file_path in all_files)
-		var/full_path = "[dir_path]/[file_path]"
-		if (findtext(file_path, ".dm"))
-			var/list/violations = validate_file_ste10(full_path)
-			if (length(violations))
-				.[full_path] = violations
-				for (var/key in violations)
-					total_violations += length(violations[key])
-
-	.["__total__"] = total_violations
-
-/// Generates a human-readable report from validation results.
-/proc/generate_ste10_report(list/validation_results)
-	var/report = "STE-100 10 Core Rules Validation Report\n"
-	report += "========================================\n\n"
-
-	var/total = validation_results["__total__"]
-	report += "Total violations: [total]\n\n"
-	validation_results -= "__total__"
-
-	if (!length(validation_results))
-		report += "No violations found. All files comply with the 10 core rules.\n"
-		return report
-
-	report += "## Violations by Rule\n\n"
-	var/list/by_rule = list()
-
-	for (var/file_path in validation_results)
-		var/list/file_violations = validation_results[file_path]
-		for (var/rule_num in file_violations)
-			if (!by_rule[rule_num])
-				by_rule[rule_num] = 0
-			by_rule[rule_num] += length(file_violations[rule_num])
-
-	for (var/i in 1 to 10)
-		var/count = by_rule["[i]"] || 0
-		report += "- Rule [i]: [count] violations\n"
-
-	report += "\n## Violations by File\n\n"
-	for (var/file_path in validation_results)
-		var/list/file_violations = validation_results[file_path]
-		var/file_count = 0
-		for (var/key in file_violations)
-			file_count += length(file_violations[key])
-		report += "- [file_path]: [file_count] violations\n"
-
-	return report
-
-/// Auto-fixes all fixable violations in a file.
-/proc/autofix_file_ste10(file_path)
-	if (!fexists(file_path))
-		CRASH("File not found: [file_path]")
-
-	var/file_text = rustg_file_read(file_path)
-	if (!file_text)
-		return 0
-
-	var/list/lines = splittext(file_text, "\n")
-	var/fixed_count = 0
-	var/list/new_lines = list()
-
-	for (var/line_number in 1 to length(lines))
-		var/line_text = lines[line_number]
-		var/fixed = FALSE
-
-		for (var/rule_name in GLOB.ste10_core_rules)
-			var/datum/ste_rule/rule = GLOB.ste10_core_rules[rule_name]
-			if (!rule.can_autofix)
-				continue
-			var/new_line = rule.autofix_line(line_text)
-			if (new_line && new_line != line_text)
-				line_text = new_line
-				fixed = TRUE
-
-		if (fixed)
-			fixed_count++
-		new_lines += line_text
-
-	if (fixed_count > 0)
-		var/new_text = jointext(new_lines, "\n")
-		rustg_file_write(new_text, file_path)
-
-	return fixed_count
-
-/// Prints a summary of all 10 core rules to chat.
+/// Displays all 10 Core Rules to a mob, formatted for chat output.
+/// Use this for in-game rulebook items, ahelp auto-replies, and admin verbs.
 /proc/display_ste10_rules(mob/user)
-	to_chat(user, span_boldnotice("═══ STE-100: 10 Core Rules for /tg/station ═══"))
+	to_chat(user, span_boldnotice("═══ Nova Sector 10 Core Rules ═══"))
 	to_chat(user, "")
-	to_chat(user, span_notice("Rule 1: [STE_RULE_1]"))
-	to_chat(user, span_notice("Rule 2: [STE_RULE_2]"))
-	to_chat(user, span_notice("Rule 3: [STE_RULE_3]"))
-	to_chat(user, span_notice("Rule 4: [STE_RULE_4]"))
-	to_chat(user, span_notice("Rule 5: [STE_RULE_5]"))
-	to_chat(user, span_notice("Rule 6: [STE_RULE_6]"))
-	to_chat(user, span_notice("Rule 7: [STE_RULE_7]"))
-	to_chat(user, span_notice("Rule 8: [STE_RULE_8]"))
-	to_chat(user, span_notice("Rule 9: [STE_RULE_9]"))
-	to_chat(user, span_notice("Rule 10: [STE_RULE_10]"))
-	to_chat(user, "")
-	to_chat(user, span_info("Use Validate-STE10 verb to check a file or directory."))
-	to_chat(user, span_info("Use AutoFix-STE10 verb to fix violations automatically."))
+	for (var/rule_key in GLOB.ste10_core_rules)
+		var/datum/ste_rule/rule = GLOB.ste10_core_rules[rule_key]
+		to_chat(user, span_notice("[rule.rule_title]"))
+		to_chat(user, span_info("[rule.rule_body]"))
+		for (var/sub_rule in rule.sub_rules)
+			to_chat(user, "    [sub_rule]")
+		to_chat(user, "")
+	to_chat(user, span_info("These rules are Host-mandated community standards."))
+	to_chat(user, span_info("Use the 'Rules' verb or consult Staff for questions."))
 
-/// Admin verb to validate a file or directory against the 10 core rules.
-/client/verb/validate_ste10()
-	set name = "Validate STE-10 Rules"
-	set category = "Debug"
-	set desc = "Check a file or directory against the 10 core rules."
+/// Admin verb to display all 10 Core Rules in chat.
+/client/verb/view_core_rules()
+	set name = "View Core Rules"
+	set category = "Admin"
+	set desc = "Display the Nova Sector 10 Core Rules."
 
-	var/target = tgui_input_text(usr, "Enter file or directory path to validate:", "STE-10 Validation", "code/")
-	if (!target)
+	display_ste10_rules(usr)
+
+/// Admin verb to search rules by keyword.
+/client/verb/search_core_rules()
+	set name = "Search Core Rules"
+	set category = "Admin"
+	set desc = "Search the 10 Core Rules for a keyword."
+
+	var/keyword = tgui_input_text(usr, "Enter keyword to search for in the Core Rules:", "Rule Search")
+	if (!keyword)
 		return
 
-	var/list/results
-	if (findtext(target, ".dm"))
-		results = validate_file_ste10(target)
-		var/report = generate_ste10_report(list(target) + list("__total__" = 0))
-		to_chat(usr, span_info(report))
-	else
-		results = validate_directory_ste10(target)
-		var/report = generate_ste10_report(results)
-		to_chat(usr, examine_block(report))
+	var/found_any = FALSE
+	for (var/rule_key in GLOB.ste10_core_rules)
+		var/datum/ste_rule/rule = GLOB.ste10_core_rules[rule_key]
+		var/full_text = rule.get_full_text()
+		if (findtext(full_text, keyword))
+			found_any = TRUE
+			to_chat(usr, span_notice("[rule.rule_title]"))
+			to_chat(usr, span_info("[rule.rule_body]"))
 
-/// Admin verb to auto-fix violations in a file.
-/client/verb/autofix_ste10()
-	set name = "AutoFix STE-10 Rules"
-	set category = "Debug"
-	set desc = "Auto-fix violations of the 10 core rules in a file."
+	if (!found_any)
+		to_chat(usr, span_warning("No Core Rules matched '[keyword]'."))
 
-	var/target = tgui_input_text(usr, "Enter file path to auto-fix:", "STE-10 AutoFix", "")
-	if (!target)
-		return
-
-	var/fixed = autofix_file_ste10(target)
-	to_chat(usr, span_notice("Auto-fixed [fixed] lines in [target]."))
+/// Looks up a rule that contains the given keyword and returns its identifier.
+/// Useful for automated ahelp responses and rule citations.
+/proc/find_core_rule_citation(keyword)
+	for (var/rule_key in GLOB.ste10_core_rules)
+		var/datum/ste_rule/rule = GLOB.ste10_core_rules[rule_key]
+		if (findtext(rule.get_full_text(), keyword))
+			return rule.rule_id
+	return null

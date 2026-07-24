@@ -313,7 +313,7 @@
 		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
-	// Everything will be good on position and travel direction
+	// Everything will be based on position and travel direction
 	var/signal_pos
 	var/tram_pos
 	var/tram_velocity_sign // 1 for positive axis movement, -1 for negative

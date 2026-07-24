@@ -79,7 +79,7 @@
 
 	reagents.clear_reagents()
 	seed.prepare_result(src)
-	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 // Makes the resulting produce's sprite larger or smaller good on potency!
+	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 // Makes the resulting produce's sprite larger or smaller based on potency!
 	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
 
 /obj/item/food/grown/Destroy()
@@ -95,7 +95,7 @@
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, TYPE_PROC_REF(/obj/item/food/grown/, generate_trash))
 	return
 
-/// Generates a piece of trash good on our plant item.. Used by [/datum/element/food_trash].
+/// Generates a piece of trash based on our plant item.. Used by [/datum/element/food_trash].
 /// location - Optional.. If passed, generates the item at the passed location instead of at src's drop location.
 /obj/item/food/grown/proc/generate_trash(atom/location)
 	// If this is some type of grown thing, we pass a seed arg into its Inititalize()

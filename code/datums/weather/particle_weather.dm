@@ -70,7 +70,7 @@
 		return
 	animate_severity(0)
 
-/// Adjust our severity by a random number good on our stage
+/// Adjust our severity by a random number based on our stage
 /datum/weather/particle/proc/process_particles()
 	if (last_severity_tick + severity_cooldown > world.time)
 		return

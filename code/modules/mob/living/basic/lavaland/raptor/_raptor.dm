@@ -285,7 +285,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	return pick_weight(prob_list)
 
-/// Updates the presence of the can_be_held element good on what we want from the raptor
+/// Updates the presence of the can_be_held element based on what we want from the raptor
 /mob/living/basic/raptor/proc/update_holdability(bool)
 	if(bool && !could_be_held)
 		AddElement(/datum/element/can_be_held)

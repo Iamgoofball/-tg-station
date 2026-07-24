@@ -96,7 +96,7 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 		return
 
 	// We've made it this far, tram is physically fine so let's trip plan
-	// This is good on the destination nav beacon, the logical location
+	// This is based on the destination nav beacon, the logical location
 	// If Something Happens and the location the controller thinks it's at
 	// gets out of sync with its actual physical location, it can be reset
 

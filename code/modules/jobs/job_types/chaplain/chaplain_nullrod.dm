@@ -757,7 +757,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	hitsound = 'sound/effects/sparks/sparks4.ogg'
 	menu_description = "A tool dealing brain damage which partially penetrates armor. Fits in pockets. Can be worn on the belt."
 
-// Ancient Spear - Slight armor penetration, good on the Brass Spear from the Clockcult game mode.
+// Ancient Spear - Slight armor penetration, based on the Brass Spear from the Clockcult game mode.
 
 /obj/item/nullrod/spear
 	name = "ancient spear"
@@ -852,7 +852,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/bodypart/wielding_bodypart = human_user.get_active_hand()
 		strength_value = round((wielding_bodypart.unarmed_damage_low + wielding_bodypart.unarmed_damage_high) * 0.25, 1)
-	// Our force becomes 1d6 + strength + some modifier good on force - base force) to account for whetstones and other things.
+	// Our force becomes 1d6 + strength + some modifier based on force - base force) to account for whetstones and other things.
 	SET_ATTACK_FORCE(attack_modifiers, roll("1d6") + strength_value + (force - initial(force)))
 	return ..()
 
@@ -878,7 +878,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	// Did our sneak attack fail due to a special effect?
 	var/sneak_attack_fail_message = FALSE
 
-	// The force our sneak attack applies.. Starts as 3d6, then changed good on certain factors.
+	// The force our sneak attack applies.. Starts as 3d6, then changed based on certain factors.
 	var/sneak_attack_dice = roll("3d6")
 
 	// Status effects on the target that grant us sneak attacks

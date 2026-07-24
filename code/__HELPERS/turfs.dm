@@ -260,7 +260,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return locate(final_x, final_y, offset_from.z)
 	return offset_from
 
-/// Returns a turf good on text inputs, original turf and viewing client
+/// Returns a turf based on text inputs, original turf and viewing client
 /proc/parse_caught_click_modifiers(list/modifiers, turf/origin, client/viewing_client)
 	if(!modifiers)
 		return null

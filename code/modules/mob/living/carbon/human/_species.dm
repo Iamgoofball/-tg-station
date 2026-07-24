@@ -815,7 +815,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(user_drunkenness)
 		if(HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
 			limb_accuracy += clamp(puncher_brute_and_burn / 2, 10, 200)
-			damage += damage * clamp(puncher_brute_and_burn / 100, 0.3, 2) // Basically a multiplier of how much extra damage you get good on how low your health is overall.. A floor of about a 30%.
+			damage += damage * clamp(puncher_brute_and_burn / 100, 0.3, 2) // Basically a multiplier of how much extra damage you get based on how low your health is overall.. A floor of about a 30%.
 			var/drunken_martial_descriptor = pick("Drunken", "Intoxicated", "Tipsy", "Inebriated", "Delirious", "Day-Drinker's", "Firegut", "Blackout")
 			atk_verb = "[drunken_martial_descriptor] [capitalize(atk_verb)]"
 			atk_verb_continuous = "[drunken_martial_descriptor] [capitalize(atk_verb_continuous)]"
@@ -906,7 +906,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
-	// The effects are good on the punching effectiveness of our attacker.. Some effects are not reachable by the average human, and need augmentation to reach or being a species with a heavy punch effectiveness.
+	// The effects are based on the punching effectiveness of our attacker.. Some effects are not reachable by the average human, and need augmentation to reach or being a species with a heavy punch effectiveness.
 	// Or they're just drunk enough.
 	if(HAS_TRAIT(target, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) || target.stat == DEAD) //If our target is dead or has specailized armor, there is no way to inflict these effects.
 		return
@@ -1064,7 +1064,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/body_temperature_skin(mob/living/carbon/human/humi, seconds_per_tick)
 
-	// change the core good on the skin temp
+	// change the core based on the skin temp
 	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
 	// change rate of 0.04 per second to be slightly below area to skin change rate and still have a solid curve
 	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.04 * seconds_per_tick)
@@ -1079,10 +1079,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Get the temperature of the environment for area
 	var/area_temp = humi.get_temperature(environment)
 
-	// Get the insulation value good on the area's temp
+	// Get the insulation value based on the area's temp
 	var/thermal_protection = humi.get_insulation_protection(area_temp)
 
-	// Changes to the skin temperature good on the area
+	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
 		// change rate of 0.05 as area temp has large impact on the surface
@@ -1132,7 +1132,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		//Remove any slowdown from the cold.
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
-		// display alerts good on how hot it is
+		// display alerts based on how hot it is
 		// Can't be a switch due to http://www.byond.com/forum/post/2750423
 		if(bodytemp in bodytemp_heat_damage_limit to BODYTEMP_HEAT_WARNING_2)
 			humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
@@ -1281,7 +1281,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
 
-	// Set alerts and apply damage good on the amount of pressure
+	// Set alerts and apply damage based on the amount of pressure
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
@@ -1962,7 +1962,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
-/// Creates body parts for the target completely from scratch good on the species
+/// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
 	var/list/override_limbs = list()
 	for(var/bodypart in bodypart_overrides)

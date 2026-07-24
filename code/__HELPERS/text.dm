@@ -1185,7 +1185,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/format_text(text)
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
-/// Returns a string good on the weight class define used as argument
+/// Returns a string based on the weight class define used as argument
 /proc/weight_class_to_text(w_class)
 	switch(w_class)
 		if(WEIGHT_CLASS_TINY)

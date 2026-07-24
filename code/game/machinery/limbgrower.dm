@@ -217,7 +217,7 @@
 			being_built = SSresearch.techweb_design_by_id(design_id)
 			// All the reagents we're using to make our organ.
 			var/list/consumed_reagents_list = being_built.reagents_list.Copy()
-			/// The amount of power we're going to use, good on how much reagent we use.
+			/// The amount of power we're going to use, based on how much reagent we use.
 			var/power = 0
 
 			for(var/reagent_id in consumed_reagents_list)
@@ -284,7 +284,7 @@
 	limb.species_color = "#62A262"
 	limb.update_icon_dropped()
 
-/// Returns a valid limb typepath good on the selected option
+/// Returns a valid limb typepath based on the selected option
 /obj/machinery/limbgrower/proc/create_buildpath()
 	var/part_type = being_built.id //their ids match bodypart typepaths
 	var/species = selected_category

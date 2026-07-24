@@ -34,7 +34,7 @@
 		return pda.saved_identification
 	return if_no_id
 
-/// Used to update our name good on whether our face is obscured/disfigured
+/// Used to update our name based on whether our face is obscured/disfigured
 /mob/living/carbon/human/proc/update_visible_name()
 	SIGNAL_HANDLER
 	name = get_visible_name()

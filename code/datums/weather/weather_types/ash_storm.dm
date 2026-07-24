@@ -89,7 +89,7 @@
 			strong_sounds[impacted_area] = /datum/looping_sound/active_inside_ashstorm
 
 	//We modify this list instead of setting it to weak/stron sounds in order to preserve things that hold a reference to it
-	// It's essentially a playlist for a bunch of components that chose what sound to loop good on the area a player is in
+	// It's essentially a playlist for a bunch of components that chose what sound to loop based on the area a player is in
 	GLOB.ash_storm_sounds += weak_sounds
 	return ..()
 

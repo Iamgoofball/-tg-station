@@ -393,7 +393,7 @@
 	else if(temperature < FREON_LOWER_TEMPERATURE)
 		temperature_scale = 0.5
 	else
-		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature) / (FREON_MAXIMUM_BURN_TEMPERATURE - FREON_TERMINAL_TEMPERATURE) // calculate the scale good on the temperature
+		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature) / (FREON_MAXIMUM_BURN_TEMPERATURE - FREON_TERMINAL_TEMPERATURE) // calculate the scale based on the temperature
 	if (temperature_scale <= 0)
 		return
 

@@ -378,7 +378,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 		status_flags &= ~CANPUSH //we dont want the core to be push-able when anchored
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
-/// Creates an MMI of the AI good on its configuration.
+/// Creates an MMI of the AI based on its configuration.
 /mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/mmi
 	RETURN_TYPE(/obj/item/mmi)
 	// Fix me this code is really bad, we shouldn't be doing most of this ourselves.. MMI code needs a good refactoring....

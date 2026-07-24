@@ -302,7 +302,7 @@ rough example of the "cone" made by the 3 dirs checked
 	chosen = matches[chosen]
 	return chosen
 
-/// Creates new items inside an atom good on a list
+/// Creates new items inside an atom based on a list
 /proc/generate_items_inside(list/items_list, where_to)
 	for(var/each_item in items_list)
 		for(var/i in 1 to items_list[each_item])

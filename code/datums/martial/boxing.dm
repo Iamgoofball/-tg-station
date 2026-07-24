@@ -115,7 +115,7 @@
 	//Determines knockout potential and armor penetration (if that matters)
 	var/base_unarmed_effectiveness = active_arm.unarmed_effectiveness
 
-	// Determines attack sound good on attacker arm
+	// Determines attack sound based on attacker arm
 	var/attack_sound = active_arm.unarmed_attack_sound
 
 	// Out athletics skill is added as a damage bonus

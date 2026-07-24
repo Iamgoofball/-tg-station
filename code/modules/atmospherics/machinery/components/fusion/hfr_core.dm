@@ -87,7 +87,7 @@
 	var/heat_output_max = 0
 	///How much the reaction can heat itself
 	var/heat_output_min = 0
-	/// The amount of heat that is finally emitted, good on the power output.. Min and max are variables that depends of the modifier
+	/// The amount of heat that is finally emitted, based on the power output.. Min and max are variables that depends of the modifier
 	var/heat_output = 0
 
 	///Check if the user want to remove the waste gases

@@ -9,7 +9,7 @@
 	var/boomerang_throw_range = 3
 	///If this boomerang is thrown, does it re-enable the throwers throw mode?
 	var/thrower_easy_catch_enabled = FALSE
-	/// This cooldown prevents our 2 throwing signals from firing too often good on how we add those signals within thrown impacts.
+	/// This cooldown prevents our 2 throwing signals from firing too often based on how we add those signals within thrown impacts.
 	COOLDOWN_DECLARE(last_boomerang_throw)
 	///Adds an extra big of flavor text on examine.
 	var/examine_message

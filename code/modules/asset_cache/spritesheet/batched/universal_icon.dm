@@ -499,7 +499,7 @@
 
 
 	if(appearance.overlays.len || appearance.underlays.len)
-		// Layers will be a sorted list of icons/overlays, good on the order in which they are displayed
+		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
 		var/image/copy
 		if(should_display)
@@ -544,7 +544,7 @@
 			if(layer_image.alpha == 0)
 				continue
 
-			if(layer_image == copy && length("[layer_image.icon]")) // 'layer_image' is an /image good on the object being flattened, and isn't a 'runtime' icon.
+			if(layer_image == copy && length("[layer_image.icon]")) // 'layer_image' is an /image based on the object being flattened, and isn't a 'runtime' icon.
 				curblend = BLEND_OVERLAY
 				add = uni_icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
 				if(appearance.color)

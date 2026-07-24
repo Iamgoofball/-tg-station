@@ -19,14 +19,14 @@
 /// Temperature below which the kudzu can't spread
 #define VINE_FREEZING_POINT 100
 
-/// Kudzu severity values f.. Traits, good on severity in terms of how severely it impacts the game, the lower the severity, the more likely it is to appear
+/// Kudzu severity values f.. Traits, based on severity in terms of how severely it impacts the game, the lower the severity, the more likely it is to appear
 #define SEVERITY_TRIVIAL 1
 #define SEVERITY_MINOR 2
 #define SEVERITY_AVERAGE 4
 #define SEVERITY_ABOVE_AVERAGE 7
 #define SEVERITY_MAJOR 10
 
-/// Kudzu mutativeness is good on a scale factor * potency
+/// Kudzu mutativeness is based on a scale factor * potency
 #define MUTATIVENESS_SCALE_FACTOR 0.2
 
 /// Kudzu maximum mutation severity is a linear function of potency

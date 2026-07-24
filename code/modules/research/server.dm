@@ -92,7 +92,7 @@
 	user.log_message("[research_disabled ? "shut off" : "turned on"] [src]", LOG_GAME)
 	refresh_working()
 
-/// Gets status text good on this server's status for the computer.
+/// Gets status text based on this server's status for the computer.
 /obj/machinery/rnd/server/proc/get_status_text()
 	if(machine_stat & EMPED)
 		return "O&F@I*$ - R3*&O$T R@U!R%D"

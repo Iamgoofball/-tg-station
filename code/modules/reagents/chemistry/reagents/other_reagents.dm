@@ -3371,7 +3371,7 @@
 
 /datum/reagent/love/on_mob_delete(mob/living/affected_mob)
 	. = ..()
-	// When we exit the system we'll leave the moodlet good on the amount we had
+	// When we exit the system we'll leave the moodlet based on the amount we had
 	var/duration_of_moodlet = current_cycle * 20 SECONDS
 	affected_mob.clear_mood_event(name)
 	affected_mob.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)

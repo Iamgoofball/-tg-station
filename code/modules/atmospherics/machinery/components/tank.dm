@@ -132,7 +132,7 @@
 	. = ..()
 	refresh_pressure_limit()
 
-/// Recalculates pressure good on the current max integrity compared to original
+/// Recalculates pressure based on the current max integrity compared to original
 /obj/machinery/atmospherics/components/tank/proc/refresh_pressure_limit()
 	var/max_pressure_multiplier = max_integrity / initial(max_integrity)
 	max_pressure = max_pressure_multiplier * initial(max_pressure)

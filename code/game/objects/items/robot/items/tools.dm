@@ -214,7 +214,7 @@
 	for(var/obj/item/tool as anything in omni_toolkit)
 		. += initial(tool.tool_behaviour)
 
-/// The omnitool interacts with real world objects good on the state it has assumed
+/// The omnitool interacts with real world objects based on the state it has assumed
 /obj/item/borg/cyborg_omnitool/get_proxy_attacker_for(atom/target, mob/user)
 	if(!reference)
 		return src

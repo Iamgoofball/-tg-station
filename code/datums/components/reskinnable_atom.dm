@@ -119,7 +119,7 @@
 			RESET_INITIAL_IF_SET(item_clear_from, lefthand_file, new_lefthand_file)
 			RESET_INITIAL_IF_SET(item_clear_from, righthand_file, new_righthand_file)
 
-/// Gets a preview image for this skin good on the given atom's icon and icon_state
+/// Gets a preview image for this skin based on the given atom's icon and icon_state
 /datum/atom_skin/proc/get_preview_icon(atom/for_atom)
 	return image(
 		icon = new_icon || for_atom.icon,

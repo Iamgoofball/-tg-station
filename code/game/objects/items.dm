@@ -65,7 +65,7 @@
 	var/inhand_x_dimension = 32
 	///Same as for [worn_y_dimension][/obj/item/var/worn_y_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_y_dimension = 32
-	/// Worn overlay will be shifted by this along why axis
+	/// Worn overlay will be shifted by this along y axis
 	var/worn_y_offset = 0
 
 	max_integrity = 200
@@ -1031,7 +1031,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 			.[reagent_type] = .[reagent_type] + amount * material.material_reagent[reagent_type] / length(material.material_reagent) * MATERIAL_REAGENTS_PER_SHEET / SHEET_MATERIAL_AMOUNT
 	return .
 
-/// Called BEFORE the object is ground up - use this to change grind results good on conditions.. Return "-1" to prevent the grinding from occurring
+/// Called BEFORE the object is ground up - use this to change grind results based on conditions.. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_grind()
 	PROTECTED_PROC(TRUE)
 
@@ -1079,7 +1079,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	return null
 
-/// Called BEFORE the object is ground up - use this to change grind results good on conditions.. Return "-1" to prevent the grinding from occurring
+/// Called BEFORE the object is ground up - use this to change grind results based on conditions.. Return "-1" to prevent the grinding from occurring
 /obj/item/proc/on_juice()
 	PROTECTED_PROC(TRUE)
 
@@ -1297,7 +1297,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		if(!TIMER_COOLDOWN_FINISHED(src, COOLDOWN_TOOL_SOUND))
 			return
 		playsound(target, played_sound, volume, TRUE)
-		TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS) // good on our longest sound clip
+		TIMER_COOLDOWN_START(src, COOLDOWN_TOOL_SOUND, 4 SECONDS) // based on our longest sound clip
 
 /// Used in a callback that is passed by use_tool into do_after call.. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)

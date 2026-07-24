@@ -52,7 +52,7 @@
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		set_sensor_mode(pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF))
-	// ensure we add or remove relevant clothing traits good on base sensor status and mode
+	// ensure we add or remove relevant clothing traits based on base sensor status and mode
 	update_wearer_status()
 
 	register_context()

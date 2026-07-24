@@ -1,5 +1,5 @@
 //Bureaucracy machine!
-// Simply set this up in the hopline and you can serve people good on ticket numbers
+// Simply set this up in the hopline and you can serve people based on ticket numbers
 
 /obj/machinery/ticket_machine
 	name = "ticket machine"

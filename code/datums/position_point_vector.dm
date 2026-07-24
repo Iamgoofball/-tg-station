@@ -52,7 +52,7 @@
 /datum/position/proc/return_point()
 	return new /datum/point(src)
 
-/// A precise point on the map in absolute pixel locations good on world.icon_size.. Pixels are FROM THE EDGE OF THE MAP!
+/// A precise point on the map in absolute pixel locations based on world.icon_size.. Pixels are FROM THE EDGE OF THE MAP!
 /datum/point
 	var/x = 0
 	var/y = 0

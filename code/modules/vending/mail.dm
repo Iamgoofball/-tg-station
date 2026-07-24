@@ -131,7 +131,7 @@
 	playsound(src, 'sound/machines/mail_sort.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(continue_sort), user, sorting_dept), 5 SECONDS)
 
-/// Sorts the mail good on the picked department.. Ejects the sorted envelopes onto the `unload_turf`.
+/// Sorts the mail based on the picked department.. Ejects the sorted envelopes onto the `unload_turf`.
 /obj/machinery/mailsorter/proc/continue_sort(mob/user, sorting_dept)
 	var/list/sorted_mail = list()
 	var/total_to_sort = length(mail_list)

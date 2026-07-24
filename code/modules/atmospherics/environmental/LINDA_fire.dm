@@ -390,7 +390,7 @@
 	var/average_x
 	var/average_y
 	var/average_Z
-	/// the range for the sound to drop off good on the size of the group
+	/// the range for the sound to drop off based on the size of the group
 	var/drop_off_dist
 	COOLDOWN_DECLARE(update_sound_center)
 

@@ -833,7 +833,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(!uses)
 			break
 		if(!C.camera_enabled || C.view_range != initial(C.view_range))
-			C.toggle_cam(owner_AI, 0) // Reactivates the camera good on status.. Badly named proc.
+			C.toggle_cam(owner_AI, 0) // Reactivates the camera based on status.. Badly named proc.
 			C.view_range = initial(C.view_range)
 			fixed_cameras++
 			uses-- //Not adjust_uses() so it doesn't automatically delete or show a message

@@ -22,7 +22,7 @@
 	var/story_value = STORY_VALUE_NONE
 	/// Flags of any special behavior for the memory
 	var/memory_flags = NONE
-	/// If this memory changes good on mood, this is the verb it uses.
+	/// If this memory changes based on mood, this is the verb it uses.
 	var/mood_verb
 
 	// Below are common infobits passed to memories, placed into strings.

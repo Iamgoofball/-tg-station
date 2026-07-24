@@ -375,7 +375,7 @@
 	. = ..()
 	update_window()
 
-/// Updates the overlays of this canister good on its air contents
+/// Updates the overlays of this canister based on its air contents
 /obj/machinery/portable_atmospherics/canister/proc/update_window()
 	if(!air_contents)
 		return
@@ -524,7 +524,7 @@
 		investigate_log("shielding turned off due to power loss")
 		update_appearance()
 
-/// return the icon_state component for the canister's indicator light good on its current pressure reading
+/// return the icon_state component for the canister's indicator light based on its current pressure reading
 /obj/machinery/portable_atmospherics/canister/proc/get_pressure_state()
 	var/air_pressure = air_contents.return_pressure()
 	switch(air_pressure)

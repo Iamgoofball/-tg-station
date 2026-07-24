@@ -229,7 +229,7 @@
 	if(ingredient.loc != atom_parent)
 		ingredient.forceMove(atom_parent)
 
-/// Rebuilds the custom materials the holder is composed of good on the materials of each ingredient
+/// Rebuilds the custom materials the holder is composed of based on the materials of each ingredient
 /datum/component/ingredients_holder/proc/handle_materials(obj/item/ingredient, remove = FALSE)
 	if(!ingredient.custom_materials)
 		return
@@ -254,7 +254,7 @@
 			return "monstrous"
 
 
-/// Gives the type of custom food good on what the first ingredient was).
+/// Gives the type of custom food based on what the first ingredient was).
 /datum/component/ingredients_holder/proc/set_custom_name(obj/item/ingredient)
 	if (istype(ingredient, /obj/item/food/meat))
 		var/obj/item/food/meat/meat = ingredient

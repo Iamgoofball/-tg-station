@@ -1217,7 +1217,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 /mob/proc/update_health_hud()
 	return
 
-/// Changes the stamina HUD good on new information
+/// Changes the stamina HUD based on new information
 /mob/proc/update_stamina_hud()
 	return
 
@@ -1478,7 +1478,7 @@ GAME_VERB_HIDDEN(/mob, DisDblClick, ".dblclick", argu = null as anything, sec = 
 		hunger_bar.update_hunger_bar()
 	SEND_SIGNAL(src, COMSIG_LIVING_UPDATE_NUTRITION)
 
-/// Apply a proper movespeed modifier good on items we have equipped
+/// Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = 0
 	var/immutable_speedies = 0

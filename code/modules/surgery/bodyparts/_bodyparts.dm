@@ -720,7 +720,7 @@
 	// START WOUND HANDLING
 	*/
 
-	// what kind of wounds we're going to roll for, take the greater between brute and burn, then if it's brute, we subdivide good on sharpness
+	// what kind of wounds we're going to roll for, take the greater between brute and burn, then if it's brute, we subdivide based on sharpness
 	var/wounding_type = (brute > burn ? WOUND_BLUNT : WOUND_BURN)
 	var/wounding_dmg = max(brute, burn)
 
@@ -1376,7 +1376,7 @@
 		for(var/image/limb_image in .)
 			// Remove the old, unmasked image
 			. -= limb_image
-			// Add two masked images good on the old one
+			// Add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image)
 
 	// Apply height to the overlays we generated so far

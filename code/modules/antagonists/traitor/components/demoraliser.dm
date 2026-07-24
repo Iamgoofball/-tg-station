@@ -77,7 +77,7 @@
 	return !viewer.mob_mood.has_mood_of_category(moods.mood_category)
 
 /// Mood application categories for this objective
-/// Used to reduce duplicate code for applying moods to players good on their state
+/// Used to reduce duplicate code for applying moods to players based on their state
 /datum/demoralise_moods
 	/// Mood category to apply to moods
 	var/mood_category

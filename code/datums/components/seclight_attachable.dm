@@ -287,7 +287,7 @@
 
 	// Get the "base icon state" to work on
 	var/base_state = source.base_icon_state || initial(source.icon_state)
-	// Updates our icon state good on our light state.
+	// Updates our icon state based on our light state.
 	if(light)
 		source.icon_state = "[base_state]-[light_icon_state][light.light_on ? "-on":""]"
 

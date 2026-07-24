@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 				reagent_to_react_count[reagent_id] += 1
 
 	var/list/reaction_lookup = GLOB.chemical_reactions_list_reactant_index
-	// Create filters good on a random reagent id in the needed reagents list - this is used to speed up handle_reactions()
+	// Create filters based on a random reagent id in the needed reagents list - this is used to speed up handle_reactions()
 	// Basically, we only really need to care about ONE reagent, at least when initially filtering, since any others are ignorable
 	// Doing this separately because it relies on the loop above, and this is easier to parse
 	for(var/datum/chemical_reaction/reaction as anything in reactions)
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(stacked_metabolization_effect, init_chemical_side_effects())
 				"reactants" = reagents,
 			))
 
-			// Create filters good on each reagent id in the needed reagents list - this is specifically for finding reactions from product(reagent) ids/typepaths.
+			// Create filters based on each reagent id in the needed reagents list - this is specifically for finding reactions from product(reagent) ids/typepaths.
 			for(var/id in product_ids)
 				if(!GLOB.chemical_reactions_list_product_index[id])
 					GLOB.chemical_reactions_list_product_index[id] = list()

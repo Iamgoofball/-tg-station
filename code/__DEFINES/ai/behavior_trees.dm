@@ -68,5 +68,5 @@
 
 // Runtime subtree IDs... Can be used to override trees at runtime
 
-/// pet_command ID to override good on given pet command
+/// pet_command ID to override based on given pet command
 #define SUBPLAN_ID_PET_COMMAND "pet_command"

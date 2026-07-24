@@ -320,7 +320,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		return "fix[min(broken_state, 3)]"
 	return on || charging_state != POWER_IDLE ? "on" : "off"
 
-// Set the charging state good on power/breaker.
+// Set the charging state based on power/breaker.
 /obj/machinery/gravity_generator/main/proc/set_power()
 	var/new_state = FALSE
 	if(machine_stat & (NOPOWER|BROKEN) || !breaker)

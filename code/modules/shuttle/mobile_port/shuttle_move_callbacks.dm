@@ -5,7 +5,7 @@ All ShuttleMove procs go here
 /************************************Base procs************************************/
 
 // Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
-// returns the new move_mode good on the old)
+// returns the new move_mode based on the old)
 /turf/proc/fromShuttleMove(turf/newT, move_mode)
 	. = move_mode
 	if((move_mode & MOVE_AREA) && isshuttleturf(src))
@@ -15,7 +15,7 @@ All ShuttleMove procs go here
 
 // Called from the new turf before anything has been moved
 // Only gets called if fromShuttleMove returns true first
-// returns the new move_mode good on the old)
+// returns the new move_mode based on the old)
 /turf/proc/toShuttleMove(turf/oldT, move_mode, obj/docking_port/mobile/shuttle)
 	. = move_mode
 	if(!(. & MOVE_TURF))
@@ -98,13 +98,13 @@ All ShuttleMove procs go here
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-// Return the move_move good on the old), without any side effects.
+// Return the move_move based on the old), without any side effects.
 // This is for checking what would be moved if src is on a shuttle being moved.
 /atom/movable/proc/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	return move_mode
 
 // Called on every atom in shuttle turf contents before anything has been moved
-// returns the new move_mode good on the old)
+// returns the new move_mode based on the old)
 // WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
 /atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	SHOULD_CALL_PARENT(TRUE)
@@ -152,7 +152,7 @@ All ShuttleMove procs go here
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Called on areas before anything has been moved
-// returns the new move_mode good on the old)
+// returns the new move_mode based on the old)
 /area/proc/beforeShuttleMove(list/shuttle_areas)
 	if(!shuttle_areas[src])
 		return NONE

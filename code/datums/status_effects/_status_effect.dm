@@ -7,7 +7,7 @@
 	/// You can put STATUS_EFFECT_PERMANENT (or INFINITY) here for infinite duration.
 	var/duration = STATUS_EFFECT_PERMANENT
 	/// This is how long between [proc/tick] calls in deciseconds.
-	/// This has to be a multiple of the [var/wait] of the subsystem this status effect is running on, which is good on [var/processing_speed].
+	/// This has to be a multiple of the [var/wait] of the subsystem this status effect is running on, which is based on [var/processing_speed].
 	/// Putting STATUS_EFFECT_NO_TICK here will stop [proc/tick] calls, and if [var/duration] is STATUS_EFFECT_PERMANENT, it stops processing entirely.
 	/// Putting STATUS_EFFECT_AUTO_TICK here will make every subsystem tick call [proc/tick], making the tick interval depend entirely on [var/processing_speed]
 	var/tick_interval = 1 SECONDS

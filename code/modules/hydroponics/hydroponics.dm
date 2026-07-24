@@ -62,7 +62,7 @@
 	var/obj/effect/overlay/vis_effect/snail/our_snail
 	///Flags to indicate special tray type behaviours.
 	var/tray_flags = HYDROPONIC
-	/// How many extra px to offset the plant sprite on the why axis, gets passed to the seed and added to the seeds offset
+	/// How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
 	var/plant_offset_y = 0
 	///Suffix things
 	var/alt_tray = FALSE

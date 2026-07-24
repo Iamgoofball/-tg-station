@@ -246,7 +246,7 @@
 	icon_state = "blood_spit"
 
 	damage_type = BURN
-	armor_flag = BULLET // I'm sorry.. Acid armor is too nonsensical for combat, as its granted good on how easily acid should destroy objects.
+	armor_flag = BULLET // I'm sorry.. Acid armor is too nonsensical for combat, as its granted based on how easily acid should destroy objects.
 
 	hitsound = 'sound/items/weapons/sear.ogg'
 	hitsound_wall = 'sound/items/weapons/sear.ogg'

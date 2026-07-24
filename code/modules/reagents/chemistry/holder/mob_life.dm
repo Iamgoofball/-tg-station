@@ -68,7 +68,7 @@
 		to_chat(owner, span_warning("You feel a dull pain in your abdomen."))
 
 	if(owner)
-		// apply side effects good on reagents metabolized
+		// apply side effects based on reagents metabolized
 		if(reagents_metabolized.len > 1)
 			for(var/datum/stacked_metabolization_effect/effect as anything in GLOB.stacked_metabolization_effect)
 				need_mob_update += effect.check_and_apply(reagents_metabolized, owner, seconds_per_tick)
@@ -122,7 +122,7 @@
 
 		for(var/addiction, threshold in reagent.addiction_types)
 			var/datum/addiction/addiction_type = addiction
-			// point gain is scaled good on how much we metabolized per second
+			// point gain is scaled based on how much we metabolized per second
 			owner.mind?.add_addiction_points(addiction, addiction_type::addiction_gain_threshold / (threshold / metabolized_volume))
 
 		if(reagent.overdosed)

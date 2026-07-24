@@ -92,7 +92,7 @@ DEFINE_BITFIELD(spread_flags, list(
 /// Negative Malnutrition Recovery Penalty
 //// Flat penalty to recovery chance if malnourished or starving
 #define DISEASE_MALNUTRITION_RECOVERY_PENALTY 3
-/// Satiety Recovery Multiplier - added chance to recover good on positive satiety
+/// Satiety Recovery Multiplier - added chance to recover based on positive satiety
 /// / Multiplier of satiety/max_satiety if satiety is positive or zero... Increase to make satiety more valuable, decrease for less.
 #define DISEASE_SATIETY_RECOVERY_MULTIPLIER 3
 /// Disease Satiety Threshold - how much junk food we have to eat to start curing positive viruses.

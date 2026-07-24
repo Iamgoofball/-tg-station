@@ -40,7 +40,7 @@
 	else
 		lobby_button.base_icon_state = "signup"
 
-/// Add an overlay good on whether you are actively signed up for this role
+/// Add an overlay based on whether you are actively signed up for this role
 /datum/station_trait/job/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	SIGNAL_HANDLER
 	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "tick" : "cross"

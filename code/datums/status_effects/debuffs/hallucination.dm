@@ -17,7 +17,7 @@
 	/// If TRUE, we only select hallucinations from the hallucination_tier.
 	/// If FALSE, it will also include anything below the hallucination_tier.
 	var/strict_tier = FALSE
-	/// Tier can be variable, good on the duration of the hallucination.
+	/// Tier can be variable, based on the duration of the hallucination.
 	var/variable_tier = TRUE
 	/// The cooldown for when the next hallucination can occur
 	COOLDOWN_DECLARE(hallucination_cooldown)
@@ -145,7 +145,7 @@
 
 	return ..()
 
-/// Updates our upper and lower intervals good on our owner's current sanity level.
+/// Updates our upper and lower intervals based on our owner's current sanity level.
 /datum/status_effect/hallucination/sanity/proc/update_intervals()
 	switch(owner.mob_mood.sanity_level)
 		if(SANITY_LEVEL_CRAZY)

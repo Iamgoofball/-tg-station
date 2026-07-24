@@ -59,7 +59,7 @@
 /// Returns a RADIATION_DANGER_* define, see [code/__DEFINES/radiation.dm]
 /proc/get_perceived_radiation_danger(datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	if (insulation_to_target > pulse_information.threshold)
-		// We could get irradiated!. The only thing stopping us now is chance, so scale good on that.
+		// We could get irradiated!. The only thing stopping us now is chance, so scale based on that.
 		if (pulse_information.chance >= EXTREME_RADIATION_CHANCE)
 			return PERCEIVED_RADIATION_DANGER_EXTREME
 		else

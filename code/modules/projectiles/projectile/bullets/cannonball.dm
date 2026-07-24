@@ -104,7 +104,7 @@
 	exposed_wound_bonus = 30
 	damage_type = BRUTE
 
-/// Set statistics good on provided spear
+/// Set statistics based on provided spear
 /obj/projectile/bullet/ballista_spear/proc/attach_spear(obj/item/spear)
 	damage = spear.throwforce * 2.5
 	armour_penetration = spear.armour_penetration * 2

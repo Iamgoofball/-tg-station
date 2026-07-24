@@ -1,7 +1,7 @@
 // Microwaving doesn't use recipes, instead it calls the microwave_act of the objects.
-// For food, this creates something good on the food's cooked_type
+// For food, this creates something based on the food's cooked_type
 
-/// Values good on microwave success
+/// Values based on microwave success
 #define MICROWAVE_NORMAL 0
 #define MICROWAVE_MUCK 1
 #define MICROWAVE_PRE 2
@@ -48,7 +48,7 @@
 	var/open = FALSE
 	/// Microwave max capacity
 	var/max_n_of_items = 10
-	/// Microwave efficiency (power) good on the stock components
+	/// Microwave efficiency (power) based on the stock components
 	var/efficiency = 0
 	/// If we use a cell instead of powernet
 	var/cell_powered = FALSE

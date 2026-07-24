@@ -60,7 +60,7 @@
 #define SKIN_HAT_OFFSET "skin_hat_offset"
 #define SKIN_TRAITS "skin_traits"
 
-/** * * Simple Animal BOT defines */
+/** Simple Animal BOT defines */
 
 //Assembly defines
 #define ASSEMBLY_FIRST_STEP 1

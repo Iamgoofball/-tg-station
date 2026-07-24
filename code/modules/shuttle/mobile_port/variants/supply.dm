@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(!empty_turfs.len)
 			break
 
-		// adjust galactic material market good on the ordered quantities
+		// adjust galactic material market based on the ordered quantities
 		var/datum/supply_pack/custom/minerals/sheets = astype(spawning_order.pack)
 		if(!isnull(sheets))
 			var/list/orders_adjusted = sheets.adjust_market()

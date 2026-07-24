@@ -183,7 +183,7 @@
 
 	dispatch_announcement_to_players(finalized_announcement, GLOB.player_list, current_level_sound)
 
-/// Proc that just generates a custom header good on variables fed into `priority_announce()`
+/// Proc that just generates a custom header based on variables fed into `priority_announce()`
 /// Will return a string.
 /proc/generate_unique_announcement_header(title, sender_override)
 	var/list/returnable_strings = list()

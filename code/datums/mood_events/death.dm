@@ -213,7 +213,7 @@
 
 	return is_any_xenomorph(dead_mob)
 
-// Give buffs good on the type of xenomorph dying
+// Give buffs based on the type of xenomorph dying
 /datum/mood_event/conditional/see_death/xeno/update_effect(mob/dead_mob, dusted, gibbed)
 	// following values are in absolute value form, we make it have a positive effect later
 	var/change_modifier = 0

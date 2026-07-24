@@ -106,7 +106,7 @@
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off = FALSE
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
-	var/suppressor_y_offset /// pixel offset for the suppressor overlay on the why axis.
+	var/suppressor_y_offset /// pixel offset for the suppressor overlay on the y axis.
 	/// Check if you are able to see if a weapon has a bullet loaded in or not.
 	var/hidden_chambered = FALSE
 

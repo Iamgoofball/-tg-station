@@ -194,7 +194,7 @@
 
 	update_static_data_for_all_viewers()
 
-/// Computes this machines cost efficiency good on the available parts
+/// Computes this machines cost efficiency based on the available parts
 /obj/machinery/rnd/production/proc/compute_efficiency()
 	PROTECTED_PROC(TRUE)
 

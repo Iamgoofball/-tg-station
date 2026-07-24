@@ -283,7 +283,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		var/datum/adventure_loot_generator/generator = new generator_type
 		generator.transfer_loot(src)
 
-/// Applies adventure qualities good on our tools
+/// Applies adventure qualities based on our tools
 /obj/item/exodrone/proc/add_tool_qualities(datum/source,list/quality_list)
 	SIGNAL_HANDLER
 	for(var/tool in tools)

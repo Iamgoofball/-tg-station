@@ -171,7 +171,7 @@
 	if(active)
 		deactivate_shields()
 
-/// generates the forcefield good on the given radius and calls calculate_regen to update the regen value accordingly
+/// generates the forcefield based on the given radius and calls calculate_regen to update the regen value accordingly
 /obj/machinery/modular_shield_generator/proc/activate_shields()
 	if(active || (machine_stat & NOPOWER))//bug or did admin call proc on already active shield gen?
 		return
@@ -346,7 +346,7 @@
 	max_strength = innate_strength + max_strength_boost
 	begin_processing()
 
-/// Calculates the regeneration good on the status of the generator and boosts from network, modifiers go here
+/// Calculates the regeneration based on the status of the generator and boosts from network, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_regeneration()
 
 	max_regeneration = innate_regen + regen_boost
@@ -366,7 +366,7 @@
 	if(!exterior_only && internal_penalty)
 		current_regeneration *= 0.5
 
-/// Reduces the strength of the shield good on the given integer
+/// Reduces the strength of the shield based on the given integer
 /obj/machinery/modular_shield_generator/proc/shield_drain(damage_amount)
 	stored_strength -= damage_amount
 	begin_processing()

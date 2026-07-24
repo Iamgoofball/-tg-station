@@ -170,7 +170,7 @@
 		payload.name = source.name
 	SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_SPAWN_EMBEDDED, payload, victim)
 
-/// Calculates the actual chance to embed good on armour penetration and throwing speed, then returns true if we pass that probability check
+/// Calculates the actual chance to embed based on armour penetration and throwing speed, then returns true if we pass that probability check
 /datum/embedding/proc/roll_embed_chance(mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum)
 	var/chance = embed_chance
 

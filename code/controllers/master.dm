@@ -878,7 +878,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
 
 			if (queue_node_priority >= 0 && current_tick_budget > 0 && current_tick_budget >= queue_node_priority)
-				// Give the subsystem a precentage of the remaining tick good on the remaining priority
+				// Give the subsystem a precentage of the remaining tick based on the remaining priority
 				tick_precentage = tick_remaining * (queue_node_priority / current_tick_budget)
 			else
 				//error state

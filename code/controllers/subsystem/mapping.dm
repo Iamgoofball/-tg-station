@@ -619,7 +619,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	num_of_res_levels++
 	return add_new_zlevel("Transit/Reserved #[num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
 
-/// Requests a /datum/turf_reservation good on the given width, height, and z_size.. You can specify a z_reservation to use a specific z level, or leave it null to use any z level.
+/// Requests a /datum/turf_reservation based on the given width, height, and z_size.. You can specify a z_reservation to use a specific z level, or leave it null to use any z level.
 /datum/controller/subsystem/mapping/proc/request_turf_block_reservation(
 	width,
 	height,

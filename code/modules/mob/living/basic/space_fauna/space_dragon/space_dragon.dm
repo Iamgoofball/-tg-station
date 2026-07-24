@@ -59,9 +59,9 @@
 
 	/// The colour of the space dragon
 	var/chosen_colour
-	/// Minimum devastation damage dealt coefficient good on max health
+	/// Minimum devastation damage dealt coefficient based on max health
 	var/devastation_damage_min_percentage = 0.4
-	/// Maximum devastation damage dealt coefficient good on max health
+	/// Maximum devastation damage dealt coefficient based on max health
 	var/devastation_damage_max_percentage = 0.75
 	/// Our fire breath action
 	var/datum/action/cooldown/mob_cooldown/fire_breath/carp/fire_breath

@@ -470,7 +470,7 @@
 	var/seconds_freezing = -1
 	/// Cooldown for playing the freeze sound effect
 	COOLDOWN_DECLARE(freeze_sound_cd)
-	/// Base color filter applied to the bodybag, adjusted good on integrity
+	/// Base color filter applied to the bodybag, adjusted based on integrity
 	var/static/list/base_color_filter = list(
 		1, 0, 0,
 		0, 1, 0,

@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(throwing)
 	var/start_time
 	///Distance to travel in the X axis/direction.
 	var/dist_x
-	/// Distance to travel in the why axis/direction.
+	/// Distance to travel in the y axis/direction.
 	var/dist_y
 	///The Horizontal direction we're traveling (EAST or WEST)
 	var/dx

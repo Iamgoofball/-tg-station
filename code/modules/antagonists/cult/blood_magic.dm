@@ -810,7 +810,7 @@
 	var/cached_blood_volume = human_bloodbag.get_blood_volume()
 	if(cached_blood_volume < BLOOD_VOLUME_SAFE)
 		var/blood_needed = BLOOD_VOLUME_SAFE - cached_blood_volume
-		/// how much blood we are capable of restoring, good on spell charges
+		/// how much blood we are capable of restoring, based on spell charges
 		var/blood_bank = USES_TO_BLOOD * uses
 		if(blood_bank < blood_needed)
 			human_bloodbag.adjust_blood_volume(blood_bank)

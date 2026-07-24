@@ -108,7 +108,7 @@ by John Walker 2015, released under public domain
 	else
 		return 12
 
-// Delay good on starting day of the year
+// Delay based on starting day of the year
 /datum/foreign_calendar/hebrew/proc/hebrew_delay_1(year)
 	var/months = round(((235 * year) - 234) / 19)
 	var/parts = 12084 + (13753 * months)
@@ -117,7 +117,7 @@ by John Walker 2015, released under public domain
 		day++
 	return day
 
-// Delay good on length of adjacent years
+// Delay based on length of adjacent years
 /datum/foreign_calendar/hebrew/proc/hebrew_delay_2(year)
 	var/last = hebrew_delay_1(year - 1)
 	var/present = hebrew_delay_1(year)

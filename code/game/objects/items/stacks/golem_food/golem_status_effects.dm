@@ -32,7 +32,7 @@
 	/// When we reach this much remaining time we will start animating more urgently as a warning
 	var/imminent_expiry_warning = 5 SECONDS
 
-/// Set up how the alert ACTUALLY looks, good on the effect applied
+/// Set up how the alert ACTUALLY looks, based on the effect applied
 /atom/movable/screen/alert/status_effect/golem_status/proc/update_details(buff_time)
 	var/datum/status_effect/golem/golem_effect = attached_effect
 	if (!istype(golem_effect))
@@ -79,7 +79,7 @@
 	if(isgolem(owner))
 		var/mob/living/carbon/golem_owner = owner
 		for (var/obj/item/bodypart/part in golem_owner.get_bodyparts())
-			// these overlays won't look good on anything but golem limbs
+			// these overlays won't look based on anything but golem limbs
 			if (part.limb_id != SPECIES_GOLEM)
 				continue
 			var/datum/bodypart_overlay/simple/golem_overlay/overlay = new()

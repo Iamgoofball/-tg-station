@@ -15,7 +15,7 @@
 	var/current_engine_power = 0
 	///How much engine power (thrust) the shuttle starts with at mapload.
 	var/initial_engine_power = 0
-	/// Speed multiplier good on station alert level
+	/// Speed multiplier based on station alert level
 	var/alert_coeff = ALERT_COEFF_BLUE
 	///used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/timer

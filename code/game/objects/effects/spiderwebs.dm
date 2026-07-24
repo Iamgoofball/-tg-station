@@ -43,7 +43,7 @@
 	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
-	/// Do we need to offset this good on a sprite frill?
+	/// Do we need to offset this based on a sprite frill?
 	var/has_frill = TRUE
 	/// Chance that someone will get stuck when trying to cross this tile
 	var/stuck_chance = 50

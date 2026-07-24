@@ -210,7 +210,7 @@
 		eyes.appearance_flags = RESET_COLOR|KEEP_APART
 	. += eyes
 
-/// Determines the speed at which the carp grows good on how big it's
+/// Determines the speed at which the carp grows based on how big it's
 /obj/item/fish/baby_carp/update_size_and_weight(new_size = average_size, new_weight = average_weight, update_materials = TRUE)
 	. = ..()
 	var/growth_rate = 4.5 MINUTES

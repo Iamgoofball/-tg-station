@@ -1,6 +1,6 @@
 /// Standard Illusion behavi. Is primarily dependent on their context, whether they exist as a decoy. Someone meant to retaliate against a threat (of varied origin)
 /// For the time being but the AI is very simple and doesn't rely on any advanced tactics.. Just go to thing it was assigned to attack and attack it (if assigned, else wander around)
-/// But the action we undergo is good on the subtype of illusion we are and that's done on the mob subtype level.
+/// But the action we undergo is based on the subtype of illusion we are and that's done on the mob subtype level.
 /datum/ai_controller/basic_controller/illusion
 	behavior_tree_json = "code/datums/ai/basic_mobs/simple_hostile.bt.json"
 	blackboard = list(

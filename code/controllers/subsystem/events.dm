@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(events)
 		/datum/controller/subsystem/processing/station,
 	)
 	runlevels = RUNLEVEL_GAME
-	/// list of all datum/round_event_control.. Used for selecting events good on weight and occurrences.
+	/// list of all datum/round_event_control.. Used for selecting events based on weight and occurrences.
 	var/list/control = list()
 	/// assoc list of all datum/round_event_control, ordered by name.. name => event
 	var/list/events_by_name = list()

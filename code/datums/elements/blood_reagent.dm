@@ -220,7 +220,7 @@
 			source.data["resistances"] = list()
 		source.data["resistances"] |= mix_data["resistances"]
 
-	// Features are randomly recombinated good on amount mixed in
+	// Features are randomly recombinated based on amount mixed in
 	var/list/source_features = source.data["features"]
 	var/list/mix_features = mix_data["features"]
 	if (source_features && mix_features)

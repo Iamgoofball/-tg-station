@@ -5,7 +5,7 @@
 	threat.AddComponent(/datum/component/virtual_entity, src)
 
 
-/// Choses which antagonist role is spawned good on threat
+/// Choses which antagonist role is spawned based on threat
 /obj/machinery/quantum_server/proc/get_antagonist_role()
 	var/list/available = list()
 

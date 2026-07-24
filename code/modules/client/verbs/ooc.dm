@@ -374,7 +374,7 @@ GAME_VERB_DESC(/client, fit_viewport, "Fit Viewport", "Fit the width of the map 
 			// success
 			return
 		else if (isnull(delta))
-			// calculate a probable delta value good on the difference
+			// calculate a probable delta value based on the difference
 			delta = 100 * (desired_width - got_width) / split_width
 		else if ((delta > 0 && got_width > desired_width) || (delta < 0 && got_width < desired_width))
 			// if we overshot, halve the delta and reverse direction

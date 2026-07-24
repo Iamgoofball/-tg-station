@@ -580,7 +580,7 @@
 
 	return handle_xadone_progress()
 
-/// Does various actions good on [cryo_progress].. By default, qdeletes the wound past a certain threshold.
+/// Does various actions based on [cryo_progress].. By default, qdeletes the wound past a certain threshold.
 /datum/wound/proc/handle_xadone_progress()
 	if(cryo_progress > get_xadone_progress_to_qdel())
 		qdel(src)
@@ -704,7 +704,7 @@
 		if(4 to INFINITY)
 			return "tightly "
 
-/// Spans [desc] good on our severity.
+/// Spans [desc] based on our severity.
 /datum/wound/proc/get_desc_intensity(desc)
 	SHOULD_BE_PURE(TRUE)
 	if (severity > WOUND_SEVERITY_MODERATE)

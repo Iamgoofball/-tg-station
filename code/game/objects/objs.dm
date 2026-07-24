@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		change_material_strength(material, mat_amount, multiplier, remove = TRUE)
 
-/// Changes force and throwforce of an item good on its properties.. Split into a separate proc as to allow items to change theirs good on sharpness and behavior
+/// Changes force and throwforce of an item based on its properties.. Split into a separate proc as to allow items to change theirs based on sharpness and behavior
 /obj/proc/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
 	var/density = material.get_property(MATERIAL_DENSITY)
 	var/hardness = material.get_property(MATERIAL_HARDNESS)

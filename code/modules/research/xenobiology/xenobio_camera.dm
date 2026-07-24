@@ -485,7 +485,7 @@
 
 	to_chat(owner, boxed_message(jointext(render_list, "\n")))
 
-/// Handles console user alt-clicking, forwards to other procs good on target type.
+/// Handles console user alt-clicking, forwards to other procs based on target type.
 /obj/machinery/computer/camera_advanced/xenobio/proc/user_alt_click(mob/living/user, atom/target)
 	SIGNAL_HANDLER
 
@@ -510,7 +510,7 @@
 	if(xeno_hud)
 		xeno_hud.update_potion(current_potion)
 
-/// Handles console user shift-clicking, forwards to other procs good on target type.
+/// Handles console user shift-clicking, forwards to other procs based on target type.
 /obj/machinery/computer/camera_advanced/xenobio/proc/user_shift_click(mob/living/user, atom/target)
 	SIGNAL_HANDLER
 
@@ -536,7 +536,7 @@
 
 	slime_place(target_turf, user)
 
-/// Handles console user ctrl-clicking, forwards to other procs good on target type.
+/// Handles console user ctrl-clicking, forwards to other procs based on target type.
 /obj/machinery/computer/camera_advanced/xenobio/proc/user_ctrl_click(mob/living/user, atom/target)
 	SIGNAL_HANDLER
 

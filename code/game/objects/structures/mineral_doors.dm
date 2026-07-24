@@ -1,4 +1,4 @@
-// NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly good on its
+// NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
 //machineryness
 
 /obj/structure/mineral_door

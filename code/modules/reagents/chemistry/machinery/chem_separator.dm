@@ -387,13 +387,13 @@
 		// consume some air after we have validated we have some good fuel.. Only if we don't already use O2 as a fuel
 		if(can_process && !fuel.has_reagent(/datum/reagent/oxygen))
 			var/datum/gas_mixture/air = return_air()
-			if(!air.remove_specific(/datum/gas/oxygen, 0.01 + (0.04 * knob_ratio))) // can burn anywhere between 0.01 & 0.05 moles of air good on the knob settings
+			if(!air.remove_specific(/datum/gas/oxygen, 0.01 + (0.04 * knob_ratio))) // can burn anywhere between 0.01 & 0.05 moles of air based on the knob settings
 				can_process = FALSE
 				toggle_burner(FALSE)
 
 		//burn some fuel if we combusted some air
 		if(can_process)
-			if(!fuel.remove_all(0.01 + (0.19 * knob_ratio))) // can burn anywhere between 0.01 & 0.2 units of fuel good on the knob settings
+			if(!fuel.remove_all(0.01 + (0.19 * knob_ratio))) // can burn anywhere between 0.01 & 0.2 units of fuel based on the knob settings
 				can_process = FALSE
 				toggle_burner(FALSE)
 
@@ -411,7 +411,7 @@
 		distiled_reagents.adjust_thermal_energy((DEFAULT_REAGENT_TEMPERATURE - distiled_reagents.chem_temp) * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * get_cool_coefficient())
 		distiled_reagents.handle_reactions()
 
-	// the distilation process checks the individual boiling point of each reagent good on their mass for seperation
+	// the distilation process checks the individual boiling point of each reagent based on their mass for seperation
 	boiling = FALSE
 	for(var/datum/reagent/reg in reagents.reagent_list)
 		var/bp = get_boiling_point(reg)

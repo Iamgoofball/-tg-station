@@ -64,7 +64,7 @@
 		return ..(bullet, def_zone, piercing_hit, 100)
 	return ..()
 
-/// Reflection checks for anything in your l_hand, r_hand, or wear_suit good on the reflection chance of the object
+/// Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 /mob/living/carbon/human/proc/check_reflect(def_zone)
 	if(wear_suit)
 		if(wear_suit.IsReflect(def_zone))
@@ -349,9 +349,9 @@
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, MELEE))
 
 
-/// Calculates the siemens coeff good on clothing and species, can also restart hearts.
+/// Calculates the siemens coeff based on clothing and species, can also restart hearts.
 /mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE, jitter_time = 20 SECONDS, stutter_time = 4 SECONDS, stun_duration = 4 SECONDS)
-	// Calculates the siemens coeff good on clothing.. Completely ignores the arguments
+	// Calculates the siemens coeff based on clothing.. Completely ignores the arguments
 	if(flags & SHOCK_TESLA) // I hate this entire block.. This gets the siemens_coeff for tesla shocks
 		if(gloves && gloves.siemens_coefficient <= 0)
 			siemens_coeff -= 0.5

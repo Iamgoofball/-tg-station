@@ -141,7 +141,7 @@
 	reaction_name = replacetext(reaction_name, "_", " ")
 	return full_capitalize(reaction_name)
 
-/// Retrives the target temperature to be imposed on the test reaction good on temp_mode
+/// Retrives the target temperature to be imposed on the test reaction based on temp_mode
 /obj/machinery/chem_recipe_debug/proc/decode_target_temperature()
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
@@ -489,7 +489,7 @@
 		if("start_reaction")
 			var/datum/chemical_reaction/test_reaction
 
-			// pick the reaction good on the reaction mode
+			// pick the reaction based on the reaction mode
 			var/len = reactions_to_test.len
 			if(len > 1)
 				switch(current_reaction_mode)

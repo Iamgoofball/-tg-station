@@ -92,7 +92,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
 	ai_movement = SSai_movement.movement_types[new_movement]
 
-/// Completely replaces the behavior_nodes with a new set good on argument provided.
+/// Completely replaces the behavior_nodes with a new set based on argument provided.
 /datum/ai_controller/proc/replace_behavior_nodes(list/typepaths_of_new_subtrees)
 	var/list/old_nodes = behavior_nodes
 	behavior_nodes = typepaths_of_new_subtrees
@@ -411,7 +411,7 @@ multiple modular subtrees with behaviors
 
 	recalculate_idle(exited)
 
-/// Sets the AI on or off good on current conditions, call to reset after you've manually disabled it somewhere
+/// Sets the AI on or off based on current conditions, call to reset after you've manually disabled it somewhere
 /datum/ai_controller/proc/reset_ai_status()
 	set_ai_status(get_expected_ai_status())
 
@@ -658,7 +658,7 @@ multiple modular subtrees with behaviors
 	cancelled_during_tick = TRUE
 	reset_bt_tick_states()
 
-/// Turn the controller on. Off good on if you're alive, we only register to this if the flag is present so don't need to check again
+/// Turn the controller on. Off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	reset_ai_status()

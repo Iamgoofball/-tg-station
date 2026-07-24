@@ -1385,7 +1385,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /// A product of fish breeding is spawned, and it's inherited traits are handled here.
 /obj/item/fish/proc/create_offspring(chosen_type, obj/item/fish/partner, datum/fish_evolution/evolution)
 	var/obj/item/fish/new_fish = new chosen_type (loc, FALSE)
-	// Try to pass down compatible traits good on inheritability
+	// Try to pass down compatible traits based on inheritability
 	new_fish.inherit_traits(fish_traits, partner?.fish_traits, evolution?.new_traits, evolution?.removed_traits)
 
 	///If set, the offspring will inherit materials from the parent.

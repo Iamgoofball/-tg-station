@@ -63,7 +63,7 @@
 	/// List of all items stolen in the last pool of bounties.
 	/// Same as above - strings that represent stolen items.
 	var/list/claimed_bounties_from_last_pool = list()
-	/// When rolling for bounties, the number of tries is calculated good on the number of bounties to give out.
+	/// When rolling for bounties, the number of tries is calculated based on the number of bounties to give out.
 	/// This number will override that calculation with a set value - used for testing and debugging.
 	var/num_attempts_override = 0
 

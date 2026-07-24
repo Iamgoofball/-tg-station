@@ -121,7 +121,7 @@
 	//if no cargo access then force private purchase
 	var/is_ordering_private = ordering_private || !can_buy_via_budget
 
-	// find current order good on ordering mode & player
+	// find current order based on ordering mode & player
 	var/datum/supply_order/current_order = find_order(user, is_ordering_private)
 
 	var/material_data

@@ -29,7 +29,7 @@
 	var/single_shot_type_overlay = TRUE
 	///Should we give an overlay to empty guns?
 	var/display_empty = TRUE
-	/// If we have an additional overlay good on our shot type while active
+	/// If we have an additional overlay based on our shot type while active
 	var/shot_type_fluff_overlay = FALSE
 
 	///whether the gun's cell drains the cyborg user's cell to recharge
@@ -213,7 +213,7 @@
 	if(!chambered)
 		var/obj/item/ammo_casing/energy/AC = ammo_type[select]
 		if(cell.charge >= AC.e_cost) //if there's enough power in the cell cell...
-			chambered = AC // ...prepare a new shot good on the current ammo type selected
+			chambered = AC // ...prepare a new shot based on the current ammo type selected
 			if(!chambered.loaded_projectile)
 				chambered.newshot()
 				return ..()

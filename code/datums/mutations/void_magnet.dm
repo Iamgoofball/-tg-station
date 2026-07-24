@@ -70,7 +70,7 @@
 
 	var/mob/living/carbon/carbon_source = source
 	if(istype(carbon_source) && carbon_source.dna)
-		// If we have DNA, the probability of curse changes good on how stable we are
+		// If we have DNA, the probability of curse changes based on how stable we are
 		prob_of_curse += ((100 - carbon_source.dna.stability) / 40)
 
 	prob_of_curse *= curse_probability_modifier

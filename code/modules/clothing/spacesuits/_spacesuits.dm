@@ -349,7 +349,7 @@
 	var/cell_percent = cell.percent()
 	// Check if there's enough charge to trigger a thermal regulator tick and
 	// if there is, whethere the cell's capacity indicates high, medium or low
-	// charge good on it.
+	// charge based on it.
 	if(cell.charge < THERMAL_REGULATOR_COST)
 		spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
 		return

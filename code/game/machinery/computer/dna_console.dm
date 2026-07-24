@@ -2158,7 +2158,7 @@
 
 	return chromosomes
 
-/// Returns a class declarations good on what sources the mutation has
+/// Returns a class declarations based on what sources the mutation has
 /obj/machinery/computer/dna_console/proc/get_mutation_class(datum/mutation/mutation)
 	if(length(mutation.sources - list(MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_ACTIVATED))) //It has other sources as well...
 		return SCANNER_MUTATION_CLASS_OTHER

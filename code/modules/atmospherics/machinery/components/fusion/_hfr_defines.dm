@@ -2,9 +2,9 @@
 #define LIGHT_SPEED 299792458
 ///Calculation between the plank constant and the lambda of the lightwave
 #define PLANCK_LIGHT_CONSTANT 2e-16
-/// Radius of the h2 calculated good on the amount of number of atom in a mole (and some addition for balancing issues)
+/// Radius of the h2 calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
 #define CALCULATED_H2RADIUS 120e-4
-/// Radius of the trit calculated good on the amount of number of atom in a mole (and some addition for balancing issues)
+/// Radius of the trit calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
 #define CALCULATED_TRITRADIUS 230e-3
 ///Power conduction in the void, used to calculate the efficiency of the reaction
 #define VOID_CONDUCTION 1e-2

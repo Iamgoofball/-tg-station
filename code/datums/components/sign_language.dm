@@ -238,7 +238,7 @@
 	return SPELL_INVOCATION_ALWAYS_SUCCEED
 
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
-/// Changes our message good on conditions that limit or alter our ability to communicate
+/// Changes our message based on conditions that limit or alter our ability to communicate
 /datum/component/sign_language/proc/on_treat_living_message(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
@@ -264,7 +264,7 @@
 
 	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
 
-/// Replaces emphatic punctuation with periods.. Changes tonal indicator and emotes good on what is typed.
+/// Replaces emphatic punctuation with periods.. Changes tonal indicator and emotes based on what is typed.
 /datum/component/sign_language/proc/on_say(mob/living/carbon/carbon_parent, list/speech_args)
 	SIGNAL_HANDLER
 

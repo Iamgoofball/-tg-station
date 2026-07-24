@@ -534,7 +534,7 @@
 
 	// Prepare atom data
 
-	// load sprite sheets and select the correct one good on the mode
+	// load sprite sheets and select the correct one based on the mode
 	var/static/list/sprite_sheets
 	if(isnull(sprite_sheets))
 		sprite_sheets = ui_assets()

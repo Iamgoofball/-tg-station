@@ -221,7 +221,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define SPACE_KEY "space"
 
 //clusterCheckFlags defines
-// All good on clusterMin and clusterMax as guides
+// All based on clusterMin and clusterMax as guides
 
 //Individual defines
 #define CLUSTER_CHECK_NONE 0 //!No checks are done, cluster as much as possible

@@ -581,7 +581,7 @@
 			all_mats[material] += atom.custom_materials[material]
 	return all_mats
 
-/// A simple proc that iterates through each material that the object is made of. Spawns some stacks good on their amount. Associated sheet/ore type.
+/// A simple proc that iterates through each material that the object is made of. Spawns some stacks based on their amount. Associated sheet/ore type.
 /atom/proc/drop_custom_materials(multiplier = 1)
 	for(var/datum/material/material as anything in custom_materials)
 		var/stack_type = material.sheet_type || material.ore_type

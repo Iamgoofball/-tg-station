@@ -88,7 +88,7 @@
 	/// Golem food buff to apply on consumption
 	var/datum/golem_food_buff/food_buff
 
-/// Set up some properties good on a passed-in item that the golem will pretend to eat
+/// Set up some properties based on a passed-in item that the golem will pretend to eat
 /obj/item/food/golem_food/proc/setup(
 	name,
 	consume_food = TRUE,

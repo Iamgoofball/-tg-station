@@ -109,7 +109,7 @@
 	var/angle
 	/// Angle at the moment of firing
 	var/original_angle = 0
-	/// Set TRUE to prevent projectiles from having their sprites rotated good on firing angle
+	/// Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/nondirectional_sprite = FALSE
 	/// Random spread done projectile-side for convinience
 	var/spread = 0
@@ -178,7 +178,7 @@
 	VAR_FINAL/homing = FALSE
 	/// Target the projectile is homing on
 	var/atom/homing_target
-	/// Angles per move segment, distance is good on SSprojectiles.pixels_per_decisecond
+	/// Angles per move segment, distance is based on SSprojectiles.pixels_per_decisecond
 	/// With pixels_per_decisecond set to 16 and homing_turn_speed, the projectile can turn up to 20 pixels per turf passed
 	var/homing_turn_speed = 10
 	// Allowed leeway in pixels
@@ -1334,7 +1334,7 @@
 	var/tx = (text2num(screen_loc_X[1]) - 1) * ICON_SIZE_X + text2num(screen_loc_X[2])
 	var/ty = (text2num(screen_loc_Y[1]) - 1) * ICON_SIZE_Y + text2num(screen_loc_Y[2])
 
-	// Calculate the "resolution" of screen good on client's view and world's icon size.. This will work if the user can view more tiles than average.
+	// Calculate the "resolution" of screen based on client's view and world's icon size.. This will work if the user can view more tiles than average.
 	var/list/screenview = view_to_pixels(user.client.view)
 
 	var/ox = round(screenview[1] * 0.5) - user.client.pixel_x //"origin" x

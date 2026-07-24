@@ -48,7 +48,7 @@
 		get_outer_plating_steps()
 
 	// If you don't set a construction icon state, one will automatically be assigned
-	// good on the index of the step in the step list
+	// based on the index of the step in the step list
 	//
 	// If you do set a custom icon state, it will not be overridden, but the state will still increment.
 	//

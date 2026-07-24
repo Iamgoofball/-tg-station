@@ -738,7 +738,7 @@
 
 	return return_list
 
-/// Returns the key good on the index
+/// Returns the key based on the index
 #define KEYBYINDEX(L, index) (((index <= length(L)) && (index > 0)) ? L[index] : null)
 
 ///return the amount of items of the same type inside a list

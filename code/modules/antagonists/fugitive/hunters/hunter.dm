@@ -36,7 +36,7 @@
 		if(HUNTER_PACK_BOUNTY)
 			to_chat(owner, span_danger("Time to clock in. I am a bounty hunter! We should be arriving at our mark's hideout shortly."))
 			to_chat(owner, span_danger("The briefing mentioned our destination was a research station. An unusual place for a target to try and lay low."))
-			to_chat(owner, span_danger("Our client promised us big bucks, and we intend to make good on our delivery. Let's hope this is an easy paycheck..."))
+			to_chat(owner, span_danger("Our client promised us big bucks, and we intend to make based on our delivery. Let's hope this is an easy paycheck..."))
 		if(HUNTER_PACK_PSYKER)
 			to_chat(owner, span_danger("GOOD EVENING, WE ARE PSYKER HUNTE- NO, PSYKER SHIKARIS!"))
 			to_chat(owner, span_danger("A brainling hit us up on the holopad with an offer we could NOT pass up. We kidnap some fools for them, and in exchange we get a LIFETIME SUPPLY OF GORE."))

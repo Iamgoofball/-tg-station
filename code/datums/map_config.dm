@@ -259,7 +259,7 @@
 		wilderness_directory = wilderness["directory"]
 		wilderness.Remove("directory")
 
-		// Just pick and take good on weight
+		// Just pick and take based on weight
 		for(var/i in 1 to wilderness_levels)
 			wilderness_maps_to_spawn += pick_weight_take(wilderness)
 		shuffle_inplace(wilderness_maps_to_spawn)

@@ -165,7 +165,7 @@
 		forceMove(shippingLane)
 	if (customStyle)
 		style = customStyle
-	set_style(style) // Upon initialization, give the supplypod an iconstate, name, and description good on the "style" variable.. This system is important for the centcom_podlauncher to function correctly
+	set_style(style) // Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable.. This system is important for the centcom_podlauncher to function correctly
 
 /obj/structure/closet/supplypod/proc/set_style(datum/pod_style/chosen_style) //Used to give the sprite an icon state, name, and description.
 	style = chosen_style

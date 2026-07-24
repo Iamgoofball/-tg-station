@@ -150,7 +150,7 @@
 		if(!do_after(user, do_after_time, source, extra_checks = CALLBACK(src, PROC_REF(check_rebuild), source, user, mats) ) )
 			return
 
-		// calculated "effective sheet power" good on mats
+		// calculated "effective sheet power" based on mats
 		// ex.. iron sheets will have a power of 1, reinforced glass a power of 1.5
 		var/mat_power = 0
 		for(var/mat, mat_amt in mats.custom_materials)

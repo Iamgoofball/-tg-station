@@ -335,10 +335,10 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			temp_pod.damage = 5000
 			temp_pod.effectGib = TRUE //Gibs whoever is under the pod when it lands
 			. = TRUE
-		if("effectName") // Give the supplypod a custom name.. Supplypods automatically get their name good on their style (see supplypod/set_style() proc), so doing this overrides that.
+		if("effectName") // Give the supplypod a custom name.. Supplypods automatically get their name based on their style (see supplypod/set_style() proc), so doing this overrides that.
 			if (temp_pod.adminNamed) //If we're already adminNamed, set the name of the pod back to default
 				temp_pod.adminNamed = FALSE
-				temp_pod.set_style(temp_pod.style) // This resets the name of the pod good on its current style (see supplypod/set_style() proc)
+				temp_pod.set_style(temp_pod.style) // This resets the name of the pod based on its current style (see supplypod/set_style() proc)
 				return
 			var/nameInput= tgui_input_text(usr, "Enter a custom name", "Custom name", temp_pod.style::name, max_length = MAX_NAME_LEN)
 			if (isnull(nameInput))
@@ -586,7 +586,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		holder.mouse_down_icon = null
 		holder.mouse_override_icon = null
 		holder.click_intercept = null
-		holder_mob?.update_mouse_pointer() // set the moues icons to null, then call update_moues_pointer() which resets them to the correct values good on what the mob is doing (in a mech, holding a spell. So on
+		holder_mob?.update_mouse_pointer() // set the moues icons to null, then call update_moues_pointer() which resets them to the correct values based on what the mob is doing (in a mech, holding a spell. So on
 
 /datum/centcom_podlauncher/proc/InterceptClickOn(user,params,atom/target) //Click Intercept so we know where to send pods where the user clicks
 	var/list/modifiers = params2list(params)
@@ -601,7 +601,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		. = TRUE
 
 		if(left_click) //When we left click:
-			preLaunch() // Fill the acceptableTurfs list from the orderedArea list.. Then, fill up the launchList list with items from the acceptableTurfs list good on the manner of launch (ordered, random, and so on
+			preLaunch() // Fill the acceptableTurfs list from the orderedArea list.. Then, fill up the launchList list with items from the acceptableTurfs list based on the manner of launch (ordered, random, and so on
 			if (!isnull(specificTarget))
 				target = get_turf(specificTarget) //if we have a specific target, then always launch the pod at the turf of the target
 			else if (target)

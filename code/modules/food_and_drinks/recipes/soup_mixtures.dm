@@ -913,7 +913,7 @@
 	)
 
 // Beet soup (Borscht)
-// This has a gimmick where it randomizes its name good on common mispellings on Borsch
+// This has a gimmick where it randomizes its name based on common mispellings on Borsch
 /datum/reagent/consumable/nutriment/soup/white_beet
 	name = "Beet Soup"
 	description = "Wait, how do you spell it again..?"

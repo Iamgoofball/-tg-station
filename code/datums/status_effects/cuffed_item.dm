@@ -140,7 +140,7 @@
 	if(!update_link())
 		qdel(src)
 
-/// Updates our link and beam effect good on our state
+/// Updates our link and beam effect based on our state
 /// Returns TRUE if we are in a valid link state, FALSE otherwise
 /datum/status_effect/cuffed_item/proc/update_link()
 	// when held, we need no tether

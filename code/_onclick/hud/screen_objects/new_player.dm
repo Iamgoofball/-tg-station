@@ -182,7 +182,7 @@
 		return
 	var/mob/dead/new_player/new_player = hud.mymob
 
-	// switch good on the user, if they aren't ready then we change them to ready, and vice versa
+	// switch based on the user, if they aren't ready then we change them to ready, and vice versa
 	if(new_player.ready == PLAYER_NOT_READY)
 		new_player.auto_deadmin_on_ready_or_latejoin()
 		new_player.ready = PLAYER_READY_TO_PLAY

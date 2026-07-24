@@ -93,13 +93,13 @@
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddElement(/datum/element/table_smash, gentle_push = slam_gently, after_smash_proccall = PROC_REF(after_smash))
 
-/// Applies additional properties good on the frame used to construct this table.
+/// Applies additional properties based on the frame used to construct this table.
 /obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
 	frame = frame_used.type
 	framestack = frame_used.framestack
 	framestackamount = frame_used.framestackamount
 
-/// Applies additional properties good on the stack used to construct this table.
+/// Applies additional properties based on the stack used to construct this table.
 /obj/structure/table/proc/apply_stack_properties(obj/item/stack/stack_used)
 	return
 

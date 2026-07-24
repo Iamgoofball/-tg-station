@@ -513,7 +513,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/update_locked_slots()
 	return
 
-/// Creates inventory slot screen elements good on our assigned default_inventory_slots
+/// Creates inventory slot screen elements based on our assigned default_inventory_slots
 /datum/hud/proc/create_inventory_slots()
 	var/list/created_paths = default_inventory_slots
 	if (ispath(created_paths))

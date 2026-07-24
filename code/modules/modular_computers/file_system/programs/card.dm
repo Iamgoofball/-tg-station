@@ -17,9 +17,9 @@
 	var/authenticated_card
 	/// The name of the registered user, related to `authenticated_card`.
 	var/authenticated_user
-	/// The regions this program has access to good on the authenticated ID.
+	/// The regions this program has access to based on the authenticated ID.
 	var/list/region_access = list()
-	/// The list of accesses this program is verified to change good on the authenticated ID.. Used for state checking against player input.
+	/// The list of accesses this program is verified to change based on the authenticated ID.. Used for state checking against player input.
 	var/list/valid_access = list()
 	/// List of job templates that can be applied to ID cards from this program.
 	var/list/job_templates = list()

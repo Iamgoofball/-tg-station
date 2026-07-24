@@ -8,7 +8,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 	PORT_TYPE_OPTION,
 ))
 
-/// Loads a circuit good on json data at a location.. Can also load usb connections, such as arrest consoles.
+/// Loads a circuit based on json data at a location.. Can also load usb connections, such as arrest consoles.
 /obj/item/integrated_circuit/proc/load_circuit_data(json_data, list/errors)
 	var/list/general_data = json_decode(json_data)
 

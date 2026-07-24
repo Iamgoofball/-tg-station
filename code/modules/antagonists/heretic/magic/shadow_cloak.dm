@@ -206,7 +206,7 @@
 	if(damage_sustained < damage_before_reveal)
 		return
 
-	// Otherwise, we have a probability good on how much damage sustained to self delete
+	// Otherwise, we have a probability based on how much damage sustained to self delete
 	if(prob(damage_sustained))
 		qdel(src)
 

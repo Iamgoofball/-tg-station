@@ -32,7 +32,7 @@
 	var/locked = FALSE
 	/// List of all mob occupants from inside of the pet carrier.
 	var/list/occupants = list()
-	/// Combined weight of all mob occupants good on the MOB_SIZE_ defines.
+	/// Combined weight of all mob occupants based on the MOB_SIZE_ defines.
 	var/occupant_weight = 0
 	/// Maximum number of mobs that can fit in a pet carrier, so you can't have infinite mice or something in one carrier
 	var/max_occupants = 3

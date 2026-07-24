@@ -2,7 +2,7 @@
 // --- Below here are special, unique plant traits that only belong to certain plants.. ---
 // They are un-removable and cannot be mutated randomly, and should never be graftable.
 
-/// Holymelon's anti-magic trait.. Charges good on potency.
+/// Holymelon's anti-magic trait.. Charges based on potency.
 /datum/plant_gene/trait/anti_magic
 	name = "Anti-Magic Vacuoles"
 	description = "You can hide behind it from a fireball!"
@@ -503,7 +503,7 @@
 	description = "It can hold up to 125 units of reagents."
 	new_capacity = 125
 
-/// Plants that explode when used good on their reagent contents)
+/// Plants that explode when used based on their reagent contents)
 /datum/plant_gene/trait/bomb_plant
 	name = "Explosive Contents"
 	description = "Don't shake it, the contents may explode."
@@ -582,7 +582,7 @@
 	our_plant.reagents.chem_temp = 1000 //Sets off the gunpowder
 	our_plant.reagents.handle_reactions()
 
-/// A subtype of bomb plants that have their boom sized good on potency instead of reagent contents.
+/// A subtype of bomb plants that have their boom sized based on potency instead of reagent contents.
 /datum/plant_gene/trait/bomb_plant/potency_based
 	name = "Explosive Nature"
 

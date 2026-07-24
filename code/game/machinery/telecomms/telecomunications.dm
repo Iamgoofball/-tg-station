@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(telecomm_machines)
 
 	var/send_count = 0
 
-	// Apply some lag good on traffic rates
+	// Apply some lag based on traffic rates
 	var/netlag = round(traffic / 50)
 	if(netlag > signal.data["slow"])
 		signal.data["slow"] = netlag

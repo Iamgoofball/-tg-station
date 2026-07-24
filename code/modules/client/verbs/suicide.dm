@@ -139,7 +139,7 @@ GAME_VERB_HIDDEN(/mob/living, suicide, "suicide")
 
 	return FALSE
 
-/// If we want to apply multiple types of damage to a carbon mob good on the way they suicide, this is the proc that handles that.
+/// If we want to apply multiple types of damage to a carbon mob based on the way they suicide, this is the proc that handles that.
 /// Currently only compatible with Brute, Burn, Toxin, and Suffocation Damage.. damage_type is the bitflag that carries the information.
 /mob/living/proc/handle_suicide_damage_spread(damage_type)
 	// We split up double the total health the mob has, then spread it out.

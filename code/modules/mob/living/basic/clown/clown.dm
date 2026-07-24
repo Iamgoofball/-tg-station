@@ -447,7 +447,7 @@
 			return FALSE
 		return TRUE
 
-/// This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal good on their potency. The peels are retained in the pouch.
+/// This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency. The peels are retained in the pouch.
 /mob/living/basic/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
 
 	var/static/funny_items = list(

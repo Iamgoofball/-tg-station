@@ -240,7 +240,7 @@ SUBSYSTEM_DEF(ticker)
 
 	// There may be various config settings that have been set or modified by this point.
 	// This is the point of no return before spawning in new players, let's run over the
-	// job trim singletons and update them good on any config settings.
+	// job trim singletons and update them based on any config settings.
 	SSid_access.refresh_job_trim_singletons()
 
 	CHECK_TICK

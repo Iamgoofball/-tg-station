@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 		copycat.updateappearance(icon_update=TRUE, mutcolor_update=TRUE, mutations_overlay_update=TRUE)
 	else
 		//even if target isn't a carbon, if they have a client we can make the
-		// dummy look like what their human would look like good on their prefs
+		// dummy look like what their human would look like based on their prefs
 		target?.client?.prefs?.apply_prefs_to(copycat, TRUE)
 
 	return copycat

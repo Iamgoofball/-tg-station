@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value = 0
 	var/coinflip
-	/// If you do not want this coin to be valued good on its materials. Instead set a custom value set this to TRUE. Set value to the desired value.
+	/// If you do not want this coin to be valued based on its materials. Instead set a custom value set this to TRUE. Set value to the desired value.
 	var/override_material_worth = FALSE
 	/// The name of the heads side of the coin
 	var/heads_name = "heads"

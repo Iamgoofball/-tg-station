@@ -1,4 +1,4 @@
-/// Tries to spawn a crate twice good on the list of available locations
+/// Tries to spawn a crate twice based on the list of available locations
 /obj/machinery/quantum_server/proc/attempt_spawn_cache(list/possible_turfs)
 	if(!length(possible_turfs))
 		return TRUE

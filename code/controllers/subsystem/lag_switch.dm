@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(lag_switch)
 	message_admins("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds. (<a href='byond://?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
 	log_admin("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds.")
 
-/// (En/Dis)able automatic triggering of switches good on client count
+/// (En/Dis)able automatic triggering of switches based on client count
 /datum/controller/subsystem/lag_switch/proc/toggle_auto_enable()
 	auto_switch = !auto_switch
 	if(auto_switch)

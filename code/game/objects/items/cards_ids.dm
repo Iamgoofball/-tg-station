@@ -617,7 +617,7 @@
 		balloon_alert(user, "no account!")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return
-	/// Determines where the holopay will be placed good on tile contents
+	/// Determines where the holopay will be placed based on tile contents
 	var/turf/projection
 	var/turf/step_ahead = get_step(user, user.dir)
 	var/turf/user_loc = user.loc

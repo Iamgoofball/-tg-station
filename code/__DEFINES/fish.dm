@@ -173,7 +173,7 @@
 /// Used to calculate how many bites a fish can take and so the amount of reagents it has.
 #define FISH_WEIGHT_BITE_DIVISOR (FISH_GRIND_RESULTS_WEIGHT_DIVISOR * FISH_WEIGHT_GRIND_TO_BITE_MULT)
 
-/// Set of operations that calculate the slowdown of fish good on weight
+/// Set of operations that calculate the slowdown of fish based on weight
 #define GET_FISH_SLOWDOWN(weighty) round(((weighty/FISH_WEIGHT_SLOWDOWN_DIVISOR)**FISH_WEIGHT_SLOWDOWN_EXPONENT)-1.3, 0.1)
 
 /**

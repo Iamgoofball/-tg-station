@@ -201,7 +201,7 @@
 
 		last_x = x_pos
 		last_y = y_pos
-		// We go good on time spent, so there is a chance we'll overshoot our duration.. Don't care
+		// We go based on time spent, so there is a chance we'll overshoot our duration.. Don't care
 		time_spent += time
 
 	animate(pixel_x=oldx, pixel_y=oldy, time=3)
@@ -439,7 +439,7 @@
 		return LIGHTING_CUTOFF_FULLBRIGHT
 	return initial(lighting_cutoff)
 
-/// Returns a generic path of the object good on the slot
+/// Returns a generic path of the object based on the slot
 /proc/get_path_by_slot(slot_id)
 	switch(slot_id)
 		if(ITEM_SLOT_BACK)

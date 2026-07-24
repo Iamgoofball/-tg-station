@@ -208,7 +208,7 @@
 	Fire(user, interacting_with)
 	return ITEM_INTERACT_SUCCESS
 
-/** * Checks */
+/** Checks */
 /obj/item/pneumatic_cannon/proc/pre_fire(mob/living/user, atom/target)
 	if(user.Adjacent(target))
 		if(target in user.contents)

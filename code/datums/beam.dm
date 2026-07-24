@@ -141,7 +141,7 @@
 	// BYOND-managed glide, making the beam trail.. Draw() doesn't sleep, so calling it here is safe.
 	Draw()
 
-/** * Returns the last drawn endpoints for reuse by inherit_glide(), or null if undrawn. */
+/** Returns the last drawn endpoints for reuse by inherit_glide(), or null if undrawn. */
 /datum/beam/proc/get_last_geometry()
 	if(!last_draw_valid)
 		return null
@@ -156,7 +156,7 @@
 		"target_py" = last_target_py,
 	)
 
-/** * Seeds the next Draw() from saved geometry so rebuilt beams glide instead of snapping. */
+/** Seeds the next Draw() from saved geometry so rebuilt beams glide instead of snapping. */
 /datum/beam/proc/inherit_glide(list/geometry, animate_time)
 	if(!geometry || animate_time <= 0)
 		return

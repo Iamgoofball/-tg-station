@@ -73,7 +73,7 @@
 	///The current panel the player is viewieng in the UI.
 	var/ui_panel = UI_PANEL_WORLD_MAP
 
-	/** * PLAYER INFORMATION */
+	/** PLAYER INFORMATION */
 
 	///Boolean on whether it's the player's time to do their turn.
 	var/player_turn = TRUE
@@ -89,7 +89,7 @@
 		ARMOR_SLOT = null,
 	)
 
-	/** * CURRENT ENEMY INFORMATION */
+	/** CURRENT ENEMY INFORMATION */
 
 	///A feedback message displayed in the UI during combat sequences.
 	var/feedback_message

@@ -162,7 +162,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Do we show this crystal in the CIMS modular program
 	var/include_in_cims = TRUE
 
-	/// Hue shift of the zaps color good on the power of the crystal
+	/// Hue shift of the zaps color based on the power of the crystal
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
 	var/atom/movable/warp_effect/warp

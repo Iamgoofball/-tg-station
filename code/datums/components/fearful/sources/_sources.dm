@@ -1,5 +1,5 @@
 // Terror source handlers
-/// Simple source which passively increases terror good on a single condition and can do something when its added/removed
+/// Simple source which passively increases terror based on a single condition and can do something when its added/removed
 /datum/terror_handler/simple_source
 	handler_type = TERROR_HANDLER_SOURCE
 	/// How much terror is added per second

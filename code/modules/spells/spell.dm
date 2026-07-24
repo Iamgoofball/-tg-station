@@ -493,7 +493,7 @@
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
-/// Gets the title of the spell good on its level.
+/// Gets the title of the spell based on its level.
 /datum/action/cooldown/spell/proc/get_spell_title()
 	switch(spell_level)
 		if(2)

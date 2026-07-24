@@ -47,7 +47,7 @@
 	return has_hand_for_held_index(active_hand_index)
 
 
-// Finds the first available (null) index OR all available (null) indexes in held_items good on a side.
+// Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
 //Lefts: 1, 3, 5, 7...
 //Rights:2, 4, 6, 8...
 /mob/proc/get_empty_held_index_for_side(side = LEFT_HANDS, all = FALSE)

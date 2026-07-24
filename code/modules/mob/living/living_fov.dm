@@ -27,8 +27,8 @@
 	var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
 
 	/// Getting a direction vector
-	var/dir_x = 0 // good on east/west
-	var/dir_y = 0 // good on north/south
+	var/dir_x = 0 // based on east/west
+	var/dir_y = 0 // based on north/south
 
 	if(dir & NORTH)
 		dir_y += vector_len

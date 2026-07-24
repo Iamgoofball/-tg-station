@@ -104,7 +104,7 @@
 	var/obj/projectile/projectile_type = /obj/projectile/magic/teleport
 	/// How many projectiles we can fire per cast.. Not all at once, per click, kind of like charges
 	var/projectile_amount = 1
-	/// How many projectiles we have yet to fire, good on projectile_amount
+	/// How many projectiles we have yet to fire, based on projectile_amount
 	var/current_amount = 0
 	/// How many projectiles we fire every fire_projectile() call.
 	/// Unwise to change without overriding or extending ready_projectile.
@@ -139,7 +139,7 @@
 		return FALSE
 
 	var/turf/caster_turf = caster.loc
-	// Get the tile infront of the caster, good on their direction
+	// Get the tile infront of the caster, based on their direction
 	var/turf/caster_front_turf = get_step(owner, owner.dir)
 
 	fire_projectile(cast_on)

@@ -404,7 +404,7 @@
 	if(owner?.client)
 		owner.client.mouse_pointer_icon = cursor_icon
 
-/// Calculates the actual screen pixel size good on the client's view
+/// Calculates the actual screen pixel size based on the client's view
 /atom/movable/screen/minimap_display/proc/get_screen_pixel_size()
 	var/mob/owner = get_mob()
 	if(!owner?.client)

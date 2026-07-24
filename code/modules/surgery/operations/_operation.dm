@@ -688,7 +688,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/get_default_radial_image()
 	return image(icon = 'icons/effects/random_spawners.dmi', icon_state = "questionmark")
 
-/// Helper to get a generic limb radial image good on body zone
+/// Helper to get a generic limb radial image based on body zone
 /datum/surgery_operation/proc/get_generic_limb_radial_image(body_zone)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PROTECTED_PROC(TRUE)
@@ -751,7 +751,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 			total_mod *= 1.5
 	return round(total_mod, 0.01)
 
-/// Returns a time modifier good on the mob's status
+/// Returns a time modifier based on the mob's status
 /datum/surgery_operation/proc/get_mob_surgery_speed_mod(mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
@@ -763,7 +763,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		basemod *= 0.8
 	return basemod
 
-/// Returns a time modifier good on the surgeon's status
+/// Returns a time modifier based on the surgeon's status
 /datum/surgery_operation/proc/get_surgeon_surgery_speed_mod(mob/living/patient, mob/living/surgeon, tool)
 	PROTECTED_PROC(TRUE)
 	var/basemod = 1.0
@@ -1000,7 +1000,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		alt_msg = span_notice("You feel [you_feel] as you are operated on."),
 	)
 
-/// Display pain message to the target good on their traits and condition
+/// Display pain message to the target based on their traits and condition
 /datum/surgery_operation/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	PROTECTED_PROC(TRUE)
@@ -1015,7 +1015,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	// Determine how drunk our patient is
 	var/drunken_patient = target.get_drunk_amount()
-	// Create a probability to ignore the pain good on drunkenness level
+	// Create a probability to ignore the pain based on drunkenness level
 	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
 
 	if(target.stat >= UNCONSCIOUS || HAS_TRAIT(target, TRAIT_KNOCKEDOUT))
@@ -1027,7 +1027,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	if(prob(30) && !mechanical_surgery)
 		target.emote("scream")
 
-/// Plays a sound for the operation good on the tool used
+/// Plays a sound for the operation based on the tool used
 /datum/surgery_operation/proc/play_operation_sound(atom/movable/operating_on, mob/living/surgeon, tool, sound_or_sound_list)
 	PROTECTED_PROC(TRUE)
 
@@ -1070,13 +1070,13 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 
 	return operating_computer
 
-/// Updates a patient's mood good on the surgery state and their traits
+/// Updates a patient's mood based on the surgery state and their traits
 /datum/surgery_operation/proc/update_surgery_mood(mob/living/patient, surgery_state)
 	PROTECTED_PROC(TRUE)
 	if(!(operation_flags & OPERATION_AFFECTS_MOOD))
 		return
 
-	// Create a probability to ignore the pain good on drunkenness level
+	// Create a probability to ignore the pain based on drunkenness level
 	var/drunk_ignore_prob = clamp(patient.get_drunk_amount(), 0, 90)
 
 	if(HAS_TRAIT(patient, TRAIT_ANALGESIA) || prob(drunk_ignore_prob))

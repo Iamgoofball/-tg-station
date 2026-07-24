@@ -1,4 +1,4 @@
-/** * Assigned say modal of the client */
+/** Assigned say modal of the client */
 /client/var/datum/tgui_say/tgui_say
 
 /**
@@ -38,7 +38,7 @@
 	/// Speech suffuxes used for force_say after "-".. Defaults to hurt_phrases
 	var/list/alter_phrases
 
-/** * Creates the new input window to exist in the background. */
+/** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)

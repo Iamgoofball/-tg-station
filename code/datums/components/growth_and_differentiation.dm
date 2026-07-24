@@ -88,7 +88,7 @@
 	setup_growth_tracking()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 
-/// Sets up the two different systems for growth: the timer and the probability good one.. Both can coexist.. Return COMPONENT_INCOMPATIBLE if we fail to set up either.
+/// Sets up the two different systems for growth: the timer and the probability based one.. Both can coexist.. Return COMPONENT_INCOMPATIBLE if we fail to set up either.
 /datum/component/growth_and_differentiation/proc/setup_growth_tracking()
 	var/did_we_add_at_least_one_thing = FALSE
 

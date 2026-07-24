@@ -290,7 +290,7 @@
 
 /// The choice with the most votes wins... Ties are broken by the first choice to reach that number of votes.
 #define VOTE_WINNER_METHOD_SIMPLE "Simple"
-/// The winning choice is selected randomly good on the number of votes each choice has.
+/// The winning choice is selected randomly based on the number of votes each choice has.
 #define VOTE_WINNER_METHOD_WEIGHTED_RANDOM "Weighted Random"
 /// There is no winner for this vote.
 #define VOTE_WINNER_METHOD_NONE "None"

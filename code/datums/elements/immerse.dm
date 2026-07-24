@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	/// An association list of turfs that have this element attached and their affected contents.
 	var/list/attached_turf_contents = list()
 
-	/// A list of generated immersion masks good on object width, height and whever they're fully immersed underwater
+	/// A list of generated immersion masks based on object width, height and whever they're fully immersed underwater
 	var/list/immersion_masks = list()
 	/// An assoc list of instances of /atom/movable/immerse_mask used as abstract effect relays, because god is dead
 	var/list/generated_visual_overlays = list()
@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING, COMSIG_LIVING_UPDATE_OFFSETS, COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
 	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
-/// Generate a mask filter mutable to use as render_source for the alpha filter good on provided width, height and immersion state
+/// Generate a mask filter mutable to use as render_source for the alpha filter based on provided width, height and immersion state
 /datum/element/immerse/proc/generate_immerse_mask(width, height, is_below_water)
 	if (!width || !height)
 		return

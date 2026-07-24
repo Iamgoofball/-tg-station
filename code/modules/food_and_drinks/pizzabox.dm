@@ -386,7 +386,7 @@
 
 /obj/item/pizzabox/infinite/examine(mob/user)
 	if(!open && ishuman(user))
-		attune_pizza(user) // pizza tag changes good on examiner
+		attune_pizza(user) // pizza tag changes based on examiner
 	. = ..()
 	if(isobserver(user))
 		. += span_deadsay("This pizza box is anomalous, and will produce infinite pizza.")

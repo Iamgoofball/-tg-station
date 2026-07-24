@@ -305,7 +305,7 @@
 	mined.update_visuals()
 
 /// When the turf gets drilled from an AOE explosion
-/// Has a chance of not being drilled good on own hardness
+/// Has a chance of not being drilled based on own hardness
 /turf/closed/mineral/proc/drill_aoe(mob/user, exp_multiplier = 0)
 	var/speed_change = /turf/closed/mineral::tool_mine_speed / tool_mine_speed
 	// Probability scaling isn't linear to still mine somewhat reliably in dense rocks

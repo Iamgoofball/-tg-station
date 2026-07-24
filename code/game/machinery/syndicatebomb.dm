@@ -41,7 +41,7 @@
 	var/detonation_timer
 	/// When do we beep next?
 	var/next_beep
-	/// If TRUE, more boom wires are added good on the timer set.
+	/// If TRUE, more boom wires are added based on the timer set.
 	var/add_boom_wires = TRUE
 	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
 	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate

@@ -40,7 +40,7 @@ This component is used in vat growing to swab for microbiological samples which 
 	return ..()
 
 
-/// Changes examine good on your sample
+/// Changes examine based on your sample
 /datum/component/swabbing/proc/examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	if(LAZYLEN(swabbed_items))

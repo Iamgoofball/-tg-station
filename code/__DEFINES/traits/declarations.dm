@@ -142,7 +142,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// When applied to a mob's head, their face will be unrecognizable and get displayed as Unknown
 #define TRAIT_DISFIGURED "disfigured"
 /// "Magic" trait that blocks the mob from moving or interacting with anything... Used for transient stuff like mob transformations or incorporality in special cases.
-/// Will block movement, `Life()` (!!!), and other stuff good on the mob.
+/// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
 /// Tracks whether we're going to be a baby alien's mummy.
 #define TRAIT_XENO_HOST "xeno_host"

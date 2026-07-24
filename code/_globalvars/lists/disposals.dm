@@ -36,7 +36,7 @@
 30 Detective's Office
 */
 
-// The whole system for the sorttype var is determined good on the order of this list,
+// The whole system for the sorttype var is determined based on the order of this list,
 //disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
 
 //If you don't want to fuck up disposals, add to this list, and don't change the order.

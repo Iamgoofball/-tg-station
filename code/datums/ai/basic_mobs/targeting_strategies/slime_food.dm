@@ -1,4 +1,4 @@
-/// Accepts edible targets for slimes good on hunger level, faction, and species.
+/// Accepts edible targets for slimes based on hunger level, faction, and species.
 /// Needs the controller (reads slime hunger/rabid/current-target blackboard keys).
 /datum/targeting_strategy/slime_food
 

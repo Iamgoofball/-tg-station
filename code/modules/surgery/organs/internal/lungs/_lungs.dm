@@ -717,7 +717,7 @@
 		breath_out.moles[exchange_id] += volume
 	return volume
 
-/// Applies suffocation side-effects to a given Human, scaling good on ratio of needed pressure VS "true" pressure.
+/// Applies suffocation side-effects to a given Human, scaling based on ratio of needed pressure VS "true" pressure.
 /// If pressure is greater than 0, the return value will represent the amount of gas successfully breathed.
 /obj/item/organ/lungs/proc/handle_suffocation(mob/living/carbon/human/suffocator = null, breath_pp = 0, safe_breath_min = 0, mole_count = 0)
 	. = 0
@@ -733,7 +733,7 @@
 	// note: this is where crit damage is handled for mobs that breathe
 	var/oxy_damage_dealt = SUFFOCATION_OXYLOSS
 	if(breath_pp > 0)
-		// we got a partial breath, scale the damage good on how much we got
+		// we got a partial breath, scale the damage based on how much we got
 		oxy_damage_dealt *= ((safe_breath_min - breath_pp) / safe_breath_min)
 		. = mole_count
 
@@ -1043,7 +1043,7 @@
 	safe_nitro_min = max(0, nitrogen_pp - GAS_TOLERANCE)
 	safe_plasma_min = max(0, plasma_pp - GAS_TOLERANCE)
 
-	// Increase plasma tolerance good on amount in base air
+	// Increase plasma tolerance based on amount in base air
 	safe_plasma_max += plasma_pp
 
 	// CO2 is always a waste gas, so none is needed but ashwalkers

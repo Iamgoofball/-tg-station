@@ -150,7 +150,7 @@
 	card = null
 	return ..()
 
-// Need to override parent here because the message we dispatch is turf-based, not good on the location of the object because that could be fuckin anywhere
+// Need to override parent here because the message we dispatch is turf-based, not based on the location of the object because that could be fuckin anywhere
 /mob/living/silicon/pai/send_applicable_messages()
 	var/turf/location = get_turf(src)
 	location.visible_message(span_danger(get_visible_suicide_message()), null, span_hear(get_blind_suicide_message())) // null in the second arg here because we're sending from the turf

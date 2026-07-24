@@ -337,7 +337,7 @@
 
 	return dist
 
-/// Returns a list of turfs around a center good on RANGE_TURFS()
+/// Returns a list of turfs around a center based on RANGE_TURFS()
 /proc/circle_range_turfs(center = usr, radius = 3)
 
 	var/turf/center_turf = get_turf(center)
@@ -351,7 +351,7 @@
 			turfs += checked_turf
 	return turfs
 
-/// Returns a list of turfs around a center good on view()
+/// Returns a list of turfs around a center based on view()
 /proc/circle_view_turfs(center=usr,radius=3) // Is there even a diffrence between this proc and circle_range_turfs()?. // Yes
 	var/turf/center_turf = get_turf(center)
 	var/list/turfs = new/list()
@@ -364,7 +364,7 @@
 			turfs += checked_turf
 	return turfs
 
-/// Returns the list of turfs around the outside of a center good on RANGE_TURFS()
+/// Returns the list of turfs around the outside of a center based on RANGE_TURFS()
 /proc/border_diamond_range_turfs(atom/center = usr, radius = 3)
 	var/turf/center_turf = get_turf(center)
 	var/list/turfs = list()

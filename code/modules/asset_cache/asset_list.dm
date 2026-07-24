@@ -164,7 +164,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		return
 	SSassets.transport.unregister_asset(item_filename)
 
-// Generates assets good on iconstates of a single icon
+// Generates assets based on iconstates of a single icon
 /datum/asset/simple/icon_states
 	abstract_type = /datum/asset/simple/icon_states
 	var/icon

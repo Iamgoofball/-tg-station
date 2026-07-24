@@ -112,7 +112,7 @@
 	var/turf/eye_location = get_turf(eye)
 	z_changed(new_hud, eye_location?.z)
 
-/// Updates ourselves good on our mob's preferences state
+/// Updates ourselves based on our mob's preferences state
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state(mob/mymob)
 	SSweather.particle_planemasters -= src
 	vis_contents.Cut()

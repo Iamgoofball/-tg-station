@@ -236,7 +236,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 #undef LOG_CATEGORY_RESET_FILE_MARKER
 #undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
 
-/// Initializes the given log category and populates the list of contained categories good on the sub category list
+/// Initializes the given log category and populates the list of contained categories based on the sub category list
 /datum/log_holder/proc/init_log_category(datum/log_category/category_type, list/datum/log_category/sub_categories)
 	var/datum/log_category/category_instance = new category_type
 

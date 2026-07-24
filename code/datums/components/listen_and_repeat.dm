@@ -13,7 +13,7 @@
 /// the blip base it should be said in
 #define MESSAGE_BLIP_NUMBER "blip_number"
 
-/// Simple element that will deterministically set a value good on stuff that the source has heard and will then compel the source to repeat it.
+/// Simple element that will deterministically set a value based on stuff that the source has heard and will then compel the source to repeat it.
 /// Needs a valid AI Blackboard.
 /datum/component/listen_and_repeat
 	/// The AI Blackboard Key we assign the value to.

@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(id_access)
 	var/list/trim_singletons_by_path = list()
 	/// Dictionary of wildcard compatibility flags.. Keys are strings for the wildcards.. Values are their associated flags.
 	var/list/wildcard_flags_by_wildcard = list()
-	/// Dictionary of accesses good on station region.. Keys are region strings.. Values are lists of accesses.
+	/// Dictionary of accesses based on station region.. Keys are region strings.. Values are lists of accesses.
 	var/list/accesses_by_region = list()
 	/// Specially formatted list for sending access levels to tgui interfaces.
 	var/list/all_region_access_tgui = list()

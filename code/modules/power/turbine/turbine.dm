@@ -630,7 +630,7 @@
 	//===============COMPRESSOR WORKING========//
 	//Transfer gases from turf to compressor
 	var/temperature = compressor.compress_gases()
-	// Compute damage taken good on temperature
+	// Compute damage taken based on temperature
 	damage_archived = damage
 	var/temperature_difference = temperature - max_allowed_temperature
 	var/damage_done = round(log(90, max(temperature_difference, 1)), 0.5)
@@ -668,7 +668,7 @@
 	var/turbine_work = transfer_gases(machine_gasmix, turbine.machine_gasmix, abs(rotor_work))
 
 	//================TURBINE WORKING============//
-	// Calculate final power generated good on how much gas was ejected from the turbine
+	// Calculate final power generated based on how much gas was ejected from the turbine
 	var/datum/gas_mixture/ejected_gases = turbine.expel_gases()
 	if(!ejected_gases) //output turf was blocked with high pressure/temperature gases or by some structure so no power generated
 		rpm = 0

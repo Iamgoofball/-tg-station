@@ -807,7 +807,7 @@
 	return result
 
 //===============================Logging==========================================
-/// Outputs a log-friendly list of reagents good on the internal reagent_list.
+/// Outputs a log-friendly list of reagents based on the internal reagent_list.
 /datum/reagents/proc/get_reagent_log_string()
 	if(!length(reagent_list))
 		return "no reagents"

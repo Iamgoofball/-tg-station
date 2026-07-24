@@ -47,7 +47,7 @@
 	threatscale = reset_fantasy_variable("threatscale", threatscale)
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
-	display_timer = (stage == GRENADE_READY) // show/hide the timer good on assembly state
+	display_timer = (stage == GRENADE_READY) // show/hide the timer based on assembly state
 	. = ..()
 	if (!user.can_see_reagents())
 		if (stage == GRENADE_READY || !(length(beakers)))

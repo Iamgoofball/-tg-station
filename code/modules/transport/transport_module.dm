@@ -53,7 +53,7 @@
 
 	///how many tiles this platform extends on the x axis
 	var/width = 1
-	/// how many tiles this platform extends on the why axis (north-south not up-down, that would be the z axis)
+	/// how many tiles this platform extends on the y axis (north-south not up-down, that would be the z axis)
 	var/height = 1
 
 	///if TRUE, this platform will late initialize and then expand to become a multitile object across all other linked platforms on this z level

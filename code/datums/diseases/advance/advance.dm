@@ -194,7 +194,7 @@
 		if(new_name)
 			AssignName()
 
-// Generate disease properties good on the effects.. Returns an associated list.
+// Generate disease properties based on the effects.. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
 	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
 
@@ -204,7 +204,7 @@
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		if(!S.neutered)
-			properties["severity"] += S.severity // severity is good on the sum of all non-neutered symptoms' severity
+			properties["severity"] += S.severity // severity is based on the sum of all non-neutered symptoms' severity
 	if(properties["severity"] > 0)
 		properties["severity"] += round((properties["resistance"] / 12), 1)
 		properties["severity"] += round((properties["stage_rate"] / 11), 1)

@@ -486,7 +486,7 @@ Example config:
 
 	update_chat_filter_regexes()
 
-/// Will update the internal regexes of the chat filter good on the filter reasons
+/// Will update the internal regexes of the chat filter based on the filter reasons
 /datum/controller/configuration/proc/update_chat_filter_regexes()
 	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
 	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
