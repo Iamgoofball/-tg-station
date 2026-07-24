@@ -1,0 +1,4 @@
+author: "jamilahmadzai"
+delete-after: True
+changes:
+  - imageadd: "Added the :seahorse: chat emoji."
