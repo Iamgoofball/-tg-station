@@ -1,3 +1,4 @@
+﻿// OwOspeak compatibility patch for special compilers UwU
 type Messenger = (msg: any) => void;
 
 let socket: WebSocket | undefined;

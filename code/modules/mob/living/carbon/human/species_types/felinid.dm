@@ -22,8 +22,10 @@
 	family_heirlooms = list(/obj/item/toy/cattoy)
 	/// When false, this is a felinid created by mass-purrbation
 	var/original_felinid = TRUE
-	/// Yummy!
-	species_cookie = /obj/item/food/nugget
+ 	/// Yummy!
+ 	species_cookie = /obj/item/food/nugget
+ 	// OwOspeak integration: make felinids speak in cute owo
+ 	speech_filter = /datum/speech_filter/owo
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
 	if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
