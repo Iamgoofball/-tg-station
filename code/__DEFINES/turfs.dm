@@ -1,139 +1,160 @@
-#define CHANGETURF_DEFER_CHANGE (1<<0)
-#define CHANGETURF_IGNORE_AIR (1<<1) // This flag prevents changeturf from gathering air from nearby turfs to fill the new turf with an approximation of local air
-#define CHANGETURF_FORCEOP (1<<2)
-#define CHANGETURF_SKIP (1<<3) // A flag for PlaceOnTop to just instance the new turf instead of calling ChangeTurf... Used for uninitialized turfs NOTHING ELSE
-#define CHANGETURF_INHERIT_AIR (1<<4) // Inherit air from previous turf... Implies CHANGETURF_IGNORE_AIR
-#define CHANGETURF_RECALC_ADJACENT (1<<5) //Immediately recalc adjacent atmos turfs instead of queuing.
-#define CHANGETURF_TRAPDOOR_INDUCED (1<<6) // Caused by a trapdoor, for trapdoor to know that this changeturf was caused by itself
-#define CHANGETURF_GENERATE_SHUTTLE_CEILING (1<<7) // Generate a shuttle ceiling on the above turf
-#define CHANGETURF_NO_AREA_CHANGE (1<<8) // Prevents turfs like space from autoadjusting their area
-#define CHANGETURF_INHERIT_MOUNTS (1<<9) //All objects attached to the turf don't fall off after transform
+/// A universal base type for all turfs that can be found across space
+/turf/open
+	gender = PLURAL
+	/// Baseturfs that this turf can become when something changes... In practice this is mostly for space, which becomes asteroid turf when it gets bombed... You can also create complex chains (for fancy baseturfs)
+	var/list/baseturfs = /turf/baseturf_bottom
+	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	/// Wall mount interactions will target this turf and may offset visual objects to this plane
+	var/wall_mounted_plane = FLOOR_PLANE
+	/// Set this to make an open turf not be destroyed when being hit by a shower of sparks, meteors, etc.
+	var/indestructible = FALSE
+	/// Whether this turf will cause radioactive contamination if analyzed. Defaults to FALSE, override to TRUE for specific radioactive turfs.
+	var/radioactive_contamination = FALSE
 
-#define IS_OPAQUE_TURF(turf) (turf.directional_opacity == ALL_CARDINALS)
+/turf/open/Initialize(mapload)
+	SHOULD_CALL_PARENT(FALSE)
+	if(flags_1 & INITIALIZED_1)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+		return
+	flags_1 |= INITIALIZED_1
 
-//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
-///Returns a list of turf in a square
-#define RANGE_TURFS(RADIUS, CENTER) \
-	RECT_TURFS(RADIUS, RADIUS, CENTER)
+	// We don't call the parent here because we want to save on the huge amount of init calls this would invoke.
+	// We call it below after the area init
 
-#define RECT_TURFS(H_RADIUS, V_RADIUS, CENTER) \
-	block( \
-	(CENTER).x - (H_RADIUS), (CENTER).y - (V_RADIUS), (CENTER).z, \
-	(CENTER).x + (H_RADIUS), (CENTER).y + (V_RADIUS), (CENTER).z \
-	)
+	// by default, vis_contents doesn't work on turfs
+	// some turfs use it, though
+	// this might be a tiny bit laggy but it's a way better alternative to enabling it on every turf
+	if(length(vis_contents))
+		vis_flags |= VIS_INHERIT_PLANE
 
-///Returns all turfs in a zlevel
-#define Z_TURFS(ZLEVEL) block(1, 1, ZLEVEL, world.maxx, world.maxy, ZLEVEL)
+	if(requires_activation)
+		CALL_IN(src, /atom/proc/update_icon) // just in case the icon needs to be set as broken
 
-///Returns all currently loaded turfs
-#define ALL_TURFS(...) block(1, 1, 1, world.maxx, world.maxy, world.maxz)
+	// If we are being maploaded, don't bother with anything too heavy.
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
 
-#define TURF_FROM_COORDS_LIST(List) (locate(List[1], List[2], List[3]))
+	var/area/our_area = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && istype(our_area))
+		add_overlay(/obj/effect/fullbright)
 
-/// Returns a list of turfs in the rectangle specified by BOTTOM LEFT corner and height/width, checks for being outside the world border for you
-#define CORNER_BLOCK(corner, width, height) CORNER_BLOCK_OFFSET(corner, width, height, 0, 0)
+	if(light_power && light_range)
+		update_light()
 
-/// Returns a list of turfs similar to CORNER_BLOCK but with offsets
-#define CORNER_BLOCK_OFFSET(corner, width, height, offset_x, offset_y) ((block(corner.x + offset_x, corner.y + offset_y, corner.z, corner.x + (width - 1) + offset_x, corner.y + (height - 1) + offset_y, corner.z)))
+	if(opacity)
+		has_opaque_atom = TRUE
 
-/// Returns an outline (neighboring turfs) of the given block
-#define CORNER_OUTLINE(corner, width, height) ( \
-	CORNER_BLOCK_OFFSET(corner, width + 2, 1, -1, -1) + \
-	CORNER_BLOCK_OFFSET(corner, width + 2, 1, -1, height) + \
-	CORNER_BLOCK_OFFSET(corner, 1, height, -1, 0) + \
-	CORNER_BLOCK_OFFSET(corner, 1, height, width, 0))
+	var/turf/T = GET_TURF_ABOVE(src)
+	if(T?.flags_1 & INITIALIZED_1)
+		QUEUE_SMOOTH(T)
 
-/// Returns a list of around us
-#define TURF_NEIGHBORS(turf) (CORNER_BLOCK_OFFSET(turf, 3, 3, -1, -1) - turf)
+	var/turf/U = GET_TURF_BELOW(src)
+	if(U?.flags_1 & INITIALIZED_1)
+		QUEUE_SMOOTH(U)
 
-/// The pipes, disposals, and wires are hidden
-#define UNDERFLOOR_HIDDEN 0
-/// The pipes, disposals, and wires are visible but cannot be interacted with
-#define UNDERFLOOR_VISIBLE 1
-/// The pipes, disposals, and wires are visible and can be interacted with
-#define UNDERFLOOR_INTERACTABLE 2
+	return INITIALIZE_HINT_LATELOAD
 
-// Wet floor type flags... Stronger ones should be higher in number.
-/// Turf is dry and mobs won't slip
-#define TURF_DRY (0)
-/// Turf has water on the floor and mobs will slip unless walking or using galoshes
-#define TURF_WET_WATER (1<<0)
-/// Turf has a thick layer of ice on the floor and mobs will slip in the direction until they bump into something
-#define TURF_WET_PERMAFROST (1<<1)
-/// Turf has a thin layer of ice on the floor and mobs will slip
-#define TURF_WET_ICE (1<<2)
-/// Turf has lube on the floor and mobs will slip
-#define TURF_WET_LUBE (1<<3)
-/// Turf has superlube on the floor and mobs will slip even if they are crawling
-#define TURF_WET_SUPERLUBE (1<<4)
+/turf/open/LateInitialize()
+	..()
+	if(requires_activation)
+		CALL_IN(src, /atom/proc/update_icon) // just in case the icon needs to be set as broken
 
-/// Maximum amount of time, (in deciseconds) a tile can be wet for.
-#define MAXIMUM_WET_TIME (5 MINUTES)
+/turf/open/Destroy()
+	// Doing this to accomodate for baseturf changes ontop of the assumption we'll be immediately replaced
+	if(!baseturfs)
+		stack_trace("A turf that doesn't have baseturfs was destroyed, somehow: [src]([type])")
+	return ..()
+
+/turf/open/Initalize_Atmos(time)
+	// We create a new gas mix if the turf needs to be
+	air = new /datum/gas_mixture
+	if(blocks_air)
+		air.set_moles(GAS_O2, 0)
+		air.set_moles(GAS_N2, 0)
+		air.set_temperature(TCMB)
+	else
+		air.copy_from_turf(src)
+		SSair.add_to_active(src)
+
+/turf/open/proc/CopyOnTop(turf/open/copytarget, ignore_bottom = 1, depth=0, copy_air = FALSE)
+	if (ignore_bottom && istype(copytarget, /turf/open/openspace))
+		var/turf/below = GET_TURF_BELOW(copytarget)
+		if(below)
+			levelupdate()
+			return CopyOnTop(below, ignore_bottom, depth + 1, copy_air)
+	var/old_flags = copytarget.flags_1
+	var/old_baseturfs = copytarget.baseturfs
+	copytarget.flags_1 = flags_1
+	copytarget.baseturfs = baseturfs
+	var/list/old_blueprint_data = copytarget.blueprint_data
+	copytarget.blueprint_data = null
+	copytarget.copy_air_with_tile(src)
+	copytarget.blueprint_data = old_blueprint_data
+	var/turf/our_target = copytarget.above()
+	// Only update openspace when it's already openspace, otherwise we could overwrite a floor
+	if(istype(our_target, /turf/open/openspace))
+		our_target.levelupdate()
+	copytarget.flags_1 = old_flags
+	copytarget.baseturfs = old_baseturfs
+	if(depth)
+		var/turf/our_below = GET_TURF_BELOW(src)
+		if(our_below)
+			copytarget.CopyOnTop(our_below, ignore_bottom, depth-1, copy_air)
+
+/turf/open/proc/copy_air_with_tile(turf/open/copy_from)
+	if(!copy_from.air)
+		CRASH("Trying to copy air from a turf that expects to have it, but doesn't.")
+	if(blocks_air)
+		return
+	air.copy_from(copy_from.air)
+	if(!SSair.has_valid_zone(src)) // In the case of "airless" with an actual gasmix, clean it up properly by not adding to active.
+		air.clear()
+	SSair.add_to_active(src, FALSE)
+
+/// Creates a gas mixture for the initial state of the turf... By default, we copy 20% oxygen and 80% nitrogen from the gas data list... Other gases can be added through return value.
+/turf/open/proc/get_initial_air_mixture()
+	var/datum/gas_mixture/air = new
+	air.set_moles(GAS_O2, MOLES_O2STANDARD)
+	air.set_moles(GAS_N2, MOLES_N2STANDARD)
+	air.set_temperature(T20C)
+	return air
+
+/turf/open/proc/levelupdate()
+	var/turf/path = below()
+	if(!path)
+		return
+	plane = path.plane
+	plane = GET_TURF_PLANE(path)
 
 /**
- * Get the turf that `A` resides in, regardless of any containers.
+ * Checks if a mob can resist to escape from the current turf.
  *
- * Use in favor of `A.loc` or `src.loc` so that things work correctly when
- * stored inside an inventory, locker, or other container.
- */
-#define get_turf(A) (get_step(A, 0))
-
-/**
- * Get the ultimate area of `A`, similarly to [get_turf].
+ * Defaults to TRUE for most open turfs. Can be overridden by subtypes
+ * that completely envelop a mob (such as by chasms.)
  *
- * Use instead of `A.loc.loc`.
+ * You should really try to keep the text short, cause resisting spam is a bitch.
  */
-#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
-
-// Defines for turfs rust resistance
-#define RUST_RESISTANCE_BASIC 1
-#define RUST_RESISTANCE_REINFORCED 2
-#define RUST_RESISTANCE_TITANIUM 3
-#define RUST_RESISTANCE_ORGANIC 4
-/// Should not be rustable... EVER... Includes thing like space, lava, chasms, admin walls
-#define RUST_RESISTANCE_ABSOLUTE 5
-
-/// Turf will be passable if density is 0
-#define TURF_PATHING_PASS_DENSITY 0
-/// Turf will be passable depending on [CanAStarPass] return value
-#define TURF_PATHING_PASS_PROC 1
-/// Turf is never passable
-#define TURF_PATHING_PASS_NO 2
-
-/// Define the alpha for holiday/colored tile decals
-#define DECAL_ALPHA 60
-/// Generate horizontal striped color turf decals
-#define PATTERN_DEFAULT "default"
-/// Generate vertical striped color turf decals
-#define PATTERN_VERTICAL_STRIPE "vertical"
-/// Generate random color turf decals
-#define PATTERN_RANDOM "random"
-/// Generate rainbow color turf decals
-#define PATTERN_RAINBOW "rainbow"
+/turf/open/proc/can_resist(mob/living/resister)
+	SHOULD_CALL_PARENT(FALSE)
+	return TRUE
 
 /**
- * Finds the midpoint of two given turfs.
+ * What happens when a mob succeeds at a resist check to escape from the turf?
  */
-#define TURF_MIDPOINT(a, b) (locate(((a.x + b.x) * 0.5), (a.y + b.y) * 0.5, (a.z + b.z) * 0.5))
+/turf/open/proc/resist_escape(mob/living/resister)
+	SHOULD_CALL_PARENT(FALSE)
+	resister.changeMoveState()
 
 /// Defines the x offset to apply to larger smoothing turfs (such as grass).
 #define LARGE_TURF_SMOOTHING_X_OFFSET -9
-/// Defines the why offset to apply to larger smoothing turfs (such as grass).
+/// Defines the y offset to apply to larger smoothing turfs (such as grass).
 #define LARGE_TURF_SMOOTHING_Y_OFFSET -9
 
 /// Defines a consistent light power for our various basalt turfs
 #define BASALT_LIGHT_POWER 0.6
-/// Defines a consistent light range for basalt turfs that have a bigger area of lava
-#define BASALT_LIGHT_RANGE_BRIGHT 2
-/// Defines a consistent light range for basalt turfs that have a smaller area of lava
-#define BASALT_LIGHT_RANGE_DIM 1.4
 
-/// Makes the set turf transparent
-#define ADD_TURF_TRANSPARENCY(modturf, source) \
-	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.AddElement(/datum/element/turf_z_transparency) }; \
-	ADD_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source))
+/// The set of smoothing groups for a closed turf that shows an icon despite density (such as walls).
+#define SMOOTH_GROUP_CLOSED_TURFS S_GROUP_TURF(`_OPEN`)
 
-/// Removes the transparency from the set turf
-#define REMOVE_TURF_TRANSPARENCY(modturf, source) \
-	REMOVE_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source)); \
-	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.RemoveElement(/datum/element/turf_z_transparency) }
+/// The set of smoothing groups for an open turf, for decorative purposes.
+#define SMOOTH_GROUP_OPEN_TURFS S_GROUP_TURF
