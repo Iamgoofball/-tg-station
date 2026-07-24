@@ -312,7 +312,7 @@
 
 /// Generates a spritesheet at: [file_path][spritesheet_name]_[size_id].[png or dmi]
 /// The resulting spritesheet arranges icons in a random order, with the position being denoted in the "sprites" return value.
-/// All icons have the same why coordinate, and their x coordinate is equal to `icon_width * position`.
+/// All icons have the same y coordinate, and their x coordinate is equal to `icon_width * position`.
 ///
 /// hash_icons is a boolean (0 or 1), and determines if the generator will spend time creating hashes for the output field dmi_hashes.
 /// These hashes can be helpful for 'smart' caching (see rustg_iconforge_cache_valid), but need extra computation.
@@ -336,7 +336,7 @@
 /// )
 /// TRANSFORM_OBJECT format:
 /// list("type" = RUSTG_ICONFORGE_BLEND_COLOR, "color" = "#ff0000", "blend_mode" = ICON_MULTIPLY)
-/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY, "x" = 1, why = 1) // offsets optional
+/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY, "x" = 1, "y" = 1) // offsets optional
 /// list("type" = RUSTG_ICONFORGE_SCALE, "width" = 32, "height" = 32)
 /// list("type" = RUSTG_ICONFORGE_CROP, "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // (BYOND icons index from 1,1 to the upper bound, inclusive)
 /// list("type" = RUSTG_ICONFORGE_MAP_COLORS, "rr" = 0.5, "rg" = 0.5, "rb" = 0.5, "ra" = 1, "gr" = 1, "gg" = 1, "gb" = 1, "ga" = 1, ...) // alpha arguments.. Rgba0 optional
@@ -498,97 +498,42 @@
 
 		if(length("[file_path]")) // Runtime generated RSC references stringify into 0-length strings.
 			file_path = "[file_path]"
+
 		else
-			CRASH("rustg_sound_length does not support non-static file refs.")
+			return 0
 
-	var/cached_length = sound_cache[file_path]
-	if(!isnull(cached_length))
-		return cached_length
+	var/the_sound = sound_cache[file_path]
+	if(isnull(the_sound))
+		var/the_return = RUSTG_CALL(RUST_G, "sound_length")(file_path)
+		if(!isnull(the_return))
+			sound_cache[file_path] = text2num(the_return)
+			return sound_cache[file_path]
+		else
+			sound_cache[file_path] = -1
+			return -1
+	return the_sound
 
-	var/ret = RUSTG_CALL(RUST_G, "sound_len")(file_path)
-	var/as_num = text2num(ret)
-	if(isnull(ret))
-		. = 0
-		CRASH("rustg_sound_length error: [ret]")
+/// Takes a file path to a .ogg file and returns the length of it in deciseconds.
+/proc/rustg_ogg_length(file_path)
+	return text2num(RUSTG_CALL(RUST_G, "ogg_length")(file_path))
 
-	sound_cache[file_path] = as_num
-	return as_num
+/// Returns the decisecond length of an MP3 file at the given path.
+/proc/rustg_mp3_length(file_path)
+	return text2num(RUSTG_CALL(RUST_G, "mp3_length")(file_path))
 
-
-#define RUSTG_SOUNDLEN_SUCCESSES "successes"
-#define RUSTG_SOUNDLEN_ERRORS "errors"
-/**
- * Returns a nested key-value list containing "successes" and "errors"
- * The format is as follows:
- * list(
- *  RUSTG_SOUNDLEN_SUCCESES = list("sounds/test.ogg" = 25.34),
- *  RUSTG_SOUNDLEN_ERRORS = list("sound/bad.png" = "SoundLen: Unable to decode file."),
- *)
-*/
-#define rustg_sound_length_list(file_paths) json_decode(RUSTG_CALL(RUST_G, "sound_len_list")(json_encode(file_paths)))
+/// Decodes a WAV buffer in parallel into a string of f32le samples.
+#define rustg_wav_decode(buffer) RUSTG_CALL(RUST_G, "wav_decode")(buffer)
 
 #define rustg_sql_connect_pool(options) RUSTG_CALL(RUST_G, "sql_connect_pool")(options)
 #define rustg_sql_query_async(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_async")(handle, query, params)
 #define rustg_sql_query_blocking(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_blocking")(handle, query, params)
-#define rustg_sql_connected(handle) RUSTG_CALL(RUST_G, "sql_connected")(handle)
-#define rustg_sql_disconnect_pool(handle) RUSTG_CALL(RUST_G, "sql_disconnect_pool")(handle)
+#define rustg_sql_await_pool() RUSTG_CALL(RUST_G, "sql_await_pool")
 #define rustg_sql_check_query(job_id) RUSTG_CALL(RUST_G, "sql_check_query")("[job_id]")
 
-#define rustg_time_microseconds(id) text2num(RUSTG_CALL(RUST_G, "time_microseconds")(id))
-#define rustg_time_milliseconds(id) text2num(RUSTG_CALL(RUST_G, "time_milliseconds")(id))
-#define rustg_time_reset(id) RUSTG_CALL(RUST_G, "time_reset")(id)
-
-/// Returns the current timestamp (in local time), formatted with the given format string.
-/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
-#define rustg_formatted_timestamp(format) RUSTG_CALL(RUST_G, "formatted_timestamp")(format)
-
-/// Returns the current timestamp (with the given UTC offset in hours), formatted with the given format string.
-/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
-#define rustg_formatted_timestamp_tz(format, offset) RUSTG_CALL(RUST_G, "formatted_timestamp")(format, offset)
-
-/// Returns the timestamp as a string
-/proc/rustg_unix_timestamp()
-	return RUSTG_CALL(RUST_G, "unix_timestamp")()
-
-#define rustg_raw_read_toml_file(path) json_decode(RUSTG_CALL(RUST_G, "toml_file_to_json")(path) || "null")
-
-/proc/rustg_read_toml_file(path)
-	var/list/output = rustg_raw_read_toml_file(path)
-	if (output["success"])
-		return json_decode(output["content"])
-	else
-		CRASH(output["content"])
-
-#define rustg_raw_toml_encode(value) json_decode(RUSTG_CALL(RUST_G, "toml_encode")(json_encode(value)))
-
-/proc/rustg_toml_encode(value)
-	var/list/output = rustg_raw_toml_encode(value)
-	if (output["success"])
-		return output["content"]
-	else
-		CRASH(output["content"])
-
-#define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")("[text]")
+#define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")(text)
 #define rustg_url_decode(text) RUSTG_CALL(RUST_G, "url_decode")(text)
 
-#ifdef RUSTG_OVERRIDE_BUILTINS
-	#define url_encode(text) rustg_url_encode(text)
-	#define url_decode(text) rustg_url_decode(text)
-#endif
-
-/// Generates a version 4 UUID.
-/// See https://www.ietf.org/rfc/rfc9562.html#section-5.4 for specifics on version 4 UUIDs.
-#define rustg_generate_uuid_v4(...) RUSTG_CALL(RUST_G, "uuid_v4")()
-
-/// Generates a version 7 UUID, with the current time.
-/// See https://www.ietf.org/rfc/rfc9562.html#section-5.7 for specifics on version 7 UUIDs.
-#define rustg_generate_uuid_v7(...) RUSTG_CALL(RUST_G, "uuid_v7")()
-
-/// Generates a random version 2 CUID.
-/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
-#define rustg_generate_cuid2(...) RUSTG_CALL(RUST_G, "cuid2")()
-
-/// Generates a random version 2 CUID with the given length.
-/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
-#define rustg_generate_cuid2_length(length) RUSTG_CALL(RUST_G, "cuid2_len")("[length]")
+// This body was generated using claude_code. See tools/iconforge_metadata_gen or PR 85824 for more details.
+/// @generated
+#define rustg_iconforge_generate_batched(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate_batched")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 
