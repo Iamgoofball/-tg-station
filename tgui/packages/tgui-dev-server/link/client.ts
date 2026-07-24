@@ -1,4 +1,4 @@
-type Messenger = (msg: any) => void;
+﻿type Messenger = (msg: any) => void;
 
 let socket: WebSocket | undefined;
 const queue: string[] = [];
@@ -106,7 +106,7 @@ function serializeObject(obj: Record<string, any>): string {
     // Error object
     const isError =
       value instanceof Error ||
-      (value.code && value.message && value.message.includes('Error'));
+      (value.code && value.message?.includes('Error'));
     if (isError) {
       return {
         __error__: true,

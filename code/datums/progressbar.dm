@@ -59,23 +59,26 @@
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_user_delete))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
 	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(on_user_login))
+	if(bar_loc != user)
+		RegisterSignal(bar_loc, COMSIG_QDELETING, PROC_REF(on_bar_loc_delete))
 
 	if(starting_amount)
 		update(starting_amount)
 
 /datum/progressbar/Destroy()
 	if(user)
-		for(var/pb in user.progressbars[bar_loc])
-			var/datum/progressbar/progress_bar = pb
-			if(progress_bar == src || progress_bar.listindex <= listindex)
-				continue
-			progress_bar.listindex--
+		if(bar_loc)
+			for(var/pb in user.progressbars[bar_loc])
+				var/datum/progressbar/progress_bar = pb
+				if(progress_bar == src || progress_bar.listindex <= listindex)
+					continue
+				progress_bar.listindex--
 
-			progress_bar.bar.pixel_z = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
-			var/dist_to_travel = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
-			animate(progress_bar.bar, pixel_z = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+				progress_bar.bar.pixel_z = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
+				var/dist_to_travel = ICON_SIZE_Y + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
+				animate(progress_bar.bar, pixel_z = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
-		LAZYREMOVEASSOC(user.progressbars, bar_loc, src)
+			LAZYREMOVEASSOC(user.progressbars, bar_loc, src)
 		user = null
 
 	if(user_client)
@@ -145,6 +148,13 @@
 	animate(bar, alpha = 0, time = PROGRESSBAR_ANIMATION_TIME)
 
 	QDEL_IN(src, PROGRESSBAR_ANIMATION_TIME)
+
+///Called right before the bar_loc's Destroy()
+/datum/progressbar/proc/on_bar_loc_delete(datum/source)
+	SIGNAL_HANDLER
+
+	bar_loc = null
+
 
 ///Progress bars are very generic, and what hangs a ref to them depends heavily on the context in which they're used
 ///So let's make hunting harddels easier yeah?

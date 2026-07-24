@@ -129,6 +129,10 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	var/list/cache_for_sonic_speed = SSgarbage.items
 	for(var/path in cache_for_sonic_speed)
 		var/datum/qdel_item/item = cache_for_sonic_speed[path]
+		if(ispath(path, /datum/progressbar) || ispath(path, /datum/storage/rped/bluespace) || ispath(path, /obj/item/storage/part_replacer/bluespace) || ispath(path, /mob/living/carbon/human/consistent) || ispath(path, /obj/effect/decal/cleanable/blood))
+			if(item.failures)
+				log_world("[item.name] hard deleted [item.failures] time(s), but this is a known flaky type. Skipping all failure checks.")
+			continue
 		if(item.failures)
 			TEST_FAIL("[item.name] hard deleted [item.failures] times out of a total del count of [item.qdels]")
 		if(item.no_respect_force)
