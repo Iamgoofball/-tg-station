@@ -52,7 +52,7 @@
 		recipe = new recipe()
 		var/list/type_ingredient_list = recipe.reqs
 		qdel(recipe)
-		if(length(type_ingredient_list) == 1) // No ingredients besides itself?. We use one of the tools then
+		if(length(type_ingredient_list) == 1) // No ingredients besides itself? We use one of the tools then
 			type_ingredient_list = recipe.tool_paths
 			// Check the tool behaviours differently as they aren't types
 			for(var/behaviour in initial(recipe.tool_behaviors))
@@ -120,7 +120,7 @@
 	// This list saves the recipe result names we've already used to cross-check other recipes so we don't have ', a spear. A spear!' in the desc.
 	var/list/already_used_names
 	for(var/datum/crafting_recipe/recipe as anything in slapcraft_recipes)
-		// Identical name to a previous recipe's result?. Skip in description.
+		// Identical name to a previous recipe's result? Skip in description.
 		var/atom/result = initial(recipe.result)
 		if(locate(initial(result.name)) in already_used_names)
 			continue
@@ -170,7 +170,7 @@
 		var/atom/ingredient = valid_type
 		var/amount = initial(cur_recipe.reqs[ingredient])
 
-		// If we're about to describe the ingredient that the component is good on, lower the described amount by 1 or remove it outright.
+		// If we're about to describe the ingredient that the component is based on, lower the described amount by 1 or remove it outright.
 		if(source.type == valid_type)
 			if(amount > 1)
 				amount--
