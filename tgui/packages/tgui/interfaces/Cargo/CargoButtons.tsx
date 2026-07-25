@@ -6,7 +6,13 @@ import type { CargoData } from './types';
 
 export function CargoCartButtons(props) {
   const { act, data } = useBackend<CargoData>();
-  const { cart = [], requestonly, can_send, can_approve_requests, displayed_currency_name } = data;
+  const {
+    cart = [],
+    requestonly,
+    can_send,
+    can_approve_requests,
+    displayed_currency_name,
+  } = data;
 
   let total = 0;
   let amount = 0;

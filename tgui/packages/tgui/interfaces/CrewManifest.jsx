@@ -25,7 +25,7 @@ export const CrewManifest = (props) => {
           <Section
             className={`CrewManifest--Section`}
             key={dept}
-            style={{'--department-color': positions[dept].color}}
+            style={{ '--department-color': positions[dept].color }}
             title={
               dept +
               (dept !== 'Misc'

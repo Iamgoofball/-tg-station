@@ -70,7 +70,15 @@ const Thresholds = (props) => {
 /** Displays the numerical trait modifiers for a virus symptom */
 const Traits = (props) => {
   const {
-    symptom: { level, resistance, stage_speed, stealth, transmission, symptom_cure, cure_color},
+    symptom: {
+      level,
+      resistance,
+      stage_speed,
+      stealth,
+      transmission,
+      symptom_cure,
+      cure_color,
+    },
   } = props;
 
   return (

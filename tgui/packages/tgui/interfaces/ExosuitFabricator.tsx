@@ -1,5 +1,11 @@
-import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
-import { Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';

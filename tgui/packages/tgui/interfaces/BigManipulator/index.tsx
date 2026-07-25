@@ -108,7 +108,7 @@ function MasterControls() {
       </Stack.Item>
     </Stack>
   );
-};
+}
 
 type ConfigRowProps = {
   label: string;
@@ -130,7 +130,11 @@ const ConfigRow = (props: ConfigRowProps) => {
         <Box style={{ marginLeft: '5px' }}>{label}</Box>
       </Table.Cell>
       <Table.Cell
-        style={{ width: 'min-content', whiteSpace: 'nowrap', textAlign: 'right' }}
+        style={{
+          width: 'min-content',
+          whiteSpace: 'nowrap',
+          textAlign: 'right',
+        }}
       >
         <Button tooltip={tooltip} onClick={onClick} selected={!!selected}>
           {content}
@@ -152,10 +156,14 @@ const getPointButtonNumber = (offset: string): number | null => {
 
 const getFilteringModeText = (mode: number) => {
   switch (mode) {
-    case 1: return 'Items';
-    case 2: return 'Closets';
-    case 3: return 'Humans';
-    default: return 'Unknown';
+    case 1:
+      return 'Items';
+    case 2:
+      return 'Closets';
+    case 3:
+      return 'Humans';
+    default:
+      return 'Unknown';
   }
 };
 
@@ -173,24 +181,26 @@ function TaskEditModal(props: TaskEditModalProps) {
 
   const isCargo = !!task.turf;
   const isPickup = task.task_type.includes('pickup');
-  const isDropoff = task.task_type === 'drop' || task.task_type === 'throw' || task.task_type === 'use';
+  const isDropoff =
+    task.task_type === 'drop' ||
+    task.task_type === 'throw' ||
+    task.task_type === 'use';
   const isInteract = task.task_type.includes('interact');
 
-  const currentButton = task.turf
-    ? getPointButtonNumber(task.turf)
-    : null;
+  const currentButton = task.turf ? getPointButtonNumber(task.turf) : null;
 
   return (
     <Modal style={{ padding: '6px', width: '340px', boxSizing: 'initial' }}>
       <Section
         title={`Edit: ${task.name}`}
-        buttons={
-          <Button icon="xmark" color="bad" onClick={onClose} />
-        }
+        buttons={<Button icon="xmark" color="bad" onClick={onClose} />}
       >
         {task.task_type.includes('wait') && (
           <Table>
-            <Table.Row className="candystripe" style={{ height: '2em', lineHeight: '2em' }}>
+            <Table.Row
+              className="candystripe"
+              style={{ height: '2em', lineHeight: '2em' }}
+            >
               <Table.Cell>
                 <Box style={{ marginLeft: '5px' }}>Wait Time</Box>
               </Table.Cell>
@@ -227,7 +237,9 @@ function TaskEditModal(props: TaskEditModalProps) {
                     key={n}
                     disabled={n === 5}
                     color={currentButton === n ? 'good' : 'default'}
-                    onClick={() => n !== 5 && adjust('move_to', { buttonNumber: n })}
+                    onClick={() =>
+                      n !== 5 && adjust('move_to', { buttonNumber: n })
+                    }
                     style={{ margin: '0', padding: '0', textAlign: 'center' }}
                     icon={buttonNumberToIcon[n]}
                   />
@@ -393,7 +405,7 @@ function TaskEditModal(props: TaskEditModalProps) {
       )}
     </Modal>
   );
-};
+}
 
 const TaskList = () => {
   const { act, data } = useBackend<ManipulatorData>();
@@ -420,8 +432,7 @@ const TaskList = () => {
     if (updated) setEditingTask(updated);
   }, [tasks_data]);
 
-  const strategyIcon =
-    TASKING_STRATEGY_ICONS[tasking_strategy] ?? 'list-ol';
+  const strategyIcon = TASKING_STRATEGY_ICONS[tasking_strategy] ?? 'list-ol';
 
   return (
     <>
@@ -433,9 +444,14 @@ const TaskList = () => {
               icon={strategyIcon}
               color="transparent"
               tooltip="Cycle tasking strategy"
-              onClick={() => act('cycle_tasking_strategy', {
-                new_strategy: tasking_strategy === 'Sequential' ? 'Strict order' : 'Sequential',
-              })}
+              onClick={() =>
+                act('cycle_tasking_strategy', {
+                  new_strategy:
+                    tasking_strategy === 'Sequential'
+                      ? 'Strict order'
+                      : 'Sequential',
+                })
+              }
             >
               {tasking_strategy}
             </Button>
@@ -453,19 +469,26 @@ const TaskList = () => {
         <Stack vertical>
           {tasks_data.map((task, index) => {
             const isActive = current_task === task.id;
-            const taskTypeKey = Object.keys(TASK_TYPE_LABELS).find((k) =>
-              task.task_type.includes(k),
-            ) ?? 'wait';
+            const taskTypeKey =
+              Object.keys(TASK_TYPE_LABELS).find((k) =>
+                task.task_type.includes(k),
+              ) ?? 'wait';
 
             return (
               <Stack.Item
                 key={task.id}
                 style={{
                   padding: '5px',
-                  border: isActive ? '1px solid #bdad5e' : '1px solid transparent',
+                  border: isActive
+                    ? '1px solid #bdad5e'
+                    : '1px solid transparent',
                   borderRadius: '2px',
-                  boxShadow: isActive ? '0 0 6px 2px rgba(200, 168, 0, 0.55)' : undefined,
-                  backgroundColor: isActive ? 'rgba(151, 142, 95, 0.55)' : undefined
+                  boxShadow: isActive
+                    ? '0 0 6px 2px rgba(200, 168, 0, 0.55)'
+                    : undefined,
+                  backgroundColor: isActive
+                    ? 'rgba(151, 142, 95, 0.55)'
+                    : undefined,
                 }}
                 className="candystripe"
               >
@@ -485,28 +508,37 @@ const TaskList = () => {
                   <Stack.Item>
                     <Icon
                       name={TASK_TYPE_ICONS[taskTypeKey] ?? 'circle'}
-                      style={{ width: '1.2em', textAlign: 'center', marginRight: '5px' }}
+                      style={{
+                        width: '1.2em',
+                        textAlign: 'center',
+                        marginRight: '5px',
+                      }}
                     />
                   </Stack.Item>
                   <Stack.Item grow>
-                      <Box>
-                        <Box bold style={{ display: 'inline' }}>
-                          {TASK_TYPE_LABELS[taskTypeKey] ?? task.task_type}
-                        </Box>
-                        <Box color="label" fontSize="11px">
-
-                          {task.item_filters && task.item_filters.length > 0 && (
-                            <Box>
-                              {'...any of: ' +
-                                task.item_filters.slice(0, 3).join(', ') +
-                                (task.item_filters.length > 3 ? ` and ${task.item_filters.length - 3} more` : '') +
-                                '...'}
-                            </Box>
-                          )}
-                          {task.turf && <Box>...at [{task.turf}]...</Box>}
-                          {task.time && <Box>...for {task.time} second{task.time > 1 && "s"}...</Box>}
-                        </Box>
+                    <Box>
+                      <Box bold style={{ display: 'inline' }}>
+                        {TASK_TYPE_LABELS[taskTypeKey] ?? task.task_type}
                       </Box>
+                      <Box color="label" fontSize="11px">
+                        {task.item_filters && task.item_filters.length > 0 && (
+                          <Box>
+                            {'...any of: ' +
+                              task.item_filters.slice(0, 3).join(', ') +
+                              (task.item_filters.length > 3
+                                ? ` and ${task.item_filters.length - 3} more`
+                                : '') +
+                              '...'}
+                          </Box>
+                        )}
+                        {task.turf && <Box>...at [{task.turf}]...</Box>}
+                        {task.time && (
+                          <Box>
+                            ...for {task.time} second{task.time > 1 && 's'}...
+                          </Box>
+                        )}
+                      </Box>
+                    </Box>
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -564,7 +596,7 @@ const TaskList = () => {
             <Button
               icon="plus"
               onClick={() => act('create_task', { task_type: selectedType })}
-              style={{lineHeight: '22px'}}
+              style={{ lineHeight: '22px' }}
             >
               New
             </Button>
@@ -603,27 +635,29 @@ export const BigManipulator = () => {
         >
           <MasterControls />
         </Section>
-        <Section
-
-        >
+        <Section>
           <Stack>
             <Stack.Item grow>
-            <Button style={{
-              width: '100%',
-              lineHeight: '24px'
-            }}
-              icon={ data.disk_inserted ? "eject" : 'info' }
-              disabled={!data.disk_inserted || !!active || !!stopping}
-              color={!data.disk_inserted && "none"}
-              onClick={() => act('disk_eject')}
-            >
-              { data.disk_inserted ? `floppy drive (tasks: ${data.disk_task_count})` : "No drives inserted" }
-            </Button>
+              <Button
+                style={{
+                  width: '100%',
+                  lineHeight: '24px',
+                }}
+                icon={data.disk_inserted ? 'eject' : 'info'}
+                disabled={!data.disk_inserted || !!active || !!stopping}
+                color={!data.disk_inserted && 'none'}
+                onClick={() => act('disk_eject')}
+              >
+                {data.disk_inserted
+                  ? `floppy drive (tasks: ${data.disk_task_count})`
+                  : 'No drives inserted'}
+              </Button>
             </Stack.Item>
             <Stack.Item>
-              <Button style={{
-              lineHeight: '24px'
-            }}
+              <Button
+                style={{
+                  lineHeight: '24px',
+                }}
                 icon="download"
                 disabled={!data.disk_inserted || !!active || !!stopping}
                 onClick={() => act('disk_read')}
@@ -632,25 +666,38 @@ export const BigManipulator = () => {
               </Button>
             </Stack.Item>
             <Stack.Item>
-              <Button style={{
-              lineHeight: '24px'
-            }}
+              <Button
+                style={{
+                  lineHeight: '24px',
+                }}
                 icon="upload"
-                disabled={!data.disk_inserted || !!data.disk_read_only || !!active || !!stopping}
+                disabled={
+                  !data.disk_inserted ||
+                  !!data.disk_read_only ||
+                  !!active ||
+                  !!stopping
+                }
                 onClick={() => act('disk_write')}
               >
                 Write
               </Button>
             </Stack.Item>
             <Stack.Item>
-              <Button.Confirm style={{
-              lineHeight: '24px'
-            }}
+              <Button.Confirm
+                style={{
+                  lineHeight: '24px',
+                }}
                 icon="trash"
-                disabled={!data.disk_inserted || !!data.disk_read_only || !!active || !!stopping}
+                disabled={
+                  !data.disk_inserted ||
+                  !!data.disk_read_only ||
+                  !!active ||
+                  !!stopping
+                }
                 confirmContent="Clear?"
                 onClick={() => act('disk_clear')}
-              >Clear
+              >
+                Clear
               </Button.Confirm>
             </Stack.Item>
           </Stack>

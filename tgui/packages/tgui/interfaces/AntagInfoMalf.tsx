@@ -177,14 +177,9 @@ function CodewordsSection(props) {
   );
 }
 
-
 export function AntagInfoMalf(props) {
   return (
-    <Window
-      width={660}
-      height={530}
-      theme={'hackerman'}
-    >
+    <Window width={660} height={530} theme={'hackerman'}>
       <Window.Content style={{ fontFamily: 'Consolas, monospace' }}>
         <Stack vertical fill>
           <Stack.Item grow>

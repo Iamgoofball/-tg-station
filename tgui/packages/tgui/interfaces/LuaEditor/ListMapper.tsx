@@ -15,8 +15,14 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { logger } from '../../logging';
-import type { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
-import type { ListElement, ListPath } from './types';
+import type {
+  CallInfo,
+  ListElement,
+  ListPath,
+  LuaEditorModal,
+  Variant,
+  VariantList,
+} from './types';
 
 const mapListVariantsInner = (value: any, variant: Variant) => {
   if (Array.isArray(variant)) {

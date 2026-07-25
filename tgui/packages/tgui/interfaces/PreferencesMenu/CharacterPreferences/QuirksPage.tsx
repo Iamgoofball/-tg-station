@@ -109,8 +109,7 @@ function QuirkDisplay(props: QuirkDisplayProps) {
         pointerEvents: props.quirkActionLocked ? 'none' : 'auto',
       }}
       onClick={() => {
-        if (quirkActionLocked)
-          return;
+        if (quirkActionLocked) return;
         if (selected) {
           setCustomizationExpanded(false);
         }
@@ -514,7 +513,9 @@ function QuirkPage() {
 
                 withQuirkDebounce(() => {
                   setSelectedQuirks(
-                    selectedQuirks.filter((otherQuirk) => quirkName !== otherQuirk),
+                    selectedQuirks.filter(
+                      (otherQuirk) => quirkName !== otherQuirk,
+                    ),
                   );
 
                   act('remove_quirk', { quirk: quirk.name });

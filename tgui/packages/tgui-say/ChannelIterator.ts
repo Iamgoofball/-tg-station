@@ -8,7 +8,14 @@ export type Channel = 'Say' | 'Radio' | 'Me' | 'OOC' | 'Admin' | 'Pray';
  */
 export class ChannelIterator {
   private index: number = 0;
-  private readonly channels: Channel[] = ['Say', 'Radio', 'Me', 'OOC', 'Admin', 'Pray'];
+  private readonly channels: Channel[] = [
+    'Say',
+    'Radio',
+    'Me',
+    'OOC',
+    'Admin',
+    'Pray',
+  ];
   private readonly blacklist: Channel[] = ['Admin'];
   private readonly quiet: Channel[] = ['OOC', 'Admin', 'Pray'];
 

@@ -37,7 +37,7 @@ export function NukeKeypad(props) {
                 mb={1}
                 textAlign="center"
                 fontSize="40px"
-                lineHeight={0.80}
+                lineHeight={0.8}
                 width="55px"
                 height="50px"
                 className={classes([

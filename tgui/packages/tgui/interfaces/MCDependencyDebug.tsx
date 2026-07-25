@@ -7,8 +7,8 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import {
   type Connection,
-  Connections,
   ConnectionStyle,
+  Connections,
 } from './common/Connections';
 import { ABSOLUTE_Y_OFFSET } from './IntegratedCircuit/constants';
 

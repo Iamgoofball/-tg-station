@@ -1,4 +1,9 @@
-import { CheckboxInput, type Feature, type FeatureToggle, FeatureSliderInput } from '../base';
+import {
+  CheckboxInput,
+  type Feature,
+  FeatureSliderInput,
+  type FeatureToggle,
+} from '../base';
 
 export const darkened_flash: FeatureToggle = {
   name: 'Enable darkened flashes',
@@ -57,4 +62,3 @@ export const twelve_hour: FeatureToggle = {
     `,
   component: CheckboxInput,
 };
-

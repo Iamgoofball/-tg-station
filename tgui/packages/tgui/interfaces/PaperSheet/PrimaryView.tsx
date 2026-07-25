@@ -49,7 +49,7 @@ export class PrimaryView extends Component {
     );
 
     const [textAreaText, setTextAreaText] = useLocalState('textAreaText', '');
-    
+
     // 新增：用來切換是否要玩 PuzzleScript Sokoban 遊戲
     const [playingGame, setPlayingGame] = useLocalState('playingGame', false);
 
@@ -77,7 +77,9 @@ export class PrimaryView extends Component {
             <Section fitted>
               <Button
                 icon={playingGame ? 'file-alt' : 'gamepad'}
-                content={playingGame ? 'View Paper' : 'Play Sokoban (PuzzleScript)'}
+                content={
+                  playingGame ? 'View Paper' : 'Play Sokoban (PuzzleScript)'
+                }
                 onClick={() => setPlayingGame(!playingGame)}
                 fluid
               />

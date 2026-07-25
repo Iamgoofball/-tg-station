@@ -67,7 +67,7 @@ export const MatMarket = (props) => {
           buttons={
             !!canOrderCargo && (
               <Button.Checkbox
-                icon={orderingPrive ? "fa-regular fa-square" : "square-check"}
+                icon={orderingPrive ? 'fa-regular fa-square' : 'square-check'}
                 tooltip="Place order from cargo budget."
                 color={orderingPrive ? 'transparent' : 'green'}
                 checked={orderingPrive}
@@ -137,16 +137,18 @@ export const MatMarket = (props) => {
                       Elasticity: <b>{Math.round(material.elastic)}</b>%
                     </Stack.Item>
 
-                    <Stack.Item
-                      width="15%"
-                      pr="2%"
-                      >
+                    <Stack.Item width="15%" pr="2%">
                       <Tooltip
-                        content={rangeText({ minPrice: material.min_threshold, maxPrice: material.max_threshold })}
+                        content={rangeText({
+                          minPrice: material.min_threshold,
+                          maxPrice: material.max_threshold,
+                        })}
                       >
-                        <u>Trading at <br /><b>{formatMoney(material.price)}</b> cr.</u>
+                        <u>
+                          Trading at <br />
+                          <b>{formatMoney(material.price)}</b> cr.
+                        </u>
                       </Tooltip>
-
                     </Stack.Item>
                     {material.price < material.min_threshold ? (
                       <Stack.Item width="33%" ml={2} textColor="grey">
@@ -155,13 +157,17 @@ export const MatMarket = (props) => {
                       </Stack.Item>
                     ) : (
                       <Stack.Item width="33%" ml={2}>
-                        <Box textColor={material.quantity === 0 ? 'grey' : 'white'}>
+                        <Box
+                          textColor={material.quantity === 0 ? 'grey' : 'white'}
+                        >
                           <b>{material.quantity || 'Zero'}</b> sheets of{' '}
                           <b>{material.name}</b> trading.{' '}
                         </Box>
                         <Box
                           bold={!!material.requested}
-                          textColor={material.requested > 0 ? 'lightblue' : 'white'}
+                          textColor={
+                            material.requested > 0 ? 'lightblue' : 'white'
+                          }
                         >
                           {material.requested || 'Zero'} sheets ordered.
                         </Box>
@@ -290,23 +296,23 @@ export const MatMarket = (props) => {
           ),
         )}
         <NoticeBox info>
-            <Collapsible title="Instructions" color="blue">
-              Buy orders for material sheets placed here will be ordered on the
-              next cargo shipment.
-              <br /> <br />
-              To sell materials, please insert sheets or similar stacks of
-              materials. All minerals sold on the market directly are subject to
-              a scaling value decrease per material, but this will recover over
-              time. To prevent market manipulation, all registered traders can
-              buy a total of 10 full stacks of materials at a time.
-              <br /> <br />
-              When selling materials, prices will be decreased based on the
-              elastic modifier of the material, which will recover over time.
-              <br /> <br />
-              All new purchases will include the cost of the shipped crate,
-              which may be recycled afterwards.
-            </Collapsible>
-          </NoticeBox>
+          <Collapsible title="Instructions" color="blue">
+            Buy orders for material sheets placed here will be ordered on the
+            next cargo shipment.
+            <br /> <br />
+            To sell materials, please insert sheets or similar stacks of
+            materials. All minerals sold on the market directly are subject to a
+            scaling value decrease per material, but this will recover over
+            time. To prevent market manipulation, all registered traders can buy
+            a total of 10 full stacks of materials at a time.
+            <br /> <br />
+            When selling materials, prices will be decreased based on the
+            elastic modifier of the material, which will recover over time.
+            <br /> <br />
+            All new purchases will include the cost of the shipped crate, which
+            may be recycled afterwards.
+          </Collapsible>
+        </NoticeBox>
       </Window.Content>
     </Window>
   );
@@ -329,12 +335,15 @@ const MarketCrashModal = (props) => {
 type rangeTextProps = {
   minPrice: number;
   maxPrice: number;
-}
+};
 
 function rangeText(props: rangeTextProps) {
-  const {minPrice, maxPrice} = props;
+  const { minPrice, maxPrice } = props;
   return (
-    "This material can be bought and sold between " + formatMoney(minPrice) +
-    " - " + formatMoney(maxPrice) + " cr."
-  )
+    'This material can be bought and sold between ' +
+    formatMoney(minPrice) +
+    ' - ' +
+    formatMoney(maxPrice) +
+    ' cr.'
+  );
 }

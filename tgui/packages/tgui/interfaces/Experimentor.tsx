@@ -211,7 +211,8 @@ type ExperimentButtonsProps = {
 };
 
 const ExperimentButtons = (props: ExperimentButtonsProps) => {
-  const { isRelic, disabled, experiments, discoverExperiment, onExperiment } = props;
+  const { isRelic, disabled, experiments, discoverExperiment, onExperiment } =
+    props;
 
   return (
     <Section fill>

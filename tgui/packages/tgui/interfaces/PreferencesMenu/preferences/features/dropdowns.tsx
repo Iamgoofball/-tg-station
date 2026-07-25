@@ -82,7 +82,14 @@ export type FeatureDropdownInputCoreProps = DropdownInputProps & {
 };
 
 export function FeatureDropdownInputCore(props: FeatureDropdownInputCoreProps) {
-  const { serverData, disabled, buttons, handleSetValue, value, populateOptions } = props;
+  const {
+    serverData,
+    disabled,
+    buttons,
+    handleSetValue,
+    value,
+    populateOptions,
+  } = props;
   const dropdownOptions = serverData ? populateOptions(serverData) : [];
   const displayText = serverData?.display_names?.[value] || String(value);
 
@@ -98,7 +105,6 @@ export function FeatureDropdownInputCore(props: FeatureDropdownInputCoreProps) {
     />
   );
 }
-
 
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;

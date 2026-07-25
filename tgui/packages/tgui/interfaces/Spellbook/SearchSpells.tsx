@@ -24,14 +24,10 @@ export function SearchSpells(props) {
         // Unsure about including description. Wizard spell descriptions
         // are painfully original and use the same verbiage often,
         // which may both be a benefit and a curse
-        entry.desc
-          .toLowerCase()
-          .includes(searchStatement) ||
+        entry.desc.toLowerCase().includes(searchStatement) ||
         // Also opting to include category
         // so you can search "rituals" to see them all at once
-        entry.cat
-          .toLowerCase()
-          .includes(searchStatement),
+        entry.cat.toLowerCase().includes(searchStatement),
     );
   }
 

@@ -15,6 +15,7 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { IconDisplay } from './LootPanel/IconDisplay';
+
 type Data = {
   pet_name: string | null;
   pet_specie: string;

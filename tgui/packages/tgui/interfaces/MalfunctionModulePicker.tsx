@@ -1,15 +1,15 @@
-import { Window } from '../layouts';
 import { useBackend } from '../backend';
+import { Window } from '../layouts';
 import { GenericUplink, type Item } from './Uplink/GenericUplink';
 
 type MalfModuleData = {
-  name: string,
-  icon: string,
-  icon_state: string,
-  cost: number,
-  desc: string,
-  category: string,
-  minimumApcs: number,
+  name: string;
+  icon: string;
+  icon_state: string;
+  cost: number;
+  desc: string;
+  category: string;
+  minimumApcs: number;
 };
 
 type Data = {
@@ -38,10 +38,10 @@ export function MalfunctionModulePicker(props) {
     icon_state: module.icon_state,
     population_tooltip: '',
     insufficient_population: false,
-  }))
+  }));
 
   return (
-    <Window width={620} height={525} theme='malfunction'>
+    <Window width={620} height={525} theme="malfunction">
       <Window.Content>
         <GenericUplink
           categories={categories}

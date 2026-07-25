@@ -4,10 +4,10 @@ import {
   Collapsible,
   Divider,
   Dropdown,
+  Input,
   NumberInput,
   Section,
   Stack,
-  Input,
   Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';

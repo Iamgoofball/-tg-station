@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  DmIcon,
   Icon,
   Input,
   NoticeBox,
@@ -10,10 +11,9 @@ import {
   Section,
   Table,
   Tooltip,
-  DmIcon,
 } from 'tgui-core/components';
-import { createSearch } from 'tgui-core/string';
 import { formatTime } from 'tgui-core/format';
+import { createSearch } from 'tgui-core/string';
 
 export type TraitData = {
   path: string;
@@ -90,7 +90,7 @@ export const SeedTable = (props: SeedTableProps) => {
               }
             >
               <Box
-                style={{ cursor: 'pointer', textAlign: "center" }}
+                style={{ cursor: 'pointer', textAlign: 'center' }}
                 onClick={(e) => setSortField('potency')}
               >
                 PTN
@@ -104,7 +104,7 @@ export const SeedTable = (props: SeedTableProps) => {
               }
             >
               <Box
-                style={{ cursor: 'pointer', textAlign: "center" }}
+                style={{ cursor: 'pointer', textAlign: 'center' }}
                 onClick={(e) => setSortField('yield')}
               >
                 YLD
@@ -118,7 +118,7 @@ export const SeedTable = (props: SeedTableProps) => {
               }
             >
               <Box
-                style={{ cursor: 'pointer', textAlign: "center" }}
+                style={{ cursor: 'pointer', textAlign: 'center' }}
                 onClick={(e) => setSortField('instability')}
               >
                 INS
@@ -132,7 +132,7 @@ export const SeedTable = (props: SeedTableProps) => {
               }
             >
               <Box
-                style={{ cursor: 'pointer', textAlign: "center" }}
+                style={{ cursor: 'pointer', textAlign: 'center' }}
                 onClick={(e) => setSortField('endurance')}
               >
                 END
@@ -144,7 +144,7 @@ export const SeedTable = (props: SeedTableProps) => {
               content={`Lifespan: The age at which the plant starts decaying. Improves quality of resulting food & drinks.`}
             >
               <Box
-                style={{ cursor: 'pointer', textAlign: "center" }}
+                style={{ cursor: 'pointer', textAlign: 'center' }}
                 onClick={(e) => setSortField('lifespan')}
               >
                 LFS
@@ -156,7 +156,7 @@ export const SeedTable = (props: SeedTableProps) => {
               content={`Maturation: The age required for the first harvest.`}
             >
               <Box
-                style={{ cursor: 'pointer', textAlign: "center" }}
+                style={{ cursor: 'pointer', textAlign: 'center' }}
                 onClick={(e) => setSortField('maturation')}
               >
                 MTR
@@ -164,11 +164,9 @@ export const SeedTable = (props: SeedTableProps) => {
             </Tooltip>
           </Table.Cell>
           <Table.Cell collapsing p={1}>
-            <Tooltip
-              content={`Production: The period of product regrowth.`}
-            >
+            <Tooltip content={`Production: The period of product regrowth.`}>
               <Box
-                style={{ cursor: 'pointer', textAlign: "center" }}
+                style={{ cursor: 'pointer', textAlign: 'center' }}
                 onClick={(e) => setSortField('production')}
               >
                 PRD
@@ -190,10 +188,7 @@ export const SeedTable = (props: SeedTableProps) => {
         </Table.Row>
         {seeds_sorted.length > 0 &&
           seeds_sorted.map((item) => (
-            <Table.Row
-              key={item.key}
-              style={{ borderTop: '2px solid #222' }}
-            >
+            <Table.Row key={item.key} style={{ borderTop: '2px solid #222' }}>
               <Table.Cell collapsing>
                 <DmIcon
                   mb={-2}
@@ -208,11 +203,7 @@ export const SeedTable = (props: SeedTableProps) => {
               </Table.Cell>
               <Table.Cell py={0.5} px={1} collapsing textAlign={'right'}>
                 {item.traits?.map((trait) => (
-                  <TraitTooltip
-                    key=""
-                    path={trait}
-                    trait_db={props.trait_db}
-                  />
+                  <TraitTooltip key="" path={trait} trait_db={props.trait_db} />
                 ))}
                 {!!item.mutatelist.length && (
                   <Tooltip
@@ -242,9 +233,7 @@ export const SeedTable = (props: SeedTableProps) => {
                   </Tooltip>
                 )}
                 {!!item.distill_reagent && (
-                  <Tooltip
-                    content={`Ferments into: ${item.distill_reagent}`}
-                  >
+                  <Tooltip content={`Ferments into: ${item.distill_reagent}`}>
                     <Icon name="wine-bottle" m={0.5} />
                   </Tooltip>
                 )}
@@ -262,13 +251,28 @@ export const SeedTable = (props: SeedTableProps) => {
                 <Level value={item.endurance} max={100} />
               </Table.Cell>
               <Table.Cell py={0.5} px={1} collapsing>
-                <Box textAlign="center">{formatTime(item.lifespan * props.cycle_seconds * 10, 'short')}</Box>
+                <Box textAlign="center">
+                  {formatTime(
+                    item.lifespan * props.cycle_seconds * 10,
+                    'short',
+                  )}
+                </Box>
               </Table.Cell>
               <Table.Cell py={0.5} px={1} collapsing>
-                <Box textAlign="center">{formatTime(item.maturation * props.cycle_seconds * 10, 'short')}</Box>
+                <Box textAlign="center">
+                  {formatTime(
+                    item.maturation * props.cycle_seconds * 10,
+                    'short',
+                  )}
+                </Box>
               </Table.Cell>
               <Table.Cell py={0.5} px={1} collapsing>
-                <Box textAlign="center">{formatTime(item.production * props.cycle_seconds * 10, 'short')}</Box>
+                <Box textAlign="center">
+                  {formatTime(
+                    item.production * props.cycle_seconds * 10,
+                    'short',
+                  )}
+                </Box>
               </Table.Cell>
               <Table.Cell
                 py={0.5}
@@ -288,8 +292,8 @@ export const SeedTable = (props: SeedTableProps) => {
         </NoticeBox>
       )}
     </Section>
-  )
-}
+  );
+};
 
 export const Level = (props) => {
   return (
