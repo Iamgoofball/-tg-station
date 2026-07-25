@@ -520,3 +520,16 @@ despite the presence of atropine by releasing a failsafe vial of monkey blood (n
 <br>
 <br>Anyway, best of luck on your mission, operative.
 	"}
+/obj/item/paper/sokoban
+	name = "paper - 'Sokoban'"
+	desc = "A small piece of paper with a Sokoban puzzle printed on it."
+	icon_state = "paper"
+
+/obj/item/paper/sokoban/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PaperSokoban", name)
+		ui.open()
+
+/obj/item/paper/sokoban/attack_self(mob/user)
+	ui_interact(user)
