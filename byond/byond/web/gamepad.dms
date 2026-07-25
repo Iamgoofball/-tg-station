@@ -1,0 +1,231 @@
+<byondclass name="gamepad">
+<script>
+(function(){
+
+var gamepadfn = navigator.getGamepads || navigator.webkitGetGamepads;
+var b2dir=[0,0,0,0,0,0,0,0,0,0,0,0,1,2,8,4];
+var dir2b=[0,12,13,0,15,17,19,0,14,16,18];
+var button2macro=['GamepadFace1','GamepadFace2','GamepadFace3','GamepadFace4','GamepadL1','GamepadR1','GamepadL2','GamepadR2','GamepadSelect','GamepadStart','GamepadL3','GamepadR3','GamepadUp','GamepadDown','GamepadLeft','GamepadRight','GamepadUpLeft','GamepadUpRight','GamepadDownLeft','GamepadDownRight'];
+var analogs={leftAnalog:'GamepadLeftAnalog', rightAnalog:'GamepadRightAnalog'};
+var padinfo=[{},{},{},{}];
+var macros = {};
+
+var defaultMacros = {
+	'GamepadUp+REP': {name: 'GamepadUp+REP', command: '.north', local: true},
+	'GamepadDown+REP': {name: 'GamepadDown+REP', command: '.south', local: true},
+	'GamepadLeft+REP': {name: 'GamepadLeft+REP', command: '.west', local: true},
+	'GamepadRight+REP': {name: 'GamepadRight+REP', command: '.east', local: true},
+	'GamepadUpLeft+REP': {name: 'GamepadUpLeft+REP', command: '.northwest', local: true},
+	'GamepadUpRight+REP': {name: 'GamepadUpRight+REP', command: '.northeast', local: true},
+	'GamepadDownLeft+REP': {name: 'GamepadDownLeft+REP', command: '.southwest', local: true},
+	'GamepadDownRight+REP': {name: 'GamepadDownRight+REP', command: '.southeast', local: true},
+	'GamepadFace1+REP': {name: 'GamepadFace1+REP', command: '.center', local: true},
+	'GamepadLeftAnalog': {name: 'GamepadLeftAnalog', mapTo: 'GamepadDir', local: true}
+};
+
+var deadzone = 0.2;
+
+function localMacros() {
+	var m,macros=byond.getMacros(),n,ret={};
+	for(n in macros) {
+		m = macros[n];
+		if(m.local && !m.name.match(/Gamepad/i)) ret[n] = m;
+	}
+	return macros;
+}
+
+function hasGamepadMacros() {
+	var m,macros=byond.getMacros(),n;
+	for(n in macros) {
+		m = macros[n];
+		if(!m.local && m.name.match(/Gamepad/i)) return true;
+	}
+	return false;
+}
+
+function normalizeAxes(pad, result, a1, a2) {
+	var x = (pad.axes[a1] || 0), y = (pad.axes[a2] || 0);
+	var d = Math.sqrt(x*x + y*y);
+	if(d <= deadzone) x = y = 0;
+	if(d >= 1) {x /= d; y /= d;}
+	else {d = (d-deadzone) / (1-deadzone); x *= d; y *= d;}
+	if(!(d=pad[result])) pad[result] = d = {x:0,y:0};
+	d.x = x;
+	d.y = -y;	// make BYOND-friendly
+}
+
+function normalize(pad,src,prev) {
+	var i, d, l;
+	if(!pad) pad = {};
+	if(!pad.buttons) pad.buttons = [];
+	if(!pad.axes) pad.axes = [];
+	if(!pad.normalizedButtons) pad.normalizedButtons = [];
+	if(!pad.normalizedAxes) pad.normalizedAxes = [];
+
+	// copy from src
+	if(src) {
+		for(i=0,l=src.buttons.length; i<l; ++i) {
+			if(typeof src.buttons[i] != 'number') pad.buttons[i] = src.buttons[i].value;
+			else pad.buttons[i] = src.buttons[i];
+		}
+		for(i=0,l=src.axes.length; i<l; ++i) {
+			pad.axes[i] = d = src.axes[i];
+			if(d <= -1.0) d = -1.0;
+			else if(d >= 1.0) d = 1.0;
+			else if(d < -deadzone) d = (d+deadzone) / (1-deadzone);
+			else if(d > deadzone) d = (d-deadzone) / (1-deadzone);
+			else d = 0;
+			pad.normalizedAxes[i] = d;
+		}
+	}
+
+	for(i=0,l=pad.buttons.length; i<l; ++i) pad.normalizedButtons[i] = pad.buttons[i];
+	for(; i<20; ++i) pad.normalizedButtons[i] = pad.buttons[i] = 0;
+	for(i=0,l=pad.axes.length; i<l; ++i) {
+		d = pad.axes[i];
+		if(d <= -1.0) d = -1.0;
+		else if(d >= 1.0) d = 1.0;
+		else if(d < -deadzone) d = (d+deadzone) / (1-deadzone);
+		else if(d > deadzone) d = (d-deadzone) / (1-deadzone);
+		else d = 0;
+		pad.normalizedAxes[i] = d;
+	}
+	for(; i<4; ++i) pad.normalizedAxes[i] = pad.axes[i] = 0;
+	normalizeAxes(pad, 'leftAnalog', 0, 1);
+	normalizeAxes(pad, 'rightAnalog', 2, 3);
+	var olddir = (prev ? prev.dir : 0) || 0;
+	pad.dpad = axesToDir(pad,false,olddir) | axesToDir(pad,true,olddir);
+	return pad;
+}
+
+function axesToDir(pad,right,old) {
+	var src = right ? 'GamepadRightAnalog' : 'GamepadLeftAnalog';
+	if(!(dst=macros[src]) || !(dst=dst.mapTo) || !dst.match(/^GamepadDir4?$/i)) return 0;
+	var x = (pad.normalizedAxes[right ? 2 : 0] || 0), y = (pad.normalizedAxes[right ? 3 : 1] || 0);
+	if(!x && !y) return 0;
+	var ax = Math.abs(x), ay = Math.abs(y);
+	if(dst.match(/4$/)) {
+		if(ax > ay) return (x > 0) ? 4 : 8;
+		else if(ay > ax) return (y > 0) ? 2 : 1;
+		return old||0;	// exact diagonal
+	}
+	if(ay < ax * 0.414213562373) return (x > 0) ? 4 : 8;
+	if(ax < ay * 0.414213562373) return (y > 0) ? 2 : 1;
+	return ((x > 0) ? 4 : 8) | ((y > 0) ? 2 : 1);
+}
+
+function doRawCommand(ctrl, cmd, id, val) {
+	cmd = cmd.replace(/\[\[id]]/g, id).replace(/\[\[value]]/g, ""+val);
+	ctrl.input(cmd);
+}
+
+function xMacro(name, stick) {
+	return stick ? name.substr(0,7)+(1+stick)+name.substr(7) : name;
+}
+
+return {
+	config: {
+		deadzone: deadzone
+	},
+	fn: {
+		create: function() {
+			byond.fn.create.call(this);
+			byond.poll(this, true);
+		},
+		poll: function() {
+			if(!gamepadfn) {byond.poll(this, false); return;}
+			var wa,pads,pi,pad,a,b,i,j,len,dir,dmax=0,cmd,n,analog,av,bv,stick;
+			try {pads = gamepadfn.call(navigator);} catch(_){gamepadfn = null; byond.poll(this, false); return;}
+			if(!pads) pads = [];
+
+			for(stick=0; stick<4; ++stick) {
+				pi = padinfo[stick];
+				if(!pi) padinfo[stick] = pi = {};
+				wa = pi.active; pi.active = !!(pad = pad[stick]);
+				if(!pad) pad = {};
+				if(!wa) {
+					if(!pi.active) return;
+					console.log("Gamepad detected: "+pad.id);
+					pi.oldpad = normalize({buttons: [], axes: [], dpad: 0});
+				}
+				else {
+					if(!pi.active) {pad = {}; console.log("Gamepad disconnected");}
+				}
+				pad = normalize(pi.pad,pad,pi.oldpad);
+
+				// handle dirs
+				dir = pi.pad.dpad;
+				dmax = dir ? 1 : 0;
+				for(i=0; i<16; ++i) {
+					pi.pad.buttons[i] = pi.buttons[i]||0;
+				}
+				for(i=12; i<20; ++i) pi.pad.normalizedButtons[i] = 0;
+				for(i=12; i<16; ++i) {
+					if(pi.pad.buttons[i] > 0.5) {
+						dmax = Math.max(dmax,pi.pad.buttons[i]||0);
+						dir |= b2dir[i];
+					}
+				}
+				j = dir2b[dir];
+				if(j) {pi.pad.normalizedButtons[j] = 1; pi.pad.dir = dir;}
+				else pi.pad.dir = 0;
+
+				// Do raw gamepad input
+
+				if((cmd=macros[xMacro('GamepadRaw',stick)]) && (cmd=cmd.command)) {
+					for(i=0,a=pi.oldpad.buttons,b=pi.pad.buttons,len=b.length; i<len; ++i) {
+						if(a[i] != b[i]) doRawCommand(this, cmd, 'Button'+i, b[i]);
+					}
+					for(i=0,a=pi.oldpad.axes,b=pi.pad.axes,len=b.length; i<len; ++i) {
+						if(a[i] != b[i]) doRawCommand(this, cmd, 'Axis'+i, b[i]);
+					}
+					if(a.dpad != b.dpad) doRawCommand(this, cmd, 'Dpad', b.dpad);
+				}
+
+				// Do button commands
+				for(i=0,a=pi.oldpad.normalizedButtons,b=pi.pad.normalizedButtons; i<20; ++i) {
+					av = a[i] || 0; bv = b[i] || 0;
+					if(bv || av != bv) byond.gamepadEvent(xMacro(button2macro[i],stick), bv);
+				}
+
+				// Do analog commands
+				for(analog in analogs) {
+					bv = pi.pad[analog]; av = pi.oldpad[analog];
+					if((!bv != !av) || (bv && (bv.x || bv.y)) || (av && (av.x || av.y))) byond.gamepadEvent(xMacro(analogs[analog],stick), bv);
+				}
+
+				// Do Dpad commands
+				av = pi.oldpad.dir || 0; bv = pi.pad.dir || 0;
+				if(bv || av != bv) byond.gamepadEvent(xMacro('GamepadDir',stick), bv);
+
+				// wrapup; swap the old+new objects
+				a = pi.oldpad; pi.oldpad = pi.pad; pi.pad = a;
+			}
+		},
+		input: function(c) {
+			byond.fn.input.call(this,c);
+		},
+		macrosChanged: function() {
+			var t=this,c=t.config;
+			macros = byond.getMacros();
+			if(c.mcreentry) return;
+			if(hasGamepadMacros()) return;
+			c.mcreentry = true;
+			try{byond.userMacros(byond.extend(localMacros(),defaultMacros));} catch(_){console.log(_);}
+			delete c.mcreentry;
+		}
+	},
+	winsetfn: {
+		deadzone: function(v) {
+			var c = this.config;
+			v = byond.winset2num(v);
+			if(v != null) c.deadzone = deadzone = v;
+			else return c.deadzone;
+		},
+		deadZone: function(v) {return this.winsetfn.deadzone.call(this,v);}
+	}
+};
+
+})()
+</script>
+</byondclass>

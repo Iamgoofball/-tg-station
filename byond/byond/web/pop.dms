@@ -1,0 +1,365 @@
+<byondclass name="pop">
+<style>
+.byond_pop {
+	position: absolute;
+	overflow: hidden;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.byond_pop_resize {
+	position: absolute;
+	border-width: 1px;
+	border-style: solid;
+	overflow: hidden;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	padding: 3px;
+}
+.byond_pop_resize_handle {position: absolute;}
+.byond_pop_resize_handle[dir=n], .byond_pop_resize_handle[dir=s] {width: 100%; height: 3px; cursor: ns-resize;}
+.byond_pop_resize_handle[dir=w], .byond_pop_resize_handle[dir=e] {width: 3px; height: 100%; cursor: ew-resize;}
+.byond_pop_resize_handle[dir=nw], .byond_pop_resize_handle[dir=se] {cursor: nwse-resize; width:20px; height:20px; max-width: 50%; max-height: 50%;}
+.byond_pop_resize_handle[dir=ne], .byond_pop_resize_handle[dir=sw] {cursor: nesw-resize; width:20px; height:20px; max-width: 50%; max-height: 50%;}
+.byond_pop_resize_handle[dir^=n] {top: 0;}
+.byond_pop_resize_handle[dir^=s] {bottom: 0;}
+.byond_pop_resize_handle[dir$=w] {left: 0;}
+.byond_pop_resize_handle[dir$=e] {right: 0;}
+.byond_pop_noresize {
+	position: absolute;
+	overflow: hidden;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border-width: 1px;
+	border-style: solid;
+}
+.byond_pop.resizable .byond_pop_noresize {
+	left: 3px;
+	top: 3px;
+	width: calc(100% - 6px);
+	height: calc(100% - 6px);
+}
+.byond_pop_contents {
+	position: absolute;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	cursor: auto;
+	background-color: rgba(0,0,0,0.001);
+	-webkit-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+.byond_pop_header {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	cursor: move;
+	overflow: hidden;
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	cursor: move;
+}
+.byond_pop_title {
+	height: 100%;
+	overflow: hidden;
+	line-height: 1.2;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	pointer-events: none;
+}
+.byond_pop_title img {
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+}
+.byond_pop_title * {
+	margin-left: 2px;
+	vertical-align: middle;
+}
+.byond_pop_close {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	cursor: pointer;
+	line-height: 1;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	text-align: center;
+	border-width: 0 0 1px 1px;
+	border-style: solid;
+}
+</style>
+<script>
+{
+	config: {
+		canResize: true,
+		canClose: true,
+		showTitle: true,
+		_drag: null,
+		_contpos: {x:0,y:0,w:0,h:0}
+	},
+	fn: {
+		create: function() {
+			var t=this,c=t.config,ui=t.ui,d,dir;
+			for(d=ui.resize.firstChild;d;d=d.nextSibling) {
+				dir = byond.attr(d,'dir');
+				d.addEventListener('mousedown',t._move.bind(t,dir));
+				d.addEventListener('touchstart',t._move.bind(t,dir));
+			}
+			ui.noresize.addEventListener('mousedown',t._move.bind(t,'move'));
+			ui.noresize.addEventListener('touchstart',t._move.bind(t,'move'));
+			ui.close.addEventListener('click',t._close.bind(t));
+			ui.close.addEventListener('touchstart',t._gndn);
+			if(c._child) ui.contents.appendChild(c._child.top);
+			t._update();
+		},
+		_open: function(ctrl,opts) {
+			var t=this,c=t.config,cc,w,i;
+			if(opts) t.winset(opts);
+			if(c._child && c._child!=ctrl) {c._child.adopt(null); c._child=null;}
+			if(ctrl) {
+				// grab settings from child
+				w={canResize:null,canClose:null,showTitle:null};
+				ctrl.winget(w);
+				cc = ctrl.config;
+				for(i in w) {
+					if(w.hasOwnProperty(i) && w[i]!=null) c[i]=byond.winset2bool(w[i]);
+					else if(cc.hasOwnProperty(i) && cc[i]!=null) c[i]=byond.winset2bool(cc[i]);
+				}
+				c._child=ctrl; ctrl.adopt(t);
+				t._update();
+			}
+			c.open = true;
+			setTimeout(t._show.bind(t), 100);
+		},
+		_show: function() {
+			var t=this,c=t.config,h=c._child,e=h&&h.top,cp=c._contpos,sz=e?{x:e.offsetWidth,y:e.offsetHeight}:{x:0,y:0};
+			if(!c.open) return;
+			if(e) t.ui.contents.appendChild(e);
+			byond.css(t.top,{
+				left: (window.innerWidth-sz.x)/2-cp.x+'px',
+				top: (window.innerHeight-sz.y)/2-cp.y+'px'
+			});
+			document.body.appendChild(t.top);
+			t._checkZ();
+			if(h) h.onshow();
+		},
+		_update: function() {
+			var t=this,c=t.config,ui=t.ui,p=t.top,n,cp={x:0,y:0,w:0,h:0},h=c._child,e=h&&h.top,sz={x:0,y:0},pos;
+			if(!p.parentNode) byond.backstage().appendChild(p);
+			pos={x:p.offsetLeft+c._contpos.x, y:p.offsetTop+c._contpos.y};
+			if(c.canResize) {
+				p.classList.add('resizable');
+				cp.x += 3; cp.y += 3;
+				cp.w += 6; cp.h += 6;
+			}
+			else p.classList.remove('resizable');
+			if(c.showTitle) {
+				byond.css(ui.header,{display:''});
+				n = Math.max(Math.ceil(byond.toPx('em')), 16) + ui.header.offsetHeight - byond.innerSize(ui.header).height;
+				byond.css(ui.header,{height:n+'px'});
+				byond.css(ui.close,{width:n+'px',height:n+'px',display:c.canClose?'':'none'});
+				byond.css(ui.title,{width:(c.canClose?'calc(100% - '+n+'px)':'100%'),height:n+'px',display:c.showTitle?'':'none'});
+				cp.h += n;
+			}
+			else {n=0; byond.css(ui.header,{display:'none'});}
+			if(e) {sz.x=e.offsetWidth; sz.y=e.offsetHeight};
+			byond.css(p, {left:(pos.x-cp.x)+'px',top:(pos.y-cp.y)+'px',width:(sz.x+cp.w)+'px',height:(sz.y+cp.h)+'px'});
+			byond.css(ui.contents, {top:n+'px',width:sz.x+'px',height:sz.y+'px'});
+			c._contpos=cp;
+		},
+		_titleText: function(pane) {
+			var tn,ti;
+			if(!pane) return '';
+			try {tn=pane.winget('title');} catch(_){tn=pane.id;}
+			try {ti=pane.winget('icon');} catch(_){ti='';}
+			tn = '<span>'+byond.htmlEncode(tn)+'</span>';
+			if(ti) tn = '<img src="'+ti+'">' + tn;
+			return tn;
+		},
+		titleChanged: function(c) {this.ui.title.innerHTML = this._titleText(c);},
+		_close: function() {
+			var t=this,c=t.config,h=c._child;
+			if(c.closing) return;
+			c.open = false;
+			c.closing = true;
+			byond.backstage().appendChild(t.top);
+			if(h) {
+				h.adopt(null);
+				h.onclose();
+			}
+			t.onclose();	// if we haven't closed already
+			c.closing = false;
+		},
+		_move: function(m,e) {
+			var t=this, c=t.config, p=e, w, i, ui=t.ui, h=c._child;
+			if(e.target==ui.close) return;
+			t._checkZ();
+			if(e.target.parentNode && e.target.parentNode==ui.resize) w=t.top;
+			else if(h && e.target==h.top) w=t.top;
+			else {for(i in ui) if(e.target==ui[i]) {w=t.top; break;}}
+			if(!w) return;
+			e.preventDefault();
+			if(m!='move' && !c.canResize) {byond.event.end(e); return;}
+			if(e.changedTouches) {
+				p = e.changedTouches[0];
+				if(!p) return;
+			}
+			t.captureMouse(e,true);
+			c._drag = {x:p.clientX, y:p.clientY, mode:m, n:w.offsetTop, w:w.offsetLeft, s:w.offsetTop+w.offsetHeight, e:w.offsetLeft+w.offsetWidth};
+		},
+		mouseEvent: function(e) {
+			var t=this, c=t.config, p=e, d=c._drag, w=t.top, s=t.ui.contents, h=c._child, q=h&&h.top, cp=c._contpos;
+			e.preventDefault();
+			if(!d || (!c.canResize && d.mode!='move')) {byond.event.end(e); t.releaseMouse(); return;}
+			if(e.type == 'touchcancel') {t.releaseMouse(); return;}
+			if(e.changedTouches) {
+				p = e.changedTouches[0];
+				if(!p) return;
+			}
+			p = {x:p.clientX-d.x, y:p.clientY-d.y};
+			t._mouseDelay(p);
+		},
+		_mouseDelay: function(p) {
+			var t=this, c=t.config, d, w, s, h, q, cp;
+			if(p) {
+				if(!c._mouseDelay) setTimeout(t._mouseDelay.bind(t), 100);
+				c._mouseDelay = p;
+			}
+			else {
+				p = c._mouseDelay;
+				delete c._mouseDelay;
+				if(!p) return;
+			}
+			d=c._drag, w=t.top, s=t.ui.contents, h=c._child, q=h&&h.top, cp=c._contpos;
+			if(d.mode=='move') {
+				p.x = Math.min(window.innerWidth-d.w-10, Math.max(p.x, 10-d.e));
+				p.y = Math.min(window.innerHeight-d.n-10, Math.max(p.y, 10-d.s));
+				byond.css(w, {left:(d.w+p.x)+'px', top:(d.n+p.y)+'px'});
+				return;
+			}
+			if(d.mode.match(/n/i)) {
+				p.y = Math.min(d.s-d.n-cp.h,Math.max(-d.n,p.y));
+				byond.css(w, {top:(d.n+p.y)+'px', height:(d.s-d.n-p.y)+'px'});
+				byond.css(s, {height:(d.s-d.n-cp.h-p.y)+'px'});
+				if(q) byond.css(q, {height:(d.s-d.n-cp.h-p.y)+'px'});
+			}
+			if(d.mode.match(/w/i)) {
+				p.x = Math.min(d.e-d.w-cp.w,Math.max(-d.w,p.x));
+				byond.css(w, {left:(d.w+p.x)+'px', width:(d.e-d.w-p.x)+'px'});
+				byond.css(s, {width:(d.e-d.w-cp.w-p.x)+'px'});
+				if(q) byond.css(q, {width:(d.e-d.w-cp.w-p.x)+'px'});
+			}
+			if(d.mode.match(/s/i)) {
+				p.y = Math.max(cp.h+d.n-d.s,Math.min(window.innerHeight-d.s,p.y));
+				byond.css(w, {height:(d.s-d.n+p.y)+'px'});
+				byond.css(s, {height:(d.s-d.n-cp.h+p.y)+'px'});
+				if(q) byond.css(q, {height:(d.s-d.n-cp.h+p.y)+'px'});
+			}
+			if(d.mode.match(/e/i)) {
+				p.y = Math.max(cp.w+d.w-d.e,Math.min(window.innerWidth-d.e,p.x));
+				byond.css(w, {width:(d.e-d.w+p.x)+'px'});
+				byond.css(s, {width:(d.e-d.w-cp.w+p.x)+'px'});
+				if(q) byond.css(q, {width:(d.e-d.w-cp.w+p.x)+'px'});
+			}
+			if(h) h.onsize();
+		},
+		paneAdopted: function() {this._close();},
+		// if this is still opening when removed, bail out
+		remove: function() {this.config.open=false; byond.fn.remove.call(this);},
+		_checkZ: function() {
+			// move to top of z-order but keep prompts where they are
+			var t=this,p=t.top,c=t.config,h=c._child,L=byond.skin.findAll(null,'pop'),i,z,l;
+			var _cmp = function(a,b) {
+				var ca=a.config, cb=b.config, ha=ca._child, hb=cb._child;
+				if(!ha) return hb?-1:0;
+				if(!hb) return 1;
+				return ((ha.type=='prompt'?1:0)-(hb.type=='prompt'?1:0)) ||
+					(((a==t)?1:0)-((b==t)?1:0)) ||
+					((ca.z||9999)-(cb.z||9999));
+			};
+			L.sort(_cmp);
+			for(i=0,z=100,l=L.length; i<l; ++i) byond.css(L[i].top,'z-index',z++);
+		}
+	},
+	winsetfn: {
+		pos: function(v) {
+			var t=this,p=t.top,c=t.config,h=c._child,cp=c._contpos||{x:0,y:0};
+			if(!p) return "0,0";
+			v = byond.winset2xy(v);
+			// pos is actually of the client area, not the pop itself
+			if(v==null || v===undefined) {
+				return (p.offsetLeft+cp.x)+","+(p.offsetTop+cp.y);
+			}
+			if(!h) return;
+			byond.css(p, {left:v.x-cp.x+'px', top:v.y-cp.y+'px'});
+		},
+		size: function(v) {
+			var t=this,p=t.top,c=t.config,h=c._child,e=h&&h.top,s=t.ui.contents,cp=c._contpos;
+			v = byond.winset2xy(v);
+			// size is actually of the client area, not the pop itself
+			if(v==null || v===undefined) {
+				return Math.max(0,p.offsetWidth-cp.w)+'x'+Math.max(0,p.offsetHeight-cp.h);
+			}
+			byond.css(p, {width:(v.x+cp.w)+'px', height:(v.y+cp.h)+'px'});
+			byond.css(s, {width:v.x+'px', height:v.y+'px'});
+			if(!h) return;
+			if(e) byond.css(e, {width:v.x+'px', height:v.y+'px'});
+			h.onsize();
+		},
+		canResize: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return c.canResize;
+			c.canResize = v;
+			t._update();
+		},
+		showTitle: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return c.showTitle;
+			c.showTitle = v;
+			t._update();
+		},
+		canClose: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return c.canClose;
+			c.canClose = v;
+			t._update();
+		}
+	}
+}
+</script>
+<div id=resize class="byond_pop_resize byond_buttonbk byond_border">
+	<div class="byond_pop_resize_handle" dir="n"></div>
+	<div class="byond_pop_resize_handle" dir="s"></div>
+	<div class="byond_pop_resize_handle" dir="w"></div>
+	<div class="byond_pop_resize_handle" dir="e"></div>
+	<div class="byond_pop_resize_handle" dir="nw"></div>
+	<div class="byond_pop_resize_handle" dir="ne"></div>
+	<div class="byond_pop_resize_handle" dir="sw"></div>
+	<div class="byond_pop_resize_handle" dir="se"></div>
+<div id=noresize class="byond_pop_noresize byond_bk byond_border">
+<div id=header class="byond_pop_header byond_bk1 byond_border1">
+	<div id=title class="byond_pop_title"></div>
+	<div id=close class="byond_pop_close byond_buttonbk byond_border1">&times;</div>
+</div>
+<div id=contents class="byond_pop_contents"></div>
+</div>
+</div>
+</byondclass>

@@ -1,0 +1,849 @@
+<byondclass name="dpad">
+<style>
+.byond_dpad, .byond_dpad > div {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.byond_dpad_main div {
+	font-family: sans-serif;
+	font-weight: bold;
+	position: absolute;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.byond_dpad .button {
+	position: absolute;
+	border-width: 1px;
+	border-style: solid;
+	overflow: hidden;
+	text-align: center;
+	cursor: default;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.byond_dpad .button * {
+	pointer-events: none;
+}
+.byond_dpad .button span {
+	width: calc(100% - 6px);
+	display: inline-block;
+	line-height: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.byond_dpad .button svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+	overflow: hidden;
+}
+.byond_dpad .button path {
+	stroke: currentColor;
+	fill: currentColor;
+	stroke-width: 1;
+	fill-opacity: 0.5;
+}
+.byond_dpad .button path.selected {
+	fill-opacity: 1;
+}
+.byond_dpad .round {
+	border-radius: 50%;
+}
+.byond_dpad .byond_dpad_toolbar > div {
+	pointer-events: all;
+	cursor: pointer;
+}
+.byond_dpad .byond_dpad_toolbar path {
+	pointer-events: none;
+}
+</style>
+
+<script>
+(function(){
+function Dpad(c,p) {
+
+if(!(this instanceof Dpad)) return new Dpad(c,p);
+
+var dpad = this;
+var params = byond.extend({
+	buttonMargin: 10,
+	buttonsPerPage: 8,
+	quickbuttonsMax: 5,
+	dock: 'left',
+	backwards: false
+}, p);
+byond.extend(this, {
+	touches: {}
+});
+
+function own(a,b) {return a.hasOwnProperty(b);}
+
+var configMode = false;
+var svgns = "http://www.w3.org/2000/svg";
+
+var arrowRings = [];	// array of ring objects containing: flag, prefix, arrows (array of buttons, corresponding to dirs)
+var centerButton;		// center key (no modifiers)
+var pagebuttons = [];	// buttons displayed on scrollable pages, iOS-style
+var quickbuttons = [];	// buttons displayed in a hotbar
+var shiftbuttons = [];	// modifier-only keys
+
+var currentPage = 0;
+var modifiers = {};		// modifiers currently in use
+
+var dirFlags = {1:'shift', 2:'ctrl', 4:'alt'};
+var dirs = ['North','Northeast','East','Southeast','South','Southwest','West','Northwest'];
+var wasddirs = ['W',null,'D',null,'S',null,'A',null];
+
+function flagPrefix(flag) {
+	var i, prefix = '';
+	for(i in dirFlags) {if(flag & i) prefix += dirFlags[i] + '+';}
+	return prefix;
+}
+function macroToFlags(m) {
+	var i, flags = 0;
+	for(i in dirFlags) {if(m[dirFlags[i]]) flags |= i;}
+	return flags;
+}
+function hasKey(name) {return byond.getMacro(name) || byond.getMacro(name+'+rep') || byond.getMacro(name+'+up');}
+function hasDirs(flag) {
+	var i, prefix=flagPrefix(flag), n=0, a=(dpad.dirmode=='wasd'?wasddirs:dirs), m;
+	for(i=8; i--;) {if(a[i] && (m=hasKey(prefix+a[i])) && !((flag&4) && m.old)) n = Math.max(n,i%2?8:4);}
+	return n;
+}
+function numFlags(m) {return (m.alt?1:0)+(m.shift?1:0)+(m.ctrl?1:0);}
+function cmpNoCase(a,b) {a = a.toLowerCase(); b = b.toLowerCase(); return (a<b) ? -1 : ((a>b) ? 1 : 0);}
+function keySort(a,b) {
+	a = byond.parseMacro(a);
+	b = byond.parseMacro(b);
+	/*
+		Sort order:
+		- Macros with fewer modifiers go first
+		- Modifiers preferred in shift, ctrl, alt order
+		- Alphanumeric keys go first in alphabetical order
+		- Other keys go in alphabetical order
+	 */
+	return (numFlags(a)-numFlags(b)) || ((a.alt?1:0)-(b.alt?1:0)) ||
+	       ((a.ctrl?1:0)-(b.ctrl?1:0)) || ((a.shift?1:0)-(b.shift?1:0)) ||
+	       ((a.key.length==1?1:0)-(b.key.length==1?1:0)) || cmpNoCase(a.key,b.key);
+}
+function prettyKey(name) {
+	return name.toLowerCase().replace(/\b([a-z])/g, function(m,a){return a.toUpperCase();});
+}
+
+var buttonid = 0;
+
+function Button(key, params) {
+	if(!(this instanceof Button)) return new Button(key, params);
+	byond.extend(this, params);
+	this.buttonid = ++buttonid;
+	this.held = false;
+	if(key) {
+		this.key = key;
+		this.down = !!byond.hasMacro(key);
+		this.up = !!byond.hasMacro(key+'+up');
+		this.rep = !!byond.hasMacro(key+'+rep');
+		this.isModifier = !!key.match(/^(shift|ctrl|alt)$/i);
+		this.parsed = byond.parseMacro(key);
+		this.keyName = this.parsed.key;
+		this.modifiers = flagPrefix(macroToFlags(this.parsed));
+	}
+	this.touches = {};
+}
+Button.prototype = {
+	create: function() {
+		var d = document.createElement('div');
+		d.id = 'dpad_button_' + this.buttonid;
+		d.className = 'byond_buttonbk byond_border1 button';
+		if(this.round) d.classList.add('round');
+		var h = this.touchEvent.bind(this);
+		d.addEventListener('touchstart',h);
+		d.addEventListener('touchend',h);
+		d.addEventListener('touchcancel',h);
+		d.addEventListener('touchmove',h);
+		d.addEventListener('touchleave',h);
+		h = this.mouseEvent.bind(this);
+		d.addEventListener('mousedown',h);
+		d.addEventListener('mouseup',h);
+		d.addEventListener('mouseover',h);
+		d.addEventListener('mousemove',h);
+		d.addEventListener('mouseleave',h);
+		d.addEventListener('mouseout',h);
+		return d;
+	},
+	div: function(a) {
+		return document.querySelector('#dpad_button_'+this.buttonid) || (a?this.create():null);
+	},
+	update: function() {
+		if(!this.key) return;
+		var d = this.div();
+		if(!d) return;
+		var face = prettyKey(this.key);
+		// simple keys with nice verb names get shown as verb names
+		if(!this.up && (this.rep != this.down)) {
+			var cmd = byond.hasMacro(this.key+(this.rep?'+rep':''));
+			if(cmd && cmd.match(/^[\w\-]+$/i)) {
+				face = prettyKey(cmd).replace(/\W+/g, ' ').trim();
+			}
+		}
+		d.innerHTML = '<span>'+byond.htmlEncode(face)+'</span>';
+		byond.attr(d,'title',face);
+		byond.css(d.firstChild, 'margin-top', (byond.innerSize(d).height-d.firstChild.offsetHeight)/2+'px');
+	},
+	eq: function(b) {return b && b.key==this.key;},
+	pos: function(e) {
+		var x=e.clientX, y=e.clientY;
+		var d=this.div(),p;
+		while(d && d!=document && d!=document.body) {
+			p = d.offsetParent;
+			x -= d.offsetLeft;
+			y -= d.offsetTop;
+			d = p;
+		}
+		return {x:x,y:y};
+	},
+	touchEvent: function(e) {
+		var b=this,tl=e.changedTouches,p,tid,i,l;
+		e.preventDefault();
+		e.stopPropagation();
+		if(!tl) return;
+		for(i=0,l=tl.length; i<l; ++i) {
+			p = b.pos(tl[i]);
+			tid = tl[i].identifier;
+			if(e.type == 'touchstart') b.press(e,p,tid);
+			else if(e.type == 'touchend' || e.type == 'touchcancel' || e.type == 'touchleave') b.release(e,tid);
+			else if(e.type == 'touchmove') b.slide(e,p,tid);
+		}
+	},
+	mouseEvent: function(e) {
+		var b=this,p,tid=0;
+		e.preventDefault();
+		e.stopPropagation();
+		p = b.pos(e);
+		if(e.type == 'mousedown') {b.press(e,p,tid); dpad.control.captureMouse(e);}
+		else if(e.type == 'mouseup' || e.type == 'mouseout' || e.type == 'mouseleave') {b.release(e,tid); dpad.control.releaseMouse();}
+		else if(e.type == 'mouseover' || e.type == 'mousemove') b.slide(e,p,tid);
+	},
+	ringButton: function(p) {
+		var d=this.div(),x=p.x,y=p.y;
+		if(!d) return null;
+		x -= (d.offsetWidth-1)/2;
+		y -= (d.offsetHeight-1)/2;
+		var ax=Math.abs(x), ay=Math.abs(y), i;
+		var n = this.arrows.length;
+		if(n == 8) {
+			var t = Math.tan(Math.PI/8);
+			if(ax<=ay*t) i = y>0?4:0;
+			else if(ay<=ax*t) i = x>0?2:6;
+			else {i=(y>0?3:1); i=(x<0?8-i:i);}
+		}
+		else {	// four-arrow pattern
+			if(ax <= ay) i = y>0? 2:0;
+			else i = x<0?3:1;
+		}
+		return this.arrows[i];
+	},
+	clear: function() {
+		var tid,b=this,l=b.touches;
+		for(tid in l) {if(own(l,tid)) b.release(null,tid);}
+	},
+	press: function(e,p,tid,parent) {
+		if(configMode) return;	// do nothing yet
+		var b=this,a,i,h=b.touches.length;
+		if(!b.touches[tid]) b.touches[tid] = b;
+		if(b.isModifier) modifiers[b.key] = true;
+		if(parent==this) parent=null;
+		if(!parent) dpad.touches[tid]=b;
+		if(b.arrows) {b=b.ringButton(p); if(b) {this.touches[tid]=b; return b.press(e,p,tid);} return;}
+		if(h) return;
+		if(b.combo) {for(a=b.combo,i=a.length;i-->0;) a[i].press(e,p,tid,b);}
+		else {
+			//console.log('Press '+b.key);
+			var path = document.querySelector("path[macrokey='"+b.key+"']");
+			if(path) path.setAttribute('class','selected');
+			byond.fireMacro(b.key, true);
+		}
+	},
+	release: function(e,tid,parent) {
+		if(configMode) return;	// do nothing yet
+		var b=this,ti=b.touches[tid];
+		if(parent==this) parent=null;
+		if(!parent) delete dpad.touches[tid];
+		delete b.touches[tid];
+		if(b.isModifier) delete modifiers[b.key];
+		if(b.arrows && (ti instanceof Button)) {
+			ti.release(e,tid);
+			return;
+		}
+		if(b.touches.length) return;
+		if(b.combo) {for(a=b.combo,i=a.length;i-->0;) a[i].release(e,tid,b);}
+		else {
+			//console.log('Release '+b.key);
+			var path = document.querySelector("path[macrokey='"+b.key+"']");
+			if(path) path.removeAttribute('class');
+			byond.fireMacro(b.key+'+up', true);
+		}
+		checkUpdate();	// if no more touches, dpad is free to update with new macros
+	},
+	slide: function(e,p,tid) {
+		if(configMode) return;	// do nothing yet
+		var b=this,ti=b.touches[tid];
+		if(!tid && !ti) return;	// mouseover without earlier press
+		if(b.arrows) {
+			b=b.ringButton(p);
+			if(!(ti instanceof Button)) ti=null;
+			if(b != ti) {
+				//console.log('Slid from '+(ti||{}).buttonid+' to '+(b||{}).buttonid);
+				var o={},n={},ao,an,i;
+				for(ao=ti?ti.combo||[ti]:[],i=ao.length; i-->0;) o[ao[i].buttonid] = ao[i];
+				for(an=b?b.combo||[b]:[],i=an.length; i-->0;) n[an[i].buttonid] = an[i];
+				for(i=ao.length; i-->0;) {
+					if(!n[ao[i].buttonid]) ao[i].release(e,tid,ti);
+				}
+				for(i=an.length; i-->0;) {
+					if(!o[an[i].buttonid]) an[i].press(e,p,tid,b);
+				}
+				this.touches[tid] = b;
+				delete ti.touches[tid];
+				b.touches[tid]=b;
+			}
+			return;
+		}
+	}
+};
+
+function clear() {
+	var b;
+	while((b=locked())) b.clear();
+	dpad.touches = {};
+}
+
+function locked() {
+	var l=dpad.touches,t;
+	for(t in l) {if(l[t] && own(l,t)) return l[t];}
+	return null;
+}
+
+function checkUpdate() {
+	if(dpad.updatePending && !locked()) {
+		dpad.updatePending = false;
+		update();
+	}
+}
+
+function update() {
+	if(dpad.updateTimeout || dpad.updatePending || locked()) {
+		dpad.updatePending = true; return;
+	}
+	init(dpad.control);
+}
+
+function updateTimeout() {
+	dpad.updateTimeout = 0;
+	checkUpdate();
+}
+
+function init(ctrl) {
+	var i,flag,prefix,macros,m,l,keys={},k,n,a,s,b,ud;
+	arrowRings = [];
+
+	for(flag=0; flag<8; ++flag) {
+		if(n = hasDirs(flag)) {
+			arrowRings.push(m = Button(null,{flag: flag, prefix: prefix=flagPrefix(flag), arrows: k=[], round: true}));
+			a = (dpad.dirmode=='wasd'?wasddirs:dirs);
+			s = (n<8) ? 2 : 1;
+			for(j=0,ud=true; j<8; j+=s) {
+				m.arrows.push(b=Button(prefix+a[j], {isArrow:true}));
+				if(b.rep || !b.up || !b.down) ud=false;
+			}
+			if(n==4 && ud) {
+				//console.log("Combo mode found");
+				a=m.arrows.slice(0);
+				for(j=0,k=1; j<4; ++j,k+=2) {
+					m.arrows.splice(k,0,Button(null, {isArrow:true, combo:[a[j],a[(j+1)%4]]}));
+				}
+			}
+		}
+	}
+
+	macros = byond.getMacros();
+	for(i in macros) {
+		if(!own(macros,i)) continue;
+		m = macros[i];
+		if(m.old && m.alt && m.rep && own(macros,i.replace(/\bALT\+\b/i,''))) continue;	// skip oldstyle Alt+ macros added automatically that have non-Alt counterparts
+		if(!m.key.match(/^(north|south|west|east)(west|east)?$/i)) {
+			k = m.name.toLowerCase().replace(/\+up\b/,'').replace(/\+rep\b/,'');
+			keys[k] = Button(k);
+		}
+	}
+
+	centerButton = keys.center;
+	if(centerButton) centerButton.isCenter = centerButton.round = true;
+	delete keys.center;
+
+	shiftbuttons = [];
+	for(i=0,k=['shift','ctrl','alt']; i<3; ++i) {
+		if(keys[k[i]]) {shiftbuttons.push(keys[k[i]]); delete keys[k[i]];}
+	}
+
+	// delete macros we don't have
+	for(i=0,k=pagebuttons,l=k.length; i<l; ++i) {
+		if(keys[k[i].key]) delete keys[k[i].key];
+		else {k.splice(i--,1); --l;}
+	}
+	for(i=0,k=quickbuttons,l=k.length; i<l; ++i) {
+		if(keys[k[i].key]) delete keys[k[i].key];
+		else {k.splice(i--,1); --l;}
+	}
+
+	// set quickbuttons if we only have a few macros, otherwise they all go to pagebuttons
+	k = []; for(i in keys) {if(own(keys,i)) k.push(i);}	// get list of keys (Object.keys is preferred but may not be available)
+	m = k.sort(keySort);
+	k = (quickbuttons.length + pagebuttons.length + (l=m.length) <= dpad.quickbuttonsMax) ? quickbuttons : pagebuttons;
+	for(i=0; i<l; ++i) k.push(keys[m[i]]);
+
+	dpad.hasShift = !!shiftbuttons.length;
+	dpad.hasQuick = !!quickbuttons.length;
+	dpad.hasPage = !!pagebuttons.length;
+
+	draw();
+	dpad.updateTimeout = setTimeout(updateTimeout, 250);
+}
+
+function makesvg(div) {
+	var svg;
+	if(!(svg = div.querySelector('svg'))) {
+		svg = document.createElementNS(svgns,"svg");
+		svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+		div.appendChild(svg);
+	}
+	while(svg.firstChild) svg.removeChild(svg.firstChild);
+	return svg;
+}
+
+function svgScale(p,n) {
+	var i,l;
+	p = p.split(/[\s,\n\r]+/);
+	for(i=0,l=p.length; i<l; ++i) {
+		if(p[i].match(/^(-?[\d\.]+)(e[+\-]?\d+)?\%$/i)) p[i] = (parseFloat(RegExp.$1)*n/100).toFixed(2).replace(/\.0+$/,'').replace(/(\..*)0+$/,'$1');
+	}
+	return p.join(' ');
+}
+
+function setsize() {
+	var dbw,dbh,ctrl=dpad.control,d=ctrl.elem,horz,sz=byond.innerSize(ctrl.top.parentNode),szd=byond.innerSize(d),
+		refsize=dpad.open?Math.floor(Math.min(sz.width,sz.height)/4):0;
+	dbw = d.offsetWidth - szd.width;
+	dbh = d.offsetHeight - szd.height;
+	horz = !!(dpad.dock||'').match(/^(top|bottom)$/i);
+	byond.css(d, {
+		width: horz ? '100%' : (refsize+dbw)+'px',
+		height: horz ? (refsize+dbh)+'px' : '100%',
+	});
+	return {dbw: dbw, dbh: dbh, horz: horz, refsize: refsize};
+}
+
+function draw() {
+	//console.log('Draw begin');
+	var w,h,dbw,dbh,pw,ph,ctrl=dpad.control,d=ctrl.elem,horz,
+		cfgsize=Math.ceil(2*byond.toPx('em')),prefsize=Math.ceil(3*byond.toPx('em')),
+		refsize,b,bd,a,i,j,k,l,x,y,u,C,S,blen,bwidth,bmargin=dpad.buttonMargin,
+		svg,path,center,radius,pt,cpos;
+	a = setsize();
+	byond.css(d,'display',dpad.open?'block':'none');
+	if(!dpad.open) return;
+	dbw = a.dbw;
+	dbh = a.dbh;
+	horz = a.horz;
+	refsize = a.refsize;
+
+	//console.log('Gather components');
+	var space = d['offset'+(horz?'Width':'Height')] - (horz?dbw:dbh);
+
+	// layout individual units
+	var units=[], pos={}, size={toolbar:cfgsize}, unshown={dpad:1,page:1,more:1,quick:1,mods:1};
+	if(dpad.open) {
+		if(arrowRings.length || centerButton) {units.push('dpad'); size.dpad = refsize;}
+		units.push('page');	// always present--as spacer if nothing else
+		if(pagebuttons.length > dpad.buttonsPerPage) {units.push('more'); size.more = Math.ceil(byond.toPx('em'));}
+		if(quickbuttons.length) {units.push('quick'); size.quick = Math.ceil(refsize / Math.max(quickbuttons.length,3));}
+		if(shiftbuttons.length) {units.push('mods'); size.mods = Math.ceil(refsize / 5);}
+		units.push('toolbar');
+	}
+	else units.push('toolbar');
+	if(dpad.backwards) units.reverse();
+
+	//console.log('Position components');
+	for(i=j=0,l=units.length; i<l; ++i) {
+		u = units[i];
+		if(own(size,u)) space -= size[u];
+		else ++j;
+	}
+	for(i=x=0; i<l; ++i) {
+		u = units[i];
+		if(!own(size,u)) {
+			size[u] = (j>1) ? Math.floor(space/j + 0.5) : space;
+			space -= size[u];
+			--j;
+		}
+		pos[u] = x;
+		x += size[u];
+		delete unshown[u];
+		byond.css(ctrl.ui[u], {display:'', width: horz?size[u]+'px':'100%', height: horz?'100%':size[u]+'px', left: horz?pos[u]+'px':0, top: horz?0:pos[u]+'px'});
+	}
+	for(i in unshown) {
+		if(own(unshown,i)) byond.css(ctrl.ui[i], 'display', 'none');
+	}
+
+	// create dpad
+	if(size.dpad) {
+		//console.log('Draw dpad');
+		center = size.dpad/2;
+		radius = Math.max(center - bmargin, 0) / Math.max(3, arrowRings.length*2 + 1);
+		ctrl.ui.dpad.innerHTML = '';
+		a = arrowRings.slice(0);
+		a.unshift(centerButton||Button('center+rep',{round:true}));
+		for(i=a.length; --i>=0;) {
+			j = radius * (i*2+1);
+			byond.css(bd=a[i].div(true), {
+				left: (center-j)+'px',
+				top: (center-j)+'px',
+				width: (j*2)+'px',
+				height: (j*2)+'px',
+			});
+			ctrl.ui.dpad.appendChild(bd);
+
+			if(a[i].arrows) {
+				svg = makesvg(bd);
+				--j; 	// account for border
+
+				u = a[i].arrows.length > 4;
+				for(var k=0; k<4; ++k) {
+					x = (k%2) ? (2-k) : 0;
+					y = (k%2) ? 0 : (k-1);
+					path = document.createElementNS(svgns,"path");
+					path.setAttribute('macrokey', a[i].arrows[u?k*2:k].key);
+					path.setAttribute('d',
+						'M ' + (j+x*(j-radius*0.4)) +
+						',' + (j+y*(j-radius*0.4)) +
+						' L ' + (j+x*(j-radius*1.6)+y*radius*0.4) +
+						',' + (j+y*(j-radius*1.6)-x*radius*0.4) +
+						' L ' + (j+x*(j-radius*1.6)-y*radius*0.4) +
+						',' + (j+y*(j-radius*1.6)+x*radius*0.4) +
+						' z'
+					);
+					svg.appendChild(path);
+
+					if(!u) continue;
+					x = (k<2) ? Math.sqrt(0.5) : -Math.sqrt(0.5);
+					y = ((k+1)%4<2) ? -Math.sqrt(0.5) : Math.sqrt(0.5);
+					path = document.createElementNS(svgns,"path");
+					path.setAttribute('macrokey', a[i].arrows[k*2+1].key);
+					path.setAttribute('d',
+						'M ' + (j+x*(j-radius*0.6)) +
+						',' + (j+y*(j-radius*0.6)) +
+						' L ' + (j+x*(j-radius*1.4)+y*radius*0.4) +
+						',' + (j+y*(j-radius*1.4)-x*radius*0.4) +
+						' L ' + (j+x*(j-radius*1.4)-y*radius*0.4) +
+						',' + (j+y*(j-radius*1.4)+x*radius*0.4) +
+						' z'
+					);
+					svg.appendChild(path);
+				}
+			}
+
+		}
+	}
+
+	// create shifts
+	if(size.mods) {
+		//console.log('Draw shifts');
+		bwidth = size.mods-bmargin*2;
+		blen = Math.floor((refsize-bmargin) / (shiftbuttons.length||1)) - bmargin;
+		ctrl.ui.mods.innerHTML = '';
+		for(i=shiftbuttons.length; --i>=0;) {
+			b = shiftbuttons[i];
+			byond.css(bd=b.div(true), {
+				left: (horz?bmargin:(i*(blen+bmargin)+bmargin))+'px',
+				top: (horz?(i*(blen+bmargin)+bmargin):bmargin)+'px',
+				width: (horz?bwidth:blen)+'px',
+				height: (horz?blen:bwidth)+'px'
+			});
+			ctrl.ui.mods.appendChild(bd);
+			b.update();
+		}
+	}
+
+	// create quick buttons
+	if(size.quick && dpad.showAll) {
+		//console.log('Draw quick buttons '+quickbuttons.length);
+		byond.css(ctrl.ui.quick, 'display', '');
+		bwidth = size.quick-bmargin*2;
+		blen = Math.max(bwidth, Math.floor((refsize-bmargin) / (quickbuttons.length||1)) - bmargin);
+		ctrl.ui.quick.innerHTML = '';
+		for(i=quickbuttons.length; --i>=0;) {
+			b = quickbuttons[i];
+			byond.css(bd=b.div(true), {
+				left: (horz?bmargin:(i*(blen+bmargin)+(blen-bwidth)/2+bmargin))+'px',
+				top: (horz?(i*(blen+bmargin)+(blen-bwidth)/2+bmargin):bmargin)+'px',
+				width: bwidth+'px',
+				height: bwidth+'px'
+			});
+			ctrl.ui.quick.appendChild(bd);
+			b.update();
+		}
+	}
+	else {
+		byond.css(ctrl.ui.quick, 'display', 'none');
+	}
+
+	if(size.page && dpad.showAll) {
+		//console.log('Draw page buttons '+pagebuttons.length);
+		var cols = Math.max(2, Math.floor((blen = refsize-bmargin)/(prefsize+bmargin)));
+		var rows = Math.max(2, Math.floor((bwidth = size.page-bmargin)/(prefsize+bmargin)));
+		dpad.buttonsPerPage = cols * rows;
+		blen = Math.floor(blen / cols) - bmargin;
+		bwidth = Math.floor(bwidth / rows) - bmargin;
+		var page = null, npage = 0;
+		byond.css(ctrl.ui.page, 'display', '');
+		byond.css(ctrl.ui.more, 'display', pagebuttons.length>dpad.buttonsPerPage?'':'none');
+		for(i=0; i<pagebuttons.length; ++i) {
+			if(i%dpad.buttonsPerPage == 0) {
+				npage = i/dpad.buttonsPerPage;
+				if(!ctrl.ui.pages) ctrl.ui.pages = [];
+				if(npage >= ctrl.ui.pages.length) {
+					ctrl.ui.pages.push(page = document.createElement('div'));
+				}
+				page = ctrl.ui.pages[npage];
+				if(!page.parentNode) byond.backstage().appendChild(page);
+				page.innerHTML = '';
+			}
+			x = (i % cols) * (blen+bmargin) + bmargin;
+			y = (Math.floor(i / cols) % rows) * (bwidth+bmargin) + bmargin;
+			b = pagebuttons[i];
+			byond.css(bd=b.div(true), {
+				left: (horz?y:x)+'px',
+				top: (horz?x:y)+'px',
+				width: (horz?bwidth:blen)+'px',
+				height: (horz?blen:bwidth)+'px'
+			});
+			page.appendChild(bd);
+			b.update();
+		}
+		changePage();
+	}
+	else {
+		byond.css(ctrl.ui.page, 'display', 'none');
+		byond.css(ctrl.ui.more, 'display', 'none');
+	}
+
+	// display controls
+	for(i=cpos=0,a=ctrl.config._icons,l=a.length; i<l; ++i) {
+		j = a[i]; k = j.id;
+		if(!ctrl.ui[k]) ctrl.ui.toolbar.appendChild(ctrl.ui[k] = document.createElement('div'));
+		k = ctrl.ui[k];
+		if(j.init) j.init(ctrl,dpad);
+
+		k.onclick = j.click && j.click.bind(ctrl,j,dpad);
+		if(j.hidden) {byond.css(k,{display:'none'}); continue;}
+		byond.css(k, {display:''});
+		byond.attr(k, {title:j.title||''});
+		byond.cssPx(k, {left:horz?0:cpos,top:horz?cpos:0,width:cfgsize,height:cfgsize});
+		svg = makesvg(k);
+		if(j.path) {
+			path = document.createElementNS(svgns,"path");
+			path.setAttribute('d', svgScale(j.path,cfgsize));
+			path.setAttribute('fill', 'currentColor');
+			svg.appendChild(path);
+		}
+		if(j.stroke) {
+			path = document.createElementNS(svgns,"path");
+			path.setAttribute('d', svgScale(j.stroke,cfgsize));
+			path.setAttribute('stroke', 'currentColor');
+			path.setAttribute('stroke-width', ''+(j.strokeWidth||2));
+			svg.appendChild(path);
+		}
+		cpos += cfgsize;
+	}
+}
+
+function changePage(dir) {
+	var ui = dpad.control.ui, npages = Math.ceil(pagebuttons.length, dpad.buttonsPerPage), page;
+	dir = dir ? (dir>0 ? 1 : -1) : 0;
+	currentPage = Math.max(0, Math.min(npages-1, currentPage+dir));
+	if(!npages) {
+		ui.page.innerHTML = '';
+		return;
+	}
+	currentPage %= npages;
+	if(currentPage < 0) currentPage += npages;
+	page = ui.pages[currentPage];
+	byond.css(page, {width:'100%', height:'100%', left:0, top:0, position:'absolute'});
+	if(page != ui.page.firstChild) {
+		if(ui.page.firstChild) ui.page.firstChild.replaceWith(page);
+		else ui.page.appendChild(page);
+	}
+}
+
+byond.extend(this, params, {
+	init: init,
+	draw: draw,
+	setsize: setsize,
+	clear: clear,
+	locked: locked,
+	update: update,
+	control: c
+});
+init();
+
+return this;
+}	// Dpad function
+
+// control
+return {
+	config: {
+		dock: 'left',
+		dpadPosition: 'top',
+		_icons: [
+			{
+				id: 'move',
+				title: 'Move D-Pad',
+				click: function() {this._move();},
+				path: 'M 21.7157% 21.7157% A 40% 40% 0 0 1 90% 50% L 100% 50% L 80% 70% L 60% 50% L 70% 50% A 20% 20% 0 0 0 35.8579% 35.8579% z M 78.2843% 78.2843% A 40% 40% 0 0 1 10% 50% L 0 50% L 20% 30% L 40% 50% L 30% 50% A 20% 20% 0 0 0 64.1421% 64.1421% z'
+			},
+			{
+				id: 'morekeys',
+				title: 'Toggle keys',
+				init: function(ctrl,dpad) {
+					this.hidden = !(dpad.hasQuick || dpad.hasPage);
+					this.title = (dpad.showAll?'Hide':'Show')+' All Macros';
+				},
+				click: function(b,dpad) {dpad.showAll=!dpad.showAll; dpad.draw();},
+				path: 'M 10% 10% L 30% 10% L 30% 30% L 10% 30% z M 40% 10% L 60% 10% L 60% 30% L 40% 30% z M 70% 10% L 90% 10% L 90% 30% L 70% 30% z M 10% 40% L 30% 40% L 30% 60% L 10% 60% z M 40% 40% L 60% 40% L 60% 60% L 40% 60% z M 70% 40% L 90% 40% L 90% 60% L 70% 60% z M 10% 70% L 30% 70% L 30% 90% L 10% 90% z M 40% 70% L 60% 70% L 60% 90% L 40% 90% z M 70% 70% L 90% 70% L 90% 90% L 70% 90% z'
+			}
+		]
+	},
+	fn: {
+		create: function() {
+			//var t=this,c=t.config,ui=t.ui,pane,skin,e,n,ct;
+			var t=this,c=t.config,ui=t.ui,pane;
+			var dockSide = !(c.dock||'').match(/^(top|bottom)$/i);
+			var dockFirst = !(c.dock||'').match(/^(bottom|right)$/i);
+			t.elem = ui.main;
+			c._pane = pane = byond.skin.attach(document.createElement('div'), 'pane');
+			byond.css(ui.contents, {left:0, top:0, position:'absolute',  width:'100%', height:'100%'});
+
+			t.dock(pane);
+			pane.adopt(t);
+			ui.contents.appendChild(pane.top);
+
+			c._dpad = Dpad(t, {dock:c.dock, backwards:!!(c.dpadPosition||'').match(/^(bottom|right)$/i)});
+		},
+		remove: function() {
+			var t=this,c=t.config,pane,skin,e,n,ct;
+			skin = (t.top&&t.top.parentNode) || document.querySelector('#skin') || document.body;
+			pane = c._pane;
+			e = pane.elem;
+			while((n=e.firstChild)!=null) {
+				skin.appendChild(n);
+				ct=byond(n);
+				if(ct) ct.onsize();
+			}
+			pane.remove();
+			c._pane = null;
+			byond.fn.remove.call(this);
+		},
+		macrosChanged: function() {
+			var d = this.config._dpad;
+			if(d) d.update();
+		},
+		onsize: function() {
+			var t=this,c=t.config,d=c._dpad,dp=t.elem,horz;
+			horz = !!(c.dock||'').match(/^(top|bottom)$/i);
+			if(d) d.draw();
+			
+			byond.css(t.elem, {
+				left: (d&&d.open&&c.dock=='right') ? 'calc(100% - '+dp.offsetWidth+'px)' : '0',
+				top: (d&&d.open&&c.dock=='bottom') ? 'calc(100% - '+dp.offsetHeight+'px)' : '0'
+			});
+			byond.css(t.ui.contents, {
+				width: (d&&d.open&&!horz) ? 'calc(100% - '+dp.offsetWidth+'px)' : '100%',
+				height: (d&&d.open&&horz) ? 'calc(100% - '+dp.offsetHeight+'px)' : '100%',
+				left: (d&&d.open&&c.dock=='left') ? dp.offsetWidth+'px' : '0',
+				top: (d&&d.open&&c.dock=='top') ? dp.offsetHeight+'px' : '0'
+			});
+			byond.fn.onsize.call(this);
+		},
+		postLoad: function() {
+			var c=this.config;
+			if(c._pane) c._pane.onsize();
+		},
+		/* _expand: function() {
+			var t=this,c=t.config,d=c._dpad;
+			if(d) {
+				d.open = !d.open;
+				t.onsize();
+			}
+		}, */
+		_move: function() {
+			var t=this,c=t.config;
+			t.winset({dock:{top:'right',right:'bottom',bottom:'left',left:'top'}[c.dock]||'left'});
+		},
+		dockOrder: function() {return 50;}
+	},
+	winsetfn: {
+		open: function(v) {
+			var t=this,c=t.config,d=c._dpad;
+			if(!d) return false;
+			v = byond.winset2bool(v);
+			if(v == null || v===undefined) return d.open;
+			d.open = v;
+			t.onsize();
+		},
+		dock: function(v) {
+			var t=this, c=t.config, h=c._child, d=c._dpad;
+			if(typeof v == 'string' && v.match(/^(left|right|top|bottom)$/i)) {
+				c.dock = d.dock = v.toLowerCase();
+				t.onsize();
+				return;
+			}
+			return c.dock;
+		},
+		dpadPosition: function(v) {
+			var c=this.config, h=c._child, d=c._dpad;
+			h = h && !h.config.isVertical;
+			if(d && typeof v == 'string' && v.match(/^(left|right|top|bottom)$/i)) {
+				d.backwards = v.match(/^(right|bottom)$/i);
+				d.draw();
+				return;
+			}
+			return (d && d.backwards) ? (h?"right":"bottom") : (h?"left":"top");
+		},
+		pos: function(v) {return "0,0";},
+		size: function(v) {return "0x0";},
+		isVisible: function(v) {return this.winsetfn.open.call(this,v);}
+	}
+};
+
+})()
+</script>
+
+<div id=contents class=byond_dpad_contents></div>
+<div id=main class=byond_dpad_main>
+	<div id=toolbar></div>
+	<div id=dpad></div>
+	<div id=page></div>
+	<div id=more></div>
+	<div id=quick></div>
+	<div id=mods></div>
+</div>
+
+</byondclass>

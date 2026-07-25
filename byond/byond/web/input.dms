@@ -1,0 +1,430 @@
+<byondclass name="input">
+<style type="text/css">
+.byond_input {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.byond_input input, .byond_input textarea {
+	width: 100%;
+	border-width: 1px;
+	border-style: solid;
+	color: currentColor;
+	text-align: left;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.byond_input input[disabled], .byond_input textarea[disabled] {
+	opacity: 0.5;
+}
+</style>
+<script type="text/javascript">
+(function(){
+
+// history manager
+function history(elem) {
+	var cursor=0,history=[],next;
+	return {
+		add: function() {history.push(elem.value); while(history.length>100) history.shift(); cursor=history.length; elem.value='';},
+		up: function() {if(cursor>0) {if(cursor>=history.length) next=elem.value; elem.value=history[--cursor];}},
+		down: function() {if(cursor<history.length) elem.value=(++cursor>=history.length)?next:history[cursor];}
+	};
+};
+
+// delays key events while waiting to finish expansion
+function delayer(t) {
+	var events=[],timer=0,delay=250;
+	function last() {return events[events.length-1];};
+	function run() {
+		if(timer) clearTimeout(timer);
+		timer=0;
+		t._delaying = null;
+		for(var i=0,l=events.length,e;i<l;++i) {
+			e = events[i];
+			if(typeof e=='string') t._insert(e);
+			else t._keydown(e,true,true);
+		}
+	};
+	function clear() {events=[]; run();};
+	timer=setTimeout(run,delay);
+	return {
+		run: run,
+		clear: clear,
+		record: function(e) {
+			byond.event.end(e);
+			if(timer) clearTimeout(timer);
+			timer=setTimeout(run,delay);
+			if(e.type=='keypress') {
+				var s=String.fromCharCode(e.charCode),l=last();
+				if(typeof l=='string') events[events.length-1] += s;
+				else events.push(s);
+			}
+			else events.push(e);
+		}
+	};
+};
+
+return {
+	config: {
+		noCommand: false,
+		isDisabled: false,
+		isPassword: false,
+		multiLine: false
+	},
+	fn: {
+		create: function() {
+			var t=this, top=t.top, e=t.ui.input||top.querySelector('input[type=text],input[type=edit],textarea'), d;
+			t.ui.input=e;
+			byond.extend(t,{elem:e, _history:history(e)});
+			e.addEventListener('keydown',t._keydown.bind(t));
+			e.addEventListener('keyup',t._keyup.bind(t));
+			e.addEventListener('keypress',t._keypress.bind(t));
+		},
+		output: function(obj) {
+			var t=this,c=t._commandSpace().toLowerCase(),m=obj.text,ma=m,d=t._delaying;
+			if(m && m.toLowerCase().indexOf(c)==0) ma=m.substr(c.length);
+			//if(obj.choices && (!m || ma==t.elem.value || !m.match(/\s$/))) {
+			if(obj.choices) {
+				if(d) d.clear();
+				if(t._prompt) t._prompt.cancel();
+				t._prompt=byond.prompt({
+					type:'any', choices:obj.choices, prefix:m, command:m, title:'Complete command',
+					onclickoff: function(){return false;},
+					reply: function(c){t._prompt=null;t.output({text:this.prefix+c,enter:true});},
+					cancel: function(){t._prompt=null;},
+					canCancel: true, cancelOnKey: true
+				});
+			}
+			else if(typeof ma=='string') {
+				t.elem.value=ma;
+				if(d) d.run();
+			}
+			if(obj.enter) t._enter();
+			return t;
+		},
+		keyEvent: function(e,any) {
+			// if any==true, skin is asking if we want this key regardless of modifiers
+			// we already would have handled the logic earlier so just say no
+			if(any) return false;
+			if(this.isDefault && e.type=='keydown') {
+				// don't grab focus for modifier keys or capslock
+				if(!this._keydown(e,true)) return true;
+			}
+			return false;
+		},
+		_sel: function(s,a,b) {
+			var t=this.elem,e;
+			if(s) {
+				var t=this.elem,l=t.value.length;
+				e=s[1]; s=s[0]; if(a) s+=a; if(b) e+=b;
+				t.selectionStart=Math.max(0,Math.min(s,e,l));
+				t.selectionEnd=Math.min(l,Math.max(s,e,0));
+				try{t.selectionDirection=(s>e)?'backward':'forward';}catch(_){}
+				return this;
+			}
+			else {
+				s=t.selectionStart;
+				e=t.selectionEnd;
+				return ((t.selectionDirection||'none')=='backward') ? [e,s] : [s,e];
+			}
+		},
+		_inQuote: function() {
+			var t=this,cf=t.config,c=cf.command,e=t.elem,v=e.value,i,l,q,ch;
+			if(c && !c.match(/^!/)) v=c+v;
+			for(i=0,l=v.length; i<l; ++i) {
+				ch=v.charAt(i);
+				if(ch=='\\') ++i;
+				else if(ch=='\"' || ch=='\'') {
+					if(!q) q=ch;
+					else if(q==ch) q=null;
+				}
+			}
+			return !!q;
+		},
+		_commandSpace: function(asDefault) {
+			var cf=this.config,c=cf.command;
+			if(c===undefined) cf.command=c='';
+			else if(c && !c.match(/[\'\"]$/)) c=c.trim()+' ';
+			if(c.match(/^!/)) return asDefault ? c.substr(1) : '';
+			return asDefault ? '' : c;
+		},
+		// grab var indicates we are asking if the input is okay to grab focus
+		_keydown: function(e,grab,delayed) {
+			var bs=byond.skin,t=this,elem=t.elem,c=t.config,v=elem.value,sel,cm,h=t._history,l=v.length,inexact;
+			if(byond(':prompt')) {bs.dispatchKeyEvent(e,t); byond.event.end(e); return false;}
+			if(c.multiLine) {if(!grab) t._multiLineKey(e); return true;}
+			if(c.noCommand) {
+				if(!grab) e.stopPropagation();
+				return true;	// don't grab focus
+			}
+			if(l>=5 && v.trim()=='.alt' && !e.altKey && !e.ctrlKey && !e.shiftKey && byond.isCharKey(e.keyCode)) {
+				bs.dispatchKeyEvent(e,t);	// see if map wants this, but otherwise chuck it
+				byond.event.end(e);
+				return false;
+			}
+			if(!grab) {
+				if({8:1,9:1,13:1,32:1}[e.keyCode]) {
+					if(!l || e.keyCode==9) {
+						// see if map wants this
+						if(!bs.dispatchKeyEvent(e,t,true)) {
+							byond.event.end(e);
+							return false;
+						}
+					}
+				}
+				else if((e.altKey || e.ctrlKey || !byond.isCharKey(e.keyCode))) {
+					if(!bs.dispatchKeyEvent(e,t)) {  // does map want this?
+						byond.event.end(e);
+						return false;
+					}
+					inexact = true;
+				}
+			}
+			// don't grab focus when using modifier keys
+			else {
+				if((e.keyCode<=18 && e.keyCode>=16) || e.keyCode == 20) grab = false;
+				else inexact = true;
+			}
+			if(t._delaying && !delayed) {
+				switch(e.keyCode) {
+					// record important keystrokes for later
+					case 37: case 38: case 39: case 40:
+					case 35: case 36: case 8: case 46:
+					case 9: case 10: case 13: case 27:
+						t._delaying.record(e);
+						break;
+					default:
+						e.stopPropagation();
+						return true;	// let it through
+				}
+			}
+			if(e.keyCode==10 || e.keyCode==13) {
+				t._enter();
+				byond.event.end(e);
+				return false;
+			}
+			if(e.keyCode==27) {
+				elem.value='';
+				byond.event.end(e);
+				return false;
+			}
+			if((e.keyCode==32 || (e.keyCode==9 && !e.shiftKey)) && !t._inQuote()) {
+				sel=t._sel();
+				if(sel[0]==sel[1] && sel[0]==l) {
+					if(!t._prompt) {
+						t._delaying = delayer(t);
+						t.expand(t._commandSpace()+v);
+					}
+					byond.event.end(e);
+					return false;
+				}
+			}
+			if(e.ctrlKey) {
+				switch(e.keyCode) {
+					case 38:	// ctrl+up
+						h.up();
+						byond.event.end(e);
+						return false;
+					case 40:	// ctrl+down
+						h.down();
+						byond.event.end(e);
+						return false;
+					case 37: case 39:	// ctrl+left/right, act like regular left/right
+						sel=t._sel();
+						sel[1]+=(e.keyCode==39)?1:-1;
+						if(!e.shiftKey) sel[0]=sel[1];
+						t._sel(sel);
+						byond.event.end(e);
+						return false;
+					case 36: case 35:	// ctrl+home/end, act like regular home/end
+						sel=t._sel();
+						sel[1]=(e.keyCode==35)?l:0;
+						if(!e.shiftKey) sel[0]=sel[1];
+						t._sel(sel);
+						byond.event.end(e);
+						return false;
+				}
+			}
+			if(delayed) {	// default actions for keydowns we skipped
+				sel=t._sel();
+				switch(e.keyCode) {
+					case 37:	// left
+						t._sel(sel,!e.shiftKey&&-1,-1); break;
+					case 39:	// right
+						t._sel(sel,!e.shiftKey&&1,1); break;
+					case 35:	// end
+						t._sel(sel,!e.shiftKey&&l,l);
+					case 36:	// home
+						t._sel(sel,!e.shiftKey&&-l,-l);
+					case 8:	// backspace
+						if(sel[0]!=sel[1]) {t._insert(''); break;}
+						if(sel[0]) t.elem.value=v.substr(0,sel[0]-1)+v.substr(sel[0]);
+						t._sel(sel,-1,-1); break;
+					case 46:	// delete
+						if(sel[0]!=sel[1]) {t._insert(''); break;}
+						if(sel[0]<l) t.elem.value=v.substr(0,sel[0])+v.substr(sel[0]+1);
+						t._sel(sel); break;
+				}
+			}
+			// if we didn't want this event but the map might have wanted it with the modifier keys munged, ask now
+			if((inexact || grab) && !bs.dispatchKeyEvent(e,t,true)) {
+				byond.event.end(e);
+				return false;
+			}
+			// grab focus only if it's clear no one else wants this key
+			if(grab) t.elem.focus();
+			else e.stopPropagation();
+			return true;
+		},
+		_keyup: function(e) {
+			if(!byond.skin.dispatchKeyEvent(e,this)) {  // does map want this?
+				byond.event.end(e);
+				return false;
+			}
+			return true;
+		},
+		_keypress: function(e) {
+			var d=this._delaying;
+			if(d) {
+				d.record(e);
+				byond.event.end(e);
+				return false;
+			}
+			return true;
+		},
+		_insert: function(s) {
+			var t=this,sel=t._sel(),e=t.elem;
+			if(sel[0]>sel[1]) sel.shift(sel.pop());
+			e.value = e.value.substr(0,sel[0]) + s + e.value.substr(sel[1]);
+			sel[0]=sel[1]=sel[0]+s.length;
+			t._sel(sel);
+		},
+		_multiLineKey: function(e) {
+			var t=this,elem=t.elem,c=t.config,v=elem.value,sel,s1,s2,l=v.length,i,j;
+			if(e.keyCode == 9) {	// tab
+				sel=t._sel(); s1=Math.min(sel[0],sel[1]); s2=Math.max(sel[0],sel[1]);
+				if(s2 = l) j = s2;
+				else j = v.indexOf('\n',s1);
+				if(!e.shiftKey) {
+					if(j>s1 && j<=s2) {
+						// indent lines
+						i = v.lastIndexOf('\n',s1) + 1;
+						sel[sel[1]<sel[0]?1:0] = i;
+						sel[sel[1]<sel[0]?0:1] = j;
+						t._sel(s);
+						v = v.substr(i,j);
+						v = v.replace(/^(.*)/gm, '\t$1').replace(/\s+$/gm,'');
+						t._insert(s);
+					}
+					else t._insert('\t');
+				}
+				else {
+					if(j>s1 && j<=s2) {
+						// de-indent lines
+						i = v.lastIndexOf('\n',s1) + 1;
+						sel[sel[1]<sel[0]?1:0] = i;
+						sel[sel[1]<sel[0]?0:1] = j;
+						t._sel(s);
+						v = v.substr(i,j);
+						v = v.replace(/^\t(.*)/gm, '$1').replace(/\s+$/gm,'');
+						t._insert(s);
+					}
+					else t._insert('\t');
+				}
+				byond.event.end(e);
+				return;
+			}
+			// handle the key normally
+			e.stopPropagation();
+		},
+		_enter: function() {
+			var t=this,elem=t.elem,v=elem.value,h=t._history;
+			h.add();
+			v = t._commandSpace()+v;
+			t.input(v);
+			elem.value = v = t._commandSpace(true);
+			t._sel([v.length,v.length]);
+		}
+	},
+	winsetfn: {
+		text: function(v) {
+			var e=this.elem;
+			if(v==null||v===undefined) return e.value;
+			e.value=v;
+		},
+		command: function(v) {
+			var c=this.config,e=this.elem,ov=e.value,oc;
+			if(v==null||v===undefined) return c.command;
+			oc = this._commandSpace(true);
+			c.command = v;
+			if(ov.toLowerCase()==oc.toLowerCase()) {
+				e.value = ov = this._commandSpace(true);
+				this._sel([ov.length,ov.length]);
+			}
+		},
+		noCommand: function(v) {
+			var c=this.config;
+			v = byond.winset2bool(v);
+			if(v==null||v===undefined) return !!c.noCommand;
+			c.noCommand = v;
+		},
+		isPassword: function(v) {
+			var t=this,c=t.config,e=t.elem,val,s,cn;
+			v = byond.winset2bool(v);
+			if(v==null||v===undefined) return !!c.isPassword;
+			c.isPassword = v;
+			if(v && c.multiLine) {
+				c.multiLine = false;
+				val = e.value.replace(/\n.*/,'');
+				s = t._sel();
+				cn = e.className;
+				t.top.removeChild(e);
+				e = t.elem = document.createElement('input');
+				e.type = 'password';
+				e.disabled = c.isDisabled;
+				e.className = cn;
+				t.top.appendChild(e);
+				e.value = val;
+				t._sel(s);
+				e.addEventListener('keydown',t._keydown.bind(t));
+				e.addEventListener('keyup',t._keyup.bind(t));
+				e.addEventListener('keypress',t._keypress.bind(t));
+			}
+			else if(e.tagName=='INPUT') e.type = v?'password':'text';
+		},
+		multiLine: function(v) {
+			var t=this,c=t.config,e=t.elem,val,s,cn;
+			v = byond.winset2bool(v);
+			if(v==null||v===undefined) return !!c.multiLine;
+			if(v == c.multiLine) return;
+			c.multiLine = v;
+			if(v) c.isPassword = false;
+			val = e.value; if(!v) val = val.replace(/\n.*/,'');
+			s = t._sel();
+			cn = e.className;
+			t.top.removeChild(e);
+			e = t.elem = document.createElement(v?'textarea':'input');
+			e.disabled = c.isDisabled;
+			if(!v) e.type = 'text';
+			e.className = cn;
+			t.top.appendChild(e);
+			e.value = val;
+			t._sel(s);
+			e.addEventListener('keydown',t._keydown.bind(t));
+			e.addEventListener('keyup',t._keyup.bind(t));
+			e.addEventListener('keypress',t._keypress.bind(t));
+		},
+		isDisabled: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==null||v===undefined) return !!c.isDisabled;
+			c.isDisabled = t.elem.disabled = v;
+		}
+	}
+};
+
+})()
+</script>
+<input class="byond_bk1 byond_borderbk1" type=text />
+</byondclass>

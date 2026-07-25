@@ -1,0 +1,18 @@
+#!/bin/sh
+if [ "$#" -lt 1 ]; then
+  echo "Usage: byondexec [program] [program_args]"
+  exit
+fi
+BYOND_PROGRAM=$1
+if ! [ -f "$BYOND_PROGRAM" ]; then
+  echo "$BYOND_PROGRAM is not a valid file"
+  exit
+fi
+if [[ $BYOND_PROGRAM != /* ]]; then 
+  BYOND_PROGRAM="$PWD/$BYOND_PROGRAM"
+fi
+BYOND_BIN=${BYOND_PROGRAM%/*}
+export BYOND_SYSTEM=${BYOND_BIN%/*}
+export LD_LIBRARY_PATH=$BYOND_BIN:$LD_LIBRARY_PATH
+shift 1
+exec $BYOND_PROGRAM "$@"

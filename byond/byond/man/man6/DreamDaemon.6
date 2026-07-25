@@ -1,0 +1,274 @@
+.\"
+.\" Man page for DreamDaemon
+.\"
+.\" Copyright (c) 2001, Dantom.
+.\"
+.\" We welcome you to distribute this software.
+.\"
+.\" Dantom
+.\" dantom@dantom.com
+.\"
+.\"
+.TH DreamDaemon 6 "July 20, 2001"
+.LO 6
+.SH NAME
+DreamDaemon \- Host BYOND worlds and CGI programs.
+.SH SYNOPSIS
+DreamDaemon world.dmb [port] [options]
+.SH DESCRIPTION
+.B DreamDaemon
+is the BYOND server program.  It executes .dmb (byte-code) programs generated
+by
+.BR DreamMaker .
+Such .dmb programs are platform independent, so they may be compiled by
+.B DreamMaker
+in a completely different operating system.
+
+.SH ARGUMENTS
+
+.TP
+.B \^world.dmb
+This is a DM byte-code file produced by
+.BR DreamMaker .
+In addition to this file,
+.B DreamDaemon
+looks for
+.IR world.rsc ,
+in the same directory.  This file may contain icons, sounds, and other
+"resources" stored by the compiler.
+
+.TP
+.B \^port
+This is a network port number on which to accept Dream Seeker connections.
+If none is specified or if the value 0 or
+.B any
+is used, any available port may be chosen.  See
+.B PORTS
+for additional options.
+
+.SH OPTIONS
+
+.TP
+.B \-\^cd " path"
+Use the specified path as the working directory.  The default is
+the directory containing the world file.
+
+.TP
+.B \-\^cgi
+Run in CGI mode.  This is normaly compiled directly into the .dmb
+by setting 
+.BR world.executor ,
+which in turn is normally done automatically by including
+.BR Dantom.CGI .
+
+.TP
+.B \-\^core
+Produce a core dump if DreamDaemon crashes.
+
+.TP
+.B \-\^home " path"
+Use the specified path as the top safe directory.  The default is
+the directory containing the world file.
+
+.TP
+.B \-\^invisible
+Don't broadcast the world to the BYOND hub.
+
+.TP
+.B \-\^log " logfile"
+Send stderr to the specified file.
+
+.TP
+.B \-\^logself
+Send stderr to 
+.IR world.log ,
+where
+.I world
+is the name of the .dmb file (minus the .dmb).
+
+
+.TP
+.B \-\^once
+Shutdown after users log out.
+
+.TP
+.B \-\^params " var=value"
+Any number of parameter assignments may be made or a single form-url-encoded
+string may be provided that includes multiple assignments.  These parameters
+are made available to the DM program in 
+.BR world.params .
+
+.TP
+.B \-\^ports " range"
+Specify a range of ports that may be used when a specific port is not
+specified.  This also applies to any child worlds spawned by the
+.B startup()
+DM instruction, which is used by host servers to dynamically execute
+worlds when they are requested by users.  See
+.B PORTS
+for more options.
+
+The syntax for 
+.I range
+is a comma separated list of numbers or ranges of numbers.  Example:
+
+.B \-ports 1234,1236,1240-1250
+
+.TP
+.B \-\^quiet
+Generate less noise in the log file.  The main difference is
+that the world does not advertise when it starts up.
+
+.TP
+.B \-\^safe
+Allow access to files and subdirectories in the same location as
+the world file.  Shell commands may not be executed.  This is the
+default if the world file is in a safe directory.  A safe directory
+is one with the same name as the world file.  A file called
+.I MyWorld.dmb
+would run in safe mode by default if it existed in a directory called
+.IR MyWorld .
+This comparison is not sensitive to case.
+
+.TP
+.B \-\^suid " path"
+Run as the owner of the specified file or directory.  Only root
+may use this option.
+
+.TP
+.B \-\^suidself
+Run as the owner of the world file.  Only root may use this option.
+Note that it is also possible to set the suid bit on the .dmb file
+so that other users may execute it with the same effect.  For this
+to work,
+.B DreamDaemon
+must also have the suid bit set.
+
+.TP
+.B \-\^trace
+Output a debug trace-log file to help the developers track bugs.
+
+.TP
+.B \-\^trusted
+Allow access to any part of the filesystem and permit execution of
+shell commands.  Note that allowing DreamDaemon to 
+.I try
+accessing any file does not mean the operating system will actually
+allow the operation.  Normal system security is in no way compromised
+by running in 
+.B \-trusted
+mode.
+
+.TP
+.B \-\^ultrasafe
+Disallow all file access and forbid the .dmb program from executing
+any shell commands.  This is the default if the world file is not
+in a safe directory.  (See 
+.BR \-\^safe .)
+
+.TP
+.B \-\^unsafe_diag
+Don't block SIGUSR2 during lengthy I/O operations: useful if you 
+want a backtrace via kill -USR2 and DreamDaemon is ignoring it due 
+to I/O or infinite loop, but may be dangerous if a system call is 
+interrupted.
+
+.TP
+.B \-\^version
+Output the BYOND version and then exit.
+
+.SH PORTS
+A network port is required in order for a BYOND world to be reached
+by players.  The port must also be accessible, which means the host machine
+must have its own IP address and the specific port being used must not be
+blocked from outside connections by any firewalls between the host and
+the client.
+
+Networks that perform IP masquerading may not host BYOND worlds to users on
+the outside, because the machines inside the network do not have their own
+external IP address.  Typically, only the machine that is acting as the
+gateway to the outside will have its own IP address in these circumstances.
+
+Firewalls that restrict access to ports must be configured to allow
+connections to the port(s) being used for hosting BYOND worlds.  It is still
+possible for ports to be dynamically assigned in this case, but you must
+configure the list of usable ports, or
+.B DreamDaemon
+will most likely choose one that is not accessible through the firewall.
+
+The range of ports that
+.B DreamDaemon
+may use is configured on the command line with the
+.B \-ports
+option, or in the
+.B byond.txt
+configuration file.  Settings in the system
+configuration file restrict settings in user configuration files and those in
+turn restrict settings made on the command line.
+
+A typical line in
+.B byond.txt
+looks like this:
+
+ports 1234,1236,1240-1250
+
+The syntax is the same as the
+.B \-ports
+command-line option.
+
+It should be noted that although the system and user configuration files may
+be used to "control" the network ports being used on the system, this should
+not be considered a high-security device.  It is intended merely as an
+administrative aid.
+
+.SH "DIRECT EXECUTION"
+It is possible to execute .dmb programs directly by compiling with
+.B world.executor
+assigned to the path to
+.BR DreamDaemon .
+This happens automatically when you include the
+.B Dantom.CGI
+library in your source code.  (Install it with 
+.BR DreamDownload ).
+You would only need to override this if the default value does not match
+the location of DreamDaemon on your system.
+
+The only additional step is to change the file permissions to allow execution
+of the .dmb file.
+.B DreamDaemon
+will be automatically invoked when the .dmb is executed.
+
+Additional command-line parameters may be hard-coded in
+.B world.executor
+if necessary.  In the case of 
+.BR Dantom.CGI ,
+the options
+.B \-cgi \-logself
+are inserted using this technique.
+
+If you need to alter the executor information and you do not have access to
+the source code, the first line of the .dmb file may be edited directly.  Be
+sure to use an editor that does not mangle binary data!
+
+.SH ENVIRONMENT
+.TP
+.B BYOND_SYSTEM
+If this is set, it designates the location of the BYOND system configuration
+files.  Otherwise, they are expected to be in
+.BR /usr/local/byond .
+
+.SH FILES
+.TP
+.B cfg/byond.txt
+This file contains various system configuration options.  System-wide
+configurations may be made in 
+.BR BYOND_SYSTEM/cfg/byond.txt ,
+and individual user configurations may be made in
+.BR ~/.byond/cfg/byond.txt .
+
+.SH LINKS
+Visit www.byond.com to learn more about DM programming, chat with
+the gurus, and explore the BYOND universe.
+
+.SH "SEE ALSO"
+DreamMaker(6)

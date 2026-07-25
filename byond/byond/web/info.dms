@@ -1,0 +1,438 @@
+<byondclass name="info">
+<style type="text/css">
+.byond_info {
+	overflow: hidden;
+	position: relative;
+	z-index: 0;
+}
+.byond_info_tabbar {
+	width: 100%;
+	max-width: 100%;
+	padding: 0 2px;
+	overflow: hidden;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	position: relative;
+}
+.byond_info_tab {
+	display: inline-block;
+	flex: 1 0 auto;
+	max-width: 33%;
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	padding: 2px 6px;
+	margin: 0 -2px -2px -2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-radius: 5px 5px 0 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: default;
+	position: relative;
+	z-index: 0;
+}
+.byond_info_tab.selected {
+	font-weight: bold;
+	z-index: 1;
+}
+.byond_info_contents {
+	border-width: 1px;
+	border-style: solid;
+	margin: -1px 0 0 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	text-align: left;
+	position: relative;
+	z-index: 2;
+}
+.byond_info table {
+	width: 100%;
+	max-width: 100%;
+}
+.byond_info td {vertical-align: top;}
+.byond_info td img {vertical-align: middle;}
+.byond_info table td {
+	cursor: default;
+	word-wrap: break-word;
+}
+.byond_info table.stats td {
+	white-space: nowrap;
+}
+.byond_info table.stats td:nth-child(2) {
+	width: 10%;
+}
+.byond_info table.stats td:last-child {
+	width: 90%;
+}
+.byond_info table.verbs {
+	table-layout: fixed;
+}
+.byond_info table.verbs td[verb]:hover {
+	font-weight: bold;
+	cursor: pointer;
+}
+</style>
+<script type="text/javascript">
+{
+	config: {
+		onShow: '',
+		onHide: '',
+		onTab: '',
+		rightClick: false,
+		allowHtml: true,
+		prefixColor: null,
+		suffixColor: null,
+		highlightColor: null,
+		_tabNames: [],
+		_tabs: {},
+		_tabInfo: {},
+		_tabInfoPending: {},
+		_curTab: null,
+		_updateTimer: {},
+		_clicked: false
+	},
+	fn: {
+		content: function() {return this.top;},
+		create: function() {
+			this.top.removeChild(this.ui.tab);
+			byond.css(this.ui.tabbar,'display','none');
+		},
+		stats: function(stats, verbs) {
+			var t=this, tb=t.ui.tabbar, tbc=tb.childNodes, e=t.ui.contents, c=t.config, tabs=c._tabs, tabNames=c._tabNames, info=c._tabInfo, pending=c._tabInfoPending;
+			if(!stats || !stats.length) stats = verbs;
+			else if(verbs) stats = stats.concat(verbs);
+			if(!stats || !(np=stats.length)) {
+				if(tabs.length) {tb.innerHTML = ''; tabs.splice(0,tabs.length); c._tabInfo={};}
+				if(this.shown) {this.shown=false; this.onhide();}
+				return;
+			}
+			if(!this.shown) {this.shown=true; this.onshow();}
+			var ih=byond.innerSize(e).height;
+
+			var i,j,l=stats.length,change,n,panel,curIdx=-1,tab,newIdx=-1;
+
+			for(i=0,l=stats.length; i<l; ++i) {
+				panel = stats[i];
+				panel.type = panel.items?'stats':'verbs';
+				n = panel.type+':'+panel.name;
+				if(c._curTab == n) {
+					curIdx = i;
+					delete pending[n];
+					if(panel.changed!=false || !info[n]) {panel.changed=false; t._updatePanel(panel, n);}
+				}
+				else if(panel.changed!=false) {pending[n] = panel; panel.changed=false;}
+				if(c._pendingTab == panel.name.toLowerCase()) {delete c._pendingTab; newIdx=i;}
+				if(i>=tabNames.length || n!=tabNames[i]) {
+					// prefer stats panel if nothing was clicked yet
+					if(!c._clicked && newIdx<0 && c._curTab && n.match(/^stats/) && c._curTab.match(/^verbs/)) newIdx = i;
+					change = true;
+					tab = tabs[n];
+					if(!tab) {
+						tabs[n] = tab = t.ui.tab.cloneNode();
+						tab.setAttribute('name', panel.name);
+						tab.innerHTML = byond.htmlEncode(panel.name);
+						tab.onclick = t._tabClick.bind(t,n);
+					}
+					if(i >= tbc.length) tb.appendChild(tab);
+					else tb.insertBefore(tab,tbc[i]);
+					j = tabNames.indexOf(n);
+					if(j>=0) tabNames.splice(j,1);
+					tabNames.splice(i,0,n);
+				}
+			}
+
+			while(tabNames.length > l) {
+				change = true;
+				n = tabNames.pop();
+				tab = tabs[n];
+				tab.onclick = null;
+				if(tab.parentNode) tab.parentNode.removeChild(tab);
+				delete tabs[n];
+				if(info[n] && (j=info[n].table)) {
+					if(j.parentNode) j.parentNode.removeChild(j);
+				}
+				if(n == c._curTab && newIdx < 0) {
+					curIdx = Math.min(curIdx,l-1);
+					if(curIdx >= 0) setTimeout(t._tabClick.bind(t,tabNames[curIdx]),100);
+				}
+			}
+			if(change) t._recalcTabs();
+			if(curIdx < 0 && l) newIdx = 0;
+			if(newIdx >= 0) setTimeout(t._tabClick.bind(t,tabNames[newIdx]),100);
+			delete c._pendingTab;
+
+			e.scrollTop = Math.max(0, Math.min(e.scrollTop,e.scrollHeight-ih));
+		},
+		postLoad: function() {
+			byond.css(this.ui.tabbar,'display','');
+			if(!this.shown) this.onhide();
+			else this._recalcTabs();
+		},
+		_mouse: function(p,e) {
+			// call preventDefault() to stop browser's normal drag behavior (which we don't handle)
+			if(e) {
+				if(e.type.match(/(down|start)$/i)) {this.captureMouse(e); e.preventDefault();}
+				if(e.type.match(/(down|start|click)$/i)) {
+					var m = byond(':map');
+					if(m) m._getCoords(e);
+				}
+				if(e.type.match(/menu$/i)) e.preventDefault();
+			}
+			this.mouse(p,e);			
+		},
+		dragTarget: function(e) {
+			// this will fail to get a panel name if dragging between cells, but it isn't a big deal
+			var t=this, c=t.config, i=c._tabInfo[c._curTab];
+			return (i && i.panel && i.panel.items) ? {panel:i.panel.name} : {};
+		},
+		_tabClick: function(n, ev) {
+			var t=this, c=t.config, tb=t.ui.tabbar, e=t.ui.contents, tab, conts, i, l, a, pend;
+			if(ev) c._clicked = true;
+			try {
+				c._curTab = n;
+				tab = c._tabs[n];
+				pend = c._tabInfoPending[n];
+				if(pend) {pend.now=true; t._updatePanel(pend,n);}
+				conts = c._tabInfo[n].table;
+				for(i=0,a=tb.querySelectorAll('.selected'),l=a.length; i<l; ++i) {
+					if(a[i] == tab) continue;
+					a[i].classList.remove('selected');
+				}
+				tab.classList.add('selected');
+				while(e.firstChild && e.firstChild != conts) e.removeChild(e.firstChild);
+				if(!e.firstChild) e.appendChild(conts);
+				t._recalcTabs();
+			} catch(_){console.log(''+_);}
+			if(c.onTab) t.input(c.onTab.replace(/\[\[\*\]\]/g, (c._curTab||'').replace(/^\w+:/,'')));
+		},
+		_recalcTabs: function(timed) {
+			var t=this, tb=t.ui.tabbar, e=t.ui.contents, c=t.config, tm;
+			byond.css(e,'height',t.loading?'100%':'calc(100% - '+tb.offsetHeight+'px)');
+			if(!timed) {
+				if((tm=c._tabTimer)) clearTimeout(tm);
+				c._tabTimer = setTimeout(t._recalcTabs.bind(t,1), 100);
+			}
+			else c._tabTimer = 0;
+		},
+		onsize: function() {
+			this._recalcTabs();
+			return byond.fn.onsize.call(this);
+		},
+		_sameItem: function(o1, o2) {
+			if(!o1) return !o2 || o2.null;
+			if(!o2) return o1.null;
+			return (o1.text == o2.text && o1.atom == o2.atom && o1.null == o2.null && o1.icon == o2.icon);
+		},
+		_sameAtom: function(o1, o2) {return o1.atom == o2.atom;},
+		_updatePanel: function(p, n) {
+			var t=this, oldp, cf=t.config, ti, newp, table, lst, oldlst, i, j, l, c, r, nc, nr, oldrows, obj, oldobj, re, ce, html, hasAtom, refresh, ot;
+			if(typeof p == 'string') {	// timer fired
+				ti = cf._updateTimer[n=p];
+				p = ti.info;
+				p.now = true;
+				ti = null;
+				delete cf._updateTimer[n];
+			}
+			else ti=cf._updateTimer[n];
+			oldp = cf._tabInfo[n];
+			if(!oldp) {
+				table = document.createElement('table');
+				byond.backstage().appendChild(table); 
+				table.className=p.items?'stats':'verbs';
+			}
+			else {
+				if(!p.now) {
+					if(!ti) cf._updateTimer[n] = ti = {timer:setTimeout(t._updatePanel.bind(t, n), 500)};
+					ti.info = p;
+					return oldp;
+				}
+				refresh = oldp.refresh;
+				table = oldp.table;
+				oldp = oldp.panel;
+			}
+			if(ti) {clearTimeout(ti.timer); delete cf._updateTimer[n];}
+			oldrows = table.rows.length;
+			newp = {table:table, panel:p};
+			if(lst=p.items) {
+				oldlst = oldp ? (oldp.items||[]) : [];
+				nr = p.rows;
+				while(oldrows > nr) table.deleteRow(--oldrows);
+				while(oldrows < nr) {
+					re = table.insertRow(oldrows++);
+					re.innerHTML = '<td class=prefix></td><td></td><td class=suffix></td>';
+				}
+				for(i=r=0; r<nr; ++r) {
+					re = table.rows[r];
+					for(c=0; c<3; ++i,++c) {
+						obj=lst[i];
+						if(!refresh && t._sameItem(obj, oldlst[i])) continue;
+						ce = re.cells[c];
+						html = '';
+						if(obj && obj.null) obj = null;
+						if(obj) {
+							ot = obj.text;
+							ot = cf.allowHtml ? byond.simpleHtml(ot) : byond.htmlEncode(ot);
+							if(typeof obj.atom == 'number') {
+								html = '<img atom='+obj.atom+' src="'+t.atomIcon(obj.atom)+'" />';
+								if(obj.text) html += ' '+ot;
+								byond.fillAtomIcons();
+							}
+							else if(obj.text) html = ot;
+							byond.attr(ce,'title',byond.htmlDecode(cf.allowHtml ? byond.stripHtml(ot) : ot));
+							byond.attr(ce,'atom',obj.atom);
+							ce.onclick = ce.ondblclick = ce.onmouseover = ce.onmouseout = ce.onmousemove = ce.onmousedown = ce.onmouseup = ce.oncontextmenu = (typeof obj.atom == 'number') && c==1 && t._mouse.bind(t,{element:ce,atom:obj.atom,panel:p.name,id:t.id});
+						}
+						else {
+							ce.onclick = ce.ondblclick = ce.onmouseover = ce.onmouseout = ce.onmousemove = ce.onmousedown = ce.onmouseup = ce.oncontextmenu = null;
+							byond.attr(ce,'atom',null);
+							byond.attr(ce,'title','');
+						}
+						ce.innerHTML = html;
+					}
+				}
+				if(cf.allowHtml) byond.fillAtomIcons();
+			}
+			else if(lst=p.verbs) {
+				oldlst = oldp ? (oldp.verbs||[]) : [];
+				nc = 4;	// eventually add more nuance
+				nr = Math.ceil((l = lst.length) / nc);
+				nc = Math.ceil(l / nr);
+				newp.cols = nc;
+				html = '';
+				for(c=r=j=0,i=nc*nr; i--;) {
+					if(!c) html += '<tr>';
+					obj = lst[j];
+					html += obj ? '<td title="'+byond.htmlEncode(obj.desc||'')+'" verb="'+byond.htmlEncode(obj.name)+'" onclick="byond(\''+t.id+'\').input(\''+byond.htmlEncode(obj.name.trim().replace(/\s+/g,'-'))+'\');return false">'+byond.htmlEncode(obj.name)+'</td>' : '<td></td>';
+					if(++c>=nc) {c=0; html += '</tr>'; j=++r;}
+					else j += nr;
+				}
+				table.innerHTML = html;
+			}
+			cf._tabInfo[n] = newp;
+			return newp;
+		},
+		_refresh: function() {
+			var t=this,ti=t.config._tabInfo,n;
+			for(n in ti) {
+				if(ti[n] && ti.hasOwnProperty(n)) {
+					ti[n].refresh = true;
+					t._updatePanel(ti[n].panel,n);
+				}
+			}
+		}
+	},
+	winsetfn: {
+		onTab: function(v) {
+			var t=this,c=t.config;
+			if(typeof v == 'string') c.onTab = v;
+			else return c.onTab;
+		},
+		currentTab: function(v) {
+			var t=this,c=t.config,ct,a,i,l,n;
+			if(typeof v == 'string') {
+				v = v.toLowerCase();
+				for(a=c._tabNames,l=a.length,i=0; i<l; ++i) {
+					n = a[i].replace(/^\w+:/i,'').toLowerCase();
+					if(n == v) {t._tabClick(a[i],true); return;}
+				}
+				c._pendingTab = v;	// can't find it; look in the next update
+				return;
+			}
+			if(!c._curTab) return null;
+			return c._curTab.replace(/^\w+:/i,'');
+		},
+		rightClick: function(v) {
+			var c=this.config;
+			v = byond.winset2bool(v);
+			if(v===undefined || v==null) return c.rightClick;
+			c.rightClick = v;
+		},
+		allowHtml: function(v) {
+			var c=this.config;
+			v = byond.winset2bool(v);
+			if(v===undefined || v==null) return c.allowHtml;
+			c.allowHtml = v;
+			this._refresh();
+		},
+		allowHTML: function(v) {return this.winsetfn.allowHtml.call(this,v);},
+		prefixColor: function(v) {
+			var c=this.config;
+			if(v===undefined || v==null) return c.prefixColor || 'none';
+			if(v == 'none') v = null;
+			else c.prefixColor = v = byond.rgb2hex(byond.css2rgb(v));
+			this.css('table.stats td:first-child', 'color', v);
+		},
+		suffixColor: function(v) {
+			var c=this.config;
+			if(v===undefined || v==null) return c.suffixColor || 'none';
+			if(v == 'none') v = null;
+			else c.suffixColor = v = byond.rgb2hex(byond.css2rgb(v));
+			this.css('table.stats td:last-child', 'color', v);
+		},
+		highlightColor: function(v) {
+			var c=this.config;
+			if(v===undefined || v==null) return c.highlightColor || 'none';
+			if(v == 'none') v = null;
+			else c.highlightColor = v = byond.rgb2hex(byond.css2rgb(v));
+			this.css('table.stats tr:hover td:nth-child(2)', 'color', v);
+		},
+		tabFontFamily: function(v,sub) {
+			var r='.byond_info_tab', sr='';
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + ']';
+			return this.css(r+sr, 'font-family', v);
+		},
+		tabFontSize: function(v,sub) {
+			var r='.byond_info_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + ']';
+			if(v===undefined || v==null) {
+				c = this.css(r+sr, 'font-size');
+				if(c) c = byond.css2font({fontSize:c}).fontSize;
+				return c;
+			}
+			c = byond.font2css({fontSize:v});
+			if(c) this.css(r+sr, c);
+		},
+		tabFontStyle: function(v,sub) {
+			var r='.byond_info_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + '"]';
+			if(v===undefined || v==null) {
+				c = {fontStyle:this.css(r+sr, 'font-style'), textDecoration:this.css(r+sr, 'text-decoration'), fontWeight:this.css(r+sr, 'font-weight')};
+				return byond.css2font(c).fontStyle;
+			}
+			c = byond.font2css({fontStyle:v});
+			if(c) this.css(r+sr, c);
+		},
+		tabColor: function(v,sub) {return this.winsetfn.tabTextColor.call(this,v,sub);},
+		tabTextColor: function(v,sub) {
+			var r='.byond_info_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + '"]';
+			if(v===undefined || v==null) {
+				c = this.css(r+sr, 'color');
+				return c ? byond.rgb2hex(c) : "none";
+			}
+			v = v!='none' ? v : null;
+			this.css(r+sr, {color:v, borderColor:v});
+		},
+		tabBackgroundColor: function(v,sub) {
+			var r='.byond_info_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + '"]';
+			if(v===undefined || v==null) {
+				c = this.css(r+sr, 'background-color');
+				return c ? byond.rgb2hex(c) : "none";
+			}
+			this.css(r+sr, 'background-color', v!='none' ? v : null);
+		},
+	}
+}
+</script>
+<div id=tabbar class="byond_info_tabbar"></div><div id=tab class="byond_info_tab byond_border byond_buttonbk"></div><div id=contents class="byond_info_contents byond_border1"></div>
+</byondclass>

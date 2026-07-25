@@ -1,0 +1,157 @@
+<byondclass name="output">
+<style type="text/css">
+.byond_output {
+	overflow-y: auto;
+	overflow-x: hidden;
+	position: relative;
+}
+.byond_output_contents {
+	padding: 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	text-align: left;
+	position: relative;
+	white-space: pre-wrap;
+	-webkit-user-select: all;
+	-moz-user-select: all;
+	-ms-user-select: all;
+	-o-user-select: all;
+	user-select: all;
+}
+.byond_output img {
+	width: 16px;
+	height: 16px;
+	vertical-align: bottom;
+}
+</style>
+<script type="text/javascript">
+{
+	config: {
+		maxLines: 1000,
+		_atBottom: true
+	},
+	fn: {
+		content: function() {return this.ui.contents||this.top.firstChild;},
+		create: function() {
+			var e=this.top, d=this.content();
+			byond.css(d,'minHeight','100%'); this.ui.contents=this.elem=d;
+			byond.extend(this.config, {newLine: false, _pendingScroll: {}});
+			e.addEventListener('scroll',this._scrolled.bind(this));
+		},
+		output: function(obj,sub) {
+			var msg,t=this,e=t.top,d=t.content(),c=t.config,nl,scroll,i,l,a,tag,rsc,f,hasAtom;
+			obj=obj||{};
+			if(obj.list) {for(i=0; i<obj.list.length; ++i) this.output(obj.list[i],sub); return;}
+			msg = (obj.text!==undefined && obj.text!=null) ? ''+obj.text : '';
+			hasAtom = (obj.atom!==undefined);
+			if(obj.file && obj.file.match(/\.(png|gif|jpg|jpeg)$/)) {msg='<img src="'+byond.url(obj.file)+'">'; if(obj.text) msg += ' '+obj.text; else msg += '<br/>\n';}
+			if(hasAtom) {
+				msg='<img atom='+obj.atom+' src="'+t.atomIcon(obj.atom)+'">';
+				if(obj.text) msg += ' '+obj.text;
+				msg += '<br/>\n';
+				byond.fillAtomIcons();
+			}
+			msg = msg.replace(/[\n\r]/g,'');
+			nl=msg.match(/(<br\s*\/*>|[\s\n\r])+$/i);
+			if(obj.null) {d.innerHTML=c.newLine=''; e.scrollTop=0; return;}
+			if(nl) {nl=nl[0]; msg=msg.substr(0,msg.length-nl.length);}
+			if(c.newLine) msg = c.newLine+msg;
+			c.newLine=nl;
+			scroll = t._autoScroll(sub) || (e.scrollTop+byond.innerSize(e).height >= e.scrollHeight);
+			f = document.createDocumentFragment();
+			f.appendChild(document.createElement('div'));
+			f = f.firstChild;
+			f.innerHTML = msg;
+			for(i=0,a=f.querySelectorAll('img'),l=a.length;i<l;++i) {
+				tag=a[i]; rsc=byond.attr(tag,'byondrsc');
+				if(byond.attr(tag,'icon')) byond.fillAtomIcons();
+				tag.onload=t._imgload.bind(t);	// onload forces a proper refresh
+				//if(rsc) byond.attr(tag,{src:byond.url(rsc),byondrsc:undefined});
+				if(rsc) byond.attr(tag,{byondrsc:undefined});
+			}
+			for(i=0,a=f.querySelectorAll('a'),l=a.length;i<l;++i) {
+				tag=a[i]; rsc=byond.attr(tag,'href');
+				if(byond.isByondUrl(rsc)) {
+					byond.attr(tag,{href:'#'});
+					tag.onclick=t.topic.bind(this,rsc.replace(/^[^\?]*\?/,''));
+					byond.attr(tag,{topic:rsc.replace(/^[^\?]*\?/,'')});
+				}
+				else byond.attr(tag,'target','_blank');
+			}
+			while(f.firstChild) d.appendChild(f.firstChild);
+			if(c.maxLines) {
+				var b=d.getElementsByTagName('br');
+				while(b.length >= c.maxLines) d.removeChild(d.firstChild); // hotlinked list will shrink as elements are removed
+			}
+			// set scroll on a timer so browser has time to get updated size
+			if(scroll) t._autoScroll(sub,1);
+		},
+		_imgload: function() {
+			var t=this,c=t.config;
+			if(c._atBottom) t._autoScroll('',1);
+			return true;	// desired in onload for some reason
+		},
+		_autoScroll: function(sub,go) {
+			var t=this,cf=t.config,c=cf._pendingScroll,ps=c[sub],e=t.top;
+			if(!go) return ps;
+			if(ps) clearTimeout(ps);
+			// scroll now
+			e.scrollTop = Math.max(0, e.scrollHeight-byond.innerSize(e).height);
+			cf._atBottom = true;
+			c[sub] = 0;
+			// if not responding to a timer already, do a small timeout and try again later
+			if(go !== 2) c[sub] = setTimeout(t._autoScroll.bind(t,sub,2), 250);
+		},
+		_innerHeight: function(e) {
+			var bh=0, n, pads=['paddingTop','paddingBottom','borderTopWidth','borderBottomWidth'];
+			for(var j=0,l=pads.length; j<l; ++j) {
+				n=byond.cssPx(e,pads[j]); if(!isNaN(n)) bh += n;
+			}
+			return e.offsetHeight-bh;
+		},
+		onsize: function() {
+			if(this.config._atBottom) this._autoScroll(null,1);
+			byond.fn.onsize.call(this);	// do default
+		},
+		_scrolled: function(ev) {
+			var c = this.config, e=this.top;
+			// +10 is a fudge factor
+			c._atBottom = e.scrollTop+byond.innerSize(e).height+10 >= e.scrollHeight;
+		}
+	},
+	winsetfn: {
+		maxLines: function(v) {
+			var c=this.config;
+			v = byond.winset2num(v);
+			if(typeof v != 'number' || isNaN(v)) return c.maxLines;
+			c.maxLines = v = Math.max(0,Math.floor(v));
+			if(v) {
+				var d=this.content(),b=d.getElementsByTagName('br');
+				while(b.length >= v) d.removeChild(d.firstChild);
+			}
+		},
+		text: function(v) {
+			var c=this.content(),e,f,g,s;
+			if(v==null || v===undefined) return c.textContent;
+			this.content().innerHTML = byond.htmlEncode(v);
+		},
+		linkColor: function(v) {
+			var c=this.config;
+			if(v===undefined || v==null) return c.linkColor || 'none';
+			if(v == 'none') v = null;
+			else c.linkColor = v = byond.rgb2hex(byond.css2rgb(v));
+			this.css('.byond_output_contents a:link', 'color', v);
+		},
+		visitedColor: function(v) {
+			var c=this.config;
+			if(v===undefined || v==null) return c.visitedColor || 'none';
+			if(v == 'none') v = null;
+			else c.visitedColor = v = byond.rgb2hex(byond.css2rgb(v));
+			this.css('.byond_output_contents a:visited', 'color', v);
+		}
+	}
+}
+</script>
+<div id=contents class="byond_output_contents byond_output_styles"></div>
+</byondclass>

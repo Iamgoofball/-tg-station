@@ -1,0 +1,97 @@
+<byondprompt name="file">
+<style type="text/css">
+.byond_prompt {
+	padding: 10px;
+	text-align: center;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.byond_prompt_title {
+	text-align: center;
+	font-size: 1.25em;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+}
+.byond_prompt_help {
+	display: table;
+	text-align: left;
+	max-width: 100%;
+	margin: 0 auto 10px auto;
+}
+.byond_prompt_button {
+	display: inline-block;
+	min-width: 5em;
+	margin: 0 20px;
+	padding: 5px 0;
+	text-align: center;
+	border-width: 1px;
+	border-style: solid;
+	font-weight: bold;
+	cursor: pointer;
+}
+.byond_prompt_buttons {
+	text-align: center;
+	margin-top: 20px;
+}
+</style>
+<script type="text/javascript">
+{
+	fn: {
+		fill: function() {
+			var t=this,e=t.elem,ui=t.ui,p=t.params,i,bt,b,d,l,sel=t._sel=-1;
+			(ui.title||{}).innerHTML=byond.htmlEncode(p.title);
+			(ui.help||{}).innerHTML=byond.htmlEncode(p.help);
+			if(bt=ui.input) {
+				if(p.accept) byond.attr(bt,'accept',p.accept);
+				bt.addEventListener('change',t._select.bind(t));
+			}
+			if(bt=ui.button) {
+				ui.cancel=b=bt.cloneNode(true);
+				bt.parentNode.insertBefore(b,bt);
+				b.innerHTML='Cancel';
+				b.addEventListener('click',t.cancel.bind(t));
+				bt.parentNode.removeChild(bt);
+			}
+			try {ui.input.click();} catch(_){}
+		},
+		onshow: function() {
+			var i=this.ui.input;
+			if(i) i.focus();
+		},
+		keyEvent: function(e) {
+			if(e.type!='keydown') return false;
+			if(e.keyCode==27) {if(this.params.canCancel) this.cancel(); byond.event.end(e); return true;}
+			var i=this.ui.input;
+			if(i) i.focus();
+			return true;
+		},
+		_select: function(e) {
+			var t=this,i,l,a=e.target.files,reader;
+			if(!a || !(l=a.length)) return;
+			for(i=0;i<l;++i) {
+				// todo: add type checking (ignore non-matching files)
+				reader = new FileReader();
+				reader.onload = (function(t,f) {
+					return function(ee) {
+						// Dart has issues with ArrayBuffer conversion, so use friendlier Uint8Array
+						t.reply(byond.filearg(f.name,new Uint8Array(ee.target.result)));
+					};
+				})(t,a[i]);
+				// todo: handle error cases
+				reader.readAsArrayBuffer(a[i]);
+			}
+		}
+	}
+}
+</script>
+<div class=byond_prompt_title id=title></div>
+<div class=byond_prompt_help id=help></div>
+<input type=file class=byond_prompt_filename id=input />
+<div class=byond_prompt_buttons>
+	<div class="byond_prompt_button byond_buttonbk" id=button></div>
+	<div style="clear:both"></div>
+</div>
+</byondprompt>

@@ -1,0 +1,239 @@
+<html>
+<head>
+<title>Host Administrator's Guide</title>
+</head>
+<body>
+
+<h1>BYOND Host Administrator's Guide</h1>
+
+<a name = Contents>
+<h2>Contents</h2>
+
+<dl>
+<dt><a href=#Overview>Overview</a>
+<dt><a href=#Installation>Installation</a>
+<dt><a href=#Administration>Administration</a>
+<dt><a href=#security>Security</a>
+<dt><a href=#WebIntegration>Integration with the Web</a>
+</dl>
+
+<a name = Overview>
+<h2>Overview</h2>
+
+<p>Running a BYOND host server is similar to running a web server, except
+instead of serving up web documents, it serves up BYOND worlds.  You might do
+this for your own personal worlds or as a host provider for others.
+
+<p>The main difference between a BYOND world and a web document is that a
+BYOND world is inherently designed to be used simultaneously by multiple
+people.  When multipel users connect to a world through a host server, they do
+not each download a copy of the world.  Rather, they all find themselves in
+the same world, running on the host machine.
+
+<p>Of course, you don't need to run a host server in order to host BYOND
+worlds.  You can just manually run BYOND worlds either in Dream Seeker or
+Dream Daemon.  A host server allows you or others to update the world files
+from a remote location or to have worlds start up and shut down automatically
+as they are used.
+
+<p>The host server itself is entirely written in DM.  It runs in Dream Daemon,
+typically on a fixed port and is usually registered in BYOND Hub as
+<tt>byond://<i>YourKey</i>.Host.SilverGate</tt> or whatever name you give it.
+
+<p>A single host server may be used to serve up any number of sites and any
+number of worlds within those sites.  Each site is identified by the BYOND key
+of its primary owner.  Continuing with the example above, the world named
+"MyWorld" in a site owned by "James Byond" would be accessed via
+<tt>byond://YourKey.Host.SilverGate/JamesByond/MyWorld</tt>.  This works
+whether the world file is <tt>MyWorld.dmb</tt> or
+<tt>MyWorld/MyWorld.dmb</tt>.  Capitalization in the URL is arbitrary.
+
+<p>If you intend to be a big host provider with multiple sites, it would be
+good to register a personal host pointer for each site you host.  For example
+you could register a hub entry called <tt>YourKey.Space.JamesByond</tt> which
+points to the login URL <tt>byond://YourKey.Host.SilverGate/JamesByond</tt>.
+The advantage of this is that you can move the site from one host machine to
+another and the user (James Byond) doesn't have to even be aware of it.  He
+just continues to use his personal URL and you can point this to any
+particular place you want.
+
+<p>Note that the games being hosted will typically have their own hub entry,
+so players will not usually be aware of either the <tt>YourKey.Host</tt> URL
+or the <tt>YourKey.Space</tt> URL.  For example, a hub entry could be created
+with the name <tt>JamesByond.MyWorld</tt> and this would point to the login
+URL <tt>byond://YourKey.Space.JamesByond/MyWorld</tt>.
+
+<p>This may seem overly complicated, but this chain of hub entries gives the
+the host provider and the site administrator the ability to change things
+internally without disruption.  For example, if the host provider needs to
+move the site to another machine, this can be done without bothering the site
+admins, and if a site admin moves a world from one host provider to another,
+this can be done without having to advertise a new URL to all the players.
+
+<p>That said, there is no requirement that you register any hub entries,
+especially when you are just testing.  You can access the host server directly
+by its Internet address.  For example, if you are running the host server on
+your own machine on port 6000, you can connect to a world directly via a URL
+such as <tt>byond://localhost:6000/JamesByond/MyWorld</tt>.
+
+<a name = Installation>
+<h2>Installation</h2>
+
+<p>Installing a host server is easy.  Just go to <a
+href=http://www.byond.com/hub/Dantom/HostServer>Dantom.HostServer</a>.  This
+will install everything you need.
+
+<p>If you wish to run multiple host servers on your machine, you will need to
+copy the files in <tt>MyHub/dantom/hostserver</tt> once for each server you
+wish to run.  Otherwise, you can just run directly from the location where
+Dream Seeker put it.
+
+<p>If you are hosting on a UNIX machine, the BYOND software installation comes
+with a host server, so you can set it up right when you install BYOND.  In
+UNIX, you've got a very cool extra option known as -suid.  In this case, the
+host server runs as the root system user and is capable of hosting worlds out
+of the home directories of other users.  This is a lot like web hosting in a
+UNIX environment.  We'll have more to say about that in another section of
+this document, because it turns out that some of the host tools work nicely
+through the web and can be used to administer a web-site just as well as a
+BYOND site.
+
+<a name = Administration>
+<h2>Administration</h2>
+
+<p>Administration of the host server is basically a matter of setting up a few
+options and creating or removing sites.
+
+<p>The manager of a host site is known as the <em>root</em>.  When the host
+system is installed, a special site is created for the root.  The main thing
+that it contains is the root administration tool.  To access it, you must be
+listed in the system or user cfg/admin.txt configuration file.  (The host does
+this for you automatically when you run it directly in Dream Seeker the first
+time.)
+
+<p>If you like doing things by hand, you can just edit hostconf.txt in a text
+editor and copy files around yourself.  That's all the root administration
+tool does for you.  The comments inside <a
+href=default/host/hostconf.txt>hostconf.txt</a> provide many hints
+about what to do.
+
+<p>Another alternative is to copy the admin tool (root.dmb) into a CGI
+directory and administer your host server through the web.  It'll ask you for
+the path to your host the first time, but otherwise, everything should be the
+same.
+
+<a name = security>
+<h2>Security</h2>
+
+<p>In the simplest setup, all hosted worlds run as the same system user.  On a
+windows platform, that's your only option.  In UNIX, you can do some fancy
+stuff that we'll get into below.
+
+<p>Since users can upload any arbitrary <tt>.dmb</tt> program, this would be a
+huge security hazard if not for BYOND's safe mode execution.  (Even people who
+don't intend to cause problems can make mistakes, especially with hackers, who
+do want to cause problems, connecting to the worlds.)
+
+<p>In safe mode, Dream Daemon only allows the <tt>.dmb</tt> to access files
+within the designated safe directory.  The host server sets this to be the
+top-level directory for each host site, so each site can access its own files
+and not those of others.  In DM code, this top directory can be referred to by
+starting a file path with tilde (e.g. ~/data/file.sav).
+
+<p>Safe mode does not allow any use of the <tt>shell()</tt> instruction, so it
+is not possible for a <tt>.dmb</tt> program to execute other commands or
+programs on the computer.  The vast majority of BYOND worlds never need to use
+anything but safe mode.
+
+<h3>The suid Option</h3>
+
+<p>On a UNIX platform, you have access to an option known as <tt>suid</tt>.
+When a world gets started up, it normally runs as the same system user as the
+host server.  With <tt>suid</tt> mode, it sets the user id to the owner of
+the <tt>.dmb</tt> file.  For that to work, the host server has to run as root,
+so the basic prerequisit is that you have root access to the host machine.
+
+<p>In <tt>suid</tt> mode, sites are no longer stored directly in
+<tt>host/home</tt>.  Instead, a symbolic link is stored there.  By default,
+this points to the home directory of the system user associated with the site.
+This allows each user to have direct access to their files through the UNIX
+shell or whatever other services the system provides.
+
+<p>Since the operating system provides its own security restrictions on what
+each system user may do, and since you can assign a different system user to
+each hosted site, in <tt>suid</tt> mode you are free to turn off safe mode and
+grant full trusted mode execution.  Most worlds don't need it, but some
+specialized worlds might need to use <tt>shell()</tt>.
+
+<a name = WebIntegration>
+<h2>Integration with the Web</h2>
+
+<p>When hosting on a web-enabled UNIX platform (using <tt>suid</tt> mode), it
+is nice to have both BYOND and web space in the same account.  The site and
+root administration tools can be copied into a CGI-enabled web directory for
+use through the web.  There might also be any number of interesting uses of a
+dual BYOND-web hosting system, since it is possible for web applications to
+interact with BYOND worlds (see <a href =
+http://www.byond.com/docs/ref/info.html#/world/proc/Export> world.Export()</a>
+and <a href = http://www.byond.com/hub/dantom/cgi> Dantom.CGI</a>).
+
+<p>For execution of CGI-enabled .dmb's through the web to work, you have to
+also run a web server.  Since there are a lot of different possibilities,
+we'll just discuss the setup we have personally used.
+
+<p>CGI, by the way, is the common term for applications that respond to an
+HTTP request, typically spitting out a bunch of HTML to be displayed by the
+user's web browser.
+
+<h3>Enabling CGI</h3>
+
+<p>Some websites are set up with all CGI applications in a separate
+directory, such as <tt>cgi-bin</tt>.  Others allow you to run CGI's right out
+of the document directory.  In the latter case, the server has to know how to
+recognize a CGI program so it doesn't just send the contents to the browser.
+In Apache, you can edit httpd.conf and add <tt>.dmb</tt> to the list in the
+<tt>AddHandler</tt> directive.  You may also want to add <tt>index.dmb</tt> to
+the <tt>DirectoryIndex</tt> list.  If all else fails, just rename your
+<tt>.dmb</tt>'s to <tt>.cgi</tt> and things should work in a normal setup.
+
+<h3>Initial Files</h3>
+
+<p>When the host server creates a new account, it copies the contents of
+<tt>host/shared</tt> and (if enabled) <tt>host/shared-web</tt> into the site's
+top directory.  You should move files around in <tt>host/shared-web</tt> to
+match the desired location of files.  For example, if your site supports CGI
+apps in the documents directory and if it expects documents to be in
+<tt>~/public_html/</tt>, then you should rename <tt>host/shared-web/web/</tt>
+to <tt>host/shared-web/public_html</tt>.
+
+<h3>Trouble-Shooting</h3>
+
+<p>If <tt>.dmb</tt> CGI apps are not working, here are a few things to check.
+
+<ul>
+<li>The <tt>.dmb</tt> file must have execute permission turned on (<tt>chmod
++x <i>file.dmb</i></tt>).
+
+<li>The first line of a CGI-enabled <tt>.dmb</tt> must be something like
+<tt><nobr>"#!/usr/local/byond/bin/DreamDaemon -CGI -logself
+-trusted"</nobr></tt>.  This is known as the <a href =
+http://www.byond.com/docs/ref/info.html#/world/var/executor> executor</a>.
+You can see it (and even edit it) in a text editor or with <tt>head -n 1
+<i>file.dmb</i></tt>.  If you have DreamDaemon installed somewhere else,
+either create a symbolic link from this standard location, or change the
+executor.
+
+<li>Of course, double-check that your web server has CGI execution enabled in
+the location of the <tt>.dmb</tt>.
+
+<li>Also make sure the web server is running CGI applications with the system
+user id of the site owner.  This requires the web server to be run as root or,
+if you are only hosting one web-enabled site, as the user id of that site.
+
+<li>Check the <tt>.log</tt> file if there is one.  Any failures reported there
+might help fix the problem.
+
+</ul>
+
+</body>
+</html>

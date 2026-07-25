@@ -1,0 +1,21 @@
+#!/bin/sh
+
+#With a standard setup, you can just execute host.dmb directly like this:
+#
+#host.dmb &
+#
+#When DreamDaemon is not in the standard location (/usr/local/bin),
+#then you can either edit host.dmb (with a binary-capable editor such
+#as vi) and change the path, or you can just use this script.
+
+#If you have installed BYOND in your own directory, you could invoke
+#the setup script here, rather than in your shell setup scripts.
+#If this script is invoked from cron (which does not run your shell
+#scripts), then this might be a good idea anyway.  Correct the
+#path to byondsetup.sh and uncomment the following.
+
+#. ../bin/byondsetup.sh
+
+
+cd `dirname $0`
+exec DreamDaemon host.dmb -port auto -logself -quiet -trusted &

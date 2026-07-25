@@ -1,0 +1,308 @@
+<byondclass name="child">
+<style>
+.byond_child {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.byond_child > div {
+	position: relative;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.byond_child > div > div {
+	box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	-webkit-box-sizing: border-box !important;
+}
+.byond_child > div > .splitter {
+	position: absolute;
+	width: 6px;
+	height: 6px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-width: 1px;
+	border-style: solid;
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.byond_child > div > .unused {
+	display: none !important;
+}
+</style>
+<script>
+{
+	config: {
+		isVert: undefined,	// grab from skinparams
+		isVertical: false,
+		showSplitter: true,
+		splitter: 50,
+		left: '',
+		right: '',
+		lock: '',
+		fit: '',
+		onSize: ''
+	},
+	fn: {
+		create: function(nodes) {
+			var t=this,c=t.config,top=t.top,e,p,pt,l,r,i,ii,sp;
+			if(c.isVert !== undefined) c.isVertical = c.isVert;
+			e = t.ui.box = t.elem = t.ui.box || t.firstChild;
+			for(i=0,ii=nodes.length; i<ii; ++i) {
+				p = nodes[i]; pt = byond.attr(p,'byondclass');
+				if(!pt) continue;
+				if(c.left && c.right) break;
+				if(!p.id) p.id = byond.skin.availableName(pt);
+				if(!c.left && c.right!=p.id) c.left = p.id;
+				else if(!c.right && c.left!=p.id) c.right = p.id;
+				if(p.parentNode!=e) e.appendChild(p);
+			}
+			sp = t.ui.splitter;
+			if(sp) {
+				sp.addEventListener('mousedown',this._drag.bind(this));
+				sp.addEventListener('touchstart',this._drag.bind(this));
+			}
+		},
+		postLoad: function() {	// grab panes
+			var t=this,c=t.config;
+			t.winset({left:c._left||c.left,right:c._right||c.right});
+			if(c.lock) {
+				t._calcLock();
+				t.onsize();
+			}
+		},
+		onsize: function(now) {
+			var t=this,c=t.config,e=this.elem,d,p,l,r,v=c.isVertical,s,sp=t.ui.splitter,sw=t._splitterWidth(),p1,p1s,p2;
+			if(t.loading) return;
+			if(!now) {setTimeout(t.onsize.bind(t,true),0); return;}	// disconnect the event (prevents some script warnings)
+			byond.fn.onsize.call(t);	// default on-size
+			l = byond(c.left);
+			r = byond(c.right);
+			p = (l&&r) ? ((c.fit=='left') ? l : ((c.fit=='right') ? r : null)) : null;
+			if(p) byond.css(p.top,{width:v?'auto':'100%',height:v?'100%':'auto'});
+			s = t._splitterValue();
+			p1 = sw ? 'calc((100% - '+sw+'px) * '+s+')' : (s*100+'%');
+			p1s = sw ? 'calc((100% - '+sw+'px) * '+s+' + '+sw+'px)' : p1;
+			p2 = sw ? 'calc((100% - '+sw+'px) * '+(1-s)+')' : ((1-s)*100+'%');
+			if(l) {
+				if(l.top.parentNode != e) e.appendChild(l.top);
+				byond.css(l.top,{width:(v&&r)?(c.fit=='left'?'auto':p1):'100%',height:(!v&&r)?(c.fit=='left'?'auto':p1):'100%',left:0,top:0,position:'absolute',display:'block'});
+				if(!l.config.parent) l.config.parent = t.id;	// claim children after skin init
+				l.onsize();
+			}
+			if(r) {
+				if(r.top.parentNode != e) e.appendChild(r.top);
+				byond.css(r.top,{width:(v&&l)?(c.fit=='right'?'auto':p2):'100%',height:(!v&&l)?(c.fit=='right'?'auto':p2):'100%',left:(v&&l)?p1s:0,top:(!v&&l)?p1s:0,position:'absolute',boxSizing:'border-box',display:'block'});
+				if(!r.config.parent) r.config.parent = t.id;	// claim children after skin init
+				r.onsize();
+			}
+			if(sp) byond.css(sp, (l&&r&&!c.fit&&c.showSplitter) ?
+				{width:(v?'':'100%'),height:(v?'100%':''),display:'',borderTop:v?'none':'',borderRight:v?'':'none',borderBottom:v?'none':'',borderLeft:v?'':'none',left:v?p1:'0',top:v?'0':p1,cursor:v?'ew-resize':'ns-resize',boxSizing:'border-box'} :
+				{left:'100%',top:'100%'});
+		},
+		paneAdopted: function(id,newparent) {
+			var t=this,c=t.config,a,p=byond(id);
+			if(c.left==id) {a=1; c.left=null;}
+			if(c.right==id) {a=1; c.right==null;}
+			if(p) p.top.classList.remove('unused');
+			if(a) t.onsize(true);
+		},
+		_splitterValue: function() {
+			var t=this,c=t.config,l=byond(c.left),r=byond(c.right),iv,sz,w,s,sw;
+			if(!l || !r) return 0;
+			s = c.splitter / 100;
+			if((c.lock && !t.loading && typeof c._lockSize=='number') || c.fit) {
+				iv = c.isVertical;
+				sz = 'offset'+(iv?'Width':'Height');
+				sw = t._splitterWidth();
+				w = Math.max(1,t.elem[sz]-sw);
+				if(c.fit == 'left') s = l.top[sz]/w;
+				else if(c.fit == 'right') s = 1-r.top[sz]/w;
+				else if(c.lock == 'left') s = c._lockSize/w;
+				else if(c.lock == 'right') s = 1-c._lockSize/w;
+			}
+			return Math.max(0,Math.min(1,s));
+		},
+		_splitterWidth: function() {
+			var sp=this.ui.splitter,c=this.config;
+			return (sp && !c.fit && c.showSplitter) ? Math.min(sp.offsetWidth,sp.offsetHeight) : 0;
+		},
+		_drag: function(e) {
+			var t=this,c=t.config,x=e.clientX,y=e.clientY,sp=t.ui.splitter,iv=c.isVertical,tl=e.changedTouches;
+			if(!sp) return;
+			if(tl && tl.length) { 
+				c._dragid = tl[0].identifier||0;	// for touches
+				x=tl[0].clientX; y=tl[0].clientY;
+			}
+			c._dragpos = iv ? sp.offsetLeft-x : sp.offsetTop-y;
+			t.captureMouse(e);
+		},
+		mouseEvent: function(e) {	// sent while control has capture
+			var t=this,c=t.config,x=e.clientX,y=e.clientY,sp=t.ui.splitter,p,sz,iv=c.isVertical,tl=e.changedTouches,i,l;
+			if(!sp || e.type=='touchcancel') return;
+			if(tl && (l=tl.length)) {
+				for(i=0; i<l; ++i) {if(c._dragid == tl[i].identifier) break;}
+				if(i>=l) return;	// no touch match
+				x=tl[i].clientX; y=tl[i].clientY;
+			}
+			p = c._dragpos + (iv ? x : y);
+			sz = t.elem['offset'+(iv?'Width':'Height')] - t._splitterWidth();
+			if(sz > 0) {
+				c.splitter = 100 * Math.max(0,Math.min(p/sz));
+				p = c.lock; c.lock = '';
+				t.onsize(true);
+				c.lock = p;
+				t._calcLock();
+			}
+			byond.event.end(e);
+		},
+		_calcLock: function() {
+			var t=this,c=t.config,iv=c.isVertical,p;
+			if(c.lock && c.left && c.right && byond(c.left) && byond(c.right)) {
+				p = byond(c[c.lock]);
+				if(p) c._lockSize = p.top['offset'+(iv?'Width':'Height')];
+			}
+		}
+	},
+	winsetfn: {
+		isVert: function(v) {return this.winsetfn.isVertical.call(this,v);},
+		isVertical: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return ''+!!c.isVertical;
+			if(c.isVertical == v) return;
+			t.releaseMouse();	// if being dragged
+			c.isVertical = v;
+			t.onsize(true);
+		},
+		showSplitter: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return ''+!!c.showSplitter;
+			if(c.showSplitter == v) return;
+			t.releaseMouse();	// if being dragged
+			c.showSplitter = v;
+			t.onsize(true);
+		},
+		splitter: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2num(v);
+			if(v==null || v===undefined) return (c.splitter-0).toFixed(4).replace(/(\.[1-9]+)0+$/,'$1').replace(/\.0+$/,'');
+			if(c.splitter==v) return;
+			t.releaseMouse();	// if being dragged
+			c.splitter = v;
+			t.onsize(true);
+		},
+		left: function(v) {
+			var t=this,id=t.id,c=t.config,e=t.elem,p,np,op;
+			if(typeof v != 'string') return c.left;
+			p = byond(c.left);
+			if(p && p.top.parentNode != e) p = null;
+			np = v ? byond(v) : null;
+			if(np && byond.contains(np.top,t.top)) v=np=null;
+			if(!np) c._left=v||null;
+			if(p==np) return;
+			if(p && p.config.parent==id) {
+				//p.adopt(null);
+				//byond.backstage().appendChild(p.top);
+				p.top.classList.add('unused');
+			}
+			if(np) v = np.id;
+			c.left = v||null;
+			if(np) {
+				if(c.left==c.right) c.right=null;
+				else {
+					np.top.classList.remove('unused');
+					np.adopt(id);
+					if(np.top.parentNode!=e) e.appendChild(np.top);
+				}
+			}
+			t.releaseMouse();	// if being dragged
+			t.onsize(true);
+		},
+		right: function(v) {
+			var t=this,id=t.id,c=t.config,e=t.elem,p,np,op;
+			if(typeof v != 'string') return c.right;
+			p = byond(c.right);
+			if(p && p.top.parentNode != e) p = null;
+			np = v ? byond(v) : null;
+			if(np && byond.contains(np.top,t.top)) v=np=null;
+			if(!np) c._right=v||null;
+			if(p==np) return;
+			if(p && p.config.parent==id) {
+				//p.adopt(null);
+				//byond.backstage().appendChild(p.top);
+				p.top.classList.add('unused');
+			}
+			if(np) v = np.id;
+			c.right = v||null;
+			if(np) {
+				if(c.left==c.right) c.left=null;
+				else {
+					np.top.classList.remove('unused');
+					np.adopt(id);
+					if(np.top.parentNode!=e) e.appendChild(np.top);
+				}
+			}
+			t.releaseMouse();	// if being dragged
+			t.onsize(true);
+		},
+		top: function(v) {return this.winsetfn.left.call(this,v);},
+		bottom: function(v) {return this.winsetfn.right.call(this,v);},
+		lock: function(v) {
+			var t=this,c=t.config;
+			if(v=='left' || v=='right') {
+				if(c.lock != v) {
+					c.lock = v;
+					t._calcLock();
+					t.releaseMouse();	// if being dragged
+					t.onsize(true);
+				}
+				return;
+			}
+			if(v=='none' || v=='') {
+				if(c.lock != '') {
+					c.lock = '';
+					t.releaseMouse();	// if being dragged
+					t.onsize(true);
+				}
+				return;
+			}
+			if(c.lock!='' && c.lock!='left' && c.lock!='right') c.lock='';
+			return c.lock;
+		},
+		fit: function(v) {
+			var t=this,c=t.config,iv=c.isVertical,p;
+			if(v=='left' || v=='right') {
+				if(c.fit != v) {
+					c.fit = v;
+					t.releaseMouse();	// if being dragged
+					t.onsize(true);
+				}
+				return;
+			}
+			if(v=='none' || v=='') {
+				if(c.fit != '') {
+					c.fit = '';
+					t.releaseMouse();	// if being dragged
+					t.onsize(true);
+				}
+				return;
+			}
+			if(c.fit!='' && c.fit!='left' && c.fit!='right') c.fit='';
+			return c.fit;
+		}
+	}
+}
+</script>
+<div id=box><div id=splitter class="splitter byond_boxbk2" onselectstart="return false"></div></div>
+</byondclass>

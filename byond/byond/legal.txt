@@ -1,0 +1,18 @@
+Dantom.BYOND.Linux
+END USER LICENSE AGREEMENT
+
+The BYOND software (herein referred to as the software') is a set of computer applications to create, host, and play games locally and over the Internet.  Games created with the software ('BYOND games') are not the responsibility of BYOND. 
+
+This End User License Agreement ('EULA') is a legal agreement between you and BYOND with regard to the copyrighted software. Use of the software will constitute your acceptance of these terms.
+
+* License Grant: BYOND grants to you a personal, non-transferable and non-exclusive right to use the software provided with this EULA.
+
+* Reverse Engineering:  You agree that you will not attempt to reverse compile, modify, translate or disassemble the software in whole or in part. Any failure to comply with the above or any other terms and conditions contained herein will result in the automatic termination of this license and the reversion of the rights granted hereunder to BYOND.
+
+* Disclaimer of Warranty: The software is provided 'AS IS' without warranty of any kind. BYOND disclaims and makes no expressed or implied warranties and specifically disclaims the warranties of merchantability, fitness for a particular purpose and non-infringement of third-party rights. The entire risk as to the quality and performance of the software is with you. BYOND does not warrant that the functions contained in the software will meet your requirements or that the operation of the software will be uninterrupted or error-free. BYOND Is not obligated to provide updates to the software.
+
+* No Liability for Consequential Damages:  In no event shall BYOND be liable for any damages whatsoever (including, without limitation, incidental, direct, indirect special and consequential damages, damages for loss of business profits, business interruption, loss of business information, or other pecuniary loss) arising out of the use or inability to use the software (including, but not limited to BYOND games) even if BYOND has been advised of the possibility of such damages.  Because some states/countries do not allow the exclusion or limitation of liability for consequential or incidental damages, the above limitation may not apply to you.
+
+* Indemnification By You:  If you distribute the software in violation of this Agreement, you agree to indemnify, hold harmless and defend BYOND from and against any claims or lawsuits, including attorney's fees that arise or result from the use or distribution of the software in violation of this Agreement.
+
+* Contact:  If you have any questions, you may contact us through our support system at http://www.byond.com/support.

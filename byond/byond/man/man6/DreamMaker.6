@@ -1,0 +1,78 @@
+.\"
+.\" Man page for DreamMaker
+.\"
+.\" Copyright (c) 2001, Dantom.
+.\"
+.\" We welcome you to distribute this software.
+.\"
+.\" Dantom
+.\" dantom@dantom.com
+.\"
+.\"
+.TH DreamMaker 6 "July 20, 2001"
+.LO 6
+.SH NAME
+DreamMaker \- Compile DM programs to make BYOND worlds.
+.SH SYNOPSIS
+DreamMaker [options] source
+.SH DESCRIPTION
+.B DreamMaker
+is the BYOND compiler.  It reads DM source code and produces .dmb byte-code
+programs executable by 
+.BR DreamDaemon
+or
+.BR DreamSeeker .
+Such .dmb programs are platform independent, so they may be compiled by
+.B DreamMaker
+in a completely different operating system from the one in which the world
+is executed.
+
+.SH ARGUMENTS
+
+.TP
+.B \^source
+This is the DM source code.  If no extension is specified, it searches
+for a file ending in .dme and then .dm.  The output file always has
+the same name as the input file but with the extension .dmb.
+
+.SH OPTIONS
+
+.TP
+.B \-\^i
+Generate
+.BR include.txt .
+This file contains a list of all the DM library dependencies.  When this
+file is included in a source-code package installed by
+.BR DreamDownload
+from BYOND Hub, any dependencies that are not already present are
+automatically installed at that time.
+
+.TP
+.B \-\^l
+List all included source files.  This may be useful when preparing
+source-code for distribution to others.
+
+.SH ERRORS
+Syntax errors are reported in a format similar to gcc, which many
+popular editors can interpret for the purpose of automatically jumping
+to the errors in the source code.
+
+.SH ENVIRONMENT
+.TP
+.B BYOND_SYSTEM
+If this is set, it designates the location of the BYOND system configuration
+files.  Otherwise, they are expected to be in
+.BR /usr/local/byond .
+
+.SH FILES
+.TP
+.B BYOND_SYSTEM/lib/stddef.dm
+This file contains various standard definitions used in DM programs.
+It must exist and be accessible in order for the compiler to operate.
+
+.SH LINKS
+Visit www.byond.com to learn more about DM programming, chat with
+the gurus, and explore the BYOND universe.
+
+.SH "SEE ALSO"
+DreamDaemon(6)

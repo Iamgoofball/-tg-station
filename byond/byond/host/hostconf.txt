@@ -1,0 +1,94 @@
+/*
+Host Configuration File
+
+Uncomment any of the following settings (ie remove //) and fill in the
+appropriate values for your site.  If you do not change anything here, almost
+everything will still work.  Some extra features such as email notification of
+log file output will be dissabled.
+
+Note that this file may also be edited through a web-style interface via the
+root.dmb administrative tool.  If you do that, it will overwrite this file,
+stripping out all of these comments.
+
+*/
+
+
+/* You should register your host site as You.Host.X where X is whatever name
+you choose for your server.  Fill in the full hub path below.  This is
+necessary in order to send email notification of log file output to users.
+Obviously, the login URL listed for the hub entry must point to this server.
+The users of your host service must also be subscribed to You.Host.X (and so
+should you) or have you listed as a friend. */
+
+//hub = "Dantom.Host.Planet.Polaris"
+
+
+/* The default host port is 1025, but this can be changed to whatever you
+like.  If you do not specify a machine name, players who connect to games will
+be rerouted to the game using the numerical IP address of your machine, rather
+than its name.  This can cause routing problems for users in some cases.  Fill
+in the full Internet address of the host to avoid that problem. */
+
+//address = "byond.com:1025"
+
+
+/* Each world that the host server spawns off must have its own network port
+to accept user connections.  (This applies to the admin tools as well.)  If
+you are behind a firewall, the firewall would need to be configured to allow
+connections in through designated ports that you specify in the following
+list.  The sample numbers are just to demonstrate the syntax: a list of
+numbers or ranges.*/
+
+//ports = "6000-6010,6015,6017"
+
+/* Worlds which fail to startup after the specified amount of time will be
+aborted.  The purpose of this is to avoid waiting indefinitely should
+something go wrong, such as a crash of DreamDaemon during boot-up.  The
+default timeout is 5 minutes. */
+
+//startup_timeout = 5  //minutes
+
+/* Setting suid = 1 enables setting the user id to the owner of the file when
+running hosted worlds.  This is only supported by the UNIX operating system
+and the host server must be run as root.  You would also usually want to turn
+on trusted mode when enabling suid execution. */
+
+//suid = 1
+
+/* Setting trusted = 1 makes hosted worlds run in trusted mode rather than
+safe mode.  Since this provides full access by the hosted worlds to the
+computer, this should generally only be done in UNIX when using suid
+execution, because then the operating system enforces filesystem security
+based on the user id of the process. */
+
+//trusted = 1
+
+
+/* The following is an example of how to enter the values for an individual
+site.  You do not even have to create an entry here at all, as long as you
+create the user's site directory (described below). */
+
+//home
+//   jamesbyond
+//      owner = "James Byond"
+//      lock  = null   //("locked" or "frozen")
+//      safe  = 1      //overrides the main -trusted execution mode
+
+
+/*In addition to that, all sites must also have an entry in the host/home
+directory.  This entry should be named with the ckey of the primary site
+owner.  It can either be a real directory or (in UNIX) a symbolic link to
+somewhere else, such as the user's actual home directory.  You can just copy
+in the contents of the shared directory to create the initial contents of a
+site.  In addition to that you would need to create a file cfg/admin.txt in
+the site's top directory (same level as the byond directory).  Put the line
+"JamesByond role=owner" in this file (no quotes), substituting the BYOND Key
+of the true owner for JamesByond.
+
+If you are running in -suid and -trusted mode (UNIX only), then create
+~user/.byond/cfg/admin.txt instead of ~user/cfg/admin.txt, because you want to
+make these user configurations instead of application-level settings.  The
+root.dmb app does all this for you, so if this all sounds a bit overwhelming,
+just connect to your host and let it do the work for you.
+
+*/

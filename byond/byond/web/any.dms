@@ -1,0 +1,173 @@
+<byondprompt name="any">
+<style type="text/css">
+.byond_prompt {
+	padding: 10px;
+	text-align: center;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.byond_prompt_title {
+	text-align: center;
+	font-size: 1.25em;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+}
+.byond_prompt_help {
+	display: table;
+	text-align: left;
+	max-width: 100%;
+	margin: 0 auto 10px auto;
+}
+.byond_prompt_choices {
+	display: inline-block;
+	margin: 0 auto;
+	min-width: 75%;
+	max-width: 100%;
+	max-height: 250px;
+	overflow: auto;
+	border-width: 1px;
+	border-style: solid;
+	position: relative;
+}
+.byond_prompt_choice {
+	text-align: left;
+	padding: 2px 10px;
+	cursor: pointer;
+}
+.byond_prompt_choice.default {
+	font-weight: bold;
+}
+.byond_prompt_button {
+	display: inline-block;
+	min-width: 5em;
+	margin: 0 20px;
+	padding: 5px 0;
+	text-align: center;
+	border-width: 1px;
+	border-style: solid;
+	font-weight: bold;
+	cursor: pointer;
+}
+.byond_prompt_buttons {
+	text-align: center;
+	margin-top: 20px;
+}
+</style>
+<script type="text/javascript">
+{
+	fn: {
+		fill: function() {
+			var t=this,e=t.elem,ui=t.ui,p=t.params,c=p.choices,i,cn,bt,b,d,l,sel=0;
+			t._sel=-1;
+			cn=(c&&c.length)||0;
+			if(cn==0) {t.cancel(); return;}
+			if(cn==1 && !p.canCancel) {t.reply(c[0]); return;}
+			(ui.title||{}).innerHTML=byond.htmlEncode(p.title);
+			(ui.help||{}).innerHTML=byond.htmlEncode(p.help);
+			if(bt=ui.choice) {
+				for(i=0;i<cn;++i) {
+					ui['choice'+(i+1)]=b=bt.cloneNode(true);
+					bt.parentNode.insertBefore(b,bt);
+					b.innerHTML=byond.htmlEncode(p.command ? t._argToText(c[i]) : c[i]);
+					if(sel<0 && c[i]==p.defaultChoice) {b.classList.add('default'); sel=i;}
+					byond.attr(b,'ischoice',i+1);
+					b.addEventListener('dblclick',t.reply.bind(t,c[i]));
+					b.addEventListener('click',t.select.bind(t,i));
+				}
+				bt.parentNode.removeChild(bt);
+			}
+			if(bt=ui.button) {
+				ui.ok=b=bt.cloneNode(true);
+				bt.parentNode.insertBefore(b,bt);
+				b.innerHTML='OK';
+				b.addEventListener('click',t.ok.bind(t));
+				if(p.canCancel) {
+					ui.cancel=b=bt.cloneNode(true);
+					bt.parentNode.insertBefore(b,bt);
+					b.innerHTML='Cancel';
+					b.addEventListener('click',t.cancel.bind(t));
+				}
+				bt.parentNode.removeChild(bt);
+			}
+			t.select(sel);
+		},
+		_argToText: function(c) {
+			var i,j,ch,t='';
+			for(i=j=0; i<c.length; ++i) {
+				ch=c.charAt(i);
+				if(ch=='-') {
+					if(j<i) t+=c.substr(j,i-j);
+					t += ' ';
+					j = i+1;
+				}
+				else if(ch=='\\') {
+					if(++i >= c.length) break;
+					if(j<i) t+=c.substr(j,i-j-1);
+					ch=c.charAt(i);
+					if(ch=='n' || ch=='t') t += ' ';
+					else t += ch;
+					j = i+1;
+				}
+			}
+			if(j<i) t+=c.substr(j);
+			return t.trim();
+		},
+		select: function(i) {
+			var c,oc,p,ui=this.ui;
+			oc = (this._sel>=0) ? ui['choice'+(this._sel+1)] : null;
+			this._sel = i;
+			c = (i>=0) ? ui['choice'+(i+1)] : null;
+			if(oc && c!=oc) oc.classList.remove('selected');
+			if(c && c!=oc) c.classList.add('selected');
+			if(c && (p=c.offsetParent)) {
+				var ih=this._innerHeight(p);
+				if(p.scrollTop+ih<c.offsetTop+c.offsetHeight) p.scrollTop=Math.max(0,c.offsetTop+c.offsetHeight-ih);
+				else if(p.scrollTop>c.offsetTop) p.scrollTop=c.offsetTop;
+			}
+		},
+		ok: function() {
+			if(this._sel>=0) this.reply(this.params.choices[this._sel]);
+		},
+		keyEvent: function(e) {
+			var p=this.params,k=e.keyCode,c=p.choices||[],l=c.length;
+			if(e.type != 'keydown') {byond.event.end(e); return true;}
+			if(k==10 || k==13) {
+				if(p.cancelOnKey && this._sel<0) {this.cancel(); return false;}
+				this.ok();
+			}
+			else if(k==27) {if(p.canCancel) this.cancel();}
+			else if(k==38) {
+				if(this._sel>0) this.select(this._sel-1);
+				else this.select(l-1);
+			}
+			else if(k==40) {
+				if(this._sel+1<l) this.select(this._sel+1);
+				else if(l) this.select(0);
+			}
+			else if(p.cancelOnKey) {this.cancel(); return false;}
+			byond.event.end(e);
+			return true;
+		},
+		_innerHeight: function(e) {
+			var bh=0, n, pads=['paddingTop','paddingBottom','borderTopWidth','borderBottomWidth'];
+			for(var j=0,l=pads.length; j<l; ++j) {
+				n=byond.cssPx(e,pads[j]); if(!isNaN(n)) bh += n;
+			}
+			return e.offsetHeight-bh;
+		}
+	}
+}
+</script>
+<div class=byond_prompt_title id=title></div>
+<div class=byond_prompt_help id=help></div>
+<div class="byond_prompt_choices byond_border"><div>
+	<div class="byond_prompt_choice byond_choicebk" id=choice></div>
+</div></div>
+<div class=byond_prompt_buttons>
+	<div class="byond_prompt_button byond_buttonbk" id=button></div>
+	<div style="clear:both"></div>
+</div>
+</byondprompt>

@@ -1,0 +1,128 @@
+<byondclass name="label">
+<style type="text/css">
+.byond_label {
+	overflow: visible;
+	position: relative;
+}
+.byond_label > div {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	text-align: center;
+	white-space: pre-wrap;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.byond_label > div > * {display:inline-block; vertical-align:middle;}
+.byond_label > div[valign=top] > * {vertical-align:top;}
+.byond_label > div[valign=bottom] > * {vertical-align:bottom;}
+.byond_label .byond_label_content {
+	display: inline-block;
+}
+.byond_label > div > :first-child {
+	width: 0;
+	height: 100%;
+}
+</style>
+<script type="text/javascript">
+{
+	config: {
+		imageMode: 'center',
+		keepAspect: false,
+		letterbox: true,
+		allowHtml: false,
+		_text: ''
+	},
+	fn: {
+		content: function() {return this.ui.label||this.top.firstChild;},
+		create: function() {this.elem=this.content();},
+		output: function(obj,sub) {
+			var c=this.config;
+			if(obj.text) {
+				c._text = (''+obj.text).replace(/(<br\/?>|\n)+$/,'');
+				this.ui.content.innerHTML = (c.allowHtml ? ''+obj.text : byond.htmlEncode(obj.text)).trim();
+			}
+		},
+		clear: function(sub) {this.ui.content.innerHTML = this.config._text = '';},
+		_refresh: function() {
+			this.output({text:this.config._text});
+		}
+	},
+	winsetfn: {
+		text: function(v) {
+			var e=this.ui.content,c=this.config;
+			if(v==null || v===undefined) return e.textContent;
+			c._text = ''+v;
+			this._refresh();
+		},
+		align: function(v) {	// no support for vertical alignment at this time
+			var e=this.content(),ha,va;
+			if(typeof v == 'number') v = ''+v;
+			if(typeof v != 'string') {
+				ha = byond.css(e,'text-align')||'center';
+				va = byond.attr(e,'valign')||'middle';
+				if(ha=='center') return va=='middle'?'center':va;
+				if(ha!='right') ha='left';
+				return va=='middle'?ha:(va+'-'+ha);
+			}
+			v = v.trim();
+			if(v.match(/^\d+$/)) {	// BYOND dirs allowed
+				v = parseInt(v);
+				if(v&4) ha='right';
+				else if(v&8) ha='left';
+				else ha='center';
+				if(v&1) va='top';
+				else if(v&2) va='bottom';
+				else va='middle';
+			}
+			else {
+				if(v.match(/(\bleft|west)$/i)) ha = 'left';
+				else if(v.match(/(\bright|east)$/i)) ha = 'right';
+				else ha = 'center';
+				if(v.match(/^(top\b|north)/i)) va = 'top';
+				else if(v.match(/^(bottom\b|south)/i)) va = 'bottom';
+				else va = 'middle';
+			}
+			byond.css(e,'text-align',ha);
+			byond.attr(e,'valign',va);
+		},
+		size: function(v) {
+			if(v!=null && v!==undefined) byond.css(this.content(),{left:0,top:0,width:'100%',height:'100%',position:'absolute'});
+			return byond.winsetfn.size.call(this,v);
+		},
+		imageMode: function(v) {
+			var t=this,c=t.config,m,css={backgroundRepeat:'',backgroundPosition:'',backgroundSize:''};
+			if(v=='stretch') {m=v;byond.extend(css,{backgroundSize:c.keepAspect?(c.letterbox?'contain':'cover'):'100% 100%'});}
+			else if(v=='tile') {m=v;byond.extend(css,{backgroundRepeat:'repeat',backgroundPosition:'0% 0%'});}
+			else if(v=='center') m=v;
+			if(m) {c.imageMode=m; byond.css(t.content(),css);}
+			else return c.imageMode;
+		},
+		keepAspect: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==undefined||v==null) return c.keepAspect;
+			c.keepAspect = v;
+			if(c.imageMode=='stretch') byond.css(t.content(),{backgroundSize:c.keepAspect?(c.letterbox?'contain':'cover'):'100% 100%'});
+		},
+		letterBox: function(v) {return this.winsetfn.letterbox.call(this,v);},
+		letterbox: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==undefined||v==null) return c.letterbox;
+			c.letterbox = v;
+			if(c.imageMode=='stretch') byond.css(t.content(),{backgroundSize:c.keepAspect?(c.letterbox?'contain':'cover'):'100% 100%'});
+		},
+		allowHtml: function(v) {
+			var c=this.config;
+			v = byond.winset2bool(v);
+			if(v===undefined || v==null) return c.allowHtml;
+			c.allowHtml = v;
+			this._refresh();
+		},
+		allowHTML: function(v) {return this.winsetfn.allowHtml.call(this,v);}
+	}
+}
+</script>
+<div id=label><span id=ghost></span><span id=content class=byond_label_content></span></div>
+</byondclass>

@@ -1,0 +1,138 @@
+<byondclass name="map">
+<style type="text/css">
+.byond_map {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	color: white;
+	background-color: black;
+}
+
+.byond_map canvas {
+	width: 100%;
+	height: 100%;
+}
+</style>
+<script type="text/javascript">
+{
+	config: {
+		zoom: 0,
+		letterbox: true,
+		viewSize: '0,0',
+		onShow: '',
+		onSize: '',
+		//textColor: '#ffffff',
+		//backgroundColor: '#000000',
+		fontFamily: null,
+		fontStyle: null,
+		fontSize: null,
+		rightClick: false,
+		_forceAuto: false,
+		_mousePos: {x:0,y:0}
+	},
+	fn: {
+		create: function() {
+			var t=this, e=t.ui.map||t.elem, d, c=t.config;
+			t.top.addEventListener('mousedown',t._getCoords.bind(t));
+			t.ui.map=t.elem=e;
+			if(byond(':pane')) {	// translated skin -- force map zoom to 0 to start
+				c._forceAuto = true;
+				c.zoom = 0;
+			}
+			t.mapConfig();
+		},
+		output: function(obj, sub) {
+			if(obj && obj.atoms) {
+				var mc = byond.skin.getClass('verbmenu'), m;
+				if(mc && mc.createAt) {
+					m = byond(':verbmenu');
+					if(m) m.remove();
+					mc.createAt(this.config._mousePos,obj);
+				}
+			}
+		},
+		onsize: function() {this.mapConfig();},
+		keyEvent: function(e,any) {
+			if(!byond.keyEvent||!byond.keyEvent(e,any)) return false;
+			byond.event.end(e);
+			return true;
+		},
+		mapConfig: function(p) {
+			var t=this, c=t.config;
+			if(p) try {byond.extend(c,p);} catch(_){}
+			byond.mapConfig(c,t.id);
+			// let client replace the canvas if needed
+			if(c.map && t.elem != c.map) {
+				t.elem = t.ui.map = c.map;
+				t.winset(c);
+			}
+		},
+		_getCoords: function(e) {
+			var t=this,m=t.config._mousePos;
+			if(e.changedTouches) e=e.touches[0];
+			if(!e) return;
+			m.x = e.clientX;
+			m.y = e.clientY;
+		}
+	},
+	winsetfn: {
+		backgroundColor: function(v) {
+			var ret = byond.winsetfn.backgroundColor.call(this,v);	// default first
+			if(v==null || v===undefined) return ret;
+			this.config.backgroundColor = byond.winsetfn.backgroundColor.call(this);
+			this.mapConfig();
+		},
+		zoom: function(v) {
+			var c=this.config;
+			v = byond.winset2num(v);
+			if(v===undefined || v==null || (c._forceAuto && this.loading)) return c.zoom;
+			c.zoom = Math.max(0,v);
+			this.mapConfig();
+		},
+		iconSize: function(v) {	// deprecated parameter
+			var c=this.config;
+			v = byond.winset2num(v);
+			if(v===undefined || v==null || (c._forceAuto && this.loading)) return (c.zoom||0)*(c.iconWidth||32);
+			this.mapConfig();	// get icon size
+			c.zoom = Math.max(0,v/(c.iconWidth||32));
+			this.mapConfig();
+		},
+		letterbox: function(v) {return this.winsetfn.letterBox.call(this,v);},
+		letterBox: function(v) {
+			var c=this.config;
+			v = byond.winset2bool(v);
+			if(v===undefined || v==null) return c.letterbox;
+			c.letterbox = v;
+			this.mapConfig();
+		},
+		viewSize: function(v) {
+			this.mapConfig();
+			return this.config.viewSize;
+		},
+		rightClick: function(v) {
+			var c=this.config;
+			v = byond.winset2bool(v);
+			if(v===undefined || v==null) return c.rightClick;
+			c.rightClick = v;
+		},
+		renderMode: function(v) {
+			var t=this, c=t.config, i;
+			if(typeof(v) != 'string') {
+				t.mapConfig();
+				v = c.engine || 'WebGL';
+				if(v.toLowerCase() == 'webgl') v += ':' + (c.sharp ? "high" : "low");
+				return v;
+			}
+			i = v.indexOf(':');
+			c.engine = (i>=0) ? v.substring(0,i) : v;
+			if(i >= 0) {
+				v = v.substring(i+1);
+				c.sharp = !v.match(/^l/i);
+			}
+			t.mapConfig();
+		}
+	}
+}
+</script>
+<canvas id=map></canvas>
+</byondclass>

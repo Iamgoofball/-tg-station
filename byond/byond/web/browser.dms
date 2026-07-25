@@ -1,0 +1,283 @@
+<byondclass name="browser">
+<style type="text/css">
+.byond_browser {
+	position: relative;
+}
+.byond_browser.byond_popup {
+	width: 400px;
+	height: 400px;
+}
+.byond_browser iframe, .byond_browser_popup iframe {
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+</style>
+<script type="text/javascript">
+(function(){
+
+function toStr(v) {return JSON.stringify(v);}
+
+return {
+	config: {
+		styles: {
+			width:'100%',
+			height:'100%',
+			overflow:'auto',
+			border:'none',
+			display:'block',
+			verticalAlign:'top'
+		},
+		onShow: '',
+		onHide: '',
+		acceptBrowse: true	// signals byond.output() that this is a valid browse control
+	},
+	fn: {
+		create: function() {
+			var t=this,ui=t.ui,e=ui.frame||t.elem;
+			t.elem = ui.frame = e;
+			byond.tryExtend(e.style, t.config.styles);
+		},
+		output: function(obj,sub) {
+			var t=this,e=t.elem,c=t.config,a,i;
+			obj = obj||{};
+			if(obj.file) {
+				a = byond.url(obj.file);
+				e.name = 'byond'+byond.local_id+'[['+t.id+']]';
+				if(e.src != a) e.src = byond.url(obj.file);
+				c._shown=true; t.onshow();
+			}
+			else if(obj.text) {
+				if(!sub) return byond.extend({browse:obj.text,error:'Invalid'},obj);
+				else {
+					a = obj.text.replace(/<br\s*\/*>[\s\n\r]*$/i,'').split('&;');
+					// strip out BYOND formatting chars after unescape, in case they got included
+					for(i=a.length;i-->0;) a[i] = toStr(unescape(a[i].replace(/\+/g,' ')).replace(/\xff./g,''));
+					sub = sub.replace(/\W+/g,'');
+					if(sub && e && e.contentWindow) e.contentWindow.postMessage(sub+'('+a.join(',')+')', '*');
+				}
+			}
+		},
+		clear: function(sub) {
+			var t=this,c=t.config,e=t.elem;
+			if(sub) {
+				sub = sub.replace(/\W+/g,'');
+				if(sub && e && e.contentWindow) e.contentWindow.postMessage(sub+'()', '*');
+				return;
+			}
+			if(t.isPopup) {
+				t.remove();
+				byond.lightbox.close();
+			}
+			else {
+				if(c._shown) {c._shown=false; t.onhide();}
+				t.elem.contentWindow.postMessage("byond.fill('')",'*');
+			}
+		},
+		popup: function(opts) {
+			if(!opts) opts = {};
+			if(typeof opts.size=='string' && opts.size.match(/(\d+)\s*[x,]\s*(\d+)/i)) {
+				opts = byond.extend({width:RegExp.$1, height:RegExp.$2}, opts);
+				delete opts.size;
+			}
+			if(byond.winset2bool(opts.can_close) == false) this.onclickoff = function(){return true;}
+			else this.onclickoff = null;
+			byond.fn.popup.call(this,opts);	// default behavior
+		},
+		remove: function() {
+			byond.fn.remove.call(this);
+			if(this.isPopup) {byond.lightbox.close();}
+		},
+		script: function(sub) {
+			var t=this,e=t.elem,a,i;
+			a = Array.prototype.slice.call(arguments,1);
+			for(i=a.length; i--;) a[i] = toStr(a[i]);
+			sub = sub.replace(/\W+/g,'');
+			if(sub && e && e.contentWindow) e.contentWindow.postMessage(sub+'('+a.join(',')+')', '*');
+		},
+		onbrowserupdate: function(n,s) {
+			var t=this;
+			if(n=='title') t.winset({title:s});
+			else if(n=='link') t.link(s);
+		}
+	},
+	windowfn: {
+		parseLinks: function() {
+			var a,i,e,url,at=byond.attr,bb=byond.base+'?',oc,bu=byond.isByondUrl,se=function(s){return (s===undefined)?'':''+s;};
+			a=document.querySelectorAll('a');
+			for(i=a.length; i--;) {
+				e=a[i]; url=se(at(e,'href'));
+				if(bu(url)) {
+					oc = at(e,'onclick');
+					if(typeof oc == 'string') {try {oc = new Function(oc);} catch(_){oc=undefined; at(e,'onclick',oc);}}
+					if(typeof oc != 'function') oc = null;
+					e.onclick = byond._onclick(oc,byond.go,url);
+				}
+				// base of document is just its domain, so parse anchors
+				else if(url.indexOf('#')==0) {
+					at(e,'href',(''+document.location).replace(/#.*$/,'')+url);
+				}
+			}
+			a=document.querySelectorAll('form');
+			for(i=a.length; i--;) {
+				e=a[i]; url=se(at(e,'action'));
+				if(!url || bu(url,true)) {
+					oc = at(e,'onsubmit');
+					if(typeof oc == 'string') {try {oc = new Function(oc);} catch(_){oc=undefined; at(e,'onsubmit',oc);}}
+					if(typeof oc != 'function') oc = null;
+					e.onsubmit = byond._onclick(oc,byond.submit,e,url);
+				}
+			}
+		},
+		// using helper functions from the normal byond module isn't possible because this needs to be raw JavaScript for the iframe
+		isByondUrl: function(url,anyByond) {
+			if(!url) return false;
+			var brx=anyByond?/^byond:\/*/:/^byond:\/*\?/,qx=/^\?/,px=/^\w+:\/*/,hx=/^#/;
+			if(url.match(brx)) return true;
+			else if(url.match(qx)) return true;
+			else if(url.match(hx)) return false;
+			else if(url.match(px)) return false;
+			return true;
+		},
+		attr: function(e,n,v) {
+			if(arguments.length==2) return e.getAttribute(n);
+			try {
+			if(v==null || v===undefined) e.removeAttribute(n);
+			else e.setAttribute(n,''+v);
+			}catch(_){}
+		},
+		fill: function(t) {
+			var d=document,b=d.body||d.documentElement;
+			try{b.innerHTML=t;} catch(_){}
+			byond.parseLinks();
+		},
+		update: function(n,s) {byond.msg(['update',window.name,n,s].join(':'));},
+		link: function(url) {console.log('Link: '+url); byond.update('link',url);},
+		go: function(url) {
+			console.log('Go: '+url);
+			var brx=/^byond:\/*\?/i,qx=/^\?/,px=/^\w+:\/*/,hx=/^#/,abrx=/^byond:/i;
+			if(url.match(brx)) byond.topic(url.replace(brx,''));
+			else if(url.match(qx)) byond.topic(url.replace(qx,''));
+			else if(url.match(abrx)) byond.link(url);
+			else if(url.match(hx)) window.location.hash=url;
+			else if(url.match(px)) window.location=url;
+			else window.location=byond.base+'/'+url.replace(/^\/*/,'');
+		},
+		submit: function(f,url) {
+			var a=f.querySelectorAll('input,textarea'),i,l,e,n,t,at=byond.attr,d={},p=[],o,ol,j,ov,
+					u=function(v){return(v===undefined)?'':encodeURIComponent(v);},
+					inc=function(v){return v!==undefined && (''+v).length;},
+					bx={submit:1,reset:1,button:1},cx={checkbox:1,radio:1};
+			for(i=0,l=a.length; i<l; ++i) {e=a[i];
+				n=e.name; t=(e.type||'').toLowerCase();
+				if(!n || bx[t] || !inc(e.value)) continue;
+				if(cx[t] && !e.checked) continue;
+				if(d.hasOwnProperty(n)) d[n]+=','+u(e.value);
+				else d[n]=u(e.value);
+			}
+			a=f.querySelectorAll('select');
+			for(i=0,l=a.length; i<l; ++i) {e=a[i];
+				n=e.name; if(!n) continue;
+				for(j=0,o=e.options,ol=o?o.length:0; j<ol; ++j) {
+					if(!o[j].selected || !inc(ov=(o[j].value||o[j].text))) continue;
+					if(d.hasOwnProperty(n)) d[n]+=','+u(ov);
+					else d[n]=u(ov);
+				}
+			}
+			for(n in d) p.push(u(n)+'='+d[n]);
+			if((''+byond.attr(f,'method')).toLowerCase()=='get') url = url.replace(/\?.*/,'');
+			if(p.length) url += (url.indexOf('?')>=0 ? '&' : '?') + p.join('&');
+			byond.go(url);
+		},
+		_onclick: function(oc,fn) {
+			var a=Array.prototype.slice.call(arguments,2);
+			return function(){var r=!oc||oc.apply(this,arguments); if(r||r===undefined) fn.apply(this,a); return false;};
+		},
+		// contentLoaded by Diego Perini
+		// http://javascript.nwbox.com/ContentLoaded/
+		// http://javascript.nwbox.com/ContentLoaded/MIT-LICENSE
+		_cl: function(win, fn) {
+			var done = false, top = true,
+			doc = win.document, root = doc.documentElement,
+			add = doc.addEventListener ? 'addEventListener' : 'attachEvent',
+			rem = doc.addEventListener ? 'removeEventListener' : 'detachEvent',
+			pre = doc.addEventListener ? '' : 'on',
+			init = function(e) {
+				if(e.type == 'readystatechange' && doc.readyState != 'complete') return;
+				(e.type == 'load' ? win : doc)[rem](pre + e.type, init, false);
+				if(!done && (done = true)) fn.apply(win, [e.type || e]);
+			},
+			poll = function() {
+				try {root.doScroll('left');} catch(e) {return setTimeout(poll, 50);}
+				init('poll');
+			};
+			if (doc.readyState == 'complete') fn.apply(win, ['lazy']);
+			else {
+				if(doc.createEventObject && root.doScroll) {
+					try {top = !win.frameElement;} catch(e) {}
+					if(top) poll();
+				}
+				doc[add](pre + 'DOMContentLoaded', init, false);
+				doc[add](pre + 'readystatechange', init, false);
+				win[add](pre + 'load', init, false);
+			}
+		},
+		onready: function() {
+			var fp=Function.prototype;
+			if(!fp.bind) fp.bind=function(o) {var a=Array.prototype.slice(arguments,1),l=a.length,f=this; return function(){return f.apply(o,a.concat(arguments));}};
+			if(!fp.curry) fp.curry=function() {var a=Array.prototype.slice(arguments),l=a.length,f=this; return function(){return f.apply(this,a.concat(arguments));}};
+			if(!fp.throttle) fp.throttle=function(t) {
+				var f=this,wait=false,fire=false;
+				return function() {
+					if(!wait) {
+						setTimeout(function(){wait=false;if(fire){fire=false; f();}},t);
+						f();
+					}
+					else fire=true;
+				}
+			};
+			byond.parseLinks = byond.parseLinks.throttle(50);
+
+			// seek out new links
+			var styles = document.createElement('style');
+			styles.setAttribute('type','text/css');
+			var rules = ["@[p]keyframes _byond_newnode {from{opacity:0.99;} to {opacity:1;}}","a,form {[p]animation:_byond_newnode 0.001s;}"];
+			var prefix = ["-moz-","-webkit-","-ms-","-o-",""];
+			var pi,pl,ri,rl,stext='';
+			for(ri=0,rl=rules.length; ri<rl; ++ri) {
+				for(pi=0,pl=prefix.length; pi<pl; ++pi) {
+					stext += rules[ri].replace(/\[p\]/g, prefix[pi])+'\n';
+				}
+			}
+			styles.textContent = stext;
+			document.querySelector('head').appendChild(styles);
+			var insertListener=function(e){if(e.animationName=='_byond_newnode')byond.parseLinks();}
+			document.addEventListener("animationstart", insertListener, false);
+			document.addEventListener("MSAnimationStart", insertListener, false);
+			document.addEventListener("webkitAnimationStart", insertListener, false);
+
+			var base = document.querySelector('base');
+			if(base) byond.attr(base,'target','_blank');
+			byond.parseLinks();
+			var title = document.querySelector('title');
+			//if(title) byond.msg('update:'+window.name+':title:'+title.textContent);
+			if(title) byond.update('title',title.textContent);
+		}
+	},
+	scripts: function(w) {
+		var t=this,b=t.windowfn,s,i,p,l;
+		w = w||t;
+		s = 'if(!window.byond) window.byond={};';
+		for(p in b) {if(b[p]&&b.hasOwnProperty(p)) s+='byond.'+p+'='+b[p]+';';}
+		s += 'byond.base='+toStr(byond.domain())+';';
+		if(w.elem) s += 'window.name='+toStr(w.elem.name)+';';
+		s += 'byond._cl(window,byond.onready);';
+		return s;
+	}
+};
+})()
+</script>
+<iframe id=frame class=byond_browser_frame></iframe>
+</byondclass>

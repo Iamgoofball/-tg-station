@@ -1,0 +1,187 @@
+<byondclass name="pane">
+<style>
+.byond_pane {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.byond_pane > div {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+</style>
+<script>
+{
+	config: {
+		canScroll: 'none',
+		_canScrollH: false,
+		_canScrollV: false,
+		_size: {},
+		onSize: '',
+		isPane: true,
+		isVisible: null,
+		statusbar: true,
+		titlebar: true,
+		canClose: true,
+		canResize: true,
+		autoDefault: false	// when looking for a default of this class, don't force isDefault for the best fit
+	},
+	fn: {
+		create: function(nodes) {
+			if(!nodes) nodes = [];
+			var t=this, e=t.ui.pane=t.elem=t.ui.pane||t.firstChild, p;
+			for(var i=0,l=nodes.length; i<l; ++i) e.appendChild(nodes[i]);
+			for(p=t.top.parentNode; p&&p.tagName; p=p.parentNode) if(byond.attr(p,'byondclass')) break;
+			e.addEventListener('scroll', t._onscroll.bind(t));
+			if(t.isDefault) {
+				if(!t.top.parentNode) document.body.appendChild(t.top);
+				else {
+					var pos = byond.css(t.top.parentNode,'position');
+					if(!pos || pos=='static') byond.css(t.top.parentNode,'position','relative');
+				}
+				var full = {left:0,top:0,width:'100%',height:'100%',position:'absolute'};
+				byond.css(t.top,full);
+				byond.css(t.elem,full);
+			}
+			else if(!p||!p.tagName) byond.backstage().appendChild(t.top);
+		},
+		reanchor: function() {},	// do nothing on reanchor
+		onsize: function() {
+			var t=this,e=this.elem,d,c,a,i,l;
+			byond.fn.onsize.call(t);	// default on-size
+			// recurse through children
+			if(!t.loading) {
+				for(a=byond.children(e),i=0,l=a.length; i<l; ++i) {
+					// disconnect the event
+					try{setTimeout(a[i].reanchor.bind(a[i],true), 0);} catch(_){}
+				}
+			}
+		},
+		postLoad: function() {
+			var t=this,c=this.config,div,ct;
+			if(!t.isDefault && !c.isPane && (c.isVisible || c.isVisible==null)) t.popup();
+			if(byond.css(t.top,'display')=='none') {
+				byond.backstage().appendChild(t.top);
+				byond.css(t.top,'display','');
+			}
+			if(t.isDefault && c.statusbar) {
+				if(!byond(':status')) {
+					div = document.createElement('div');
+					byond.skin.top().appendChild(div);
+					ct = byond.skin.attach(div,'status');
+					ct.postLoad();
+				}
+			}
+			if(t.isDefault) {
+				if(!byond(':dpad')) {
+					div = document.createElement('div');
+					byond.skin.top().appendChild(div);
+					ct = byond.skin.attach(div,'dpad');
+					ct.postLoad();
+				}
+				if(!byond(':hotbar')) {
+					div = document.createElement('div');
+					byond.skin.top().appendChild(div);
+					ct = byond.skin.attach(div,'hotbar');
+					ct.postLoad();
+				}
+			}
+		},
+		popup: function(options) {
+			var t=this,c=t.config;
+			byond.backstage().appendChild(t.top);
+			byond.css(t.top,{display:'block',position:'absolute',left:0,top:0});
+			byond.fn.popup.call(t,options);
+		},
+		_onscroll: function(e) {
+			var t=this,el=this.elem,c=t.config;
+			if(e.target == el && (!c._canScrollH || !c._canScrollV)) {
+				// defeat browser-initiated auto scroll
+				if(!c.canScrollH) el.scrollLeft = 0;
+				if(!c.canScrollv) el.scrollTop = 0;
+				e.stopImmediatePropagation();
+				e.preventDefault();
+			}
+		}
+	},
+	winsetfn: {
+		canScroll: function(v) {
+			var t=this,c=t.config,sh,sv;
+			if(typeof (sh=byond.winset2bool(v)) == 'boolean') v = sh ? "both" : "none";
+			if(typeof v == 'string') v = v.toLowerCase();
+			if(v == 'none') sh=sv=false;
+			else if(v == 'both') sh=sv=true;
+			else if(v == 'horizontal') {sh=true; sv=false;}
+			else if(v == 'vertical') {sh=false; sv=true;}
+			else return c.canScroll;
+			c.canScroll = v;
+			c._canScrollH = sh;
+			c._canScrollV = sv;
+			if(sh==sv) byond.css(t.top,'overflow',v?'auto':'hidden');
+			else byond.css(t.top, {overflowX:sh?'auto':'hidden', overflowY:sv?'auto':'hidden'});
+			byond.css(t.elem, {width:(sh&&c._size.width)?c._size.width+'px':'', height:(sv&&c._size.height)?c._size.height+'px':''});
+		},
+		canClose: function(v) {
+			var t=this,c=t.config,p;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return ''+!!c.canClose;
+			c.canClose = v;
+			if((p=t._pop())) p.winset({canClose:v});
+		},
+		canResize: function(v) {
+			var t=this,c=t.config,p;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return ''+!!c.canResize;
+			c.canResize = v;
+			if((p=t._pop())) p.winset({canResize:v});
+		},
+		titlebar: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return ''+!!c.titlebar;
+			c.titlebar = v;
+			if((p=t._pop())) p.winset({showTitle:v});
+		},
+		showTitle: function(v) {return this.winsetfn.titlebar.call(this,v);},	// alias
+		isVisible: function(v) {
+			v = byond.winset2bool(v);
+			if(v!=null && v!=undefined) {
+				if(!this.config.isPane) {
+					if(!this.loading) {if(v) this.popup(); else this.popdown();}
+					return;
+				}
+				else if(this.isDefault) return;
+			}
+			return byond.winsetfn.isVisible.call(this,v);
+		},
+		size: function(v) {
+			var t=this,p,c=t.config;
+			if(v!=null && v!=undefined) {
+				if(t.isDefault) return;	// default window should stay put
+				if(!c.isPane) {
+					var l = t.loading;
+					t.loading = false;
+					if((p=t._pop())) p.winset({size:v});
+					else byond.winsetfn.size.call(t,v);
+					t.loading = l;
+				}
+				else if(typeof v == 'string' && (v=v.trim().match(/^(-?[\d\.]+)[,x](-?[\d\.]+)$/))) {
+					p = {};
+					if(v[1]) c._size.width=v[1];
+					if(v[2]) c._size.height=v[2];
+					if(c._canScrollH) {p.width=v[1]+'px';}
+					if(c._canScrollV) {p.height=v[2]+'px';}
+					if(c._canScrollH || c._canScrollV) byond.css(t.elem,p);
+				}
+				return;
+			}
+			return byond.winsetfn.size.call(t,v);
+		}
+	}
+}
+</script>
+<div id=pane class=pane></div>
+</byondclass>

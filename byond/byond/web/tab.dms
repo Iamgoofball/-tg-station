@@ -1,0 +1,318 @@
+<byondclass name="tab">
+<style type="text/css">
+.byond_tab {
+	overflow: hidden;
+	position: relative;
+	z-index: 0;
+}
+.byond_tab_tabbar {
+	width: 100%;
+	max-width: 100%;
+	padding: 0 2px;
+	overflow: hidden;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	position: relative;
+}
+.byond_tab_tab {
+	display: inline-block;
+	flex: 1 0 auto;
+	max-width: 33%;
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	padding: 2px 6px;
+	margin: 0 -2px -1px -2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-radius: 5px 5px 0 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: default;
+	position: relative;
+	z-index: 0;
+}
+.byond_tab_tab img {
+	max-width: 16px;
+	max-height: 16px;
+	vertical-align: middle;
+}
+.byond_tab_tab.selected {
+	font-weight: bold;
+	z-index: 1;
+}
+.byond_tab_contents {
+	border-width: 1px;
+	border-style: solid;
+	margin: -1px 0 0 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	text-align: left;
+	position: relative;
+	z-index: 2;
+}
+.byond_tab_contents > * {
+	width: 100%;
+	min-height: 100%;
+	box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	-webkit-box-sizing: border-box !important;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+</style>
+<script type="text/javascript">
+{
+	config: {
+		onShow: '',
+		onHide: '',
+		onTab: '',
+		_tabNames: [],
+		_tabs: {},
+		tabs: '',
+		currentTab: '',
+		_curTab: null,
+		_clicked: false
+	},
+	fn: {
+		content: function() {return this.top;},
+		create: function() {
+			this.top.removeChild(this.ui.tab);
+		},
+		_tabText: function(pane) {
+			var tn,ti;
+			if(!pane) return '';
+			try {tn=pane.winget('title');} catch(_){tn=pane.id;}
+			try {ti=pane.winget('icon');} catch(_){ti='';}
+			tn = byond.htmlEncode(tn);
+			if(ti) tn = '<img src="'+ti+'"> ' + tn;
+			return tn;
+		},
+		_setTabs: function(panes) {
+			var t=this, tb=t.ui.tabbar, tbc=tb.childNodes, e=t.ui.contents, c=t.config, tabs=c._tabs, tabNames=c._tabNames;
+			if(!panes || !(np=panes.length)) {
+				if(panes.length) {tb.innerHTML = ''; c._tabs=tabs={}; tabNames.splice(0,tabNames.length);}
+				if(this.shown) {this.shown=false; this.onhide();}
+				return;
+			}
+			if(!this.shown) {this.shown=true; this.onshow();}
+
+			var i,j,l,change,n,pane,curIdx=-1,tab,newIdx=-1;
+
+			for(i=0,l=panes.length; i<l; ++i) {
+				n = byond.sanitizeId(panes[i]);
+				pane = byond(n);
+				if(pane == t) {panes.splice(i--,1); continue;}
+				if(pane) n = pane.id;
+				if(c._curTab == n) {
+					curIdx = i;
+					if(pane && byond.contains(pane.top,e)) t.adopt(null);
+				}
+				if(i>=tabNames.length || n!=tabNames[i]) {
+					change = true;
+					tab = tabs[n];
+					if(!tab) {
+						tabs[n] = tab = t.ui.tab.cloneNode();
+						tab.innerHTML = t._tabText(pane);
+						tab.onclick = t._tabClick.bind(t,n);
+					}
+					if(i >= tbc.length) tb.appendChild(tab);
+					else tb.insertBefore(tab,tbc[i]);
+					j = tabNames.indexOf(n);
+					if(j>=0) tabNames.splice(j,1);
+					tabNames.splice(i,0,n);
+				}
+			}
+
+			while(tabNames.length > l) {
+				change = true;
+				n = tabNames.pop();
+				tab = tabs[n];
+				tab.onclick = null;
+				if(tab.parentNode) tab.parentNode.removeChild(tab);
+				delete tabs[n];
+				if(n == c._curTab) {
+					curIdx = Math.min(curIdx,l-1);
+					if(curIdx >= 0 && curIdx < l) setTimeout(t._tabClick.bind(t,tabNames[curIdx]),100);
+				}
+			}
+			if(change) t._recalcTabs();
+			if(curIdx < 0 && l) newIdx = 0;
+			if(newIdx >= 0) setTimeout(t._tabClick.bind(t,tabNames[newIdx]),100);
+		},
+		paneAdopted: function(id,newparent) {
+			var t=this,c=t.config,a,i,l;
+			for(a=c._tabNames,l=a.length,i=0; i<l; ++i) {
+				if(a[i]==id) {a=a.slice(0); a.splice(i,1); t._setTabs(a);}
+			}
+		},
+		titleChanged: function(pane) {
+			if(!pane) return;
+			var t=this,c=t.config,b=c._tabs[pane.id];
+			if(b) {
+				b.innerHTML = t._tabText(pane);
+				t._recalcTabs();
+			}
+		},
+		postLoad: function() {	// grab panes
+			var t=this,c=t.config,i,l,a=c._tabNames,p,e=t.ui.contents,tab;
+			if(!t.shown) {this.onhide(); return;}
+			for(i=0,l=a.length; i<l; ++i) {
+				p = byond(a[i]);
+				if(!p || p==t) continue;
+				a[i] = p.id;
+				if(!p.config.parent) p.config.parent = t.id;
+				if(p.top.parentNode != e) {
+					if(a[i]==c._curTab && byond.contains(p.top,e)) t.adopt(null);
+					(a[i]==c._curTab ? e : byond.backstage()).appendChild(p.top);
+				}
+				tab = c._tabs[p.id];
+				if(tab) tab.innerHTML = t._tabText(p);
+			}
+		},
+		_tabClick: function(n, ev) {
+			var t=this, c=t.config, tb=t.ui.tabbar, e=t.ui.contents, tab, cur, old, conts, i, l, a;
+			if(ev) c._clicked = true;
+			try {
+				cur = byond(n);
+				if(!cur || cur==t) return;
+				old = byond(e.firstChild);
+				c._curTab = n = cur.id;
+				tab = c._tabs[n];
+				cur = byond(n);
+				conts = cur ? cur.top : null;
+				for(i=0,a=tb.querySelectorAll('.selected'),l=a.length; i<l; ++i) {
+					if(!a[i] || a[i] == tab) continue;
+					a[i].classList.remove('selected');
+				}
+				if(tab) tab.classList.add('selected');
+				if(old && old.top && old!=cur) byond.backstage().appendChild(old.top);
+				while(e.firstChild && e.firstChild != conts) e.removeChild(e.firstChild);
+				if(conts) {
+					if(byond.contains(conts,e)) t.adopt(null);
+					if(!e.firstChild) e.appendChild(conts);
+					byond.css(conts,{width:'100%',height:'100%',left:0,top:0,position:'absolute',display:'block'});
+				}
+				t._recalcTabs();
+			} catch(_){console.log(''+_);}
+			if(c.onTab) t.input(c.onTab.replace(/\[\[\*\]\]/g, c._curTab||''));
+		},
+		onsize: function() {
+			if(this.loading) return;
+			byond.fn.onsize.call(this);	// default on-size
+			this._recalcTabs()
+		},
+		_recalcTabs: function(timed) {
+			var t=this, c=t.config, tb=t.ui.tabbar, e=t.ui.contents, cur;
+			byond.css(e,'height','calc(100% - '+tb.offsetHeight+'px)');
+			cur = byond(c._curTab);
+			if(c._curTab && (cur=byond(c._curTab))) {
+				if(cur.top.parentNode != e) {
+					if(byond.contains(cur.top,e)) t.adopt(null);
+					e.appendChild(cur.top);
+				}
+				byond.css(cur.top,{width:'100%',height:'100%',left:0,top:0,position:'absolute',display:'block'});
+				if(!cur.config.parent) cur.config.parent = t.id;	// claim children after skin init
+				cur.onsize();
+			}
+			if(!timed) setTimeout(t._recalcTabs.bind(t,1), 100);
+		}
+	},
+	winsetfn: {
+		textColor: function(v) {
+			// text-color is meaningless for tab controls, so don't use it
+			if(v!=null && v!==undefined) return '';
+			return byond.winsetfn.textColor.call(this,v);
+		},
+		tabs: function(v) {
+			var t=this,c=t.config,tb=c._tabNames,d,i,j,l,n,rem,add,p;
+			if(typeof v != 'string') return tb.join(',');
+			if(v.match(/^[\+\-]/)) {
+				add = !(rem = v.substr(0,1)=='-');
+				v = v.substr(1);
+				tb = tb.slice(0);	// copy array
+			}
+			d = v.substr(0).split(/[\s,]+/);
+			for(i=0,l=d.length; i<l; ++i) {
+				d[i] = n = d[i].trim();
+				if(p = byond(n)) n = p.id;
+				j = tb.indexOf(d[i]);
+				if(rem) {if(j>=0) tb.splice(j,1);}
+				else if(add) {if(j<0) tb.push(n);}
+			}
+			t._setTabs((rem||add)?tb:d);
+		},
+		currentTab: function(v) {
+			var t=this,c=t.config,cur,tb=c._tabNames,i,l,p;
+			if(typeof v != 'string') return c._curTab;
+			v = v.trim();
+			p = byond(v);
+			if(!p) return;
+			v = p.id;
+			if(tb.indexOf(v) < 0) t.winset({tabs: '+'+v});
+			t._tabClick(v);
+		},
+		onTab: function(v) {
+			var t=this,c=t.config;
+			if(typeof v == 'string') c.onTab = v;
+			else return c.onTab;
+		},
+		tabFontFamily: function(v,sub) {
+			var r='.byond_tab_tab', sr='';
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + ']';
+			return this.css(r+sr, 'font-family', v);
+		},
+		tabFontSize: function(v,sub) {
+			var r='.byond_tab_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + ']';
+			if(v===undefined || v==null) {
+				c = this.css(r+sr, 'font-size');
+				if(c) c = byond.css2font({fontSize:c}).fontSize;
+				return c;
+			}
+			c = byond.font2css({fontSize:v});
+			if(c) this.css(r+sr, c);
+		},
+		tabFontStyle: function(v,sub) {
+			var r='.byond_tab_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + '"]';
+			if(v===undefined || v==null) {
+				c = {fontStyle:this.css(r+sr, 'font-style'), textDecoration:this.css(r+sr, 'text-decoration'), fontWeight:this.css(r+sr, 'font-weight')};
+				return byond.css2font(c).fontStyle;
+			}
+			c = byond.font2css({fontStyle:v});
+			if(c) this.css(r+sr, c);
+		},
+		tabColor: function(v,sub) {return this.winsetfn.tabTextColor.call(this,v,sub);},
+		tabTextColor: function(v,sub) {
+			var r='.byond_tab_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + '"]';
+			if(v===undefined || v==null) {
+				c = this.css(r+sr, 'color');
+				return c ? byond.rgb2hex(c) : "none";
+			}
+			v = v!='none' ? v : null;
+			this.css(r+sr, {color:v, borderColor:v});
+		},
+		tabBackgroundColor: function(v,sub) {
+			var r='.byond_tab_tab', sr='', c;
+			if(sub && typeof sub == 'string') sr = '[name="' + sub.replace(/\"/g,'\\"') + '"]';
+			if(v===undefined || v==null) {
+				c = this.css(r+sr, 'background-color');
+				return c ? byond.rgb2hex(c) : "none";
+			}
+			this.css(r+sr, 'background-color', v!='none' ? v : null);
+		}
+	}
+}
+</script>
+<div id=tabbar class="byond_tab_tabbar"></div><div id=tab class="byond_tab_tab byond_border byond_buttonbk"></div><div id=contents class="byond_tab_contents byond_bk byond_border1"></div>
+</byondclass>

@@ -1,0 +1,407 @@
+<byondclass name="bar">
+<style>
+.byond_bar {
+	position: relative;
+}
+.byond_bar * {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.byond_bar > div {
+	width: 100%;
+	height: 100%;
+}
+.byond_bar_slider {
+	position: absolute;
+	border-width: 1px;
+	border-style: solid;
+	cursor: pointer;
+}
+.byond_bar_bar {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.byond_bar svg > path {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	pointer-events: none;
+}
+.byond_bar.slider svg > path {
+	cursor: pointer;
+	pointer-events: visible;
+}
+
+</style>
+<script>
+{
+	config: {
+		dir: 'east',
+		angle1: 0,
+		angle2: 0,
+		value: 0,
+		width: 10,
+		sliderWidth: '50%',
+		trackWidth: '50%',
+		barColor: '#808080',
+		trackColor: '',
+		isSlider: false,
+		onChange: '',
+		_xdir: 1,
+		_ydir: 0,
+		_cdir: 0,
+		_barSize: {x:0,y:0},
+		_sliderSize: {x:0,y:0},
+		_width: 10,
+		_barRadius: 0,	// outer radius
+		_barCenter: {x:0,y:0},
+		_barHome: {x:0,y:0},
+		_drag: null
+	},
+	fn: {
+		content: function(sub) {return sub ? this.ui.slider : this.elem;},
+		create: function() {
+			var t=this, ui=t.ui, items={track:false,fill:false,outline:false,slider:true}, i;
+			t.elem = t.top.firstChild;
+			for(i in items) {
+				if(items.hasOwnProperty(i)) {
+					t.ui[i].addEventListener('mousedown', t._mouse.bind(t,items[i]));
+					t.ui[i].addEventListener('touchstart', t._mouse.bind(t,items[i]));
+				}
+			}
+		},
+		_widthAsVal: function(w,ref) {
+			if(typeof w == 'number') return w;
+			if(typeof w != 'string') return ref;
+			if(w.match(/\%$/)) return parseFloat(w) * ref / 100;
+			return parseFloat(w);
+		},
+		_redraw: function(all) {
+			var t=this, c=t.config, bar=t.ui.bar, slider=t.ui.slider, sz=byond.innerSize(t.elem), svg=t.ui.svg, track=t.ui.track, fill=t.ui.fill, outline=t.ui.outline, iss=byond.winset2bool(c.isSlider), w=c.width, wf=iss?t._widthAsVal(c.trackWidth,1):1, C1, S1, C2, S2, da, a, path, r0, r1, x0, x1, y0, y1, bs=1, color;
+			if(c._cdir) {
+				da = c.angle2 - c.angle1;
+				if(c._cdir>0) {if(da < 0) da += 360;}
+				else {if(da > 0) da -= 360;}
+				C1 = Math.cos(c.angle1*Math.PI/180);
+				S1 = Math.sin(c.angle1*Math.PI/180);
+			}
+			if(all) {
+				c._barCenter.x = sz.width/2;
+				c._barCenter.y = sz.height/2;
+				if(c._cdir) {
+					c._barSize.y = Math.min(sz.width, sz.height)/2;
+					c._barHome.x = c._barCenter.x - c._barCenter.y;
+					c._barHome.y = c._barCenter.y - c._barCenter.y;
+					c._width = w = Math.min(c._barSize.y, w||(c._barSize.y/2));
+					if(iss) c._width = w = w/2;
+					c._barSize.x = wf * w;
+					c._barSize.y -= w * (1-wf)/2;
+					c._sliderSize.x = t._widthAsVal(c.sliderWidth,w);
+					c._sliderSize.y = w;
+
+					r1 = c._barSize.y - bs/2;
+					r0 = r1 - c._barSize.x + bs;
+					x0 = (Math.abs(da) > 180) ? 1 : 0;	// large arc flag
+					C2 = Math.cos(c.angle2*Math.PI/180);
+					S2 = Math.sin(c.angle2*Math.PI/180);
+					path = ['M', (c._barCenter.x + r1*S1), (c._barCenter.y - r1*C1),
+						'A', r1, r1, 0, x0, (c._cdir>0?1:0), (c._barCenter.x + r1*S2), (c._barCenter.y - r1*C2),
+						'L', (c._barCenter.x + r0*S2), (c._barCenter.y - r0*C2),
+						'A', r0, r0, 0, x0, (c._cdir<0?1:0), (c._barCenter.x + r0*S1), (c._barCenter.y - r0*C1),
+						'z'].join(' ');
+					outline.setAttribute('d', path);
+					track.setAttribute('d', path);
+				}
+				else {
+					c._width = w = Math.min(w||10000, c._xdir ? sz.height : sz.width);
+					if(iss) c._width = w = w/2;
+					c._barSize.x = c._xdir ? sz.width : w;
+					c._barSize.y = c._ydir ? sz.height : w;
+					c._sliderSize.x = c._xdir ? t._widthAsVal(c.sliderWidth,w) : w;
+					c._sliderSize.y = c._ydir ? t._widthAsVal(c.sliderWidth,w) : w;
+					if(iss) {
+						c._barSize[c._xdir?'x':'y'] = Math.max(0, c._barSize[c._xdir?'x':'y']-w);
+						c._barSize[c._xdir?'y':'x'] *= wf;
+					}
+					c._barHome.x = c._barCenter.x-c._barSize.x/2;
+					c._barHome.y = c._barCenter.y-c._barSize.y/2;
+					x0 = c._barHome.x + bs/2;
+					x1 = x0 + c._barSize.x - bs;
+					y0 = c._barHome.y + bs/2;
+					y1 = y0 + c._barSize.y - bs;
+					path = ['M', x0, y0, 'L', x1, y0, 'L', x1, y1, 'L', x0, y1, 'z'].join(' ');
+					outline.setAttribute('d',path);
+					track.setAttribute('d',path);
+				}
+
+				outline.setAttribute('stroke-width', 1);
+				outline.setAttribute('stroke', 'currentColor');
+				byond.css(slider,{display:iss?'block':'none'});
+			}
+
+			w = c._width;
+			// more
+			if(c._cdir) {
+				a = c.angle1 + da * c.value / 100;
+				if(!iss) {
+					r1 = c._barSize.y - bs/2;
+					r0 = r1 - c._barSize.x + bs;
+					x0 = (Math.abs(a-c.angle1) > 180) ? 1 : 0;	// large arc flag
+					C2 = Math.cos(a*Math.PI/180);
+					S2 = Math.sin(a*Math.PI/180);
+					path = ['M', (c._barCenter.x + r1*S1), (c._barCenter.y - r1*C1),
+						'A', r1, r1, 0, x0, (c._cdir>0?1:0), (c._barCenter.x + r1*S2), (c._barCenter.y - r1*C2), 
+						'L', (c._barCenter.x + r0*S2), (c._barCenter.y - r0*C2),
+						'A', r0, r0, 0, x0, (c._cdir<0?1:0), (c._barCenter.x + r0*S1), (c._barCenter.y - r0*C1),
+						'z'].join(' ');
+					fill.setAttribute('d', path);
+				}
+				else {
+					r0 = 'rotate('+a+'deg)';
+					r1 = '50% '+(c._barCenter.y-c._barHome.y)+'px';
+					byond.css(slider, {transform:r0, WebkitTransform:r0, transformOrigin:r1, WebkitTransformOrigin:r1, left:(c._barCenter.x-c._sliderSize.x/2)+'px', top:c._barHome.y+'px', width:c._sliderSize.x+'px', height:c._sliderSize.y+'px'});
+				}
+			}
+			else {
+				a = c.value / 100;
+				if(!iss) {
+					x0 = c._barHome.x + (c._xdir<0 ? c._barSize.x*(1-a) : 0) + bs/2;
+					y0 = c._barHome.y + (c._ydir<0 ? c._barSize.y*(1-a) : 0) + bs/2;
+					x1 = c._barHome.x + (c._xdir>0 ? c._barSize.x*a : c._barSize.x) - bs/2;
+					y1 = c._barHome.y + (c._ydir>0 ? c._barSize.y*a : c._barSize.y) - bs/2;
+					path = ['M', x0, y0, 'L', x1, y0, 'L', x1, y1, 'L', x0, y1, 'z'].join(' ');
+					fill.setAttribute('d',path);
+				}
+				else {
+					x0 = y0 = 0;
+					if(c._xdir) {
+						x0 = c._barHome.x + (c._xdir>0 ? a : 1-a)*c._barSize.x - c._sliderSize.x/2;
+						y0 = c._barCenter.y - c._sliderSize.y/2;
+					}
+					else {
+						y0 = c._barHome.y + (c._ydir>0 ? a : 1-a)*c._barSize.y - c._sliderSize.y/2;
+						x0 = c._barCenter.x - c._sliderSize.x/2;
+					}
+					byond.css(slider, {transform:'', WebkitTransform:'', left:x0+'px', top:y0+'px', width:c._sliderSize.x+'px', height:c._sliderSize.y+'px'});
+				}
+			}
+
+			color = c.trackColor;
+			if(!color) color = byond.rgb2hex(byond.css2rgb(c.barColor), 0.5);
+			track.setAttribute('fill', color);
+			fill.setAttribute('fill', c.barColor);
+			fill.style.display = iss ? 'none' : '';
+			outline.setAttribute('fill', 'transparent');
+		},
+		_setValue: function(v) {
+			var t=this, c=t.config;
+			v = Math.max(0, Math.min(v,100));
+			if(c.value != v) {
+				c.value = v;
+				if(c.onChange) t.input(c.onChange.replace(/\[\[\*\]\]/g, (v-0).toFixed(4).replace(/\.0+$/,'')));
+			}
+			// don't redraw; let the caller do it
+		},
+		_pos: function() {
+			var e=this.top,p={x:0,y:0};
+			while(e && e.tagName) {
+				p.x += e.offsetLeft;
+				p.y += e.offsetTop;
+				e = e.offsetParent;
+			}
+			return p;
+		},
+		_pos2val: function(p) {
+			var t=this, c=t.config, a, a0, da;
+			if(c._cdir) {
+				// get angle difference
+				da = c.angle2 - c.angle1;
+				if(c._cdir>0) {if(da < 0) da += 360;}
+				else {if(da > 0) da -= 360;}
+				da = Math.abs(da);
+				// get "extreme" angle (where min vs. max is a crapshoot)
+				a0 = -(360-da) / 2;
+				// measure a as positive change from angle1 in bar's dir
+				a = Math.atan2(p.x-c._barCenter.x,c._barCenter.y-p.y)*180/Math.PI - c.angle1;
+				if(c._cdir < 0) a = -a;
+				if(a < a0) a += 360; else if(a >= 360-a0) a -= 360;
+				a = a * 100 / (da||1);
+			}
+			else if(c._xdir) {
+				a = (p.x-c._barHome.x) * 100 / (c._barSize.x||1);
+				if(c._xdir<0) a = 100 - a;
+			}
+			else {
+				a = (p.y-c._barHome.y) * 100 / (c._barSize.y||1);
+				if(c._ydir<0) a = 100 - a;
+			}
+			return a;
+		},
+		_mouse: function(slider,e) {
+			var t=this, c=t.config, p=e, pos=t._pos();
+			e.preventDefault();
+			if(!c.isSlider) {byond.event.end(e); return;}
+			if(e.changedTouches) {
+				p = e.changedTouches[0];
+				if(!p) return;
+			}
+			t.captureMouse(e);
+			c._drag = {x:p.clientX-pos.x, y:p.clientY-pos.y};
+			c._drag.value = slider ? c.value - t._pos2val(c._drag, true) : 0;
+			if(!slider) {
+				t._setValue(t._pos2val(c._drag, true));
+				t._redraw();
+			}
+		},
+		mouseEvent: function(e) {
+			var t=this, c=t.config, p=e, pos=t._pos(), a, a0, da;
+			e.preventDefault();
+			if(!c.isSlider || !c._drag) {byond.event.end(e); t.releaseMouse(); return;}
+			if(e.type == 'touchcancel') {t.releaseMouse(); return;}
+			if(e.changedTouches) {
+				p = e.changedTouches[0];
+				if(!p) return;
+			}
+			p = {x:p.clientX-pos.x, y:p.clientY-pos.y};
+			a = t._pos2val(p) + c._drag.value;
+			t._setValue(a);
+			if(e.type.match(/(out|end|leave)$/)) t.releaseMouse();
+			t._redraw();
+		},
+		onsize: function(now) {
+			var t=this;
+			byond.fn.onsize.call(t);	// default
+			setTimeout(t._redraw.bind(t,true),0);
+		}
+	},
+	winsetfn: {
+		textColor: function(v,sub) {
+			var t=this,ret=byond.winsetfn.textColor.call(t,v,sub);
+			if(v) t._redraw();
+			return ret;
+		},
+		backgroundColor: function(v,sub) {
+			var t=this,ret=byond.winsetfn.backgroundColor.call(t,v,'slider');
+			if(v) t._redraw();
+			return ret;
+		},
+		barColor: function(v) {
+			var t=this, c=t.config;
+			if(typeof v != 'string') return c.barColor;
+			v = byond.css2rgb(v);
+			c.barColor = byond.rgb2hex(v, v.a/255);
+			if(!t.loading && !byond.winset2bool(c.isSlider)) t._redraw(true);
+		},
+		trackColor: function(v) {
+			var t=this, c=t.config;
+			if(typeof v != 'string') return c.trackColor||'none';
+			v = byond.css2rgb(v);
+			c.trackColor = byond.rgb2hex(v, v.a/255);
+			if(!t.loading && !byond.winset2bool(c.isSlider)) t._redraw(true);
+		},
+		dir: function(v) {
+			var t=this, c=t.config, n=v;
+			if(typeof v == 'number' || (n=byond.winset2num(v))) {
+				if(n & 4) v = 'east';
+				else if(n & 8) v = 'west';
+				else if(n & 1) v = 'north';
+				else if(n & 2) v = 'south';
+				else return;
+			}
+			if(typeof v != 'string') {
+				if(c._cdir > 0) return 'clockwise';
+				if(c._cdir < 0) return 'counterclockwise';
+				if(c._xdir > 0) return 'east';
+				if(c._xdir < 0) return 'west';
+				if(c._ydir > 0) return 'south';
+				return 'north';
+			}
+			v = v.trim().toLowerCase();
+			if(v=='cw' || v=='clockwise') {c._cdir = 1; c._xdir=c._ydir = 0;}
+			else if(v=='ccw' || v=='counterclockwise') {c._cdir = -1; c._xdir=c._ydir = 0;}
+			else if(v=='east') {c._xdir = 1; c._cdir=c._ydir = 0;}
+			else if(v=='west') {c._xdir = -1; c._cdir=c._ydir = 0;}
+			else if(v=='south') {c._ydir = 1; c._cdir=c._xdir = 0;}
+			else if(v=='north') {c._ydir = -1; c._cdir=c._xdir = 0;}
+			else return;
+			t._redraw(true);
+		},
+		angle1: function(v) {
+			var t=this, c=t.config;
+			v = byond.winset2num(v);
+			if(typeof v != 'number') return c.angle1;
+			if(v<0 || v>=360) v = v % 360;
+			if(v<0) v += 360;
+			c.angle1 = v;
+			if(c._cdir) t._redraw(true);
+		},
+		angle2: function(v) {
+			var t=this, c=t.config;
+			v = byond.winset2num(v);
+			if(typeof v != 'number') return c.angle2;
+			if(v<0 || v>=360) v = v % 360;
+			if(v<0) v += 360;
+			c.angle2 = v;
+			if(c._cdir) t._redraw(true);
+		},
+		width: function(v) {
+			var t=this, c=t.config;
+			v = byond.winset2num(v);
+			if(typeof v != 'number') return c.width;
+			c.width = v;
+			t._redraw(true);
+		},
+		sliderWidth: function(v) {
+			var t=this, c=t.config;
+			if(typeof v == 'string' && v.match(/\%$/)) c.sliderWidth = v;
+			else {
+				v = byond.winset2num(v);
+				if(typeof v != 'number') return c.sliderWidth;
+			}
+			c.sliderWidth = ''+v;
+			t._redraw(true);
+		},
+		trackWidth: function(v) {
+			var t=this, c=t.config;
+			if(typeof v == 'string' && v.match(/\%$/)) c.trackWidth = v;
+			else {
+				v = byond.winset2num(v);
+				if(typeof v != 'number') return c.trackWidth;
+			}
+			c.trackWidth = ''+v;
+			t._redraw(true);
+		},
+		value: function(v) {
+			var t=this, c=t.config;
+			v = byond.winset2num(v);
+			if(typeof v != 'number') return (c.value-0).toFixed(4).replace(/\.0+$/,'');
+			t._setValue(Math.max(0, Math.min(v,100)));
+			t._redraw();
+		},
+		isSlider: function(v) {
+			var t=this, c=t.config;
+			v = byond.winset2num(v);
+			if(v==null || v===undefined) return c.isSlider;
+			if(v != c.isSlider) {
+				c.isSlider = v;
+				if(v) t.top.classList.add('slider');
+				else t.top.classList.remove('slider');
+				t._redraw(true);
+			}
+		},
+		onChange: function(v) {
+			var t=this, c=t.config;
+			if(typeof v != 'string') return c.onChange;
+			c.onChange = v;
+		}
+	}
+}
+</script>
+
+<div><div id=bar class=byond_bar_bar><svg id=svg xmlns="http://www.w3.org/2000/svg"><path id=track xmlns="http://www.w3.org/2000/svg"></path><path id=fill xmlns="http://www.w3.org/2000/svg"></path><path id=outline xmlns="http://www.w3.org/2000/svg"></path></svg></div><div id=slider class="byond_bar_slider byond_border1 byond_bk1"></div></div>
+
+</byondclass>

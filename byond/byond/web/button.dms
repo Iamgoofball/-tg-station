@@ -1,0 +1,230 @@
+<byondclass name="button">
+<style type="text/css">
+.byond_button {
+	overflow: visible;
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.byond_button > div {
+	padding: 3px 10px;
+	min-width: 3em;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-width: 1px;
+	border-style: solid;
+	text-align: center;
+	cursor: pointer;
+	overflow: visible;
+	white-space: pre;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.byond_button > div.sized {
+	min-width: 0;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+</style>
+<script type="text/javascript">
+{
+	config: {
+		command: '',
+		group: '',
+		buttonType: 'pushbutton',
+		isChecked: false,
+		isDisabled: false,
+		fit: true
+	},
+	fn: {
+		content: function() {return this.ui.button||this.top.firstChild;},
+		create: function() {
+			var t=this,e=t.elem=t.content(), c=t.config;
+			e.onclick = this._click.bind(this);
+		},
+		output: function(obj,sub) {
+			if(obj.text) this.content().innerHTML=byond.stripHtml(obj.text).trim();
+			this._fit();
+		},
+		clear: function(sub) {this.content().innerHTML=''; this._fit();},
+		_click: function(e) {
+			var c=this.config,a,i;
+			if(c.isDisabled) {byond.event.end(e); return;}
+			if(c.group) {
+				a = this._ingroup();
+				for(i=a.length; i--;) {
+					if(a[i].config.isChecked) a[i].winset({isChecked:false});
+				}
+				this.winset({isChecked:true});
+			}
+			else if(c.buttonType == 'pushbox' || c.buttonType == 'checkbox') {
+				this.winset({isChecked:!c.isChecked});
+			}
+			if(c.command != '') this.input(c.command);
+		},
+		_ingroup: function() {
+			var i,a,g=this.config.group,p,b;
+			if(!g) return [];
+			p = this.parent();
+			a = Array.prototype.slice.call((p ? p.top : document.body).querySelectorAll('div[byondclass=button]'));
+			for(i=a.length; i--;) {
+				b=byond(a[i].id);
+				if(!b || b==this || b.config.group!=g || b.parent()!=p) a.splice(i,1);
+				else a[i] = b;
+			}
+			return a;
+		},
+		_fit: function(timed) {
+			var t=this,c=t.config,e=t.elem,p=t.top,sz,d,o,n;
+			if(!c.fit) return;
+			if(!timed) {
+				if(c._fitting) return;
+				c._fitting = true;
+				setTimeout(t._fit.bind(t,true), 100);
+				return;
+			}
+			c._fitting = false;
+			d=e.cloneNode();
+			d.innerHTML = e.innerHTML;
+			byond.css(d,{visibility:'hidden',width:'auto',height:'auto'});
+			p.appendChild(d);
+			sz=byond.innerSize(p);
+			if(p.style.height) {
+				while((o=d.offsetHeight-sz.height) > 0) {
+					n = byond.cssPx(d,'padding-top');
+					if(n > 1) {
+						n = Math.max(1,Math.floor(n-o/2));
+						byond.css(d,{paddingTop:n+'px',paddingBottom:n+'px'});
+						byond.css(e,{paddingTop:n+'px',paddingBottom:n+'px'});
+						continue;
+					}
+					n = byond.cssPx(d,'font-size');
+					if(n>1) {
+						--n;
+						byond.cssPx(d,'font-size',n);
+						byond.cssPx(e,'font-size',n);
+					}
+					else break;
+				}
+			}
+			if(p.style.width) {
+				while((o=d.offsetWidth-sz.width) > 0) {
+					n = byond.cssPx(d,'padding-left');
+					if(n > 1) {
+						n = Math.max(1,Math.floor(n-o/2));
+						byond.css(d,{paddingLeft:n+'px',paddingRight:n+'px'});
+						byond.css(e,{paddingLeft:n+'px',paddingRight:n+'px'});
+						continue;
+					}
+					n = byond.cssPx(d,'font-size');
+					if(n>1) {
+						--n;
+						byond.cssPx(d,'font-size',n);
+						byond.cssPx(e,'font-size',n);
+					}
+					else break;
+				}
+				// center vertically if shrunk too much
+				if(p.style.height && (o=d.offsetHeight-sz.height)<0) {
+					n = byond.cssPx(d,'padding-top');
+					n += Math.floor(-o/2);
+					byond.css(d,{paddingTop:n+'px',paddingBottom:n+'px'});
+					byond.css(e,{paddingTop:n+'px',paddingBottom:n+'px'});
+				}
+			}
+			d.parentNode.removeChild(d);
+			byond.css(d,{visibility:'',width:'',height:''});
+			e.style.cssText = d.style.cssText;
+		},
+		postLoad: function() {this._fit();},
+		onsize: function() {this._fit(); byond.fn.onsize.call(this);}
+	},
+	winsetfn: {
+		text: function(v) {
+			var t=this,e=t.elem,c=t.config;
+			if(v==null || v===undefined) return e.textContent;
+			e.innerHTML = byond.stripHtml(''+v).trim();
+			t._fit();
+		},
+		command: function(v) {
+			var c=this.config;
+			if(v==null || v===undefined) return c.command;
+			c.command = ''+v;
+		},
+		buttonType: function(v) {
+			var t=this,c=t.config;
+			if(v==null || v===undefined) return c.buttonType;
+			if(v=='pushbutton' || v=='pushbox' || v=='checkbox' || v=='radio') c.buttonType = v;
+			else c.buttonType = v = c.group?'pushbox':'pushbutton';
+			if(!c.group && c.buttonType == 'pushbutton' && c.isChecked) t.winset({isChecked:false});
+		},
+		group: function(v) {
+			var t=this,c=t.config,p,a,i,b;
+			if(v==null || v===undefined) return c.group;
+			c.group = v = ''+v;
+			if(c.group && c.isChecked) {
+				var a = t._ingroup();
+				for(i=a.length; i--;) {
+					if(a[i].config.isChecked) {t.winset({isChecked:false}); break;}
+				}
+			}
+			t._fit();
+		},
+		isChecked: function(v) {
+			var t=this,c=t.config,e=t.elem;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return (c.group || c.buttonType!='pushbutton') && c.isChecked;
+			if(c.buttonType != 'pushbox' && c.buttonType != 'checkbox' && c.buttonType != 'radio') {c.buttonType=c.group?'pushbox':'pushbutton'; v=!!(v&&c.group);}
+			c.isChecked = v;
+			if(v) e.classList.add('selected');
+			else e.classList.remove('selected');
+			if(c.group && v) {
+				var a = t._ingroup();
+				for(i=a.length; i--;) {
+					if(a[i].config.isChecked) a[i].winset({isChecked:false});
+				}
+			}
+			t._fit();
+		},
+		isDisabled: function(v) {
+			var t=this,c=t.config,e=t.elem;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return c.isDisabled;
+			c.isDisabled = v;
+			if(v) e.classList.add('disabled');
+			else e.classList.remove('disabled');
+			t._fit();
+		},
+		size: function(v) {
+			var t=this,c=t.config,e=t.elem,x=(v!=null && v!==undefined);
+			if(x) e.classList.add('sized');
+			var ret = byond.winsetfn.size.call(t,v);
+			t._fit();
+			return ret;
+		},
+		isVisible: function(v) {
+			var t=this,c=t.config,ret;
+			v = byond.winset2bool(v);
+			ret = byond.winsetfn.isVisible.call(t,v);
+			if(v) t._fit();
+			return ret;
+		},
+		fit: function(v) {
+			var t=this,c=t.config,e=t.elem;
+			v = byond.winset2bool(v);
+			if(v==null || v===undefined) return c.fit;
+			c.fit = v;
+			t._fit();
+		}
+	}
+}
+</script>
+<div id=button class=byond_buttonbk></div>
+</byondclass>

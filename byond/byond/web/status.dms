@@ -1,0 +1,55 @@
+<byondclass name=status>
+<style>
+.byond_status {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	display: none;
+	z-index: 101;
+	max-width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	opacity: 0.75;
+}
+.byond_status > div {
+	max-width: 100%;
+	border-width: 1px;
+	border-style: solid;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	padding: 1px 3px;
+}
+</style>
+<script>
+{
+	fn: {
+		create: function() {
+			this.elem = this.ui.status || this.content();
+		},
+		output: function(obj, sub) {
+			var t=this,e=t.elem,tp=this.top,show,tx=obj&&obj.text,at=obj&&obj.atom;
+			if(typeof tx != 'string') tx='';
+			tx = tx.replace(/(<br\/?>|\n)*$/,'').trim();
+			show = tx!='';
+			e.innerHTML = show ? byond.htmlEncode(tx) : '';
+			if(!t.parent()) byond.css(tp, 'display', show?'block':'none');
+			t.winset({title:tx, icon:t.atomIcon(at)});
+		},
+		clear: function(sub) {
+			var t=this,e=t.elem,tp=t.top;
+			e.innerHTML = '';
+			byond.css(tp, 'display', 'none');
+			t.winset({title:'',icon:''});
+		}
+	},
+	winsetfn: {
+		pos: function(v) {return byond.winsetfn.pos.call(this);},
+		size: function(v) {return byond.winsetfn.size.call(this);},
+		isVisible: function(v) {return byond.winsetfn.isVisible.call(this);}
+	}
+}
+</script>
+<div id=status class="byond_bk byond_border"></div>
+</byondclass>

@@ -1,0 +1,422 @@
+<byondclass name=grid>
+<style>
+.byond_grid > div {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: auto;
+}
+
+.byond_grid table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.byond_grid td {
+	padding: 1px 3px;
+	vertical-align: top;
+}
+
+.byond_grid td *[atom], .byond_grid td .atomname {
+	vertical-align: middle;
+}
+.byond_grid .atomname {
+	display: none;
+}
+.byond_grid[shownames] .atomname {
+	display: inline;
+}
+</style>
+<script>
+(function(){
+
+function TableCell(td,c,r) {
+	if(!(this instanceof TableCell)) return new TableCell();
+	byond.extend(this, {
+		td: td,
+		colspan: 1,
+		rowspan: 1,
+		col: (typeof c=='number')?c:-1,
+		row: (typeof r=='number')?r:-1,
+		balance: function(pct) {
+			var t=this, td=t.td;
+			if(td) byond.css(td, 'width', t.colspan>1?'':pct);
+		},
+		setSpan: function(c,r) {
+			var t=this,td=this.td;
+			if(typeof c=='number') byond.attr(td,'colspan',t.colspan=Math.max(1,c));
+			if(typeof r=='number') byond.attr(td,'rowspan',t.rowspan=Math.max(1,r));
+		}
+	});
+}
+
+function Table() {
+	if(!(this instanceof Table)) return new Table();
+	byond.extend(this, {
+		table: document.createElement('table'),
+		rows: 0,
+		cols: 0,
+		cells: [],
+		isList: false,
+		balance: function() {
+			var t=this,i,pct=100/(t.cols||1)+'%';
+			for(i=t.cells.length; --i>=0;) t.cells[i].balance(pct);
+		},
+		setCols: function(c) {
+			var t=this,x,y,idx,cell,tr,td;
+			c = Math.max(0,c);
+			if(c == t.cols) return;
+			if(c < t.cols) {
+				for(y=0,idx=c; y<t.rows; ++y,idx+=c) {
+					for(x=c; x<t.cols; ++x,++idx) {
+						cell = t.cells[idx];
+						if(cell.col >= c) {cell.col = -1; cell.td.parentNode.removeChild(cell.td);}
+						else if(cell.col + cell.colspan > c) cell.setSpan(c-cell.col,null);
+					}
+					t.cells.splice(idx-=(t.cols-c), t.cols-c);
+				}
+			}
+			else {
+				for(y=0,idx=t.cols; y<t.rows; ++y,idx+=t.cols) {
+					tr = t.table.rows[y];
+					for(x=t.cols; x<c; ++x,++idx) {
+						td = tr.insertCell(-1);
+						cell = new TableCell(td,x,y);
+						t.cells.splice(idx,0,cell);
+					}
+				}
+			}
+			t.cols = c;
+			t.balance();
+		},
+		setRows: function(r) {
+			var t=this,x,y,idx,cell,tr,td;
+			r = Math.max(0,r);
+			if(r == t.rows) return;
+			if(r < t.rows) {
+				for(y=r,idx=y*t.cols; y<t.rows; ++y) {
+					for(x=0; x<t.cols; ++x,++idx) {
+						cell = t.cells[idx];
+						if(cell.row >= r) {cell.row = -1; cell.td.parentNode.removeChild(cell.td);}
+						else if(cell.row + cell.rowspan > r) cell.setSpan(null,r-cell.row);
+					}
+				}
+				t.cells.splice(r*t.cols,(t.rows-r)*t.cols);
+			}
+			else {
+				for(y=t.rows,idx=y*t.cols; y<r; ++y) {
+					tr = t.table.insertRow(-1);
+					for(x=0; x<t.cols; ++x,++idx) {
+						td= tr.insertCell(-1);
+						cell = new TableCell(td,x,y);
+						t.cells.splice(idx,0,cell);
+					}
+				}
+			}
+			t.rows = r;
+			t.balance();
+		},
+		getCell: function(x,y) {
+			var t=this;
+			if(x<0 || x>=t.cols || y<0 || y>=t.rows) return null;
+			return t.cells[x+y*t.cols];
+		},
+		setCellSpan: function(cell,c,r,pre,recurse) {	// pre=true if we are deleting rows/cols from beginning--never when adding
+			var t=this,x,y,x2,y2,o,c2,tr,td,idx,ridx,pct=100/(t.cols||1)+'%';
+			c = Math.max(1,Math.min(c,t.cols-cell.col));
+			r = Math.max(1,Math.min(r,t.rows-cell.row));
+			if(r < cell.rowspan) {
+				o = cell.rowspan;
+				cell.setSpan(null,r);
+				if(pre) cell.td.parentNode.removeChild(cell.td);
+				for(y=cell.row+(pre?0:r),idx=y*t.cols,y2=y+o-r; y<y2; ++y,idx+=t.cols-x) {
+					tr = t.table.rows[y];
+					for(x=0,ridx=-1; x<cell.col; ++x,++idx) {if(!x || t.cells[idx] != t.cells[idx-1]) ++ridx;}
+					for(x2=x+cell.colspan; x<x2; ++x,++idx) {
+						td = tr.insertCell(++ridx);
+						t.cells[idx] = c2 = new TableCell(td,x,y);
+						c2.balance(pct);
+					}
+				}
+				if(pre) {
+					tr = t.table.rows[y];
+					// re-insert cell
+					for(x=0,ridx=0; x<cell.col; ++x,++idx) {if(!x || t.cells[idx] != t.cells[idx-1]) ++ridx;}
+					if(ridx >= tr.cells.length) tr.appendChild(cell.td);
+					else tr.insertBefore(cell.td,tr.cells[ridx]);
+					cell.row += o-r;
+				}
+			}
+			if(c < cell.colspan) {
+				o = cell.colspan;
+				cell.setSpan(c,null);
+				for(y=cell.row,idx=y*t.cols,y2=y+cell.rowspan; y<y2; ++y,idx+=t.cols-x) {
+					tr = t.table.rows[y];
+					for(x=0,ridx=-1; x<cell.col; ++x,++idx) {if(!x || t.cells[idx] != t.cells[idx-1]) ++ridx;}
+					if(!pre) {x+=c; idx+=c; ++ridx;}
+					for(x2=x+o-c; x<x2; ++x,++idx) {
+						td = tr.insertCell(++ridx);
+						t.cells[idx] = c2 = new TableCell(td,x,y);
+						c2.balance(pct);
+					}
+				}
+				if(pre) cell.col += o-c;
+				cell.balance(pct);
+			}
+			if(c > cell.colspan) {
+				o = cell.colspan;
+				for(y=cell.row,idx=y*t.cols+cell.col+o,y2=y+cell.rowspan; y<y2; ++y,idx+=t.cols-(c-o)) {
+					for(x=cell.col+o,x2=x+c-o; x<x2; ++x,++idx) {
+						c2 = t.cells[idx];
+						if(c2.col < 0) {t.cells[idx] = cell; continue;}	// already removed
+						if(c2.col+c2.colspan > cell.col+c) t.setCellSpan(c2,c2.col+c2.colspan-cell.col-c,c2.rowspan,true,true);
+						else if(c2.row < cell.row) t.setCellSpan(c2,c2.colspan,cell.row-c2.row,false,true);
+						else if(c2.row+c2.rowspan > cell.row+cell.rowspan) t.setCellSpan(c2,c2.colspan,cell.row+cell.rowspan-c2.row-c2.rowspan,true,true);
+						c2 = t.cells[idx];
+						c2.td.parentNode.removeChild(c2.td);
+						c2.col = -1;
+						t.cells[idx] = cell;
+					}
+				}
+				cell.setSpan(c,null);
+				cell.balance(pct);
+			}
+			if(r > cell.rowspan) {
+				o = cell.rowspan;
+				for(y=cell.row+o,idx=y*t.cols+cell.col,y2=y+r-o; y<y2; ++y,idx+=t.cols-cell.colspan) {
+					for(x=cell.col,x2=x+cell.colspan; x<x2; ++x,++idx) {
+						c2 = t.cells[idx];
+						if(c2.col < 0) {t.cells[idx] = cell; continue;}	// already removed
+						if(c2.row+c2.rowspan > cell.row+r) t.setCellSpan(c2,c2.colspan,c2.row+c2.rowspan-cell.row-r,true,true);
+						else if(c2.col < cell.col) t.setCellSpan(c2,cell.col-c2.col,c2.rowspan,false,true);
+						else if(c2.col+c2.colspan > cell.col+cell.colspan) t.setCellSpan(c2,cell.col+cell.colspan-c2.col-c2.colspan,c2.rowspan,true,true);
+						c2 = t.cells[idx];
+						c2.td.parentNode.removeChild(c2.td);
+						c2.col = -1;
+						t.cells[idx] = cell;
+					}
+				}
+				cell.setSpan(null,r);
+			}
+		}
+	});
+}
+
+return {
+	config: {
+		_lrows: 0,	// actual # of rows in list format
+		_curxy: {x:-1,y:-1},
+		currentCell: null,
+		isList: false,
+		cells: '0x0',
+		showNames: true,
+		rightClick: false
+	},
+	fn: {
+		_rxl: /^(\d+)$/,
+		_rxxy: /^(\d+)[,x](\d+)$/,
+
+		_sz: function(size) {
+			var t=this,c=t.config;
+			if(typeof size != 'string') return null;
+			if(size.match(t._rxxy)) return {x:RegExp.$1-0,y:RegExp.$2-0};
+			if(c.isList && size.match(t._rxl)) return {x:0,y:RegExp.$1-0};
+		},
+		_xy: function(cellName, ex) {
+			var xy,c=this.config,i,x,y,ct=c._table,cn=(ct.cols||1);
+			if(!ct) return null;
+			if(typeof cellName == 'number') {
+				if(c.isList && cellName>=0) xy = {'x':0,'y':Math.floor(cellName)-1};
+				else return null;
+			}
+			else if(typeof cellName != 'string') return null;
+			else if(cellName.match(this._rxl)) {
+				i=RegExp.$1-1;
+				xy = c.isList ? {'x':0,'y':i} : {'x':Math.floor(i/cn),'y':i%cn};
+			}
+			else if(cellName.match(this._rxxy)) {
+				x=RegExp.$1-1; y=RegExp.$2-1;
+				xy = c.isList ? {'x':0,'y':x+y} : {'x':x,'y':y};
+			}
+			if(xy.x == -1) xy.x = c._curxy.x;
+			if(xy.y == -1) xy.y = c._curxy.y;
+			return (ex || (xy.y<ct.rows && xy.x<cn)) ? xy : null;
+		},
+		_cell: function(xy) {
+			var t=this, c=this.config, ct = c._table;
+			if(!xy || !ct) return null;
+			if(c.isList) {
+				if(!ct.cols || xy.y<0 || xy.y>=c._lrows) return null;
+				xy = {x: xy.y % ct.cols, y: Math.floor(xy.y / ct.cols)};
+			}
+			return ct.getCell(xy.x,xy.y);
+		},
+		_cellxy: function(sub,grow) {
+			var t=this,c=t.config,cell,ct=c._table;
+			if(sub=='' || sub==null) sub = c.currentCell;
+			cell = t._cell(t._xy(sub));
+			if(!cell && ct && grow) {
+				// autogrow
+				xy = t._xy(sub,true);
+				if(c.isList) {
+					if(xy.y < 0) return null;
+					if(xy.y >= c._lrows) t.winset({cells:'1x'+(xy.y+1)});
+				}
+				else {
+					if(xy.x >= ct.cols) ct.setCols(xy.x+1);
+					if(xy.y >= ct.rows) ct.setRows(xy.y+1);
+				}
+				cell = t._cell(xy);
+			}
+			return cell;
+		},
+		content: function(sub, exact) {
+			var t = this._cellxy(sub);
+			return t ? t.td : (exact?null:this.top);
+		},
+		create: function() {
+			var t=this,c=t.config,ct=new Table();
+			t.elem = t.top.firstChild;
+			c._table = ct;
+			t.elem.appendChild(t.ui.table = ct.table);
+			if(c.showNames) byond.attr(t.top,'shownames',c.showNames?1:null);
+		},
+		output: function(obj,sub) {
+			var t=this,c=t.config,ct=c._table,cell,e,txt,xy,i,l,tag,rsc;
+			if(!sub) sub = c.currentCell;
+			cell = t._cellxy(sub,true);
+			if(cell) {
+				e = cell.td;
+				c.currentCell = cell.col+','+cell.row;
+				c._curxy.x = cell.col; c._curxy.y = cell.row;
+				txt = (typeof obj.text == 'string') ? obj.text.replace(/(<br\/?>|\n)+$/i,'') : '';
+				var hasAtom = (typeof obj.atom == 'number');
+				byond.attr(e,"atom",hasAtom?obj.atom:null);
+				if(hasAtom) {
+					txt = "<img atom="+obj.atom+" src=\""+t.atomIcon(obj.atom)+"\"><span class=atomname>" + (txt.length?' ':'') + txt + "</span>";
+					byond.fillAtomIcons();
+				}
+				if(obj.file && obj.file.match(/\.(png|jpe?g|gif)$/)) txt = "<img src=\""+obj.file+"\">";
+				e.innerHTML = txt;
+				for(i=0,a=e.querySelectorAll('img'),l=a.length;i<l;++i) {
+					tag=a[i]; rsc=byond.attr(tag,'byondrsc');
+					if(byond.attr(tag,'icon')) byond.fillAtomIcons();
+					//if(rsc) byond.attr(tag,{src:byond.url(rsc),byondrsc:undefined});
+					if(rsc) byond.attr(tag,{byondrsc:undefined});
+				}
+				for(i=0,a=e.querySelectorAll('a'),l=a.length;i<l;++i) {
+					tag=a[i]; rsc=byond.attr(tag,'href');
+					if(byond.isByondUrl(rsc)) {
+						byond.attr(tag,{href:'#'});
+						tag.onclick=t.topic.bind(this,rsc.replace(/^[^\?]*\?/,''));
+					}
+				}
+				e.onmouseover = e.onmousemove = e.onmousedown = e.onmouseup = e.onmouseout = e.onmouseleave = e.onclick = e.ondblclick = t._mouse.bind(t,{atom:obj.atom,id:t.id+':'+sub});
+			}
+		},
+		clear: function(sub) {
+			var t=this,c=t.config,cell,e;
+			if(!sub) sub = c.currentCell;
+			cell = t._cellxy(sub,true);
+			if(cell) {
+				e = cell.td;
+				c.currentCell = cell.col+','+cell.row;
+				c._curxy.x = cell.col; c._curxy.y = cell.row;
+				e.innerHTML = '';
+				byond.attr(e,"atom",null);
+				byond.attr(e,"title",null);
+				e.onmouseover = e.onmousemove = e.onmousedown = e.onmouseup = e.onmouseout = e.onmouseleave = e.onclick = e.ondblclick = null;
+			}
+		},
+		_mouse: function(p,e) {
+			var t=this;
+			p.element = t.content(p.id.substr(p.id.indexOf(':')+1), true);
+			if(e && e.type == 'mousedown') {this.captureMouse(e); e.preventDefault();}
+			this.mouse(p,e);
+		},
+		dragTarget: function(e) {
+			var t=this, c=t.config, ct=c._table, td=e.target, tb;
+			if(!ct) return {};
+			while(td && td.tagName!='TD') td=td.parentNode;
+			for(tb=td; tb && tb.tagName!='TABLE'; tb=tb.parentNode);
+			if(tb != ct.table) return {};
+			td = ct.findCell(td);
+			if(c.isList) {
+				td = td.col + td.row*ct.cols;
+				return (td.row >= c._lrows) ? {} : {id:t.id+':'+(td+1)};
+			}
+			return td ? {id:t.id+':'+(td.col+1)+','+(td.row+1)} : {};
+		}
+	},
+	winsetfn: {
+		isList: function(v) {
+			var t=this, c=t.config, ct=c._table, xy;
+			v = byond.winset2bool(v);
+			if(typeof v != 'boolean') return c.isList;
+			if(v != c.isList) {
+				c.isList = ct.isList = v;
+				c._lrows = ct ? (ct.cols * ct.rows) : 0;
+				// do nothing important yet!
+			}
+		},
+		cells: function(v) {
+			var t=this, c=t.config, ct=c._table, o;
+			v = this._sz(v);
+			if(!v) return ct ? (c.isList ? ('1x'+c._lrows) : (ct.cols+'x'+ct.rows)) : 0;
+			if(c.isList) {
+				if(v.y < 0) return;
+				o = c._lrows;
+				if(!ct.cols) ct.setCols(4);	// default list columns
+				ct.setRows(Math.ceil(v.y / ct.cols));
+				c._lrows = o = Math.min(o, ct.rows*ct.cols);
+				while(v.y < o) t.clear((o--)+'');
+				c._lrows = v.y;
+			}
+			else {
+				if(v.x >= 0) ct.setCols(v.x);
+				if(v.y >= 0) ct.setRows(v.y);
+			}
+		},
+		currentCell: function(v) {
+			var c = this.config;
+			if(v == '') {c.currentCell = ''; return;}
+			v = this._xy(v,true);
+			if(v) {
+				c._curxy.x = v.x;
+				c._curxy.y = v.y;
+				c.currentCell = c.isList ? (''+(v.y+1)) : ((v.x+1)+','+(v.y+1));
+			}
+			else {
+				v = c._curxy;
+				return c.isList ? (''+(v.y+1)) : ((v.x+1)+','+(v.y+1));
+			}
+		},
+		cellSpan: function(v,sub) {
+			var t=this,cell=t._cellxy(sub),c=t.config,ct=c._table;
+			if(c.isList || !cell) return "1,1";
+			if(v===undefined || v==null) return cell.colspan+","+cell.rowspan;
+			v = t._sz(v);
+			ct.setCellSpan(cell,(v?v.x:1),(v?v.y:1));
+		},
+		showNames: function(v) {
+			var t=this,c=t.config;
+			v = byond.winset2bool(v);
+			if(v===undefined || v==null) return !!c.showNames;
+			c.showNames = v;
+			byond.attr(t.top,'shownames',c.showNames?1:null);
+		},
+		rightClick: function(v) {
+			var c=this.config;
+			v = byond.winset2bool(v);
+			if(v===undefined || v==null) return c.rightClick;
+			c.rightClick = v;
+		}
+	}
+};
+
+
+})()
+</script>
+<div></div>
+</byondclass>
