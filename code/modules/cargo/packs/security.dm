@@ -152,12 +152,12 @@
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/security/baton
-	name = "Stun Batons Crate"
-	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included."
+	name = "Electro Prods Crate"
+	desc = "Arm the Civil Protection Forces with three electro prods. Batteries included."
 	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/melee/baton/security/loaded = 3)
-	crate_name = "stun baton crate"
+	crate_name = "electro prod crate"
 
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"

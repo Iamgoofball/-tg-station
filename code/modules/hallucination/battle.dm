@@ -109,7 +109,7 @@
 	hallucinator.playsound_local(source, 'sound/items/weapons/cablecuff.ogg', 15, TRUE)
 	qdel(src)
 
-/// A hallucination of someone being stun batonned, and subsequently harmbatonned.
+/// A hallucination of someone being electro prodned, and subsequently harmbatonned.
 /datum/hallucination/battle/harm_baton
 
 /datum/hallucination/battle/harm_baton/start()

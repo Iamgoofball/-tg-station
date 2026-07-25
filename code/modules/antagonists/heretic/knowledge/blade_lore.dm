@@ -343,7 +343,7 @@
 		// flashbangs are like 5-10 seoncds,
 		// a banana peel is ~5 seconds, depending on botany
 		// body throws and tackles are less than 5 seconds,
-		// stun baton / stamcrit detracts no time,
+		// electro prod / stamcrit detracts no time,
 		// and worst case: beepsky / tasers are 10 seconds.
 		max_seconds_of_stuns_blocked = 45 SECONDS,
 		delete_after_passing_max = FALSE,

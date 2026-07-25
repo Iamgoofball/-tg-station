@@ -244,7 +244,7 @@
 		set_batoned(target, user, cooldown)
 		log_combat(user, target, "stunned", src.name)
 
-/// The actual "stun()" of the stun baton
+/// The actual "stun()" of the electro prod
 /obj/item/melee/baton/proc/baton_effect(mob/living/target, mob/living/user, stun_override, clumsy)
 	PROTECTED_PROC(TRUE)
 	var/trait_check = HAS_TRAIT(target, TRAIT_BATON_RESISTANCE)
@@ -308,7 +308,7 @@
 
 /obj/item/conversion_kit
 	name = "conversion kit"
-	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
+	desc = "A strange box containing wood working tools and an instruction paper to turn electro prods into something else."
 	icon = 'icons/obj/storage/box.dmi'
 	icon_state = "uk"
 	custom_price = PAYCHECK_COMMAND * 4.5
@@ -423,7 +423,7 @@
 
 /obj/item/melee/baton/telescopic/contractor_baton
 	name = "contractor baton"
-	desc = "A high tech telescopic stun baton, as developed by Cybersun Industries. Delivers a precise shock to a target's central nervous system to incapacitate them."
+	desc = "A high tech telescopic electro prod, as developed by Cybersun Industries. Delivers a precise shock to a target's central nervous system to incapacitate them."
 	icon = 'icons/obj/weapons/baton.dmi'
 	icon_state = "contractor_baton"
 	worn_icon_state = "contractor_baton"
@@ -455,7 +455,7 @@
 	target.set_stutter_if_lower(40 SECONDS * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.5 : 1))
 
 /obj/item/melee/baton/security
-	name = "stun baton"
+	name = "electro prod"
 	desc = "The Secure Apprehension Device, as developed by Nanotrasen. Delivers a precise shock to a target's central nervous system to incapacitate them."
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/baton.dmi'
@@ -636,7 +636,7 @@
 			balloon_alert(user, "turned off")
 	add_fingerprint(user)
 
-/// Toggles the stun baton's light
+/// Toggles the electro prod's light
 /obj/item/melee/baton/security/proc/toggle_light()
 	set_light_on(!light_on)
 
@@ -805,10 +805,10 @@
 /obj/item/melee/baton/security/stunsword/loaded
 	preload_cell_type = /obj/item/stock_parts/power_store/cell/bluespace // 40% stun_armour_penetration
 
-//Makeshift stun baton. Replacement for stun gloves.
+//Makeshift electro prod. Replacement for stun gloves.
 /obj/item/melee/baton/security/cattleprod
 	name = "stunprod"
-	desc = "An improvised stun baton."
+	desc = "An improvised electro prod."
 	desc_controls = "Left click to stun, right click to harm."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "stunprod"
@@ -1013,17 +1013,17 @@
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "The Secure Apprehension Device (sometimes referred to as the SAD in the officer training manuals) is \
 		an unholy union of mace and cattleprod. Designed to stop criminals in their tracks, Nanotrasen security members \
-		are rarely without their trusty stun baton. Assuming they haven't lost it somewhere.<br>\
+		are rarely without their trusty electro prod. Assuming they haven't lost it somewhere.<br>\
 		<br>\
 		Trained to 'baton first, interrogate later', Nanotrasen security has long since earned itself a mixed reputation. \
 		The device is able to rapidly shut down the central nervous system of a criminal with only a few direct applications \
 		of the conductive striking head.<br>\
 		<br>\
-		TerraGov law enforcement has avoided the adoption of stun batons due to various ethical dilemmas posed by \
+		TerraGov law enforcement has avoided the adoption of electro prods due to various ethical dilemmas posed by \
 		their utilization. Studies of their usage have shown numerous longterm physical and mental ramifications caused by \
 		being struck by a human cattleprod. Citizens' rights advocacy groups protest against the proliferation of stun \
 		batons as a policing tool, arguing that they are 'inhumane' and 'authoritarian'. Nanotrasen, on the other hand, \
-		has had no such qualms when deploying stun batons as a compliance measure across all of their existing stations \
+		has had no such qualms when deploying electro prods as a compliance measure across all of their existing stations \
 		and facilities against their own unruly members of staff." \
 	)
 
@@ -1035,7 +1035,7 @@
 		lore = "The Contract Acquisition Device (sometimes referred to as the CAD in encrypted correspondence) is \
 		the most frequently encountered example of Cybersun Industries weaponry. Similar in purpose to Nanotrasen's \
 		own Secure Apprehension Device, the baton is capable of inducing rapid CNS disruption in a target to render them \
-		helpless. It also makes for an effective bludgeon, another quality it shares with the stun baton. To maximize \
+		helpless. It also makes for an effective bludgeon, another quality it shares with the electro prod. To maximize \
 		ease of concealment, the baton is also able to be telescopically collapsed, to then be rapidly deployed at the \
 		pull of a trigger.<br>\
 		<br>\

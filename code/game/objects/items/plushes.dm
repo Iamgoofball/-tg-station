@@ -738,7 +738,7 @@
 
 /obj/item/toy/plush/abductor/agent
 	name = "abductor agent plushie"
-	desc = "A plushie depicting an alien abductor agent. The stun baton is attached to the hand of the plushie, and appears to be inert. I wouldn't stay alone with it."
+	desc = "A plushie depicting an alien abductor agent. The electro prod is attached to the hand of the plushie, and appears to be inert. I wouldn't stay alone with it."
 	icon_state = "abductor_agent"
 	inhand_icon_state = null
 	attack_verb_continuous = list("abducts", "probes", "stuns")

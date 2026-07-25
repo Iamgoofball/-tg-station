@@ -545,7 +545,7 @@
 
 /obj/item/clothing/glasses/trickblindfold
 	name = "blindfold"
-	desc = "A see-through blindfold perfect for cheating at games like pin the stun baton on the clown."
+	desc = "A see-through blindfold perfect for cheating at games like pin the electro prod on the clown."
 	icon_state = "trickblindfold"
 	inhand_icon_state = "blindfold"
 	flags_cover = GLASSESCOVERSEYES

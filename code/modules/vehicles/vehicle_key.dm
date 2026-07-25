@@ -10,7 +10,7 @@
 	desc = "A small grey key for starting and operating ATVs."
 
 /obj/item/key/security
-	desc = "A keyring with a small steel key, and a rubber stun baton accessory."
+	desc = "A keyring with a small steel key, and a rubber electro prod accessory."
 	icon_state = "keysec"
 
 /obj/item/key/security/suicide_act(mob/living/user)

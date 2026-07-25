@@ -138,7 +138,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	if(potential_reaping.stat >= UNCONSCIOUS || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
 		death_knell_speed_mod *= 0.5
 	if(potential_reaping.stat != DEAD && potential_reaping.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to perform the death knell, even if they're still
-		death_knell_speed_mod *= 1.5 //Staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to slice their head off, but staminacritting someone who isn't jittering will
+		death_knell_speed_mod *= 1.5 //Staminacritting someone who's jittering (from, say, a electro prod) won't give you enough time to slice their head off, but staminacritting someone who isn't jittering will
 	if(empowerment == SCYTHE_EMPOWERED) //That said, if heads are already rolling, why stop here?
 		death_knell_speed_mod *= 0.5
 	if(ispodperson(potential_reaping) || ismonkey(potential_reaping)) //And if they're a podperson or monkey, they can just die.

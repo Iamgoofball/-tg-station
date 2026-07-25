@@ -934,7 +934,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/safeguard)
 
 /datum/objective_item/steal/spy/stun_baton
-	name = "a stun baton"
+	name = "a electro prod"
 	targetitem = /obj/item/melee/baton/security
 	excludefromjob = list(
 		JOB_CAPTAIN,
@@ -945,7 +945,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		JOB_WARDEN,
 	)
 	difficulty = 2
-	steal_hint = "Steal any stun baton from Security."
+	steal_hint = "Steal any electro prod from Security."
 
 /datum/objective_item/steal/spy/stun_baton/check_special_completion(obj/item/thing)
 	return !istype(thing, /obj/item/melee/baton/security/cattleprod)

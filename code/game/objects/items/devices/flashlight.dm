@@ -396,7 +396,7 @@
 	worn_icon_state = "seclite"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	force = 9 // Not as good as a stun baton.
+	force = 9 // Not as good as a electro prod.
 	light_range = 5 // A little better than the standard flashlight.
 	light_power = 0.8
 	light_color = "#99ccff"
