@@ -1398,10 +1398,10 @@
 	affected_mob.AdjustSleeping(-2 SECONDS * metabolization_ratio * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/consumable/sugar, 3 * metabolization_ratio * seconds_per_tick)
 
-//Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
+// Medibot Chems - renamed from Star Trek themed names
 
 /datum/reagent/medicine/inaprovaline //is this used anywhere?
-	name = "Inaprovaline"
+	name = "Stabilizine"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	color = "#A4D8D8"
 	ph = 8.5
