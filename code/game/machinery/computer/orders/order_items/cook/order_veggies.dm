@@ -18,7 +18,7 @@
 	purchase_path = /obj/item/food/grown/eggplant
 
 /datum/orderable_item/veggies/mushroom
-	name = "Plump Helmet"
+	name = "Mellow Cap"
 	desc = "Plumus Hellmus: Plump, soft and s-so inviting~"
 	purchase_path = /obj/item/food/grown/mushroom/plumphelmet
 

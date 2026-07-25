@@ -115,7 +115,7 @@
 	icon_state = "libertycap"
 	wine_power = 80
 
-// Plump Helmet
+// Mellow Cap
 /obj/item/seeds/plump
 	name = "plump-helmet mycelium pack"
 	desc = "This mycelium grows into helmets... maybe."

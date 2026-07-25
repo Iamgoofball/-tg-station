@@ -178,7 +178,7 @@
 
 /obj/item/food/pie/plump_pie
 	name = "plump pie"
-	desc = "I bet you love stuff made out of plump helmets!"
+	desc = "I bet you love stuff made out of mellow caps!"
 	icon_state = "plump_pie"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 11,
