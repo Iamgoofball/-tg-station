@@ -207,5 +207,54 @@
 
 /obj/structure/fish_mount/bar
 	persistence_id = "Bar"
+	/// Cooldown between singing performances so the fish doesn't exhaust itself
+	COOLDOWN_DECLARE(sing_cooldown)
+
+/obj/structure/fish_mount/bar/on_fish_attack_hand(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	if(!COOLDOWN_FINISHED(src, sing_cooldown))
+		balloon_alert(user, "voice needs rest!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	INVOKE_ASYNC(src, PROC_REF(bar_fish_perform), user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/// Makes the mounted bar fish sing "Take Me to the River" and dance.
+/obj/structure/fish_mount/bar/proc/bar_fish_perform(mob/living/user)
+	set waitfor = FALSE
+	if(!mounted_fish)
+		return
+	COOLDOWN_START(src, sing_cooldown, 30 SECONDS)
+
+	visible_message(span_notice("[mounted_fish] begins to sing and dance!"))
+
+	// Dance animation - bounce up and down
+	var/starting_pixel_y = mounted_fish.pixel_y
+	animate(mounted_fish, pixel_y = starting_pixel_y + 6, time = 0.3 SECONDS, loop = 6, flags = ANIMATION_PARALLEL)
+	animate(pixel_y = starting_pixel_y, time = 0.3 SECONDS)
+
+	playsound(mounted_fish, 'sound/effects/singlebeat.ogg', 50, TRUE)
+	mounted_fish.say("Take me to the river!", message_mods = list(MODE_SING = TRUE))
+	mounted_fish.manual_emote("wiggles to the beat!")
+	sleep(1.5 SECONDS)
+
+	playsound(mounted_fish, 'sound/effects/splash.ogg', 30, TRUE)
+	mounted_fish.say("Drop me in the water!", message_mods = list(MODE_SING = TRUE))
+	mounted_fish.manual_emote("splashes about!")
+	sleep(1.5 SECONDS)
+
+	playsound(mounted_fish, 'sound/effects/singlebeat.ogg', 50, TRUE)
+	mounted_fish.say("Take me to the river!", message_mods = list(MODE_SING = TRUE))
+	mounted_fish.manual_emote("dances joyfully!")
+	sleep(1.5 SECONDS)
+
+	playsound(mounted_fish, 'sound/effects/fish_splash.ogg', 50, TRUE)
+	mounted_fish.say("Dip me in the water!", message_mods = list(MODE_SING = TRUE))
+	mounted_fish.manual_emote("flops around triumphantly!")
+
+	// Reset animation
+	animate(mounted_fish)
+	mounted_fish.pixel_y = starting_pixel_y
+
+	visible_message(span_notice("[mounted_fish] takes a bow!"))
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fish_mount/bar, /obj/item/wallframe/fish::pixel_shift)
