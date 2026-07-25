@@ -6,7 +6,6 @@ export const ServerPrefs = createContext<ServerData | undefined>({
   jobs: {
     departments: {},
     jobs: {},
-    jobs_sorted: [],
   },
   names: {
     types: {},
