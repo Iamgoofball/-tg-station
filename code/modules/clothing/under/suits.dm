@@ -116,3 +116,9 @@
 /obj/item/clothing/under/suit/carpskin/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, -4)
+
+/obj/item/clothing/under/suit/brown
+	name = "brown suit"
+	desc = "A brown suit, perfect for a suburban dad with a taste for the finer things in life."
+	icon_state = "brown_suit"
+	inhand_icon_state = "brown_suit"
