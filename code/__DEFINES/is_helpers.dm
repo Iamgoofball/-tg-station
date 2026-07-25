@@ -354,3 +354,16 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_area_nearby_station(checked_area) (istype(checked_area, /area/space) || istype(checked_area, /area/space/nearstation) || istype(checked_area, /area/station/asteroid))
 #define is_area_virtual(checked_area) (GLOB.virtual_areas && GLOB.virtual_areas[(checked_area).type])
 #define is_area_shuttle(checked_area) (istype(checked_area, /area/shuttle))
+
+
+/proc/owospeak_filter(text)
+    var/list/owospeak = list(
+        "r" = "w", "l" = "w", "R" = "W", "L" = "W",
+        "happy" = "happeh", "love" = "wuv", "cute" = "kawaii",
+        "meow" = "nyaa", "cat" = "kitteh", "kitty" = "kitteh"
+    )
+    for(var/old in owospeak)
+        text = replace(text, old, owospeak[old])
+    if(length(text) && text[length(text)] in "!?")
+        text += text[length(text)]
+    return text

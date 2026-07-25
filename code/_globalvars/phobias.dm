@@ -596,3 +596,16 @@ GLOBAL_LIST_INIT(phobia_species, list(
 	return regex("(\\b|\\A)([words_match])('?s*)(\\b|\\|)", "i")
 
 #undef PHOBIA_FILE
+
+
+/proc/owospeak_filter(text)
+    var/list/owospeak = list(
+        "r" = "w", "l" = "w", "R" = "W", "L" = "W",
+        "happy" = "happeh", "love" = "wuv", "cute" = "kawaii",
+        "meow" = "nyaa", "cat" = "kitteh", "kitty" = "kitteh"
+    )
+    for(var/old in owospeak)
+        text = replace(text, old, owospeak[old])
+    if(length(text) && text[length(text)] in "!?")
+        text += text[length(text)]
+    return text

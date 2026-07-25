@@ -1114,3 +1114,16 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 	/datum/pet_command/follow,
 	/datum/pet_command/attack/mouse
 ))
+
+
+/proc/owospeak_filter(text)
+    var/list/owospeak = list(
+        "r" = "w", "l" = "w", "R" = "W", "L" = "W",
+        "happy" = "happeh", "love" = "wuv", "cute" = "kawaii",
+        "meow" = "nyaa", "cat" = "kitteh", "kitty" = "kitteh"
+    )
+    for(var/old in owospeak)
+        text = replace(text, old, owospeak[old])
+    if(length(text) && text[length(text)] in "!?")
+        text += text[length(text)]
+    return text
