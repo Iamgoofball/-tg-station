@@ -7,6 +7,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
+
 /**
  * Move a client in a direction
  *
@@ -44,18 +45,14 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
  *
  */
 /client/Move(new_loc, direct)
-	if(world.time < move_delay) //do not move anything ahead of this check please
+	if(move_delay > world.time)
 		return FALSE
-	next_move_dir_add = NONE
-	next_move_dir_sub = NONE
-	var/old_move_delay = move_delay
-	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!direct || !new_loc)
 		return FALSE
 	if(!mob?.loc)
 		return FALSE
 	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
-		return FALSE //This is sorta the goto stop mobs from moving trait
+		return FALSE // This is sorta the goto stop mobs from moving trait
 	if(!isliving(mob))
 		if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE)
 			return FALSE
@@ -66,28 +63,28 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE)
 		return FALSE
 
-	var/mob/living/L = mob //Already checked for isliving earlier
-	if(L.incorporeal_move && !is_secret_level(mob.z)) //Move though walls
+	var/mob/living/L = mob // Already checked for isliving earlier
+	if(L.incorporeal_move && !is_secret_level(mob.z)) // Move through walls
 		Process_Incorpmove(direct)
 		return FALSE
 
-	if(mob.remote_control) //we're controlling something, our movement is relayed to it
+	if(mob.remote_control) // We're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
 		var/mob/living/silicon/ai/smoovin_ai = mob
 		return smoovin_ai.AIMove(direct)
 
-	if(Process_Grab()) //are we restrained by someone's grip?
+	if(Process_Grab()) // Are we restrained by someone's grip?
 		return
 
-	if(mob.buckled) //if we're buckled to something, tell it we moved.
+	if(mob.buckled) // If we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
 	if(!(L.mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
-	if(ismovable(mob.loc)) //Inside an object, tell it we moved
+	if(ismovable(mob.loc)) // Inside an object, tell it we moved
 		var/atom/loc_atom = mob.loc
 		return loc_atom.relaymove(mob, direct)
 
@@ -97,29 +94,22 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_MOVE, args) & COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE)
 		return FALSE
 
-	//We are now going to move
+	// We are now going to move
 	var/add_delay = mob.cached_multiplicative_slowdown
 	var/glide_delay = add_delay
 	if(NSCOMPONENT(direct) && EWCOMPONENT(direct))
 		glide_delay = FLOOR(glide_delay * sqrt(2), world.tick_lag)
 	mob.set_glide_size(DELAY_TO_GLIDE_SIZE(glide_delay)) // set it now in case of pulled objects
-	//If the move was recent, count using old_move_delay
-	//We want fractional behavior and all
-	if(old_move_delay + world.tick_lag > world.time)
-		//Yes this makes smooth movement stutter if add_delay is too fractional
-		//Yes this is better then the alternative
-		move_delay = old_move_delay
-	else
-		move_delay = world.time
+	move_delay = world.time
 
-	//Basically an optional override for our glide size
-	//Sometimes you want to look like you're moving with a delay you don't actually have yet
+	// Basically an optional override for our glide size
+	// Sometimes you want to look like you're moving with a delay you don't actually have yet
 	visual_delay = 0
 	var/old_dir = mob.dir
 
 	. = ..()
 
-	if((direct & (direct - 1)) && mob.loc == new_loc) //moved diagonally successfully
+	if((direct & (direct - 1)) && mob.loc == new_loc) // moved diagonally successfully
 		add_delay = FLOOR(add_delay * sqrt(2), world.tick_lag)
 
 	var/after_glide = 0
@@ -151,7 +141,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 /client/proc/Process_Grab()
 	if(!mob.pulledby)
 		return FALSE
-	if(mob.pulledby == mob.pulling && mob.pulledby.grab_state == GRAB_PASSIVE) //Don't autoresist passive grabs if we're grabbing them too.
+	if(mob.pulledby == mob.pulling && mob.pulledby.grab_state == GRAB_PASSIVE) // Don't autoresist passive grabs if we're grabbing them too.
 		return FALSE
 	if(HAS_TRAIT(mob, TRAIT_INCAPACITATED))
 		COOLDOWN_START(src, move_delay, 1 SECONDS)
@@ -161,7 +151,6 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 		to_chat(src, span_warning("You're restrained! You can't move!"))
 		return TRUE
 	return mob.resist_grab(TRUE)
-
 
 /**
  * Allows mobs to ignore density and phase through objects
@@ -183,7 +172,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	var/mob/living/L = mob
 	switch(L.incorporeal_move)
 		if(INCORPOREAL_MOVE_BASIC)
-			var/T = get_step(L,direct)
+			var/T = get_step(L, direct)
 			if(T)
 				L.forceMove(T)
 			L.setDir(direct)
@@ -194,30 +183,30 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 				switch(direct)
 					if(NORTH)
 						locx = mobloc.x
-						locy = (mobloc.y+2)
-						if(locy>world.maxy)
+						locy = (mobloc.y + 2)
+						if(locy > world.maxy)
 							return
 					if(SOUTH)
 						locx = mobloc.x
-						locy = (mobloc.y-2)
-						if(locy<1)
+						locy = (mobloc.y - 2)
+						if(locy < 1)
 							return
 					if(EAST)
 						locy = mobloc.y
-						locx = (mobloc.x+2)
-						if(locx>world.maxx)
+						locx = (mobloc.x + 2)
+						if(locx > world.maxx)
 							return
 					if(WEST)
 						locy = mobloc.y
-						locx = (mobloc.x-2)
-						if(locx<1)
+						locx = (mobloc.x - 2)
+						if(locx < 1)
 							return
 					else
 						return
-				var/target = locate(locx,locy,mobloc.z)
+				var/target = locate(locx, locy, mobloc.z)
 				if(target)
 					L.forceMove(target)
-					var/limit = 2//For only two trailing shadows.
+					var/limit = 2 // For only two trailing shadows.
 					for(var/turf/T in get_line(mobloc, L.loc))
 						new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
 						limit--
@@ -225,11 +214,11 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 							break
 			else
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
-				var/T = get_step(L,direct)
+				var/T = get_step(L, direct)
 				if(T)
 					L.forceMove(T)
 			L.setDir(direct)
-		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
+		if(INCORPOREAL_MOVE_JAUNT) // Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			if(stepTurf)
 				var/obj/effect/decal/cleanable/food/salt/salt = locate() in stepTurf
@@ -271,14 +260,14 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
 		return TRUE
 
-	if (HAS_TRAIT(src, TRAIT_NOGRAV_ALWAYS_DRIFT))
+	if(HAS_TRAIT(src, TRAIT_NOGRAV_ALWAYS_DRIFT))
 		return FALSE
 
 	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
 	if(!backup)
 		return FALSE
 
-	if (SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, movement_dir, continuous_move, backup) & COMPONENT_PREVENT_SPACEMOVE_HALT)
+	if(SEND_SIGNAL(src, COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE, movement_dir, continuous_move, backup) & COMPONENT_PREVENT_SPACEMOVE_HALT)
 		return FALSE
 
 	if(continuous_move || !istype(backup) || !movement_dir || backup.anchored)
@@ -287,7 +276,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	// last pushoff exists for one reason
 	// to ensure pushing a mob doesn't just lead to it considering us as backup, and failing
 	last_pushoff = world.time
-	if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE)) //You're pushing off something movable, so it moves
+	if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE)) // You're pushing off something movable, so it moves
 		// We set it down here so future calls to Process_Spacemove by the same pair in the same tick don't lead to fucky
 		backup.last_pushoff = world.time
 		to_chat(src, span_info("You push off of [backup] to propel yourself."))
@@ -316,9 +305,9 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 			if(isspaceturf(turf))
 				continue
 			if(!turf.density && !mob_negates_gravity())
-				if (!include_floors || !turf.has_gravity())
+				if(!include_floors || !turf.has_gravity())
 					continue
-			if (is_priority)
+			if(is_priority)
 				return pushover
 			secondary_backup = pushover
 			continue
@@ -334,7 +323,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 		var/pass_allowed = rebound.CanPass(src, get_dir(rebound, src))
 		if(!rebound.density && pass_allowed && !istype(rebound, /obj/structure/lattice))
 			continue
-		//Sometime this tick, this pushed off something. Doesn't count as a valid pushoff target
+		// Sometime this tick, this pushed off something. Doesn't count as a valid pushoff target
 		if(rebound.last_pushoff == world.time)
 			continue
 		if(continuous_move && !pass_allowed)
@@ -346,13 +335,13 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 			if(moving_direction == get_dir(src, pushover)) // Can't push "off" of something that you're walking into
 				continue
 		if(rebound.anchored)
-			if (is_priority)
+			if(is_priority)
 				return rebound
 			secondary_backup = rebound
 			continue
 		if(pulling == rebound)
 			continue
-		if (is_priority)
+		if(is_priority)
 			return rebound
 		secondary_backup = rebound
 	return secondary_backup
@@ -385,13 +374,13 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
 	add_personality_mood_to_viewers(src, "slip_observed", list(/datum/personality/whimsical = /datum/mood_event/whimsical_slip), range = 5)
 	return ..()
 
-//bodypart selection verbs - Cyberboss
-//8: repeated presses toggles through head - eyes - mouth
-//7: mouth 8: head  9: eyes
-//4: r-arm 5: chest 6: l-arm
-//1: r-leg 2: groin 3: l-leg
+// bodypart selection verbs - Cyberboss
+// 8: repeated presses toggles through head - eyes - mouth
+// 7: mouth 8: head 9: eyes
+// 4: r-arm 5: chest 6: l-arm
+// 1: r-leg 2: groin 3: l-leg
 
-///Validate the client's mob has a valid zone selected
+/// Validate the client's mob has a valid zone selected
 /client/proc/check_has_body_select()
 	return istype(mob?.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR], /atom/movable/screen/zone_sel)
 
@@ -401,9 +390,8 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
  * Uses numpad keys 1-9
  */
 
-///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
+/// Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth. Bound to 8
 GAME_VERB_HIDDEN(/client, body_toggle_head, "body-toggle-head")
-
 	if(!check_has_body_select())
 		return
 
@@ -419,88 +407,79 @@ GAME_VERB_HIDDEN(/client, body_toggle_head, "body-toggle-head")
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(next_in_line, mob)
 
-///Hidden verb to target the head, unbound by default.
+/// Hidden verb to target the head, unbound by default.
 GAME_VERB_HIDDEN(/client, body_head, "body-head")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_HEAD, mob)
 
-///Hidden verb to target the eyes, bound to 7
+/// Hidden verb to target the eyes, bound to 7
 GAME_VERB_HIDDEN(/client, body_eyes, "body-eyes")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_PRECISE_EYES, mob)
 
-///Hidden verb to target the mouth, bound to 9
+/// Hidden verb to target the mouth, bound to 9
 GAME_VERB_HIDDEN(/client, body_mouth, "body-mouth")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_PRECISE_MOUTH, mob)
 
-///Hidden verb to target the right arm, bound to 4
+/// Hidden verb to target the right arm, bound to 4
 GAME_VERB_HIDDEN(/client, body_r_arm, "body-r-arm")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_R_ARM, mob)
 
-///Hidden verb to target the chest, bound to 5
+/// Hidden verb to target the chest, bound to 5
 GAME_VERB_HIDDEN(/client, body_chest, "body-chest")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_CHEST, mob)
 
-///Hidden verb to target the left arm, bound to 6
+/// Hidden verb to target the left arm, bound to 6
 GAME_VERB_HIDDEN(/client, body_l_arm, "body-l-arm")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_L_ARM, mob)
 
-///Hidden verb to target the right leg, bound to 1
+/// Hidden verb to target the right leg, bound to 1
 GAME_VERB_HIDDEN(/client, body_r_leg, "body-r-leg")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_R_LEG, mob)
 
-///Hidden verb to target the groin, bound to 2
+/// Hidden verb to target the groin, bound to 2
 GAME_VERB_HIDDEN(/client, body_groin, "body-groin")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_PRECISE_GROIN, mob)
 
-///Hidden verb to target the left leg, bound to 3
+/// Hidden verb to target the left leg, bound to 3
 GAME_VERB_HIDDEN(/client, body_l_leg, "body-l-leg")
-
 	if(!check_has_body_select())
 		return
 
 	var/atom/movable/screen/zone_sel/selector = mob.hud_used.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector.set_selected_zone(BODY_ZONE_L_LEG, mob)
 
-///Verb to toggle the walk or run status
+/// Verb to toggle the walk or run status
 GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	if(isliving(mob))
 		var/mob/living/user_mob = mob
@@ -521,14 +500,14 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	update_move_intent_slowdown()
 	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
 
-///Moves a mob upwards in z level
+/// Moves a mob upwards in z level
 /mob/proc/up()
 	if(remote_control)
 		return remote_control.relaymove(src, UP)
 
 	var/turf/current_turf = get_turf(src)
 
-	if(ismovable(loc)) //Inside an object, tell it we moved
+	if(ismovable(loc)) // Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
 
@@ -537,22 +516,22 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 		current_ladder.use(src, TRUE)
 		return
 
-	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
+	if(!can_z_move(UP, current_turf, null, ZMOVE_CAN_FLY_CHECKS | ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving up...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
-	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
+	if(zMove(UP, z_move_flags = ZMOVE_FLIGHT_FLAGS | ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
-///Moves a mob down a z level
+/// Moves a mob down a z level
 /mob/proc/down()
 	if(remote_control)
 		return remote_control.relaymove(src, DOWN)
 
 	var/turf/current_turf = get_turf(src)
 
-	if(ismovable(loc)) //Inside an object, tell it we moved
+	if(ismovable(loc)) // Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
 
@@ -561,12 +540,12 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 		current_ladder.use(src, FALSE)
 		return
 
-	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS|ZMOVE_FEEDBACK))
+	if(!can_z_move(DOWN, current_turf, null, ZMOVE_CAN_FLY_CHECKS | ZMOVE_FEEDBACK))
 		return
 	balloon_alert(src, "moving down...")
 	if(!do_after(src, 1 SECONDS, hidden = TRUE))
 		return
-	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK))
+	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS | ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 	return FALSE
 
