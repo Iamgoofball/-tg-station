@@ -174,7 +174,7 @@
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 3,
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 3,
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 2,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 2,
+		/obj/item/reagent_containers/cup/soda_cans/krakenblast = 2,
 		/obj/item/reagent_containers/cup/glass/bottle/beer/light = 2,
 		/obj/item/reagent_containers/cup/soda_cans/shamblers = 1,
 		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 1,

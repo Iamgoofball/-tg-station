@@ -227,9 +227,9 @@
 	if(SPT_PROB(5, seconds_per_tick))
 		drinker.adjust_hallucinations(4 SECONDS * metabolization_ratio)
 
-/datum/reagent/consumable/ethanol/thirteenloko
-	name = "Thirteen Loko"
-	description = "A potent mixture of caffeine and alcohol."
+/datum/reagent/consumable/ethanol/krakenblast
+	name = "Kraken Blast"
+	description = "A potent mixture of stimulants and ethanol."
 	color = "#102000" // rgb: 16, 32, 0
 	nutriment_factor = 1
 	boozepwr = 80
@@ -240,7 +240,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	metabolized_traits = list(TRAIT_STIMULATED)
 
-/datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+/datum/reagent/consumable/ethanol/krakenblast/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	drinker.adjust_drowsiness(-14 SECONDS * metabolization_ratio * seconds_per_tick)
 	drinker.AdjustSleeping(-4 SECONDS * metabolization_ratio * seconds_per_tick)
@@ -248,13 +248,13 @@
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.set_jitter_if_lower(10 SECONDS)
 
-/datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/drinker, metabolization_ratio)
+/datum/reagent/consumable/ethanol/krakenblast/overdose_start(mob/living/drinker, metabolization_ratio)
 	. = ..()
 	to_chat(drinker, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
 	drinker.set_jitter_if_lower(40 SECONDS)
 	drinker.Stun(1.5 SECONDS)
 
-/datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/drinker, seconds_per_tick, metabolization_ratio)
+/datum/reagent/consumable/ethanol/krakenblast/overdose_process(mob/living/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(3.5, seconds_per_tick) && iscarbon(drinker))
 		var/obj/item/held_item = drinker.get_active_held_item()

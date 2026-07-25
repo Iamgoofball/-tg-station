@@ -91,7 +91,7 @@
 	var/list/extra_ingredients = list(
 		/datum/reagent/consumable/ethanol/pina_olivada,
 		/datum/reagent/consumable/ethanol/rum,
-		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/ethanol/krakenblast,
 		/datum/reagent/consumable/ethanol/vodka,
 		/datum/reagent/consumable/superlaughter,
 		/datum/reagent/drug/bath_salts,

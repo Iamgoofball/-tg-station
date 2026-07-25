@@ -42,10 +42,10 @@
 	name = "glass of candy corn liquor"
 	desc = "Good for your Imagination."
 
-/datum/glass_style/drinking_glass/thirteenloko
-	required_drink_type = /datum/reagent/consumable/ethanol/thirteenloko
-	name = "glass of Thirteen Loko"
-	desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
+/datum/glass_style/drinking_glass/krakenblast
+	required_drink_type = /datum/reagent/consumable/ethanol/krakenblast
+	name = "glass of Kraken Blast"
+	desc = "This is a glass of Kraken Blast, it appears to be of the highest quality. The drink, not the glass."
 	icon_state = "thirteen_loko_glass"
 
 /datum/glass_style/drinking_glass/vodka
