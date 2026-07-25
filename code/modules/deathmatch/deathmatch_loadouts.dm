@@ -610,8 +610,8 @@
 	belt = /obj/item/gun/ballistic/revolver
 
 /datum/outfit/deathmatch_loadout/nukie
-	name = "Deathmatch: Nuclear Operative"
-	display_name = "Nuclear Operative"
+	name = "Deathmatch: Special Operative"
+	display_name = "Special Operative"
 	desc = "Gear afforded to Lone Operatives. Your mission is simple."
 
 	uniform = /obj/item/clothing/under/syndicate/tacticool

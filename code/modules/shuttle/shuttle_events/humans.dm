@@ -85,7 +85,7 @@
 	internals_slot = ITEM_SLOT_LPOCKET
 
 /datum/shuttle_event/simple_spawner/player_controlled/human/nukie
-	name = "Nuclear Operative (Dangerous as heck)!"
+	name = "Special Operative (Dangerous as heck)!"
 	spawning_list = list(/mob/living/carbon/human = 1)
 	spawning_flags = SHUTTLE_EVENT_HIT_SHUTTLE
 	outfit = /datum/outfit/deathmatch_loadout/nukie
@@ -101,7 +101,7 @@
 	role_type = ROLE_OPERATIVE
 
 /datum/outfit/shuttle_nukie
-	name = "Shuttle Nuclear Operative"
+	name = "Shuttle Special Operative"
 
 	uniform = /obj/item/clothing/under/syndicate/tacticool
 	back = /obj/item/mod/control/pre_equipped/nuclear

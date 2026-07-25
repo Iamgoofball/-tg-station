@@ -8,7 +8,7 @@
  * Lethally attracted to loose plastic.
  *
  * Tameable by feeding them meat, and can follow basic instructions. Rideable.
- * Owned as a pet both by the HoS (sometimes) and also the Nuclear Operatives.
+ * Owned as a pet both by the HoS (sometimes) and also the Special Operatives.
  */
 /mob/living/basic/carp
 	name = "space carp"

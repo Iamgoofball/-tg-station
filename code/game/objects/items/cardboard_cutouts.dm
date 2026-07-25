@@ -167,7 +167,7 @@
 	deceptive = TRUE
 
 /obj/item/cardboard_cutout/nuclear_operative
-	starting_cutout = "Nuclear Operative"
+	starting_cutout = "Special Operative"
 
 /obj/item/cardboard_cutout/xenomorph
 	starting_cutout = "Xenomorph"
@@ -257,9 +257,9 @@
 	return pick("Unknown", "Captain")
 
 /datum/cardboard_cutout/nuclear_operative
-	name = "Nuclear Operative"
+	name = "Special Operative"
 	applied_name = "Unknown"
-	applied_desc = "A cardboard cutout of a nuclear operative."
+	applied_desc = "A cardboard cutout of a special operative."
 	outfit = /datum/outfit/syndicate/full
 
 /datum/cardboard_cutout/nuclear_operative/get_name()

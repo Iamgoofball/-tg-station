@@ -301,7 +301,7 @@
 	candidate.add_antag_datum(/datum/antagonist/wizard) // moves to lair for us
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies
-	name = "Nuclear Operatives"
+	name = "Special Operatives"
 	config_tag = "Midround Nukeops"
 	preview_antag_datum = /datum/antagonist/nukeop
 	midround_type = HEAVY_MIDROUND

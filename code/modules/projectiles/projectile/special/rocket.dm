@@ -82,7 +82,7 @@ among other potential differences. This granularity is helpful for things like t
 		explosion(target, light_impact_range = 2, flame_range = 3, flash_range = 4, explosion_cause = src)
 
 /** SRM-8 Missile - Used by the SRM-8 Exosuit missile rack.
-* Employed by Nuclear Operatives Maulers and Nanotrasen Marauders and Seraphs to kill everything and anyone.
+* Employed by Special Operatives Maulers and Nanotrasen Marauders and Seraphs to kill everything and anyone.
 *
 * Explodes when it hits literally anything.
 */

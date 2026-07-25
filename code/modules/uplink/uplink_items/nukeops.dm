@@ -1,4 +1,4 @@
-// Nuclear Operative Weapons and Ammunition
+// Special Operative Weapons and Ammunition
 
 /datum/uplink_category/weapon_kits
 	name = "Weapon Kits (Recommended)"
@@ -42,7 +42,7 @@
 
 // ~~ Weapon Categories ~~
 
-// Core Gear Box: This contains all the 'fundamental' equipment that most nuclear operatives probably should be buying. It isn't cheaper, but it is a quick and convenient method of acquiring all the gear necessary immediately.
+// Core Gear Box: This contains all the 'fundamental' equipment that most special operatives probably should be buying. It isn't cheaper, but it is a quick and convenient method of acquiring all the gear necessary immediately.
 // Only allows one purchase, and doesn't prevent the purchase of the contained items. Focused on newer players to help them understand what items they need to succeed, and to help older players quickly purchase the baseline gear they need.
 
 /datum/uplink_item/weapon_kits/core
@@ -428,7 +428,7 @@
 /datum/uplink_item/weapon_kits/high_cost/doublesword
 	name = "Double-Bladed plasma blade Case (Very Hard)"
 	desc = "A case containing a double-bladed plasma blade, anti-slip module, meth autoinjector, and a bar of soap. \
-		Some say the most infamous nuclear operatives utilized this combination of equipment to slaughter hundreds \
+		Some say the most infamous special operatives utilized this combination of equipment to slaughter hundreds \
 		of Nanotrasen employees. However, some also say this is an embellishment from the Tiger Co-operative. \
 		The soap did most of the work. Comes with a prisoner uniform so you fit the part."
 	item = /obj/item/storage/toolbox/guncase/doublesword
@@ -1040,7 +1040,7 @@
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
 // Hats
-// It is fundamental for the game's health for there to be a hat crate for nuclear operatives.
+// It is fundamental for the game's health for there to be a hat crate for special operatives.
 
 /datum/uplink_item/badass/hats
 	name = "Hat Crate"

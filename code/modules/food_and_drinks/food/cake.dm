@@ -293,7 +293,7 @@
 
 /obj/item/food/cake/birthday/energy
 	name = "energy cake"
-	desc = "Just enough calories for a whole nuclear operative squad."
+	desc = "Just enough calories for a whole special operative squad."
 	icon_state = "energycake"
 	force = 5
 	hitsound = 'sound/items/weapons/blade1.ogg'

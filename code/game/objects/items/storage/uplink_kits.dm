@@ -655,7 +655,7 @@
 
 /obj/item/storage/box/syndie_kit/core_gear
 	name = "core equipment box"
-	desc = "Contains all the necessary gear for success for any nuclear operative unsure of what is needed for success in the field. Everything here WILL help you."
+	desc = "Contains all the necessary gear for success for any special operative unsure of what is needed for success in the field. Everything here WILL help you."
 
 /obj/item/storage/box/syndie_kit/core_gear/PopulateContents()
 	new /obj/item/implanter/freedom (src)
@@ -771,13 +771,13 @@
 	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.
 
 /obj/item/implanter/induction_implant
-	name = "implanter (nuclear operative)"
+	name = "implanter (special operative)"
 	desc = "A sterile automatic implant injector. You can see a tiny, somehow legible sticker on the side: 'NOT A BRAINWASH DEVICE'"
 	imp_type = /obj/item/implant/nuclear_operative
 
 /obj/item/implant/nuclear_operative
-	name = "nuclear operative implant"
-	desc = "Registers you as a member of a Syndicate nuclear operative team."
+	name = "special operative implant"
+	desc = "Registers you as a member of a Syndicate special operative team."
 	implant_color = "r"
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
@@ -788,7 +788,7 @@
 
 	if(IS_NUKE_OP(human_target)) // this wont proc due to ..() but i guess its good as a just-in-case?
 		if(human_target == user)
-			to_chat(user, span_userdanger("You're already a nuclear operative, dumbass! The implant disintegrates within you! You feel sick..."))
+			to_chat(user, span_userdanger("You're already a special operative, dumbass! The implant disintegrates within you! You feel sick..."))
 			human_target.Stun(10 SECONDS)
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 10)
 			return FALSE
@@ -809,8 +809,8 @@
 	nuke_datum.nukeop_outfit = null
 	human_target.mind?.add_antag_datum(nuke_datum)
 	human_target.add_faction(ROLE_SYNDICATE)
-	to_chat(human_target, span_warning("You are now a nuclear operative. Your main objective, if you were an antagonist and willing, is presumably to assist the nuclear operative team and secure the disk."))
-	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the nuclear operatives."))
+	to_chat(human_target, span_warning("You are now a special operative. Your main objective, if you were an antagonist and willing, is presumably to assist the special operative team and secure the disk."))
+	to_chat(human_target, span_userdanger("This implant does NOT, in any way, brainwash you. If you were a normal crew member beforehand, forcibly implanted or otherwise, you are still one and cannot assist the special operatives."))
 	return TRUE
 
 /obj/item/implant/nuclear_operative/removed(mob/target, silent = FALSE, special = FALSE)
@@ -821,7 +821,7 @@
 	living_target.mind.remove_antag_datum(/datum/antagonist/nukeop)
 	living_target.remove_faction(ROLE_SYNDICATE)
 	to_chat(target, span_notice("You feel a little less nuclear."))
-	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
+	to_chat(target, span_userdanger("You're no longer identified as a special operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE
 
 /obj/item/storage/box/syndie_kit/poster_box

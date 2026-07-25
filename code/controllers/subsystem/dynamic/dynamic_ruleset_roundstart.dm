@@ -237,7 +237,7 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nukies
-	name = "Nuclear Operatives"
+	name = "Special Operatives"
 	config_tag = "Roundstart Nukeops"
 	preview_antag_datum = /datum/antagonist/nukeop
 	pref_flag = ROLE_OPERATIVE
