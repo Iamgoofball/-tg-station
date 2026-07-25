@@ -626,12 +626,39 @@
 	name = "felinid tongue"
 	desc = "A fleshy muscle mostly used for meowing. Or biting."
 	say_mod = "meows"
+	modifies_speech = TRUE
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
 	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	languages_native = list(/datum/language/nekomimetic)
 	actions_types = list(/datum/action/item_action/organ_action/go_feral)
 	var/feral_mode = FALSE
+
+/obj/item/organ/tongue/cat/modify_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*") // Don't modify emotes
+		// Randomly replace 'r' with 'w' and 'l' with 'w'
+		var/new_message = ""
+		for(var/i = 1 to length(message))
+			var/char = message[i]
+			if((char == "r" || char == "l") && prob(50))
+				new_message += "w"
+			else if((char == "R" || char == "L") && prob(50))
+				new_message += "W"
+			else
+				new_message += char
+		message = new_message
+
+		// Add owo-isms at random intervals between words
+		var/list/words = splittext(message, " ")
+		var/list/new_words = list()
+		for(var/i in 1 to length(words))
+			new_words += words[i]
+			if(i < length(words) && prob(20))
+				new_words += pick(":3", "owo", "uwu", "rawr", "nya~")
+		message = new_words.Join(" ")
+
+	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
 	. = ..()
