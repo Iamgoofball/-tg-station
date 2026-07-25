@@ -38,6 +38,17 @@
 	RegisterSignal(human_who_gained_species, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	return ..()
 
+/// Hewwo! Dis pwoc tweats anyfing da fewinid says and twansfowms it into da cutest wittwe owo-speak!
+/// It's wike... da mawgic of being a cat pewson, but fow youw wowds! :3
+///
+/// When a pwayew wiff dis species tawks, dis pwoc does da fowwowing vewy impowtant things:
+/// - Wepwaces aww 'w' and 'w' wiff 'w' (case-pwesewving, 'cause we'we powite wike dat nyah~)
+/// - Adds a cheeky " :3" at da end wiff about 15% chance (because sometimes u just gotta)
+/// - Thwows in a wandom owo-ism wike "nya~", "owo", "uwu", "wawr", ow "mwwp" wiff ~8% chance
+///
+/// Dis can make communication swightwy hawd fow othew pwayews, but it's pawt of da fwuff!
+/// It weinfowces the pewsonawity of being a fewinid and makes evewy intewaction a widdle moaw adowable. uvu
+/// If a pwayew doesn't wike it... dey can awways twy a diffewent species! >;3
 /datum/species/human/felinid/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
@@ -60,6 +71,10 @@
 		message += " " + pick("nya~", "owo", "uwu", "rawr", "mrrp")
 
 	speech_args[SPEECH_MESSAGE] = message
+
+/datum/species/human/felinid/on_species_loss(mob/living/carbon/human/human_who_lost_species, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(human_who_lost_species, COMSIG_MOB_SAY)
 
 /datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
 	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
