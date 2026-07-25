@@ -7158,4 +7158,7 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
+#include "interface\fonts\tiny_unicode.dm"
+#include "interface\fonts\vcr_osd_mono.dm"
+#include "code\modules\mob\living\simple_animal\pet\talking_dog.dm"
 // END_INCLUDE
