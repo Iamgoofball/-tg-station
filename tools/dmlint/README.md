@@ -89,6 +89,43 @@ class MyRule(BaseRule):
 
 Then register it in `rules/__init__.py` in the `ALL_RULES` list.
 
+## Sample Output
+
+Running on real DM files from the tgstation codebase:
+
+```bash
+# Scan the wiremod/datatypes directory (13 .dm files, all clean)
+$ python -m dmlint code/modules/wiremod/datatypes --exclude-rule style
+dmlint: scanning 13 .dm file(s) under 'code/modules/wiremod/datatypes'
+
+0 errors, 0 warnings, 0 info
+
+# Scan the wiremod/shell directory (19 .dm files, finds issues)
+$ python -m dmlint code/modules/wiremod/shell --exclude-rule style
+dmlint: scanning 19 .dm file(s) under 'code/modules/wiremod/shell'
+code/modules/wiremod/shell/implant.dm:11:4579: error: Unmatched closing ')' [brackets]
+code/modules/wiremod/shell/implant.dm:8:16: error: Unmatched double-quote on this line [quotes]
+code/modules/wiremod/shell/implant.dm:11:66: error: Unmatched double-quote on this line [quotes]
+
+3 errors, 0 warnings, 0 info
+
+# JSON output (CI-friendly)
+$ python -m dmlint code/modules/wiremod/shell --json --exclude-rule style
+[
+  {
+    "filename": "code/modules/wiremod/shell/implant.dm",
+    "line": 11,
+    "column": 4579,
+    "severity": "error",
+    "message": "Unmatched closing ')'",
+    "rule": "brackets"
+  },
+  ...
+]
+```
+
+> **Note:** The `--exclude-rule style` flag skips the style rule which flags hard tabs (tgstation uses tabs for indentation). If your project uses spaces, you can omit this flag.
+
 ## Testing
 
 ```bash
