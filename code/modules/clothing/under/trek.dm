@@ -28,7 +28,7 @@
 	inhand_icon_state = "r_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn
-	greyscale_colors = "#B72B2F"
+	greyscale_colors = "#808080"
 
 /obj/item/clothing/under/trek/medsci
 	name = "medsci uniform"
