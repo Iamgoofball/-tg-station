@@ -132,7 +132,7 @@
 #define WENDIGO_SCORE "Wendigos Killed"
 #define KINGGOAT_SCORE "King Goat Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
-#define THETHING_SCORE "The Thing Killed"
+#define CHANGELING_SCORE "Changeling Destroyed"
 
 // DB ID for hardcore random mode
 #define HARDCORE_RANDOM_SCORE "Hardcore Random Score"
