@@ -18,6 +18,12 @@ class SyntaxRule(BaseRule):
     description = "Validate DM syntax: type paths, proc definitions, statements"
 
     def check(self, tokens, lines, reporter, filename):
+        """Validate DreamMaker syntax constructs in the token stream.
+
+        Checks type path segments for invalid characters, detects
+        double-slash proc definitions, flags suspicious ``var/``
+        declarations, and reports unnecessary trailing semicolons.
+        """
         i = 0
         n = len(tokens)
 
@@ -86,6 +92,12 @@ class SyntaxRule(BaseRule):
 
     @staticmethod
     def _next_significant(tokens, start):
+        """Return the next meaningful token after the given index.
+
+        Skips over newlines, line comments, and block comment
+        markers to find the first significant token. Returns None
+        if no such token exists before end of stream.
+        """
         for t in tokens[start:]:
             if t.type not in (
                 TokenType.NEWLINE,
@@ -98,6 +110,12 @@ class SyntaxRule(BaseRule):
 
     @staticmethod
     def _prev_significant(tokens, end):
+        """Return the nearest meaningful token before the given index.
+
+        Scans backwards from the end position, skipping whitespace
+        and comment tokens. Returns the first significant token found
+        or None if none exist before the start of the stream.
+        """
         for t in reversed(tokens[:end]):
             if t.type not in (
                 TokenType.NEWLINE,
@@ -110,6 +128,12 @@ class SyntaxRule(BaseRule):
 
     @staticmethod
     def _is_valid_var_decl(token):
+        """Check whether a token is valid in a var declaration context.
+
+        Returns True for identifiers, type paths, and modifier keywords
+        (static, global, const, tmp) that can follow ``var/`` in a valid
+        DreamMaker variable declaration.
+        """
         return token.type in (
             TokenType.IDENTIFIER,
             TokenType.TYPE_PATH,

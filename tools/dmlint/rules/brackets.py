@@ -39,6 +39,12 @@ class BracketRule(BaseRule):
     }
 
     def check(self, tokens, lines, reporter, filename):
+        """Validate that all brackets are properly matched.
+
+        Uses a stack to pair opening and closing braces, parens,
+        and brackets. Reports mismatched pairs, unclosed openers,
+        and unmatched closing brackets with their source locations.
+        """
         stack: list[tuple[TokenType, Token]] = []
 
         for token in tokens:

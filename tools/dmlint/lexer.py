@@ -114,6 +114,11 @@ class Token:
     column: int
 
     def __repr__(self) -> str:
+        """Return a human-readable representation of this token.
+
+        Includes the token type name, its value, and source position
+        in line:column format for debugging and diagnostic output.
+        """
         return f"Token({self.type.name}, {self.value!r}, {self.line}:{self.column})"
 
 
@@ -225,10 +230,21 @@ class Lexer:
     """Tokenize DreamMaker source code."""
 
     def __init__(self) -> None:
+        """Initialize a new lexer with an empty token buffer.
+
+        Sets up the internal token list and position counter used
+        during tokenization and iteration over the token stream.
+        """
         self.tokens: list[Token] = []
         self._pos = 0
 
     def tokenize(self, source: str) -> list[Token]:
+        """Convert DreamMaker source text into a list of tokens.
+
+        Uses a single compiled regex to match tokens, tracking line
+        and column positions throughout. Returns the complete token
+        stream including an EOF sentinel at the end.
+        """
         self.tokens = []
         self._pos = 0
         line = 1
@@ -315,10 +331,21 @@ class Lexer:
         return self.tokens
 
     def __iter__(self):
+        """Return self as an iterator, resetting the position counter.
+
+        Allows the lexer to be used directly in for-loops and other
+        iteration contexts over the tokenized stream.
+        """
         self._pos = 0
         return self
 
     def __next__(self) -> Token:
+        """Return the next token from the stream.
+
+        Advances the internal position counter and returns the token
+        at that position. Raises StopIteration when the stream is
+        exhausted (all tokens have been consumed).
+        """
         if self._pos >= len(self.tokens):
             raise StopIteration
         token = self.tokens[self._pos]
@@ -326,6 +353,12 @@ class Lexer:
         return token
 
     def peek(self, offset: int = 0) -> Token | None:
+        """Look ahead in the token stream without consuming tokens.
+
+        Returns the token at the given offset from the current position,
+        or None if the offset falls beyond the end of the stream. Useful
+        for rules that need multi-token lookahead.
+        """
         idx = self._pos + offset
         if idx < len(self.tokens):
             return self.tokens[idx]

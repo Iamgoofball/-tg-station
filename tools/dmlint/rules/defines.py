@@ -18,6 +18,13 @@ class DefineRule(BaseRule):
     description = "Validate #define/#include/#ifdef/#endif preprocessor directives"
 
     def check(self, tokens, lines, reporter, filename):
+        """Validate preprocessor directive usage and pairing.
+
+        Tracks ``#define`` names to detect redefinitions, validates
+        ``#ifdef``/``#ifndef``/``#endif`` nesting, checks ``#undef``
+        targets exist, and warns about ``#include`` without a quoted
+        path argument.
+        """
         ifdef_stack: list[tuple[Token, str]] = []
         defines: dict[str, int] = {}
 
@@ -109,6 +116,12 @@ class DefineRule(BaseRule):
 
     @staticmethod
     def _next_significant(tokens, start):
+        """Find the next token that is not whitespace or a comment.
+
+        Skips over newlines, line comments, and block comment
+        delimiters to return the first meaningful token after
+        the given starting position. Returns None if none found.
+        """
         for t in tokens[start:]:
             if t.type not in (
                 TokenType.NEWLINE,

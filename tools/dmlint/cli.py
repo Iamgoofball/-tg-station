@@ -14,6 +14,12 @@ from .scanner import discover_dm_files, read_file_lines
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """Construct the argparse parser with all CLI options.
+
+    Defines positional and optional arguments for scanning paths,
+    output format selection, rule filtering, and verbosity control.
+    Returns a fully configured ArgumentParser ready for parsing.
+    """
     parser = argparse.ArgumentParser(
         prog="dmlint",
         description="Standalone linter for DreamMaker (.dm) source files",
@@ -55,6 +61,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Entry point for the dmlint command-line tool.
+
+    Parses arguments, discovers .dm files, instantiates rules, and
+    runs each rule against every file. Emits diagnostics in terminal
+    or JSON format and returns a non-zero exit code on errors.
+    """
     parser = build_parser()
     args = parser.parse_args(argv)
 

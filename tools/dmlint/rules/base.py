@@ -11,12 +11,20 @@ if TYPE_CHECKING:
 
 
 class BaseRule(abc.ABC):
-    """Abstract base for all lint rules."""
+    """Abstract base for all lint rules.
+
+    Subclasses must implement the ``check`` method, which receives
+    the full token list of a file and reports any issues found.
+    """
 
     name: str = "base"
     description: str = ""
 
     @abc.abstractmethod
     def check(self, tokens: list[Token], lines: list[str], reporter: Reporter, filename: str) -> None:
-        """Run this rule against tokenized source."""
+        """Run this rule against tokenized source.
+
+        Inspects the token stream and source lines for violations,
+        recording any diagnostics via the provided reporter instance.
+        """
         ...

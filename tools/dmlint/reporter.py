@@ -36,6 +36,12 @@ class Diagnostic:
         )
 
     def format_json(self) -> dict:
+        """Serialize this diagnostic as a JSON-compatible dictionary.
+
+        Converts all fields including severity enum value, line/column
+        positions, and optional rule/context metadata into a flat dict
+        suitable for JSON serialization in CI pipelines.
+        """
         return {
             "filename": self.filename,
             "line": self.line,
@@ -64,6 +70,12 @@ class Reporter:
         rule: str = "",
         context: str = "",
     ) -> None:
+        """Record a new diagnostic and update severity counters.
+
+        Creates a Diagnostic object from the given parameters, appends
+        it to the internal list, and increments the appropriate counter
+        (error, warning, or info) based on severity.
+        """
         diag = Diagnostic(
             filename=filename,
             line=line,
@@ -83,9 +95,21 @@ class Reporter:
             self.info_count += 1
 
     def has_errors(self) -> bool:
+        """Check whether any error-level diagnostics were recorded.
+
+        Returns True if at least one diagnostic with ERROR severity
+        was added, indicating the linter should exit with a non-zero
+        status code.
+        """
         return self.error_count > 0
 
     def emit_terminal(self) -> None:
+        """Print all diagnostics to stderr in GCC-style format.
+
+        Each diagnostic is printed on its own line with file, line,
+        column, severity, and message. A summary line with error,
+        warning, and info counts is appended at the end.
+        """
         for diag in self.diagnostics:
             print(diag.format_terminal(), file=sys.stderr)
         print(
@@ -96,4 +120,10 @@ class Reporter:
         )
 
     def emit_json(self) -> None:
+        """Print all diagnostics to stdout as a JSON array.
+
+        Serializes every recorded diagnostic into a JSON array of
+        objects with indentation for readability. Designed for
+        machine consumption in CI and automated tooling.
+        """
         print(json.dumps([d.format_json() for d in self.diagnostics], indent=2))

@@ -18,6 +18,12 @@ class CommentRule(BaseRule):
     description = "Validate block comment nesting and unclosed comments"
 
     def check(self, tokens, lines, reporter, filename):
+        """Check block comment nesting and detect unclosed comments.
+
+        Uses a depth counter to track nestable ``/* */`` blocks.
+        Reports unexpected ``*/`` tokens outside comments and flags
+        block comments that are left unclosed at end of file.
+        """
         comment_depth = 0
         comment_start: Token | None = None
 

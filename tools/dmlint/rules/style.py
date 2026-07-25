@@ -19,6 +19,13 @@ class StyleRule(BaseRule):
     MAX_LINE_LENGTH: int = 200
 
     def check(self, tokens, lines, reporter, filename):
+        """Inspect source lines for style convention violations.
+
+        Checks each line for trailing whitespace, mixed tabs/spaces,
+        hard-tab indentation, excessive line length, and empty brace
+        blocks. Issues are reported at appropriate severity levels
+        (warnings and info).
+        """
         for i, line in enumerate(lines, start=1):
             stripped = line.rstrip("\n")
 
