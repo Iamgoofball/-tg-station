@@ -9,17 +9,8 @@ import { InteractionType, type PaperContext, type PaperInput } from './types';
 
 // Overarching component that holds the primary view for papercode.
 export class PrimaryView extends Component {
-  // Reference that gets passed to the <Section> holding the main preview.
-  // Eventually gets filled with a reference to the section's scroll bar
-  // funtionality.
   scrollableRef: RefObject<HTMLDivElement | null>;
-
-  // The last recorded distance the scrollbar was from the bottom.
-  // Used to implement "text scrolls up instead of down" behaviour.
   lastDistanceFromBottom: number;
-
-  // Event handler for the onscroll event. Also gets passed to the <Section>
-  // holding the main preview. Updates lastDistanceFromBottom.
   onScrollHandler: (this: GlobalEventHandlers, ev: Event) => any;
 
   constructor(props) {
@@ -58,6 +49,9 @@ export class PrimaryView extends Component {
     );
 
     const [textAreaText, setTextAreaText] = useLocalState('textAreaText', '');
+    
+    // 新增：用來切換是否要玩 PuzzleScript Sokoban 遊戲
+    const [playingGame, setPlayingGame] = useLocalState('playingGame', false);
 
     const interactMode =
       held_item_details?.interaction_mode || InteractionType.reading;
@@ -71,27 +65,51 @@ export class PrimaryView extends Component {
       }, 0) || 0;
 
     const usedCharacters = dmCharacters + textAreaText.length;
-
     const tooManyCharacters = usedCharacters > max_length;
-
     const canEdit = interactMode === InteractionType.writing;
 
     return (
       <>
         <PaperSheetStamper scrollableRef={this.scrollableRef} />
         <Flex direction="column" fillPositionedParent>
-          <Flex.Item grow={3} basis={1}>
-            <PreviewView
-              key={`${raw_field_input?.length || 0}_${
-                raw_text_input?.length || 0
-              }`}
-              scrollableRef={this.scrollableRef}
-              handleOnScroll={this.onScrollHandler}
-              textArea={textAreaText}
-              canEdit={canEdit}
-            />
+          {/* 頂部控制列：加入切換 PuzzleScript 遊戲的按鈕 */}
+          <Flex.Item>
+            <Section fitted>
+              <Button
+                icon={playingGame ? 'file-alt' : 'gamepad'}
+                content={playingGame ? 'View Paper' : 'Play Sokoban (PuzzleScript)'}
+                onClick={() => setPlayingGame(!playingGame)}
+                fluid
+              />
+            </Section>
           </Flex.Item>
-          {canEdit && (
+
+          <Flex.Item grow={3} basis={1}>
+            {playingGame ? (
+              // 嵌入 PuzzleScript Sokoban 遊戲
+              <Section fill title="PuzzleScript - Sokoban">
+                <Box height="100%" width="100%">
+                  <iframe
+                    src="https://www.puzzlescript.net/play.html?p=sokoban"
+                    style={{ width: '100%', height: '100%', border: 'none' }}
+                    title="Sokoban PuzzleScript"
+                  />
+                </Box>
+              </Section>
+            ) : (
+              <PreviewView
+                key={`${raw_field_input?.length || 0}_${
+                  raw_text_input?.length || 0
+                }`}
+                scrollableRef={this.scrollableRef}
+                handleOnScroll={this.onScrollHandler}
+                textArea={textAreaText}
+                canEdit={canEdit}
+              />
+            )}
+          </Flex.Item>
+
+          {canEdit && !playingGame && (
             <Flex.Item shrink={1} height={`${TEXTAREA_INPUT_HEIGHT}px`}>
               <Section
                 title="Insert Text"

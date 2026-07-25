@@ -44,8 +44,8 @@
 
 /datum/glass_style/drinking_glass/thirteenloko
 	required_drink_type = /datum/reagent/consumable/ethanol/thirteenloko
-	name = "glass of Thirteen Loko"
-	desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
+	name = "glass of Thirteen Refresh"
+	desc = "This is a glass of Thirteen Refresh, it appears to be of the highest quality. The drink, not the glass."
 	icon_state = "thirteen_loko_glass"
 
 /datum/glass_style/drinking_glass/vodka

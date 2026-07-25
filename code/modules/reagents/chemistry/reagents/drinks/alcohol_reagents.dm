@@ -228,7 +228,7 @@
 		drinker.adjust_hallucinations(4 SECONDS * metabolization_ratio)
 
 /datum/reagent/consumable/ethanol/thirteenloko
-	name = "Thirteen Loko"
+	name = "Thirteen Refresh"
 	description = "A potent mixture of caffeine and alcohol."
 	color = "#102000" // rgb: 16, 32, 0
 	nutriment_factor = 1
