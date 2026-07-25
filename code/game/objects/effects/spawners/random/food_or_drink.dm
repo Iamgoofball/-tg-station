@@ -70,7 +70,7 @@
 		/obj/item/seeds/reishi = 5,
 		/obj/item/seeds/seedling = 5,
 		/obj/item/seeds/nettle/death = 1,
-		/obj/item/seeds/plump/walkingmushroom = 1,
+		/obj/item/seeds/capshroom/walkingmushroom = 1,
 		/obj/item/seeds/cannabis/anti = 1,
 		/obj/item/seeds/cannabis/death = 1,
 		/obj/item/seeds/cannabis/rainbow = 1,

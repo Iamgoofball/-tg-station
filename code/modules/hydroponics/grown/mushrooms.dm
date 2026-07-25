@@ -115,14 +115,14 @@
 	icon_state = "libertycap"
 	wine_power = 80
 
-// Plump Helmet
-/obj/item/seeds/plump
-	name = "plump-helmet mycelium pack"
-	desc = "This mycelium grows into helmets... maybe."
+// Cap Shroom (replaces former Plump Helmet from Dwarf Fortress)
+/obj/item/seeds/capshroom
+	name = "cap-shroom mycelium pack"
+	desc = "This mycelium grows into tasty cap-shaped mushrooms."
 	icon_state = "mycelium-plump"
-	species = "plump"
-	plantname = "Plump-Helmet Mushrooms"
-	product = /obj/item/food/grown/mushroom/plumphelmet
+	species = "capshroom"
+	plantname = "Cap-Shroom Mushrooms"
+	product = /obj/item/food/grown/mushroom/capshroom
 	maturation = 8
 	production = 1
 	yield = 4
@@ -130,19 +130,19 @@
 	growthstages = 3
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
-	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
+	mutatelist = list(/obj/item/seeds/capshroom/walkingmushroom)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	graft_gene = /datum/plant_gene/trait/plant_type/fungal_metabolism
 
-/obj/item/food/grown/mushroom/plumphelmet
-	seed = /obj/item/seeds/plump
-	name = "plump-helmet"
-	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
+/obj/item/food/grown/mushroom/capshroom
+	seed = /obj/item/seeds/capshroom
+	name = "cap-shroom"
+	desc = "<I>Fungus Capitatus</I>: A round, cap-shaped mushroom. Tastes earthy and delicious."
 	icon_state = "plumphelmet"
 	distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
 
-// Walking Mushroom
-/obj/item/seeds/plump/walkingmushroom
+// Walking Mushroom (mutates from cap-shroom)
+/obj/item/seeds/capshroom/walkingmushroom
 	name = "walking mushroom mycelium pack"
 	desc = "This mycelium will grow into huge stuff!"
 	icon_state = "mycelium-walkingmushroom"
@@ -161,9 +161,9 @@
 	graft_gene = /datum/plant_gene/trait/eyes
 
 /obj/item/food/grown/mushroom/walkingmushroom
-	seed = /obj/item/seeds/plump/walkingmushroom
+	seed = /obj/item/seeds/capshroom/walkingmushroom
 	name = "walking mushroom"
-	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
+	desc = "<I>Fungus Ambulatus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	can_distill = FALSE
 

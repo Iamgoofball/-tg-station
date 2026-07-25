@@ -183,7 +183,7 @@
 			/obj/item/food/grown/corn,
 			/obj/item/food/grown/cucumber,
 			/obj/item/food/grown/mushroom/chanterelle,
-			/obj/item/food/grown/mushroom/plumphelmet,
+			/obj/item/food/grown/mushroom/capshroom,
 			/obj/item/food/grown/potato,
 			/obj/item/food/grown/potato/sweet,
 			/obj/item/food/grown/soybeans,

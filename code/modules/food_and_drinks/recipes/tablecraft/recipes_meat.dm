@@ -69,7 +69,7 @@
 	name = "Tempeh starter"
 	reqs = list(
 		/obj/item/food/grown/soybeans = 5,
-		/obj/item/seeds/plump = 1
+		/obj/item/seeds/capshroom = 1
 	)
 	result = /obj/item/food/tempehstarter
 	added_foodtypes = GROSS

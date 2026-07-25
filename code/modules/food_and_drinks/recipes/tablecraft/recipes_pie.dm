@@ -92,13 +92,13 @@
 	dish_category = DISH_PIE
 	meal_category = MEAL_DESSERT
 
-/datum/crafting_recipe/food/plumppie
-	name = "Plump pie"
+/datum/crafting_recipe/food/capshroompie
+	name = "Cap-shroom pie"
 	reqs = list(
 		/obj/item/food/pie/plain = 1,
-		/obj/item/food/grown/mushroom/plumphelmet = 1
+		/obj/item/food/grown/mushroom/capshroom = 1
 	)
-	result = /obj/item/food/pie/plump_pie
+	result = /obj/item/food/pie/capshroom_pie
 	dish_category = DISH_PIE
 	meal_category = MEAL_DESSERT
 

@@ -179,8 +179,8 @@
 	impact_pain_mult = 10
 
 /obj/item/melee/energy/sword
-	name = "energy sword"
-	desc = "May the force be within you."
+	name = "energy blade"
+	desc = "A crackling blade of pure plasma energy. Handle with care."
 	icon_state = "e_sword"
 	base_icon_state = "e_sword"
 	inhand_icon_state = "e_sword"

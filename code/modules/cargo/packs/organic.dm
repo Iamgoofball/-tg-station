@@ -100,7 +100,7 @@
 		/obj/item/seeds/eggplant/eggy,
 		/obj/item/seeds/liberty,
 		/obj/item/seeds/nettle,
-		/obj/item/seeds/plump,
+		/obj/item/seeds/capshroom,
 		/obj/item/seeds/replicapod,
 		/obj/item/seeds/reishi,
 		/obj/item/seeds/rainbow_bunch,

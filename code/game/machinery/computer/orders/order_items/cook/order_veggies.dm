@@ -18,9 +18,9 @@
 	purchase_path = /obj/item/food/grown/eggplant
 
 /datum/orderable_item/veggies/mushroom
-	name = "Plump Helmet"
-	desc = "Plumus Hellmus: Plump, soft and s-so inviting~"
-	purchase_path = /obj/item/food/grown/mushroom/plumphelmet
+	name = "Cap-Shroom"
+	desc = "Fungus Capitatus: A round, cap-shaped mushroom. Tastes earthy and delicious.~"
+	purchase_path = /obj/item/food/grown/mushroom/capshroom
 
 /datum/orderable_item/veggies/cabbage
 	name = "Cabbage"

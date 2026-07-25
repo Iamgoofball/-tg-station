@@ -176,9 +176,9 @@
 	foodtypes = GRAIN|DAIRY|VEGETABLES|TOXIC|GROSS
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pie/plump_pie
-	name = "plump pie"
-	desc = "I bet you love stuff made out of plump helmets!"
+/obj/item/food/pie/capshroom_pie
+	name = "cap-shroom pie"
+	desc = "I bet you love stuff made out of cap-shrooms!"
 	icon_state = "plump_pie"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 11,
@@ -188,11 +188,11 @@
 	foodtypes = GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pie/plump_pie/Initialize(mapload)
+/obj/item/food/pie/capshroom_pie/Initialize(mapload)
 	var/fey = prob(10)
 	if(fey)
-		name = "exceptional plump pie"
-		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump pie!"
+		name = "exceptional cap-shroom pie"
+		desc = "Microwave is taken by a fey mood! It has cooked an exceptional cap-shroom pie!"
 		food_reagents = list(
 			/datum/reagent/consumable/nutriment = 11,
 			/datum/reagent/medicine/omnizine = 5,

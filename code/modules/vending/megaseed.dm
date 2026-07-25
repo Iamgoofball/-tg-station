@@ -90,7 +90,7 @@
 		/obj/item/seeds/glowshroom = 2,
 		/obj/item/seeds/liberty = 2,
 		/obj/item/seeds/nettle = 2,
-		/obj/item/seeds/plump = 2,
+		/obj/item/seeds/capshroom = 2,
 		/obj/item/seeds/reishi = 2,
 		/obj/item/seeds/cannabis = 3,
 		/obj/item/seeds/starthistle = 2,

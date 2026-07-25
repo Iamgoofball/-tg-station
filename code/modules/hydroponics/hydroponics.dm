@@ -713,7 +713,7 @@
 		if(6 to 7)
 			new_seed = new /obj/item/seeds/tower(src)
 		if(4 to 5)
-			new_seed = new /obj/item/seeds/plump(src)
+			new_seed = new /obj/item/seeds/capshroom(src)
 		else
 			new_seed = new /obj/item/seeds/starthistle(src)
 	set_seed(new_seed)
