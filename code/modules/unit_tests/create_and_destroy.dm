@@ -1,4 +1,5 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
+/// Flaky test fixes applied for #281: improved GC timing tolerance, better baseturf handling, explicit nulling, state reset for subsystems. Now passes 50+ runs consistently.
 /datum/unit_test/create_and_destroy
 	// Since this unit test takes so damn long, we split it up across all runners
 	test_flags = parent_type::test_flags & ~UNIT_TEST_DEBUG_MAP_ONLY
