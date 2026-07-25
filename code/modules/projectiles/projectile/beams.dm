@@ -132,6 +132,16 @@
 /obj/projectile/beam/weak/penetrator
 	armour_penetration = 50
 
+/obj/projectile/beam/weak/laser_2
+	name = "weak training laser"
+	desc = "A low-power laser beam, commonly used for target practice and reflective surface calibration."
+	damage = 8
+	ricochet_chance = 100
+	ricochets_max = 10
+	ricochet_decay_chance = 0.9
+	ricochet_decay_damage = 0.9
+	reflectable = TRUE
+
 /obj/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
