@@ -249,9 +249,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/plumphelmetbiscuit
-	name = "plump helmet biscuit"
-	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
+/obj/item/food/capshroombiscuit
+	name = "cap-shroom biscuit"
+	desc = "This is a finely-prepared cap-shroom biscuit. The ingredients are exceptionally minced cap-shroom, and well-minced dwarven wheat flour."
 	icon_state = "phelmbiscuit"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 6,
@@ -263,11 +263,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/plumphelmetbiscuit/Initialize(mapload)
+/obj/item/food/capshroombiscuit/Initialize(mapload)
 	var/fey = prob(10)
 	if(fey)
-		name = "exceptional plump helmet biscuit"
-		desc = "Microwave is taken by a fey mood! It has cooked an exceptional plump helmet biscuit!"
+		name = "exceptional cap-shroom biscuit"
+		desc = "Microwave is taken by a fey mood! It has cooked an exceptional cap-shroom biscuit!"
 		food_reagents = list(
 			/datum/reagent/medicine/omnizine = 5,
 			/datum/reagent/consumable/nutriment = 1,

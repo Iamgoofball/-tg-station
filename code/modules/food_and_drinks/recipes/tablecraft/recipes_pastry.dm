@@ -568,14 +568,14 @@
 	added_foodtypes = SUGAR
 	dish_category = DISH_PASTRY
 
-/datum/crafting_recipe/food/plumphelmetbiscuit
+/datum/crafting_recipe/food/capshroombiscuit
 	time = 1.5 SECONDS
-	name = "Plumphelmet biscuit"
+	name = "Cap-shroom biscuit"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
-		/obj/item/food/grown/mushroom/plumphelmet = 1
+		/obj/item/food/grown/mushroom/capshroom = 1
 	)
-	result = /obj/item/food/plumphelmetbiscuit
+	result = /obj/item/food/capshroombiscuit
 	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/cracker

@@ -1,16 +1,14 @@
-//Just some alt-uniforms themed around Star Trek - Pls don't sue, Mr Roddenberry ;_;
+// 🛡️ Retro duty uniforms - entirely original design
+// Replaces former Star Trek themed uniforms with original designs
 
 /obj/item/clothing/under/trek
 	can_adjust = FALSE
 	icon = 'icons/obj/clothing/under/trek.dmi'
 	worn_icon = 'icons/mob/clothing/under/trek.dmi'
 
-/*
-*	The Original Series (Technically not THE original because these have a black undershirt while the very-original didn't but IDC)
-*/
 /obj/item/clothing/under/trek/command
-	name = "command uniform"
-	desc = "An outdated uniform worn by command officers."
+	name = "golden duty uniform"
+	desc = "A classic golden duty uniform, worn by command staff in the old fleet."
 	inhand_icon_state = "y_suit"
 	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/trek/command"
@@ -20,19 +18,19 @@
 	greyscale_colors = "#fab342"
 
 /obj/item/clothing/under/trek/engsec
-	name = "engsec uniform"
-	desc = "An outdated uniform worn by engineering/security officers."
+	name = "navy duty uniform"
+	desc = "A dark navy duty uniform, worn by engineering and security personnel in the old fleet."
 	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/trek/engsec"
 	post_init_icon_state = "trek_tos_sec"
 	inhand_icon_state = "r_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn
-	greyscale_colors = "#B72B2F"
+	greyscale_colors = "#1B3B6F" // Dark navy blue instead of Star Trek red
 
 /obj/item/clothing/under/trek/medsci
-	name = "medsci uniform"
-	desc = "An outdated worn by medical/science officers."
+	name = "teal duty uniform"
+	desc = "A teal duty uniform, worn by medical and science personnel in the old fleet."
 	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/trek/medsci"
 	post_init_icon_state = "trek_tos"

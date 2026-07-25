@@ -379,11 +379,11 @@
 	list_reagents = list(/datum/reagent/consumable/spacemountainwind = 30)
 	drink_type = SUGAR | JUNKFOOD
 
-/obj/item/reagent_containers/cup/soda_cans/thirteenloko
-	name = "Thirteen Loko"
-	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
+/obj/item/reagent_containers/cup/soda_cans/krakenblast
+	name = "Kraken Blast"
+	desc = "The CMO has advised crew members that consumption of Kraken Blast may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
-	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30)
+	list_reagents = list(/datum/reagent/consumable/ethanol/krakenblast = 30)
 	drink_type = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/cup/soda_cans/dr_gibb

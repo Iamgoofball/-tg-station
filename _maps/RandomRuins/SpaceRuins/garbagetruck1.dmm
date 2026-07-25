@@ -492,7 +492,7 @@
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "xf" = (
 /obj/item/trash/tray,
-/obj/item/food/grown/mushroom/plumphelmet,
+/obj/item/food/grown/mushroom/capshroom,
 /obj/structure/closet/crate/trashcart,
 /mob/living/basic/mouse/rat,
 /turf/open/floor/plating/dumpsterair,

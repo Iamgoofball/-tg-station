@@ -166,7 +166,7 @@
 	name = "Mushroomy Stirfry"
 	reqs = list(
 		/obj/item/food/steeped_mushrooms = 1,
-		/obj/item/food/grown/mushroom/plumphelmet = 1,
+		/obj/item/food/grown/mushroom/capshroom = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1,
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)

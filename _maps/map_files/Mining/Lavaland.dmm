@@ -4223,7 +4223,7 @@
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
 "wr" = (
-/obj/item/seeds/plump,
+/obj/item/seeds/capshroom,
 /obj/machinery/hydroponics/soil,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)

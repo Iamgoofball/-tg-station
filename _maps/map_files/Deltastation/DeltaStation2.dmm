@@ -27736,7 +27736,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/reagent_containers/cup/soda_cans/thirteenloko{
+/obj/item/reagent_containers/cup/soda_cans/krakenblast{
 	pixel_x = -3;
 	pixel_y = 3
 	},

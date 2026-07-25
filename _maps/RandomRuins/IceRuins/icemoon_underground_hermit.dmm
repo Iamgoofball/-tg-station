@@ -131,8 +131,8 @@
 /turf/open/floor/plating,
 /area/ruin/powered/hermit)
 "Yi" = (
-/obj/item/seeds/plump,
-/obj/item/seeds/plump,
+/obj/item/seeds/capshroom,
+/obj/item/seeds/capshroom,
 /obj/item/seeds/tower,
 /obj/item/seeds/reishi,
 /obj/structure/table/wood,
