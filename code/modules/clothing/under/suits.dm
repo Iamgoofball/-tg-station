@@ -122,3 +122,4 @@
 	desc = "A brown suit, perfect for a suburban dad with a taste for the finer things in life."
 	icon_state = "brown_suit"
 	inhand_icon_state = "brown_suit"
+
