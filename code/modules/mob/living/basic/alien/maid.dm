@@ -1,5 +1,5 @@
 /mob/living/basic/alien/maid
-	name = "lusty xenomorph maid"
+	name = "lusty crawler maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	combat_mode = FALSE

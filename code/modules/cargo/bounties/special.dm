@@ -3,7 +3,7 @@
 
 /datum/bounty/item/special/alien_organs
 	name = "Alien Organs"
-	description = "Nanotrasen is interested in studying Xenomorph biology. Ship a set of organs to be thoroughly compensated."
+	description = "Nanotrasen is interested in studying Crawler biology. Ship a set of organs to be thoroughly compensated."
 	reward = CARGO_CRATE_VALUE * 50
 	required_count = 3
 	wanted_types = list(

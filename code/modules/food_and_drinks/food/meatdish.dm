@@ -519,7 +519,7 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 
 /obj/item/food/meatball/xeno
-	name = "xenomorph meatball"
+	name = "crawler meatball"
 	tastes = list("meat" = 1, "acid" = 1)
 
 /obj/item/food/meatball/chicken
@@ -556,7 +556,7 @@
 	patty_type = /obj/item/food/patty/bear
 
 /obj/item/food/raw_patty/xeno
-	name = "raw xenomorph patty"
+	name = "raw crawler patty"
 	tastes = list("meat" = 1, "acid" = 1)
 	patty_type = /obj/item/food/patty/xeno
 
@@ -591,7 +591,7 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 
 /obj/item/food/patty/xeno
-	name = "xenomorph patty"
+	name = "crawler patty"
 	tastes = list("meat" = 1, "acid" = 1)
 
 /obj/item/food/patty/chicken

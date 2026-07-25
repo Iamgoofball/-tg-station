@@ -602,12 +602,12 @@
 
 // Randomization keys for calling wabbajack with.
 // Note the contents of these keys are important, as they're displayed to the player
-// Ex: (You turn into a "monkey", You turn into a "xenomorph")
+// Ex: (You turn into a "monkey", You turn into a "crawler")
 #define WABBAJACK_MONKEY "monkey"
 #define WABBAJACK_ROBOT "robot"
 #define WABBAJACK_CLOWN "clown"
 #define WABBAJACK_SLIME "slime"
-#define WABBAJACK_XENO "xenomorph"
+#define WABBAJACK_XENO "crawler"
 #define WABBAJACK_HUMAN "humanoid"
 #define WABBAJACK_ANIMAL "animal"
 

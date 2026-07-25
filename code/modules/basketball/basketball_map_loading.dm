@@ -54,11 +54,11 @@
 	home_team_uniform = /datum/outfit/basketball/nanotrasen
 
 /datum/lazy_template/basketball/lusty_xenomorphs
-	name = "Lusty Xenomorphs Stadium"
-	description = "The homecourt of the Lusty Xenomorphs."
+	name = "Lusty Crawlers Stadium"
+	description = "The homecourt of the Lusty Crawlers."
 	map_name = "lusty_xenomorphs"
 	key = "lusty_xenomorphs"
-	team_name = "Lusty Xenomorphs"
+	team_name = "Lusty Crawlers"
 	home_team_uniform = /datum/outfit/basketball/lusty_xenomorphs
 
 /datum/lazy_template/basketball/space_surfers

@@ -19,7 +19,7 @@
 	icon_state = "petehat"
 
 /obj/item/clothing/head/collectable/xenom
-	name = "collectable xenomorph helmet!"
+	name = "collectable crawler helmet!"
 	desc = "Hiss hiss hiss!"
 	clothing_flags = SNUG_FIT
 	icon_state = "xenom"
