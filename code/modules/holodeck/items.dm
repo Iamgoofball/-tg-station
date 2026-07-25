@@ -8,7 +8,7 @@
 //
 
 /obj/item/melee/energy/sword/holographic
-	name = "holographic energy sword"
+	name = "holographic plasma blade"
 	desc = "May the force be with you. Sorta."
 	damtype = STAMINA
 	throw_speed = 2

@@ -234,7 +234,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/d_day_promo, 3
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/syndicate_pistol, 32)
 
 /obj/structure/sign/poster/contraband/energy_swords
-	name = "Energy Swords"
+	name = "plasma blades"
 	desc = "All the colors of the bloody murder rainbow."
 	icon_state = "energy_swords"
 

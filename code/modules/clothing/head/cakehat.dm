@@ -59,7 +59,7 @@
 
 /obj/item/clothing/head/utility/hardhat/cakehat/energycake
 	name = "energy cake"
-	desc = "You put the energy sword on your cake. Brilliant."
+	desc = "You put the plasma blade on your cake. Brilliant."
 	icon_state = "hardhat1_energycake"
 	inhand_icon_state = "hardhat0_energycake"
 	hat_type = "energycake"

@@ -44,8 +44,8 @@
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/dangerous/sword
-	name = "Energy Sword"
-	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
+	name = "plasma blade"
+	desc = "The plasma blade is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/energy/sword/saber
 	cost = 6
@@ -68,8 +68,8 @@
 	cost = 8
 
 /datum/uplink_item/dangerous/doublesword
-	name = "Double-Bladed Energy Sword"
-	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
+	name = "Double-Bladed plasma blade"
+	desc = "The double-bladed plasma blade does slightly more damage than a standard plasma blade and will deflect \
 			energy projectiles it blocks, but requires two hands to wield. It also struggles to protect you from tackles."
 	progression_minimum = 30 MINUTES
 	population_minimum = TRAITOR_POPULATION_LOWPOP

@@ -490,7 +490,7 @@
 				build_step--
 				swordamt = 0
 				icon_state = initial(icon_state)
-				to_chat(user, span_notice("You unbolt [src]'s energy swords."))
+				to_chat(user, span_notice("You unbolt [src]'s plasma blades."))
 				for(var/IS in 1 to swordamt)
 					new /obj/item/melee/energy/sword/saber(drop_loc)
 				return ITEM_INTERACT_SUCCESS
@@ -502,7 +502,7 @@
 				if(!user.temporarilyRemoveItemFromInventory(tool))
 					return ITEM_INTERACT_BLOCKING
 				created_name = "General Beepsky"
-				name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
+				name = "helmet/signaler/prox sensor/robot arm/plasma blade assembly"
 				icon_state = "grievous_assembly"
 				to_chat(user, span_notice("You bolt [tool] onto one of [src]'s arm slots."))
 				qdel(tool)

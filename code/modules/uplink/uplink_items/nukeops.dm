@@ -213,11 +213,11 @@
 	cost = 4
 	purchasable_from = UPLINK_SERIOUS_OPS
 
-// ~~ Energy Sword and Shield & CQC ~~
+// ~~ plasma blade and Shield & CQC ~~
 
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
-	desc = "A case containing an energy sword and energy shield. Paired together, it provides considerable defensive power without compromising lethal potency. \
+	desc = "A case containing an plasma blade and energy shield. Paired together, it provides considerable defensive power without compromising lethal potency. \
 		Perfect for the enterprising nuclear knight. Comes with a medieval helmet for your MODsuit!"
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
 
@@ -426,8 +426,8 @@
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
 /datum/uplink_item/weapon_kits/high_cost/doublesword
-	name = "Double-Bladed Energy Sword Case (Very Hard)"
-	desc = "A case containing a double-bladed energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
+	name = "Double-Bladed plasma blade Case (Very Hard)"
+	desc = "A case containing a double-bladed plasma blade, anti-slip module, meth autoinjector, and a bar of soap. \
 		Some say the most infamous nuclear operatives utilized this combination of equipment to slaughter hundreds \
 		of Nanotrasen employees. However, some also say this is an embellishment from the Tiger Co-operative. \
 		The soap did most of the work. Comes with a prisoner uniform so you fit the part."
@@ -631,7 +631,7 @@
 /datum/uplink_item/reinforcements/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
-		Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
+		Comes equipped with a self-resupplying LMG, a grenade launcher, plasma blade, emag, pinpointer, flash and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 
 /datum/uplink_item/reinforcements/medical_borg

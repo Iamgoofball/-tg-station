@@ -35,7 +35,7 @@
 /mob/living/basic/bot/secbot/grievous/proc/on_weapon_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 	if(active)
-		visible_message(span_warning("[src] ignites his energy swords!"))
+		visible_message(span_warning("[src] ignites his plasma blades!"))
 	sword_active = active
 	update_icon_state()
 
@@ -51,7 +51,7 @@
 	if(!sword_active || !prob(block_chance))
 		return NONE
 
-	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
+	visible_message(span_warning("[source] deflects [hitting_projectile] with its plasma blades!"))
 	playsound(source, 'sound/items/weapons/blade1.ogg', 50, TRUE)
 	return COMPONENT_BULLET_BLOCKED
 

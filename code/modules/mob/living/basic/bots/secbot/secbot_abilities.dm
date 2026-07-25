@@ -1,5 +1,5 @@
 /datum/action/cooldown/mob_cooldown/bot/sword
-	name = "Energy Sword"
+	name = "plasma blade"
 	desc = "Turn your sword off/on!"
 	button_icon = 'icons/obj/weapons/transforming_energy.dmi'
 	button_icon_state = "e_sword_on"

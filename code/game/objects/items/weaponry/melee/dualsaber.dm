@@ -1,8 +1,8 @@
 /*
- * Double-Bladed Energy Swords - Cheridan
+ * Double-Bladed plasma blades - Cheridan
  */
 /obj/item/dualsaber
-	name = "double-bladed energy sword"
+	name = "double-bladed plasma blade"
 	desc = "Handle with care."
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	icon_state = "dualsaber0"

@@ -173,13 +173,13 @@
 	user.visible_message(span_suicide("[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS|FIRELOSS)
 
-/// Energy swords.
+/// plasma blades.
 /datum/embedding/esword
 	embed_chance = 75
 	impact_pain_mult = 10
 
 /obj/item/melee/energy/sword
-	name = "energy sword"
+	name = "plasma blade"
 	desc = "May the force be within you."
 	icon_state = "e_sword"
 	base_icon_state = "e_sword"
@@ -219,7 +219,7 @@
 
 	return ..()
 
-// The colored energy swords we all know and love.
+// The colored plasma blades we all know and love.
 /obj/item/melee/energy/sword/saber
 	/// Assoc list of all possible saber colors to color define. If you add a new color, make sure to update /obj/item/toy/sword too!
 	var/list/possible_sword_colors = list(
@@ -281,7 +281,7 @@
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/melee/energy/sword/saber/cyborg
-	name = "cyborg energy sword"
+	name = "cyborg plasma blade"
 	hacked = TRUE
 	sword_color_icon = "rainbow"
 	/// The cell cost of hitting something.
@@ -339,7 +339,7 @@
 	. = ..()
 	AddElement(/datum/element/cuffable_item) //closed sword guard
 
-/// Energy blades, which are effectively perma-extended energy swords
+/// Energy blades, which are effectively perma-extended plasma blades
 /obj/item/melee/energy/blade
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
@@ -389,7 +389,7 @@
 	icon_angle = 0
 
 /obj/item/melee/energy/sword/surplus
-	name = "\improper Pattern I 'Iaito' energy sword"
+	name = "\improper Pattern I 'Iaito' plasma blade"
 	desc = "Oversized, overengineered, and somehow still mass-produced. The twin energy blades, theoretically, help make up for the poor cutting plane the emitter generates. \
 		When there are no more heroes in a desperate struggle, it's kill or be killed."
 	icon_state = "surplus_e_sword"
@@ -423,14 +423,14 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, PROC_REF(check_power))
 	AddElement(/datum/element/examine_lore, \
-		lore = "This early iteration of the now infamous energy sword was, supposedly, a Waffle Corp prototype first trialed in a variety of armed conflicts \
+		lore = "This early iteration of the now infamous plasma blade was, supposedly, a Waffle Corp prototype first trialed in a variety of armed conflicts \
 		around the interstellar frontier.<br>\
 		<br>\
 		Unfortunately, the success rate of the platform, along with the survival rate of its users, was abysmally low. \
 		To make matters worse, initial overestimation of its effectiveness meant that by the time its myriad flaws reared their heads, production had already \
 		reached such a level that the company behind its manufacture would have to pay more to properly disassemble and dispose of the swords, \
 		than if they started offloading them onto markets of various legitimacy to try and recoup costs. Thus, the Iaito was 'born'.<br><br>\
-		As a consequence of its haphazard proliferation and its low market price compared to later, improved energy sword models, examples of the Iaito are \
+		As a consequence of its haphazard proliferation and its low market price compared to later, improved plasma blade models, examples of the Iaito are \
 		typically found in the hands of various grunts, mooks, goons, criminals, wannabe assassins, lunatics, or those otherwise embroiled in \
 		a desperate struggle. If you're actually trying to kill someone with this sword, you may or may not fit into one or more of those categories." \
 	)
@@ -558,7 +558,7 @@
 // Null rod variants
 
 /obj/item/melee/energy/sword/nullrod
-	name = "light energy sword"
+	name = "light plasma blade"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
 	throw_speed = 3
 	throw_range = 4
@@ -588,7 +588,7 @@
 	return ..()
 
 /obj/item/melee/energy/sword/nullrod/red
-	name = "dark energy sword"
+	name = "dark plasma blade"
 	desc = "Woefully ineffective when used on steep terrain."
 	sword_color_icon = "red"
 	light_color = COLOR_SOFT_RED

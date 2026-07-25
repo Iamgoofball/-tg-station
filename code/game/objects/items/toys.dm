@@ -590,7 +590,7 @@
  */
 /obj/item/toy/sword
 	name = "toy sword"
-	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
+	desc = "A cheap, plastic replica of an plasma blade. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
 	inhand_icon_state = "e_sword"
 	icon_angle = -45
@@ -603,7 +603,7 @@
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.1, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1)
 	/// Whether our sword has been multitooled to rainbow
 	var/hacked = FALSE
-	/// The color of our fake energy sword
+	/// The color of our fake plasma blade
 	var/saber_color = "blue"
 
 /obj/item/toy/sword/Initialize(mapload)
@@ -781,11 +781,11 @@
 	animate(src, transform = matrix())
 
 /*
- * Subtype of Double-Bladed Energy Swords
+ * Subtype of Double-Bladed plasma blades
  */
 /obj/item/dualsaber/toy
 	name = "double-bladed toy sword"
-	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
+	desc = "A cheap, plastic replica of TWO plasma blades.  Double the fun!"
 	force = 0
 	throwforce = 0
 	throw_speed = 3

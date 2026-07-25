@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	rods[/obj/item/storage/belt/sheath/hanzo_katana] = "A sharp katana which provides a low chance of blocking incoming melee attacks. Can be worn on the back or belt, wearing the sheath on belt allows for a swift counterattack."
 
 	for(var/obj/item/melee/energy/sword/nullrod/energy_nullrod_type as anything in typesof(/obj/item/melee/energy/sword/nullrod))
-		rods[energy_nullrod_type] = "An energy sword, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
+		rods[energy_nullrod_type] = "An plasma blade, but with a lower force, no armour penetration and a low chance of blocking. Can be switched on and off. \
 			Can be stored away easily while off, but impossible while on."
 
 	return rods

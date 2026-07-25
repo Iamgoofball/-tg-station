@@ -21,8 +21,8 @@
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/weapon_kits/clownsword
-	name = "Bananium Energy Sword"
-	desc = "An energy sword that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
+	name = "Bananium plasma blade"
+	desc = "An plasma blade that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
 		impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
 	item = /obj/item/melee/energy/sword/bananium
 	cost = 3
