@@ -54,6 +54,6 @@
 	database_id = WENDIGO_SCORE
 
 /datum/award/score/thething_score
-	name = "The Thing Killed"
+	name = "Changeling Destroyed"
 	desc = "You've killed HOW many?"
 	database_id = THETHING_SCORE
