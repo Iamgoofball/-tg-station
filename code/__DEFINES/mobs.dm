@@ -220,6 +220,7 @@
 #define SPECIES_PLASMAMAN "plasmaman"
 #define SPECIES_PODPERSON "pod"
 #define SPECIES_SHADOW "shadow"
+#define SPECIES_SHRIMP "shrimp"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
 #define SPECIES_VAMPIRE "vampire"
