@@ -547,7 +547,7 @@
 // Ethereal Pizza, for when they want a slice
 /obj/item/food/pizza/energy
 	name = "energy pizza"
-	desc = "You could probably power a RIPLEY with this. You should avoid eating this if you aren't an Ethereal."
+	desc = "You could probably power a LOADER with this. You should avoid eating this if you aren't an Ethereal."
 	icon_state ="energypizza"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 18,
