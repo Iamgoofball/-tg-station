@@ -205,3 +205,13 @@
 	if(prob(20))
 		message = "OwO " + message
 	return ..(message)
+/datum/species/human/felinid/handle_speech(message)
+	message = replacetext(message, "r", "w")
+	message = replacetext(message, "R", "W")
+	message = replacetext(message, "l", "w")
+	message = replacetext(message, "L", "W")
+	if(prob(30))
+		message += " :3"
+	if(prob(20))
+		message = "OwO " + message
+	return ..(message)
