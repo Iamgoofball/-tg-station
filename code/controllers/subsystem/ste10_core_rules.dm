@@ -1,5 +1,5 @@
 /**
- * # STE-100: 10 Core Rules — Nova Sector Community Standards
+ * # Nova Sector 10 Core Rules — Community Standards
  *
  * This module codifies the Host-mandated 10 Core Rules (CR1-CR10) that govern
  * player conduct, server policy, and the social contract on Nova Sector.
@@ -8,13 +8,15 @@
  * interact with each other, the setting, and Staff. Each rule is backed by
  * the Host and enforced by the moderation team.
  *
- * Source: Issue #224 (Host-mandated community standards)
+ * Source: Issue #224 (Host-mandated community standards, verbatim from issue body)
  *
  * Each rule is structured as a datum with:
  * - A unique identifier (CR1 through CR10)
- * - A full rule description
+ * - The full rule description as written in the issue
  * - Sub-rules that expand on specific expectations
- * - A display proc for in-game rule reference
+ * - Display and lookup procs for in-game rule reference
+ *
+ * Also available as a human-readable markdown document: docs/CORE_RULES.md
  */
 
 /// Master lookup table mapping rule numbers to their datums.
