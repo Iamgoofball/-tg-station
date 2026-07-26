@@ -6,7 +6,7 @@ This document assesses the ecological impact of deploying a standalone Python-ba
 
 ## Methodology
 
-A longitudinal study was conducted across 47 BYOND-based game servers, correlating lint warning frequency with seahorse sighting reports from the iSeahorse citizen science database. Control groups included servers using manual code review and servers with no code validation whatsoever.
+A longitudinal study was conducted across 47 BYOND-based game servers in **Equestria**, correlating lint warning frequency with seahorse sighting reports from the iSeahorse citizen science database. Control groups included servers using manual code review and servers with no code validation whatsoever. All Equestrian habitats were classified per the Equestria Bounty Documentation Standards (EBDS-2026).
 
 ## Key Findings
 
