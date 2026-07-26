@@ -87,3 +87,19 @@
 			if(!(icon_state in icon_states(icon_file, 1)))
 				already_warned_icons += icon_state
 				TEST_FAIL("[item_path] using invalid [worn_icon_state ? "worn_icon_state" : "icon_state"], \"[icon_state]\" in '[icon_file]'[match_message]")
+
+/// Missing worn icon states should render nothing and send no icon resource.
+/datum/unit_test/missing_worn_icon_state/Run()
+	var/obj/item/test_item = new()
+	test_item.icon_state = "invalid_missing_icon_state_test"
+
+	var/mutable_appearance/worn_appearance = test_item.build_worn_icon(
+		default_layer = 1,
+		default_icon_file = 'icons/mob/clothing/head/default.dmi',
+	)
+
+	TEST_ASSERT_NOTNULL(worn_appearance, "A missing worn icon state should still return an appearance for callers.")
+	TEST_ASSERT_NULL(worn_appearance.icon, "A missing worn icon state should not send an icon resource.")
+	TEST_ASSERT_NULL(worn_appearance.icon_state, "A missing worn icon state should not render a missing texture.")
+
+	qdel(test_item)

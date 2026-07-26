@@ -593,6 +593,11 @@ generate/load female uniform sprites matching all previously decided variables
 	//Find a valid layer from variables+arguments
 	var/layer2use = alternate_worn_layer || default_layer
 
+	// A blank appearance keeps callers safe while preventing BYOND from sending
+	// a missing-texture icon resource to clients.
+	if(!icon_exists(file2use, t_state))
+		return mutable_appearance(layer = -layer2use)
+
 	var/mutable_appearance/draw_target // MA of the item itself, not the final result
 	var/icon/building_icon // used to construct an icon across multiple procs before converting it to MA
 	if(female_uniform)
