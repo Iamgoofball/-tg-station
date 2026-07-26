@@ -35,9 +35,38 @@
 	// Swapping out feline ears for normal ol' human ears if they have invisible cat ears.
 	if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
 		mutantears = /obj/item/organ/ears
+		RegisterSignal(human_who_gained_species, COMSIG_MOB_SAY, PROC_REF(handle_owospeak))
 	return ..()
 
-/datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
+/datum/species/human/felinid/get_hiss_sound(mob/
+/datum/species/human/felinid/on_species_loss(mob/living/carbon/human/lost_felinid, datum/species/new_species, pref_load, ...)
+    . = ..()
+    UnregisterSignal(lost_felinid, COMSIG_MOB_SAY)
+
+/// Applies owospeak to felinid speech per bounty #267.
+/// Replaces r/l with w, common words with kawaii forms, and randomly
+/// appends owo-isms (:3, >w<, OwO, UwU, rawr~) to messages.
+/datum/species/human/felinid/proc/handle_owospeak(datum/source, list/speech_args)
+    SIGNAL_HANDLER
+    var/message = speech_args[SPEECH_MESSAGE]
+    if(!message || message[1] == "*")
+        return
+    // Classic owo letter substitutions (case-sensitive)
+    var/list/owo_replacements = list(
+        "r" = "w", "l" = "w", "R" = "W", "L" = "W",
+        "happy" = "happeh", "love" = "wuv", "cute" = "kawaii",
+        "meow" = "nyaa", "cat" = "kitteh", "kitty" = "kitteh",
+        "no" = "nu", "yes" = "yesh", "the" = "teh", "you" = "u",
+    )
+    for(var/old_text in owo_replacements)
+        message = replacetextEx(message, old_text, owo_replacements[old_text])
+    // Random owo-isms at the end (30% chance per message)
+    if(prob(30))
+        var/list/owo_suffixes = list(" :3", " >w<", " OwO", " UwU", " rawr~")
+        message += pick(owo_suffixes)
+    speech_args[SPEECH_MESSAGE] = message
+
+living/carbon/human/felinid)
 	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
 
 /proc/mass_purrbation()
