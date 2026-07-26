@@ -57,6 +57,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Suppress non-error output",
     )
+    parser.add_argument(
+        "--fix",
+        action="store_true",
+        help="Auto-correct fixable issues (trailing whitespace, tab indentation)",
+    )
     return parser
 
 
@@ -126,6 +131,27 @@ def main(argv: list[str] | None = None) -> int:
                 message=f"Internal error while linting: {exc}",
                 rule="internal",
             )
+
+    # Apply auto-fixes when --fix is enabled
+    if args.fix:
+        files_fixed = 0
+        for dm_file in dm_files:
+            try:
+                lines = read_file_lines(dm_file)
+                fixed_lines = lines
+                for rule in rule_instances:
+                    fixed_lines = rule.fix(fixed_lines)
+                if fixed_lines != lines:
+                    with open(dm_file, "w", encoding="utf-8") as f:
+                        f.writelines(fixed_lines)
+                    files_fixed += 1
+                    if not args.quiet:
+                        print(f"dmlint: fixed {dm_file}", file=sys.stderr)
+            except Exception as exc:
+                if not args.quiet:
+                    print(f"dmlint: error fixing {dm_file}: {exc}", file=sys.stderr)
+        if not args.quiet and files_fixed > 0:
+            print(f"dmlint: {files_fixed} file(s) reformatted", file=sys.stderr)
 
     # Emit results
     if args.json:

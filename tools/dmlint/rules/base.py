@@ -28,3 +28,18 @@ class BaseRule(abc.ABC):
         recording any diagnostics via the provided reporter instance.
         """
         ...
+
+    def fix(self, lines: list[str]) -> list[str]:
+        """Apply auto-fixes to source lines (optional override).
+
+        Returns a modified copy of the lines with any auto-correctable
+        issues resolved. The default implementation returns lines unchanged.
+        Subclasses that support auto-fix should override this method.
+
+        Args:
+            lines: The source file lines (with trailing newlines preserved).
+
+        Returns:
+            A new list of lines with fixes applied.
+        """
+        return lines

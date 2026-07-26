@@ -17,6 +17,7 @@ class StyleRule(BaseRule):
     description = "Check code style: indentation, line length, trailing whitespace"
 
     MAX_LINE_LENGTH: int = 200
+    TAB_WIDTH: int = 4
 
     def check(self, tokens, lines, reporter, filename):
         """Inspect source lines for style convention violations.
@@ -83,3 +84,36 @@ class StyleRule(BaseRule):
                     message="Empty block — consider adding a comment or removing",
                     rule=self.name + "/empty-block",
                 )
+
+    def fix(self, lines: list[str]) -> list[str]:
+        """Apply auto-fixes: strip trailing whitespace and convert tabs to spaces.
+
+        Processes each line to remove trailing whitespace characters and
+        replaces leading hard-tab characters with spaces (4 spaces per tab).
+        Tab characters in the middle of lines (after non-whitespace content)
+        are left unchanged to avoid breaking aligned content.
+
+        Args:
+            lines: The source file lines (with trailing newlines preserved).
+
+        Returns:
+            A new list of lines with style fixes applied.
+        """
+        fixed: list[str] = []
+        for line in lines:
+            # Strip trailing whitespace (preserve trailing newline if present)
+            had_newline = line.endswith("\n")
+            stripped = line.rstrip("\n").rstrip(" \t")
+            if had_newline:
+                stripped += "\n"
+
+            # Convert leading tabs to spaces
+            leading = ""
+            rest = stripped
+            while rest.startswith("\t"):
+                leading += " " * self.TAB_WIDTH
+                rest = rest[1:]
+            # Preserve the newline at end if present
+            fixed.append(leading + rest)
+
+        return fixed

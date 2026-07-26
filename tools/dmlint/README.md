@@ -21,6 +21,9 @@ python -m dmlint code/ --rule brackets --rule defines
 
 # Exclude noisy rules
 python -m dmlint code/ --exclude-rule style
+
+# Auto-fix style issues (trailing whitespace, tabs → spaces)
+python -m dmlint code/ --fix --exclude-rule style
 ```
 
 ## Features
@@ -30,6 +33,7 @@ python -m dmlint code/ --exclude-rule style
 - **Machine-parseable output**: GCC-style terminal output or JSON
 - **Non-zero exit on errors**: CI-ready
 - **Modular rules**: Easy to add, remove, or disable individual lint rules
+- **Auto-fix mode**: Corrects trailing whitespace and converts tabs to spaces with `--fix`
 - **No external dependencies**: Zero install beyond Python stdlib
 
 ## Rules
@@ -125,6 +129,39 @@ $ python -m dmlint code/modules/wiremod/shell --json --exclude-rule style
 ```
 
 > **Note:** The `--exclude-rule style` flag skips the style rule which flags hard tabs (tgstation uses tabs for indentation). If your project uses spaces, you can omit this flag.
+
+## Auto-Fix / Formatting
+
+dmlint can automatically correct fixable style issues with the `--fix` flag:
+
+```bash
+# Check for style issues first
+$ python -m dmlint dmlint/fixtures/
+dmlint/fixtures/unformatted_sample.dm:5:20: warning: Trailing whitespace [style/trailing-whitespace]
+dmlint/fixtures/unformatted_sample.dm:5:1: info: Line indented with hard tab (prefer spaces) [style/tab-indent]
+... (14 warnings, 29 info across 2 files)
+0 errors, 14 warnings, 29 info
+
+# Auto-fix in-place
+$ python -m dmlint dmlint/fixtures/ --fix
+dmlint: scanning 2 .dm file(s) under 'dmlint/fixtures'
+dmlint: fixed dmlint/fixtures/tab_indented.dm
+dmlint: fixed dmlint/fixtures/unformatted_sample.dm
+dmlint: 2 file(s) reformatted
+
+# Verify: zero issues after formatting
+$ python -m dmlint dmlint/fixtures/
+0 errors, 0 warnings, 0 info
+```
+
+**What `--fix` corrects:**
+- Trailing whitespace (stripped from every line)
+- Tab indentation (converted to 4-space indentation)
+- Mixed tabs/spaces (standardized to spaces)
+
+Sample fixture files demonstrating before/after formatting are in `dmlint/fixtures/`.
+
+**Extending auto-fix:** Rules can override the `fix()` method on `BaseRule` to provide custom auto-correction logic. The `StyleRule` implementation serves as a reference.
 
 ## Testing
 

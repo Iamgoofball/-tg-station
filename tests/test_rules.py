@@ -145,6 +145,37 @@ class TestStyleRule:
         r = _check(StyleRule, "var/x = 1\n")
         assert r.warning_count == 0
 
+    def test_fix_trailing_whitespace(self):
+        """fix() should strip trailing whitespace from all lines."""
+        lines = ["var/x = 1   \n", "    return  \n"]
+        rule = StyleRule()
+        fixed = rule.fix(lines)
+        assert fixed[0] == "var/x = 1\n"
+        assert fixed[1] == "    return\n"
+
+    def test_fix_tab_to_spaces(self):
+        """fix() should convert leading tabs to 4-space indentation."""
+        lines = ["\tvar/x = 1\n", "\t\treturn\n"]
+        rule = StyleRule()
+        fixed = rule.fix(lines)
+        assert fixed[0] == "    var/x = 1\n"
+        assert fixed[1] == "        return\n"
+
+    def test_fix_preserves_newlines(self):
+        """fix() should preserve trailing newlines on all lines."""
+        lines = ["line1\n", "line2\n"]
+        rule = StyleRule()
+        fixed = rule.fix(lines)
+        assert fixed[0].endswith("\n")
+        assert fixed[1].endswith("\n")
+
+    def test_fix_noop_on_clean(self):
+        """fix() should return unchanged lines when there's nothing to fix."""
+        lines = ["clean line\n", "    indented correctly\n"]
+        rule = StyleRule()
+        fixed = rule.fix(lines)
+        assert fixed == lines
+
 
 class TestSyntaxRule:
     def test_valid_type_path(self):
