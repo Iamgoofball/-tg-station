@@ -116,7 +116,7 @@
 	var/target_radius = 5
 	/// The maximum number of bounces the beam will go before stopping.
 	var/max_beam_bounces = 1
-	/// Who's our initial beam target?. Set in before cast, used in cast.
+	/// Who's our initial beam target? Set in before cast, used in cast.
 	var/atom/initial_target
 
 /datum/action/cooldown/spell/charged/beam/Destroy()

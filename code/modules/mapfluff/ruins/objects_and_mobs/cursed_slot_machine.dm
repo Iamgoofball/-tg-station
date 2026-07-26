@@ -20,7 +20,7 @@
 	var/status_effect_on_roll = TRUE
 	/// Length of the cooldown between the machine being used and being able to spin the machine again.
 	var/cooldown_length = 15 SECONDS
-	/// Are we currently in use?. Anti-spam prevention measure.
+	/// Are we currently in use? Anti-spam prevention measure.
 	var/in_use = FALSE
 	/// Cooldown between pulls of the cursed slot machine.
 	COOLDOWN_DECLARE(spin_cooldown)

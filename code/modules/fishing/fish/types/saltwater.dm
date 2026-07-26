@@ -255,7 +255,7 @@
 /obj/item/fish/squid/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points [src]'s ink glands at their face and presses INCREDIBLY hard! It looks like [user.p_theyre()] trying to commit squidcide!"))
 
-	// No head?. Bozo.
+	// No head? Bozo.
 	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		user.visible_message(span_suicide("[user] has no head! The ink goes flying by!"))

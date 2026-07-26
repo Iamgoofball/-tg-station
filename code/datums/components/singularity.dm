@@ -33,7 +33,7 @@
 	/// How big is the singularity?
 	var/singularity_size
 
-	/// Should we disregard the possibility of failed movements?. Used by stage five singularities
+	/// Should we disregard the possibility of failed movements? Used by stage five singularities
 	var/disregard_failed_movements
 
 	/// Can this singularity be BSA'd?
@@ -175,7 +175,7 @@
 
 	consume(source, user)
 
-// Will there be an impact?. Who knows.. Will we see it?. No.
+// Will there be an impact? Who knows.. Will we see it? No.
 /datum/component/singularity/proc/consume_bullets(datum/source, obj/projectile/projectile)
 	SIGNAL_HANDLER
 

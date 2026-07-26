@@ -160,7 +160,7 @@
 	tick_interval = 0.6 SECONDS
 	/// How much fire / stam to do per tick (stamina damage is doubled this)
 	var/tick_damage = 1
-	/// How long does the animation of the appearance last?. If 0 or negative, we make no overlay
+	/// How long does the animation of the appearance last? If 0 or negative, we make no overlay
 	var/animate_duration = 0.75 SECONDS
 
 /datum/status_effect/fire_blasted/on_creation(mob/living/new_owner, animate_duration = -1, tick_damage = 1)

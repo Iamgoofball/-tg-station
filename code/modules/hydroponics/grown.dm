@@ -41,7 +41,7 @@
 	var/filling_color
 	/// If the grown food has an alternative icon state to use in places.
 	var/alt_icon
-	/// Should we pixel offset ourselves at init?. for mapping
+	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
 
 /obj/item/food/grown/New(loc, obj/item/seeds/new_seed)

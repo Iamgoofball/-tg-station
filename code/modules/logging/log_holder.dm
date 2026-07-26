@@ -219,7 +219,7 @@ ADMIN_VERB(log_viewer_new, R_ADMIN, "View Round Logs", "View the rounds logs.", 
 /// Sets up the given category's file and header.
 /datum/log_holder/proc/init_category_file(datum/log_category/category)
 	var/file_path = category.get_output_file(null)
-	if(fexists(file_path)) // already exists?. implant a reset marker
+	if(fexists(file_path)) // already exists? implant a reset marker
 		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path)
 		fcopy(file_path, get_recovery_file_for(file_path))
 	rustg_file_write("[json_encode(category.category_header)]\n", file_path)

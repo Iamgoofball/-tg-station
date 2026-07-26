@@ -16,7 +16,7 @@
 	isSecure - 1 if there some form of shielding in front of the airlock wires.
 */
 
-/// Overlay cache.. Why isn't this just in /obj/machinery/door/airlock?. Because its used just a
+/// Overlay cache.. Why isn't this just in /obj/machinery/door/airlock? Because its used just a
 /// tiny bit in door_assembly.dm Refactored so you don't have to make a null copy of airlock
 /// to get to the damn thing
 /// Someone, for the love of god, profile this.. Is there a reason to cache mutable_appearance

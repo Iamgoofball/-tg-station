@@ -80,11 +80,11 @@ SUBSYSTEM_DEF(vote)
 
 	// Now we should determine who actually won the vote.
 	var/final_winner
-	// 1 winner?. That's the winning option
+	// 1 winner? That's the winning option
 	if(length(winners) == 1)
 		final_winner = winners[1]
 
-	// More than 1 winner?. Tiebreaker between all the winners
+	// More than 1 winner? Tiebreaker between all the winners
 	else if(length(winners) > 1)
 		final_winner = current_vote.tiebreaker(winners)
 
@@ -200,13 +200,13 @@ SUBSYSTEM_DEF(vote)
 		if(!to_vote)
 			stack_trace("Voting initiate_vote was passed an invalid vote type. (Got: [vote_type || "null"])")
 
-	// No valid vote found?. No vote
+	// No valid vote found? No vote
 	if(!istype(to_vote))
 		if(vote_initiator)
 			to_chat(vote_initiator, span_warning("Invalid voting choice."))
 		return FALSE
 
-	// Vote can't be initiated in our circumstances?. No vote
+	// Vote can't be initiated in our circumstances? No vote
 	if(to_vote.can_be_initiated(forced) != VOTE_AVAILABLE)
 		return FALSE
 

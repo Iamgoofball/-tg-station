@@ -289,7 +289,7 @@
 
 /datum/config_entry/flag/usewhitelist
 
-/datum/config_entry/flag/use_age_restriction_for_jobs // Do jobs use account age restrictions?. --requires database
+/datum/config_entry/flag/use_age_restriction_for_jobs // Do jobs use account age restrictions? --requires database
 
 /datum/config_entry/flag/use_account_age_for_jobs // Uses the time they made the account for the job restriction stuff.. New player joining alerts should be unaffected.
 

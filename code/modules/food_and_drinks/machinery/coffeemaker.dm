@@ -497,7 +497,7 @@
 	icon_state = "cartridge_blank"
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
-// now, how do you store coffee carts?. well, in a rack, of course!
+// now, how do you store coffee carts? well, in a rack, of course!
 /obj/item/storage/fancy/coffee_cart_rack
 	name = "coffeemaker cartridge rack"
 	desc = "A small rack for storing coffeemaker cartridges."

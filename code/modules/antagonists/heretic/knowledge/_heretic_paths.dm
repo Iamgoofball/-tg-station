@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	for(var/route in GLOB.heretic_path_datums)
 		var/datum/heretic_knowledge_tree_column/column_path = GLOB.heretic_path_datums[route]
 		var/start_knowledge = column_path::start
-		// why aren't the tiered knowledges in a list?!?!?. (initial() probably)
+		// why aren't the tiered knowledges in a list?!?!? (initial() probably)
 		var/t1_knowledge = column_path::knowledge_tier1
 		var/t2_knowledge = column_path::knowledge_tier2
 		var/t3_knowledge = column_path::knowledge_tier3

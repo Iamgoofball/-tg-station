@@ -20,7 +20,7 @@
 	if(!multiz_dir)
 		return ..()
 
-	// Are we a trunk that goes up?. Or down?
+	// Are we a trunk that goes up? Or down?
 	var/turf/target = get_turf(src)
 	if(multiz_dir == MULTIZ_PIPE_UP)
 		target = GET_TURF_ABOVE(target)

@@ -101,7 +101,7 @@
 	slot_blocker = HIDEMUTWINGS
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_wings/burnt_off
-	/// Are we burned?. If so we draw differently
+	/// Are we burned? If so we draw differently
 	var/burnt
 
 /datum/bodypart_overlay/mutant/wings/moth/New()

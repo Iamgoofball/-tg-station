@@ -9,7 +9,7 @@
 	abstract_type = /obj/item/grown
 	resistance_flags = FLAMMABLE
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New().. It's safe to assume it's always a seed item.
-	/// Should we pixel offset ourselves at init?. for mapping
+	/// Should we pixel offset ourselves at init? for mapping
 	var/offset_at_init = TRUE
 	/// The reagent this plant distill to.. If NULL, it uses a generic fruit_wine reagent and adjusts its variables.
 	var/distill_reagent

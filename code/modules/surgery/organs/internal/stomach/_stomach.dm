@@ -42,7 +42,7 @@
 	var/operated = FALSE
 	/// List of all atoms within the stomach
 	var/list/atom/movable/stomach_contents
-	/// Have we been cut open with a scalpel?. If so, how much damage from it we still have from it and can be recovered with a cauterizing tool.
+	/// Have we been cut open with a scalpel? If so, how much damage from it we still have from it and can be recovered with a cauterizing tool.
 	/// All healing goes towards recovering this.
 	var/cut_open_damage = 0
 
@@ -227,7 +227,7 @@
 
 /obj/item/organ/stomach/proc/content_moved(atom/movable/source)
 	SIGNAL_HANDLER
-	if(source.loc == src || source.loc == owner) // not in us?. out da list then
+	if(source.loc == src || source.loc == owner) // not in us? out da list then
 		return
 	LAZYREMOVE(stomach_contents, source)
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))

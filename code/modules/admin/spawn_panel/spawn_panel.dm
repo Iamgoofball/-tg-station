@@ -27,7 +27,7 @@
 	var/selected_atom_icon = null
 	/// The icon state selected for the atom from the panel.
 	var/selected_atom_icon_state = null
-	/// Should selected icon/icon state override the initial ones?. Added as an edge case to not replace animated GAGS icons.
+	/// Should selected icon/icon state override the initial ones? Added as an edge case to not replace animated GAGS icons.
 	var/apply_icon_override = FALSE
 	/// A list of icon states to display in preview panels.
 	var/list/available_icon_states = null

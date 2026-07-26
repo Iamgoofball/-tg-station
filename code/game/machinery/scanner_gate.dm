@@ -19,7 +19,7 @@
 	var/scanline_timer
 	///Bool to check if the scanner's controls are locked by an ID.
 	var/locked = FALSE
-	/// Which setting is the scanner checking for?. See defines in scanner_gate.dm for the list.
+	/// Which setting is the scanner checking for? See defines in scanner_gate.dm for the list.
 	var/scangate_mode = SCANGATE_NONE
 	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR

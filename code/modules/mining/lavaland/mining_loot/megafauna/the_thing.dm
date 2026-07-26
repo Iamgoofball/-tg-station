@@ -80,7 +80,7 @@
 	holder.pixel_y = size_check.Height() - ICON_SIZE_Y
 	if(mob_parent.stat == DEAD || HAS_TRAIT(mob_parent, TRAIT_FAKEDEATH) || isnull(mainframe))
 		holder.icon_state = "huddead2"
-		holder.pixel_x = -8 // new icon states?. nuh uh
+		holder.pixel_x = -8 // new icon states? nuh uh
 	else
 		holder.icon_state = "hudtrackingai"
 		holder.pixel_x = -16

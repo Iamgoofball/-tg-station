@@ -69,7 +69,7 @@
 /datum/shuttle_event/simple_spawner/proc/generate_spawning_turfs(list/bounding_coords, spawning_behaviour, direction)
 	spawning_turfs_hit = list() //turfs that will drift its contents to miss the shuttle
 	spawning_turfs_miss = list() //turfs that will drift its contents to hit the shuttle
-	var/list/step_dir // vector, either -1, 0 or 1.. once we get a corner (lets say top right), in which direction do we 'walk' to get the full side?. (this case to the right, so (1, 0)
+	var/list/step_dir // vector, either -1, 0 or 1.. once we get a corner (lets say top right), in which direction do we 'walk' to get the full side? (this case to the right, so (1, 0)
 	var/list/target_corner //Top left or bottom right corner
 	var/list/spawn_offset //bounding_coords is ONLY the shuttle, not the space around it, so offset spawn_tiles or stuff spawns on the walls of the shuttle
 

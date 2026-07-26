@@ -3,7 +3,7 @@
 	icon_state = "cliff"
 	icon = 'icons/turf/cliff/cliff.dmi'
 	density = TRUE
-	/// From our perspective, where does someone need to stand to be able to fall from us?. Cardinal only, we do the diagonals automatically
+	/// From our perspective, where does someone need to stand to be able to fall from us? Cardinal only, we do the diagonals automatically
 	var/can_fall_from_direction = NORTH
 	/// If we fall, in which direction?
 	var/fall_direction = SOUTH
@@ -109,7 +109,7 @@
 	if(!(valid_move_dirs & get_dir(src, target)))
 		return FALSE
 
-	// we're trying to leave the cliff from somewhere that's not the bottom?. no can do pall
+	// we're trying to leave the cliff from somewhere that's not the bottom? no can do pall
 	if(!iscliffturf(target) && get_dir(src, target) != fall_direction)
 		return FALSE
 

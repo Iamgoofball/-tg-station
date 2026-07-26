@@ -347,7 +347,7 @@
 /// Puts our action in their actions list and shows them the button.
 /datum/action/proc/GiveAction(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	if(viewers[our_hud]) // Already have a copy of us?. go away
+	if(viewers[our_hud]) // Already have a copy of us? go away
 		return
 
 	LAZYOR(viewer.actions, src) // Move this in

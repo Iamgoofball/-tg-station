@@ -7,7 +7,7 @@
 	var/datum/component/fearful/component
 	/// Type of this handler, determines if it should run in the first or second batch
 	var/handler_type = TERROR_HANDLER_SOURCE
-	/// Is this a "default" handler?. If so, it will be added to any fearful component unless its initialized with add_defaults = FALSE
+	/// Is this a "default" handler? If so, it will be added to any fearful component unless its initialized with add_defaults = FALSE
 	var/default = FALSE
 	/// Other effects which should be disabled while this one is running
 	var/list/overrides

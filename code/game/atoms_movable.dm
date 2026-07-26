@@ -34,7 +34,7 @@
 	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
-	/// Are we moving with inertia?. Mostly used as an optimization
+	/// Are we moving with inertia? Mostly used as an optimization
 	var/inertia_moving = FALSE
 	/// Multiplies speed the movable drifts when unaffected by gravity.
 	/// "Passive" is used for referring "base drift speed" - only the smaller of the two are used.
@@ -313,7 +313,7 @@
 	// We're going to build a light, and mask it with the base turf's appearance
 	// grab a 32x32 square of it
 	// I would like to use GLOB.starbright_overlays here
-	// But that breaks down for.... some?. reason.. I think receiving a render relay breaks keep_together or something
+	// But that breaks down for.... some? reason.. I think receiving a render relay breaks keep_together or something
 	// So we're just going to accept that this'll break with starlight color changing.. hardly matters since this is really only for offset stuff, but I'd love to fix it someday
 	var/mutable_appearance/light = new(GLOB.starlight_objects[GET_TURF_PLANE_OFFSET(generate_for) + 1])
 	light.render_target = ""
@@ -541,7 +541,7 @@
 		if(state == 0)
 			stop_pulling()
 			return FALSE
-		// Are we trying to pull something we are already pulling?. Then enter grab cycle and end.
+		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(pulled_atom == pulling)
 			setGrabState(state)
 			if(istype(pulled_atom,/mob/living))
@@ -1668,7 +1668,7 @@
 		return FALSE
 
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
-		// Why snowflake check for escape shuttle?. a lot of shuttles spawn with machines
+		// Why snowflake check for escape shuttle? a lot of shuttles spawn with machines
 		// but docked at centcom, and I wanted those machines to also speak funny languages
 		return FALSE
 	grant_random_uncommon_language()

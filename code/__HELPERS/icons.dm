@@ -368,7 +368,7 @@ world
 //Used in the OLD chem colour mixing algorithm
 /proc/GetColors(hex)
 	hex = uppertext(hex)
-	// No alpha set?. Default to full alpha.
+	// No alpha set? Default to full alpha.
 	if(length(hex) == 7)
 		hex += "FF"
 	var/hi1 = text2ascii(hex, 2) // Are

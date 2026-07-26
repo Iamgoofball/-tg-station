@@ -93,7 +93,7 @@
 	if(special_target)
 		var/turf/target_turf = get_turf(special_target)
 
-		// Did they escape the z-level?. Let's see if we can chase them down!
+		// Did they escape the z-level? Let's see if we can chase them down!
 		var/z_diff = target_turf.z - z
 
 		if(z_diff)
@@ -128,7 +128,7 @@
 			qdel(src)
 			return
 
-		// Did we reach our destination?. We're probably on Icebox.. Let's get rid of ourselves.
+		// Did we reach our destination? We're probably on Icebox.. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
 		// the rod will auto transition to a new z-level.
 		// If the rod is parallel to the destination at the world border, it is likely stuck (once again, icebox)

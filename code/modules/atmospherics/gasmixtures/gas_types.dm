@@ -65,7 +65,7 @@
 	var/rarity = 0
 	///Can gas of this type can purchased through cargo?
 	var/purchaseable = FALSE
-	/// How does a single mole of this gas sell for?. Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm.. Doesn't matter for roundstart gasses.
+	/// How does a single mole of this gas sell for? Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm.. Doesn't matter for roundstart gasses.
 	var/base_value = 0
 	var/desc
 	/// RGB code for use when a generic color representing the gas is needed.. Colors taken from contants.ts

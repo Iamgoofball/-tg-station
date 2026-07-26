@@ -903,7 +903,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	else if(check_behind(user, living_target))
 		successful_sneak_attack = TRUE
 
-	/// Now we'll check for things that STOP a sneak attack.. Why?. Because this mechanic isn't complicated enough and I must insert more ivory tower design.
+	/// Now we'll check for things that STOP a sneak attack.. Why? Because this mechanic isn't complicated enough and I must insert more ivory tower design.
 
 	if(living_target.mob_biotypes & MOB_SLIME) // SLIMES HAVE NO ANATOMY.
 		successful_sneak_attack = FALSE

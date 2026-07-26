@@ -6,7 +6,7 @@
 	priority = TEST_LONGER
 
 /datum/unit_test/maptest_mapload_space_verification/Run()
-	// Is our current map a planetary station (NO space turfs allowed)?. If so, check for ANY space turfs.
+	// Is our current map a planetary station (NO space turfs allowed)? If so, check for ANY space turfs.
 	if(SSmapping.is_planetary())
 		validate_planetary_map()
 		return

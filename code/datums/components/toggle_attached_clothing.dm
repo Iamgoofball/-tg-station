@@ -17,7 +17,7 @@
 	var/destroy_on_removal
 	/// Current state of our deployable equipment
 	var/currently_deployed = FALSE
-	/// What should be added to the end of the parent icon state when equipment is deployed?. Set to "" for no change
+	/// What should be added to the end of the parent icon state when equipment is deployed? Set to "" for no change
 	var/parent_icon_state_suffix = ""
 	/// Icon state for overlay to display over the parent item while deployable item is not deployed
 	var/down_overlay_state_suffix = ""

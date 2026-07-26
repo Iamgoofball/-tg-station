@@ -1,9 +1,9 @@
-// !.. Defines for subsystems and overlays
+//! Defines for subsystems and overlays
 //!
-// !.. Lots of important stuff in here, make sure you have your brain switched on
-// !.. when editing this file
+//! Lots of important stuff in here, make sure you have your brain switched on
+//! when editing this file
 
-// !.. ## DB defines
+//! ## DB defines
 /**
  * DB major schema version
  *
@@ -23,7 +23,7 @@
 #define DB_MINOR_VERSION 34
 
 
-// !.. ## Timing subsystem
+//! ## Timing subsystem
 /**
  * Don't run if there is an identical unique timer active
  *
@@ -67,7 +67,7 @@
 #define PROCESS_KILL 26
 
 
-// !.. ## Initialization subsystem
+//! ## Initialization subsystem
 
 ///New should not call Initialize
 #define INITIALIZATION_INSSATOMS 0
@@ -76,7 +76,7 @@
 ///New should call Initialize(FALSE)
 #define INITIALIZATION_INNEW_REGULAR 1
 
-// !.. ### Initialization hints
+//! ### Initialization hints
 
 ///Nothing happens
 #define INITIALIZE_HINT_NORMAL 0
@@ -104,7 +104,7 @@
 	}\
 }
 
-// !.. ### SS initialization hints
+//! ### SS initialization hints
 /**
  * Negative values indicate a failure or warning of some kind, positive are good.
  * 0 and 1 are unused so that TRUE and FALSE are guaranteed to be invalid values.

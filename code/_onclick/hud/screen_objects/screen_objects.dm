@@ -953,7 +953,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		// layer chest above other limbs, it's the center after all
 		limb.layer = body_zone == BODY_ZONE_CHEST ? layer + 0.05 : layer
 		limbs[body_zone] = limb
-		// why viscontents?. why not overlays?. - because i want to animate filters
+		// why viscontents? why not overlays? - because i want to animate filters
 		vis_contents += limb
 
 /atom/movable/screen/healthdoll/human/Destroy()

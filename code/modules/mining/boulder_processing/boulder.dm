@@ -22,11 +22,11 @@
 	var/obj/machinery/processed_by = null
 	/// How many steps of refinement this boulder has gone through.. Starts at 5-8, goes down one each machine process.
 	var/durability = 5
-	/// What was the size of the boulder when it was spawned?. This is used for inheiriting the icon_state.
+	/// What was the size of the boulder when it was spawned? This is used for inheiriting the icon_state.
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Used in inheriting the icon_state from our parent vent in update_icon.
 	var/boulder_string = "boulder"
-	/// If the boulder is converted into a platform, how long will it last?. Default is 10 seconds unless overwritten by a vent.
+	/// If the boulder is converted into a platform, how long will it last? Default is 10 seconds unless overwritten by a vent.
 	var/platform_lifespan = PLATFORM_LIFE_DEFAULT
 
 /obj/item/boulder/Initialize(mapload)

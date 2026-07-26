@@ -76,7 +76,7 @@
 			if(required_temp != 0 && (is_cold_recipe && chem_temp > required_temp) || (!is_cold_recipe && chem_temp < required_temp))
 				continue
 
-			// do we have the needed ph?. in range of min - ph_range & max + ph_range
+			// do we have the needed ph? in range of min - ph_range & max + ph_range
 			if(ph < reaction.optimal_ph_min - reaction.determin_ph_range && ph > reaction.optimal_ph_max + reaction.determin_ph_range)
 				continue
 

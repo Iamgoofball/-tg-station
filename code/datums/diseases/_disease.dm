@@ -47,7 +47,7 @@
 	/// The probability of this infection being cured every second the cure is present
 	var/cure_chance = 4
 	var/carrier = FALSE //If our host is only a carrier
-	var/bypasses_immunity = FALSE // Does it skip species virus immunity check?. Some things may diseases and not viruses
+	var/bypasses_immunity = FALSE // Does it skip species virus immunity check? Some things may diseases and not viruses
 	var/spreading_modifier = 1
 	var/severity = DISEASE_SEVERITY_NONTHREAT
 	/// If the disease needs an organ for the effects to function, robotic organs are immune to disease unless inorganic biology symptom is present

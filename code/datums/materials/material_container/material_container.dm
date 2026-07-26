@@ -393,13 +393,13 @@
 
 			//delete the item or merge stacks if any left over
 			if(is_stack)
-				// player split it & machine further split that due to lack of space?. merge with remaining stack
+				// player split it & machine further split that due to lack of space? merge with remaining stack
 				if(!QDELETED(target_item) && was_stack_split)
 					var/obj/item/stack/inserting_stack = target_item
 					item_stack.add(inserting_stack.amount)
 					qdel(inserting_stack)
 
-				// was this the original item in the players hand?. put what's left back in the player's hand
+				// was this the original item in the players hand? put what's left back in the player's hand
 				if(!QDELETED(original_item))
 					user.put_in_active_hand(original_item)
 
@@ -423,7 +423,7 @@
 				item_stack.add(inserting_stack.amount)
 				qdel(inserting_stack)
 
-			// was this the original item in the players hand?. put it back because we coudn't salvage it
+			// was this the original item in the players hand? put it back because we coudn't salvage it
 			if(!QDELETED(original_item))
 				user.put_in_active_hand(original_item)
 

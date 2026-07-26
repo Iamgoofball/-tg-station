@@ -291,7 +291,7 @@
 
 /// Proc called to change the variable `limb` and react to the event.
 /// * replaced - Is the wound being overriden by another (stronger) wound?
-/// * destroying - Is this coming from a limb's Destroy() call?. If so, cut down on updates we cause
+/// * destroying - Is this coming from a limb's Destroy() call? If so, cut down on updates we cause
 /datum/wound/proc/set_limb(obj/item/bodypart/new_value, replaced = FALSE, destroying = FALSE)
 	if(limb == new_value)
 		return FALSE // Limb can either be a reference to something or `null`.. Returning the number variable makes it clear no change was made.

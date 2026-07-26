@@ -61,7 +61,7 @@
 	/// If this plane master is outside of our visual bounds right now
 	var/is_outside_bounds = FALSE
 
-	/// Has this plane master had its offset made concrete?. Avoids modifications/uses that are going to immediately break
+	/// Has this plane master had its offset made concrete? Avoids modifications/uses that are going to immediately break
 	var/offset_already_updated = FALSE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)

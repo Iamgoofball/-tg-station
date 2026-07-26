@@ -13,10 +13,10 @@
 	/// Determines the type of damage overlay that will be used for the tile
 	var/damaged_dmi = null
 	var/broken = FALSE
-	/// Are broken overlays smoothed?. if they are we have to change a little bit about how we render them
+	/// Are broken overlays smoothed? if they are we have to change a little bit about how we render them
 	var/smooth_broken = FALSE
 	var/burnt = FALSE
-	/// Are burnt overlays smoothed?. if they are we have to change a little bit about how we render them
+	/// Are burnt overlays smoothed? if they are we have to change a little bit about how we render them
 	var/smooth_burnt = FALSE
 
 	/// Custom destination for mirages

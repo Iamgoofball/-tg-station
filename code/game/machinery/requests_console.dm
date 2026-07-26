@@ -29,9 +29,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/list/messages = list()
 	/// Priority of the latest message
 	var/new_message_priority = REQ_NO_NEW_MESSAGE
-	// Is the console silent?. Set to TRUE for it not to beep all the time
+	// Is the console silent? Set to TRUE for it not to beep all the time
 	var/silent = FALSE
-	// Is the console hacked?. Enables EXTREME priority if TRUE
+	// Is the console hacked? Enables EXTREME priority if TRUE
 	var/hack_state = FALSE
 	/// FALSE = This console cannot be used to send department announcements, TRUE = This console can send department announcements
 	var/can_send_announcements = FALSE

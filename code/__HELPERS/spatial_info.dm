@@ -352,7 +352,7 @@
 	return turfs
 
 /// Returns a list of turfs around a center based on view()
-/proc/circle_view_turfs(center=usr,radius=3) // Is there even a diffrence between this proc and circle_range_turfs()?. // Yes
+/proc/circle_view_turfs(center=usr,radius=3) // Is there even a diffrence between this proc and circle_range_turfs()? // Yes
 	var/turf/center_turf = get_turf(center)
 	var/list/turfs = new/list()
 	var/rsq = radius * (radius + 0.5)

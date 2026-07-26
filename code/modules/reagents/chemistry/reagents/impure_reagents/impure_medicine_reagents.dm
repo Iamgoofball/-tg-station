@@ -553,7 +553,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!back_from_the_dead)
 		return ..()
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart) // No heart?. No life!
+	if(!heart) // No heart? No life!
 		REMOVE_TRAIT(affected_mob, TRAIT_NODEATH, type)
 		affected_mob.stat = DEAD
 		return ..()

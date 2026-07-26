@@ -157,7 +157,7 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
-/// Can this blob structure make further blobs?. For special cases (e.g.. blobs not going past crit mass count if not ending the round)
+/// Can this blob structure make further blobs? For special cases (e.g.. blobs not going past crit mass count if not ending the round)
 /obj/structure/blob/proc/can_make_blob(mob/eye/blob/controller = null)
 	// If it's not being done with a controller, it's being done automatically.. Because it's not player-controlled, it's not worth worrying about.
 	if(!controller)

@@ -887,7 +887,7 @@
 	crowbar.play_tool_sound(src, 50)
 	user.visible_message(span_notice("[user] pries open [src]."), span_notice("You pry open [src]."))
 	open_machine(density_to_set = open_density)
-	if (close_after_pry) // Should it immediately close after prying?. (If not, it must be closed elsewhere)
+	if (close_after_pry) // Should it immediately close after prying? (If not, it must be closed elsewhere)
 		close_machine(density_to_set = closed_density)
 	return ITEM_INTERACT_SUCCESS
 

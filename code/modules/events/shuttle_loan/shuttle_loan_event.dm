@@ -77,7 +77,7 @@
 /datum/round_event/shuttle_loan/end()
 	if(!SSshuttle.shuttle_loan)
 		return
-	if(!SSshuttle.shuttle_loan.dispatched) // Haven't dispatched in time?. Too bad.. Clean it up and move on without spawning anything.
+	if(!SSshuttle.shuttle_loan.dispatched) // Haven't dispatched in time? Too bad.. Clean it up and move on without spawning anything.
 		SSshuttle.shuttle_loan = null
 		return
 

@@ -142,7 +142,7 @@
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
-/// What happens if we bless a corpse?. By default just do the default smack behavior
+/// What happens if we bless a corpse? By default just do the default smack behavior
 /datum/religion_sect/proc/sect_dead_bless(mob/living/target, mob/living/chap)
 	return FALSE
 

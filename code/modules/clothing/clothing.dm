@@ -230,7 +230,7 @@
 	update_appearance()
 
 /obj/item/clothing/Destroy()
-	user_vars_remembered = null // Oh god somebody put REFERENCES in here?. not to worry, we'll clean it up
+	user_vars_remembered = null // Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	QDEL_NULL(moth_snack)
 	return ..()
 
@@ -247,7 +247,7 @@
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
-				if(user.vars[variable] == user_vars_to_edit[variable]) // Is it still what we set it to?. (if not we best not change it)
+				if(user.vars[variable] == user_vars_to_edit[variable]) // Is it still what we set it to? (if not we best not change it)
 					user.vars[variable] = user_vars_remembered[variable]
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 

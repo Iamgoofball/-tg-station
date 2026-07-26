@@ -55,7 +55,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	// Associated item types
 	/// The type of sheet this material creates.
 	var/sheet_type = null
-	/// What type of ore is this material associated with?. Used for mining, and not every material has one.
+	/// What type of ore is this material associated with? Used for mining, and not every material has one.
 	var/obj/item/ore_type = null
 	/// What type of shard the material will shatter to
 	var/obj/item/shard_type = null
@@ -69,7 +69,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 	/// How likely this mineral is to be found in a boulder during mining.
 	var/mineral_rarity = MATERIAL_RARITY_COMMON
-	/// How many points per units of ore does this grant?. This ore uses in the ORM, NOT for boulder machinery due to the automated nature.
+	/// How many points per units of ore does this grant? This ore uses in the ORM, NOT for boulder machinery due to the automated nature.
 	var/points_per_unit = 1
 	/// How many points per unit does this ore grant when processed by a smelter/refinery?
 	var/points_per_boulder_unit = 1

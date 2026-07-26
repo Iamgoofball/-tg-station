@@ -27,7 +27,7 @@
 	// Mouse eating is chance-based, so we set the hunting target directly, yes, this messed with the test from what it was before. I'm not sure how to do it better :(
 	biter.ai_controller.set_blackboard_key(BB_LOW_PRIORITY_HUNTING_TARGET, wire)
 
-	// Tick the tree until the hunt branch moves onto and bites the cable.. Can we do this better in unit tests??. I do not know
+	// Tick the tree until the hunt branch moves onto and bites the cable.. Can we do this better in unit tests?? I do not know
 	for(var/i in 1 to 5)
 		if(QDELETED(biter))
 			break

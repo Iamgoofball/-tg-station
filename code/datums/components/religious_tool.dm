@@ -9,7 +9,7 @@
 	var/datum/religion_sect/easy_access_sect
 	/// Prevents double selecting sects
 	var/selecting_sect = FALSE
-	/// What extent do we want this religious tool to act?. In case you don't want full access to the list.. Generated on New
+	/// What extent do we want this religious tool to act? In case you don't want full access to the list.. Generated on New
 	var/operation_flags
 	/// The rite currently being invoked
 	var/datum/religion_rites/performing_rite

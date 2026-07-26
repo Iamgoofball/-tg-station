@@ -74,7 +74,7 @@
 	stable_population = 4
 	fish_flags = parent_type::fish_flags & ~FISH_FLAG_SHOW_IN_CATALOG
 	beauty = FISH_BEAUTY_EXCELLENT
-	fish_movement_type = /datum/fish_movement/choppy // Glideless legacy movement?. in my fishing minigame?
+	fish_movement_type = /datum/fish_movement/choppy // Glideless legacy movement? in my fishing minigame?
 	favorite_bait = list(
 		list(
 			FISH_BAIT_TYPE = FISH_BAIT_FOODTYPE,

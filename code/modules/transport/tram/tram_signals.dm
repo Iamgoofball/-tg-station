@@ -327,7 +327,7 @@
 		tram_pos = tram_part.x
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
-	// How far away are we?. negative if already passed.
+	// How far away are we? negative if already passed.
 	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + DEFAULT_TRAM_MIDPOINT))
 
 	// Check if tram is driving away from us.

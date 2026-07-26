@@ -133,7 +133,7 @@
 	sprite_height = 9
 
 	required_fluid_type = AQUARIUM_FLUID_AIR
-	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human?. that's odd...
+	required_temperature_min = BODYTEMP_COLD_DAMAGE_LIMIT // you mean just like a human? that's odd...
 	required_temperature_max = BODYTEMP_HEAT_DAMAGE_LIMIT
 	food = /datum/reagent/blood
 	max_integrity = 800 // apex predator

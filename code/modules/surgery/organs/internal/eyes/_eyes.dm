@@ -63,7 +63,7 @@
 
 	/// this message should never show up for default eyes, do not change on default eyes.
 	var/penlight_message = "useless default please report"
-	/// what are the pupils called?. for example pupils, apertures, and so on
+	/// what are the pupils called? for example pupils, apertures, and so on
 	var/pupils_name = "pupils"
 	/// do these eyes have pupils (or equivalent) that react to light when penlighted.
 	var/light_reactive = TRUE
@@ -376,7 +376,7 @@
 		var/mutable_appearance/right_iris = mutable_appearance(icon, "[iris_overlay]_r")
 		var/list/color_left = rgb2num(eye_color_left, COLORSPACE_HSL)
 		var/list/color_right = rgb2num(eye_color_right, COLORSPACE_HSL)
-		// Ugly as sin?. Indeed it is!. But otherwise eyeballs turn out to be super dark, and this way even lighter colors are mostly preserved
+		// Ugly as sin? Indeed it is!. But otherwise eyeballs turn out to be super dark, and this way even lighter colors are mostly preserved
 		if (color_left[3])
 			color_left[3] /= sqrt(color_left[3] * 0.01)
 		if (color_right[3])

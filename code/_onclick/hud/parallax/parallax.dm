@@ -183,7 +183,7 @@
 		parallax_layer.offset_y -= change_y
 		// Now that we have our offsets, let's do our positioning
 		// We're going to use an animate to "glide" that last movement out, so it looks nicer
-		// Don't do any animates if we're not actually moving enough distance yeah?. thanks lad
+		// Don't do any animates if we're not actually moving enough distance yeah? thanks lad
 		if(run_parralax && (largest_change * our_speed > 1))
 			animate(parallax_layer, pixel_w = round(parallax_layer.offset_x, 1), pixel_z = round(parallax_layer.offset_y, 1), time = glide_rate)
 		else

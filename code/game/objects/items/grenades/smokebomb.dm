@@ -35,7 +35,7 @@
 	. = ..()
 	desc = "The word '[pick(bruh_moment)]' is scribbled on it in crayon."
 
-/// Here we generate some smoke and also damage blobs???. for some reason.. Honestly not sure why we do that.
+/// Here we generate some smoke and also damage blobs??? for some reason.. Honestly not sure why we do that.
 /obj/item/grenade/smokebomb/detonate(mob/living/lanced_by)
 	. = ..()
 	if(!.)

@@ -31,7 +31,7 @@
 
 	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.
 	var/obj/item/dullahan_relay/my_head
-	/// Did our owner's first client connection get handled yet?. Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
+	/// Did our owner's first client connection get handled yet? Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
 	var/owner_first_client_connection_handled = FALSE
 
 /datum/species/dullahan/check_roundstart_eligible()
@@ -86,7 +86,7 @@
 	human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
 	human.gib(DROP_ALL_REMAINS)
 
-/// Head was butchered?. No more dullahan
+/// Head was butchered? No more dullahan
 /datum/species/dullahan/proc/on_relay_move()
 	SIGNAL_HANDLER
 	if(QDELETED(my_head?.owner) || !isdullahan(my_head?.owner))

@@ -235,7 +235,7 @@
 	after_use_message = "The Moon hears your call..."
 
 // Path of Nar'Sie's blade
-// What!?. This blade is given to cultists as an altar item when they sacrifice a heretic.
+// What!? This blade is given to cultists as an altar item when they sacrifice a heretic.
 // It is also given to the heretic themself if they sacrifice a cultist.
 /obj/item/melee/sickly_blade/cursed
 	name = "\improper cursed blade"

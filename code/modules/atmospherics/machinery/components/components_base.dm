@@ -8,7 +8,7 @@
 	var/welded = FALSE
 	///Current underfloor_accessibility state, determines if the component should show the pipe underneath it and what plane it renders on.
 	var/underfloor_state = UNDERFLOOR_INTERACTABLE
-	/// When the component is on a non default layer should we shift everything?. Or just the underlay pipe
+	/// When the component is on a non default layer should we shift everything? Or just the underlay pipe
 	var/shift_underlay_only = TRUE
 	///Stores the parent pipeline, used in components
 	var/list/datum/pipeline/parents

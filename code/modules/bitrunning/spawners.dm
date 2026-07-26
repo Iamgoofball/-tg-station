@@ -5,7 +5,7 @@
 	you_are_text = "You are NOT supposed to be here. How did you let this happen?"
 	important_text = "Bitrunning is a crime, and your primary threat."
 	temp_body = TRUE
-	/// Does this bit-entity get an antag datum with the goal of hunting bitrunners?. TRUE by default
+	/// Does this bit-entity get an antag datum with the goal of hunting bitrunners? TRUE by default
 	var/antag = TRUE
 
 

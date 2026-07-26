@@ -151,7 +151,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 			confidential = TRUE)
 		return
 
-	if(!holder && !current_ticket) // no ticket?. https://www.youtube.com/watch?v=iHSPf6x1Fdo
+	if(!holder && !current_ticket) // no ticket? https://www.youtube.com/watch?v=iHSPf6x1Fdo
 		to_chat(src,
 			type = MESSAGE_TYPE_ADMINPM,
 			html = span_danger("You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be."),
@@ -351,7 +351,7 @@ ADMIN_VERB(cmd_admin_pm_panel, R_NONE, "Admin PM", "Show a list of clients to PM
 	var/recip_ckey = recipient?.ckey
 	// Our current ticket, can (supposedly) be null here
 	var/datum/admin_help/ticket = current_ticket
-	// The recipient's current ticket, could in theory?. maybe?. be null here
+	// The recipient's current ticket, could in theory? maybe? be null here
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// I use -1 as a default for both of these
 	// Our ticket ID

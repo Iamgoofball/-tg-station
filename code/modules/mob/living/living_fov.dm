@@ -1,4 +1,4 @@
-/// Is `observed_atom` in a mob's field of view?. This takes blindness, nearsightness and FOV into consideration
+/// Is `observed_atom` in a mob's field of view? This takes blindness, nearsightness and FOV into consideration
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
 	if(ignore_self && observed_atom == src)
 		return TRUE
@@ -86,7 +86,7 @@
 	LAZYREMOVE(fov_traits, source)
 	update_fov()
 
-// did you know you can subtype /image and /mutable_appearance?. // Stop telling them that they might actually do it
+// did you know you can subtype /image and /mutable_appearance? // Stop telling them that they might actually do it
 /image/fov_image
 	icon = 'icons/effects/fov/fov_effects.dmi'
 	layer = EFFECTS_LAYER + FOV_EFFECT_LAYER

@@ -1248,7 +1248,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
-// ...Why?. I mean, clearly someone had to have done this and thought, well,
+// ...Why? I mean, clearly someone had to have done this and thought, well,
 // acid doesn't hurt plants, but what brought us here, to this point?
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_plant_health(-round(volume))

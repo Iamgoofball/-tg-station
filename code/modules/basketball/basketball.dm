@@ -140,7 +140,7 @@
 	if(!istype(user))
 		return
 
-	// Healing knockdown or setting knockdown to zero or something?. No fumble
+	// Healing knockdown or setting knockdown to zero or something? No fumble
 	if(amount <= 0)
 		return
 

@@ -38,7 +38,7 @@
 #define MC_LOOP_RTN_NEWSTAGES 1
 #define MC_LOOP_RTN_GRACEFUL_EXIT 2
 
-// !.. SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
+//! SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
 /// subsystem does not initialize.
 #define SS_NO_INIT (1 << 0)
@@ -74,7 +74,7 @@
 /// It should not be used simply to silence CI.
 #define SS_OK_TO_FAIL_INIT (1 << 6)
 
-// !.. SUBSYSTEM STATES
+//! SUBSYSTEM STATES
 #define SS_IDLE 0 /// is not doing shit.
 #define SS_QUEUED 1 /// queued to run
 #define SS_RUNNING 2 /// actively running
@@ -84,10 +84,10 @@
 
 // Subsystem init stages
 #define INITSTAGE_FIRST 1
-#define INITSTAGE_EARLY 2 // !.. Early init stuff that doesn't need to wait for mapload
-#define INITSTAGE_MAIN 3 // !.. Main init stage
+#define INITSTAGE_EARLY 2 //! Early init stuff that doesn't need to wait for mapload
+#define INITSTAGE_MAIN 3 //! Main init stage
 #define INITSTAGE_LAST 4
-#define INITSTAGE_MAX 4 // !.. Highest initstage.
+#define INITSTAGE_MAX 4 //! Highest initstage.
 
 #define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
 /datum/controller/subsystem/##X/New(){\

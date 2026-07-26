@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Should we preload this species's organs?
 	var/preload = TRUE
 
-	/// Do we try to prevent reset_perspective() from working?. Useful for Dullahans to stop perspective changes when they're looking through their head.
+	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
 
 	///Was the species changed from its original type at the start of the round?
@@ -767,13 +767,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if (length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index) // Just in case
 				atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
 			atk_effect = attacking_bodypart.unarmed_attack_effect
-		else  // Nothing?. Okay.. Fail.
+		else  // Nothing? Okay.. Fail.
 			user.balloon_alert(user, "can't attack!")
 			return FALSE
 
 	user.do_attack_animation(target, atk_effect)
 
-	// has our target been shoved recently?. If so, they're staggered and we get an easy hit.
+	// has our target been shoved recently? If so, they're staggered and we get an easy hit.
 	var/staggered = target.has_status_effect(/datum/status_effect/staggered)
 
 	//Someone in a grapple is much more vulnerable to being harmed by punches.

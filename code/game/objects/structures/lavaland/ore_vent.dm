@@ -17,13 +17,13 @@
 	density = TRUE
 	can_buckle = TRUE
 
-	/// Has this vent been tapped to produce boulders?. Cannot be untapped.
+	/// Has this vent been tapped to produce boulders? Cannot be untapped.
 	var/tapped = FALSE
-	/// Has this vent been scanned by a mining scanner?. Cannot be scanned again.. Adds ores to the vent's description.
+	/// Has this vent been scanned by a mining scanner? Cannot be scanned again.. Adds ores to the vent's description.
 	var/discovered = FALSE
-	/// Is this type of vent exempt from the map's vent budget/limit?. Think the free iron/glass vent or boss vents.. This also causes it to not roll for random mineral breakdown.
+	/// Is this type of vent exempt from the map's vent budget/limit? Think the free iron/glass vent or boss vents.. This also causes it to not roll for random mineral breakdown.
 	var/unique_vent = FALSE
-	/// Does this vent spawn a node drone when tapped?. Currently unique to boss vents so try not to VV it.
+	/// Does this vent spawn a node drone when tapped? Currently unique to boss vents so try not to VV it.
 	var/spawn_drone_on_tap = TRUE
 	/// What icon_state do we use when the ore vent has been tapped?
 	var/icon_state_tapped = "ore_vent_active"

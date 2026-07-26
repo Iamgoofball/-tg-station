@@ -1,7 +1,7 @@
 /datum/ert
 	///Antag datum team for this type of ERT.
 	var/team = /datum/team/ert
-	/// Do we open the doors to the "high-impact" weapon/explosive cabinets?. Used for combat-focused ERTs.
+	/// Do we open the doors to the "high-impact" weapon/explosive cabinets? Used for combat-focused ERTs.
 	var/opendoors = TRUE
 	///Alternate antag datum given to the leader of the squad.
 	var/leader_role = /datum/antagonist/ert/commander

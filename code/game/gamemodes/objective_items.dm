@@ -88,7 +88,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	/// If the item takes special steps to destroy for an objective (e.g.. blackbox)
 	var/destruction_method = null
 
-/// For objectives with special checks (does that intellicard have an ai in it?. etcetc)
+/// For objectives with special checks (does that intellicard have an ai in it? etcetc)
 /datum/objective_item/proc/check_special_completion(obj/item/thing)
 	return TRUE
 
@@ -565,7 +565,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 	if(istype(potential_storage, /obj/item/aicard))
 		var/obj/item/aicard/card = potential_storage
-		being = card.AI // why is this one capitalized and the other one not?. i wish i knew.
+		being = card.AI // why is this one capitalized and the other one not? i wish i knew.
 	else if(istype(potential_storage, /obj/item/mod/control))
 		var/obj/item/mod/control/suit = potential_storage
 		if(isAI(suit.ai_assistant))

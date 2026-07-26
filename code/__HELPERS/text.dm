@@ -749,7 +749,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 					question = TRUE
 					if(exclaim)
 						break
-				if(!exclaim && !question && findtext(let, ".")) // ?. and !. take priority over periods
+				if(!exclaim && !question && findtext(let, ".")) // ? and !. take priority over periods
 					periods += 1
 			if(exclaim)
 				if(question)

@@ -70,7 +70,7 @@
 	var/body_part
 	/// List of obj/item's embedded inside us.. Managed by embedded components, do not modify directly
 	var/list/embedded_objects
-	/// are we a hand?. if so, which one!
+	/// are we a hand? if so, which one!
 	var/held_index = 0
 
 	// Limb disabling variables
@@ -187,12 +187,12 @@
 	var/unarmed_effectiveness = 10
 	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
 	var/unarmed_pummeling_bonus = 1
-	/// If this limb is used to grab (which is only arms right now), how much more effective is the limb?. Every integer above or below 0 is one effective grab level.. Higher is a bonus, lower is a malus.
+	/// If this limb is used to grab (which is only arms right now), how much more effective is the limb? Every integer above or below 0 is one effective grab level.. Higher is a bonus, lower is a malus.
 	/// This is more powerful than adjusting grab escape chance.. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
 	var/unarmed_grab_state_bonus = 0
 	/// If this limb is used to grab (which is only arms right now), how much additional damage does it deal to the grabbed individual when they fail to escape the grab?
 	var/unarmed_grab_damage_bonus = 0
-	/// If this limb is used to grab (which is only arms right now), how much more difficult is it to escape the grab, before accounting f. Grab state?. Values above 0 is a malus, values below 0 is a bonus.
+	/// If this limb is used to grab (which is only arms right now), how much more difficult is it to escape the grab, before accounting f. Grab state? Values above 0 is a malus, values below 0 is a bonus.
 	/// This is less powerful than adjusting grab state.. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
 	var/unarmed_grab_escape_chance_bonus = 0
 	/// The 'sharpness' of the limb.. Could indicate claws, teeth or spines.. Should default to NONE, or blunt.

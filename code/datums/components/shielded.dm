@@ -20,7 +20,7 @@
 	var/shield_icon_file = 'icons/effects/effects.dmi'
 	/// What icon is used when someone has a functional shield up
 	var/shield_icon = "shield-old"
-	/// Do we still shield if we're being held in-hand?. If FALSE, it needs to be equipped to a slot to work
+	/// Do we still shield if we're being held in-hand? If FALSE, it needs to be equipped to a slot to work
 	var/shield_inhand = FALSE
 	/// Should the shield lose charges equal to the damage dealt by a hit?
 	var/lose_multiple_charges = FALSE
@@ -158,7 +158,7 @@
 
 	COOLDOWN_START(src, recently_hit_cd, recharge_start_delay)
 
-	// No wearer?. No block.
+	// No wearer? No block.
 	if(isnull(wearer))
 		return
 

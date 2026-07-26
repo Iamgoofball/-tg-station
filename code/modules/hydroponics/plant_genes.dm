@@ -118,7 +118,7 @@
 
 /// Traits that affect the grown product.
 /datum/plant_gene/trait
-	/// The rate at which this trait affects something.. This can be anything really - why?. I do not know
+	/// The rate at which this trait affects something.. This can be anything really - why? I do not know
 	var/rate = 0.05
 	/// Flag - Traits that share an ID cannot be placed on the same plant.
 	var/trait_ids

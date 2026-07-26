@@ -283,7 +283,7 @@
 	/// Are we anchored
 	var/anchored = FALSE
 
-	/// Are we a ghost?. (they have effectively unique pathfinding)
+	/// Are we a ghost? (they have effectively unique pathfinding)
 	var/is_observer = FALSE
 	/// Are we a living mob?
 	var/is_living = FALSE

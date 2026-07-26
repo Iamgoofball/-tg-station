@@ -204,7 +204,7 @@
 	return FALSE
 
 /datum/config_entry/keyed_list/proc/parse_key_and_value(option_string)
-	// Blank or null option string?. Bad mojo!
+	// Blank or null option string? Bad mojo!
 	if(!option_string)
 		log_config("ERROR: Keyed list config tried to parse with no key or value data.")
 		return null

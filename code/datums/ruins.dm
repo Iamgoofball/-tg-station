@@ -26,7 +26,7 @@
 	var/prefix = null
 	/// The dynamic part of the ruin path for example "lavaland_surface_ruinfile.dmm"
 	var/suffix = null
-	/// What flavor or ruin is this?. for example ZTRAIT_SPACE_RUINS
+	/// What flavor or ruin is this? for example ZTRAIT_SPACE_RUINS
 	var/ruin_type = null
 	/// is this ruin "enclosed" by walls.. This is relevant for terrain gen with cellular automata to know whether this ruin will spawn inside of walls, or should spawn in the open.
 	var/enclosed_for_terrain = FALSE

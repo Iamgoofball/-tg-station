@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		QDEL_NULL(query_extract_ranks)
 
 		for(var/datum/admin_rank/rank as anything in GLOB.admin_ranks)
-			// This does technically potentially mask local edits?. to db ranks if that is even possible (should not be), but I prefer to be honest about longterm values.
+			// This does technically potentially mask local edits? to db ranks if that is even possible (should not be), but I prefer to be honest about longterm values.
 			if(all_ranks[rank.name])
 				continue
 			all_ranks[rank.name] = list("rank" = rank.name, "flags" = rank.include_rights, "exclude_flags" = rank.exclude_rights, "can_edit_flags" = rank.can_edit_rights)

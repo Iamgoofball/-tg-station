@@ -37,7 +37,7 @@
 		/obj/item/food/meat/cutlet/chicken)
 	output = /obj/item/food/raw_meatball
 	removed_foodtypes = GORE
-	added_foodtypes = RAW // you know what?. *uncooks your cutlet*
+	added_foodtypes = RAW // you know what? *uncooks your cutlet*
 
 /datum/food_processor_process/meat/human
 	input = /obj/item/food/meat/slab/human

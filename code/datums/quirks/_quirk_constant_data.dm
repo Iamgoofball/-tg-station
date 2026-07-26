@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT_TYPED(all_quirk_constant_data, /datum/quirk_constant_data, gene
 
 	return customization_data
 
-/// Is this quirk customizable?. If true, a button will appear within the quirk's description box in the quirks page, and upon clicking it,
+/// Is this quirk customizable? If true, a button will appear within the quirk's description box in the quirks page, and upon clicking it,
 /// will open a customization menu for the quirk.
 /datum/quirk_constant_data/proc/is_customizable()
 	return LAZYLEN(customization_options) > 0

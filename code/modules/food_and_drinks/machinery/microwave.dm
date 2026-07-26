@@ -42,7 +42,7 @@
 	/// How dirty is it?
 	var/dirty = 0
 	var/dirty_anim_playing = FALSE
-	/// How broken is it?. NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
+	/// How broken is it? NOT_BROKEN, KINDA_BROKEN, REALLY_BROKEN
 	var/broken = NOT_BROKEN
 	/// Microwave door position
 	var/open = FALSE

@@ -175,7 +175,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "slicedapart"
-	/// Are wires inserted?. If so, we are on the final step
+	/// Are wires inserted? If so, we are on the final step
 	var/wires_are_in = FALSE
 	/// Typecache of items we are allowed to stuff into the pipebomb for effects, only add items with effects
 	var/static/list/allowed = typecacheof(list(

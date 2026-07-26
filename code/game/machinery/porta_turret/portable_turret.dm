@@ -1016,7 +1016,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/lasertag/assess_perp(mob/living/carbon/human/perp)
 	. = 0
-	if(team_color == "blue") // Lasertag turrets target the opposing team, how great is that?. -Sieve
+	if(team_color == "blue") // Lasertag turrets target the opposing team, how great is that? -Sieve
 		. = 0 //But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			. += 4

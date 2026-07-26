@@ -73,7 +73,7 @@
 	if(HAS_TRAIT(user, TRAIT_PRIMITIVE) || user.ai_controller)
 		if(locked)
 			return //Your primitive brain cant escape a dna scanner noob
-	else if(!locked) // Not locked and not primitive?. escape immediately
+	else if(!locked) // Not locked and not primitive? escape immediately
 		open_machine()
 
 	user.changeNext_move(CLICK_CD_BREAKOUT)

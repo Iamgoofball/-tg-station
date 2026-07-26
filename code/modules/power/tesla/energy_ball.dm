@@ -98,7 +98,7 @@
 	if(shocked_things.len)
 		for (var/i in 1 to 30)
 			var/atom/real_thing = pick(shocked_things)
-			dirs += get_dir(src, real_thing) // Carry some momentum yeah?. Just a bit though
+			dirs += get_dir(src, real_thing) // Carry some momentum yeah? Just a bit though
 	for (var/i in 0 to move_amount)
 		var/move_dir = pick(dirs) //ensures teslas don't just sit around
 		if (target && prob(10))

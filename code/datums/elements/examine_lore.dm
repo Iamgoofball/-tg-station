@@ -1,4 +1,4 @@
-/// A simple element for adding additional lore to things.. Examine more?. More like examine *lore*.
+/// A simple element for adding additional lore to things.. Examine more? More like examine *lore*.
 /// Yes, the name's a pun, I'm sorry, I thought it was funny at the moment.
 /datum/element/examine_lore
 	element_flags = ELEMENT_BESPOKE

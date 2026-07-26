@@ -55,7 +55,7 @@
 	var/mode = FALSE
 
 	// The following 3 vars are mostly for the prototype
-	/// manual shooting?. (basically you hop onto the emitter. Choose the shooting direction, is very low quality since you can only shoot at the 8 directions. I don't think is ever used since you can't build those)
+	/// manual shooting? (basically you hop onto the emitter. Choose the shooting direction, is very low quality since you can only shoot at the 8 directions. I don't think is ever used since you can't build those)
 	var/manual = FALSE
 	///Amount of power inside
 	var/charge = 0

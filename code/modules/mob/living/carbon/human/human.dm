@@ -417,7 +417,7 @@
 
 	//Lasertag bullshit
 	if(lasercolor)
-		if(lasercolor == "b")// Lasertag turrets target the opposing team, how great is that?. -Sieve
+		if(lasercolor == "b")// Lasertag turrets target the opposing team, how great is that? -Sieve
 			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
 				threatcount += 4
 			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))

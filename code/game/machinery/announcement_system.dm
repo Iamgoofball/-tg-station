@@ -177,7 +177,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 			return TRUE
 	return FALSE
 
-/// Can AAS receive request for broadcast from you?. Null source means yes.
+/// Can AAS receive request for broadcast from you? Null source means yes.
 /obj/machinery/announcement_system/proc/can_be_reached_from(atom/source)
 	if(!source || !istype(source))
 		return TRUE

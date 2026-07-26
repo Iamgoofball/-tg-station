@@ -656,7 +656,7 @@
 	return
 
 /atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
-	// Only one recipe?. use the first
+	// Only one recipe? use the first
 	if(processing_recipes.len == 1)
 		StartProcessingAtom(user, processed_object, processing_recipes[1])
 		return

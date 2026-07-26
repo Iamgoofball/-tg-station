@@ -11,7 +11,7 @@
 	var/obj/item/assembly/signaler/anomaly/anomaly_core = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
-	/// How long till we seppuku?. Blocked by immortal
+	/// How long till we seppuku? Blocked by immortal
 	var/lifespan = ANOMALY_COUNTDOWN_TIMER
 	var/death_time
 

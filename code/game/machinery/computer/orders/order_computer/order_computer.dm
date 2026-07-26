@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/list/order_categories = list()
 	///The current list of things we're trying to order, waiting for checkout.
 	var/list/datum/orderable_item/grocery_list = list()
-	/// For blackbox logging, what kind of order is this?. set nothing to not tally, like golem orders
+	/// For blackbox logging, what kind of order is this? set nothing to not tally, like golem orders
 	var/blackbox_key
 
 /obj/machinery/computer/order_console/Initialize(mapload)

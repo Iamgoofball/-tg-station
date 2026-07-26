@@ -41,7 +41,7 @@
 		if(checked_object.block_superconductivity())
 			atmos_supeconductivity |= direction
 			target_turf.atmos_supeconductivity |= opposite_direction
-			return FALSE // no need to keep going, we got all we asked (Is this even faster?. fuck you it's soul)
+			return FALSE // no need to keep going, we got all we asked (Is this even faster? fuck you it's soul)
 
 	//Superconductivity is a bitfield of directions we can't conduct with
 	// Yes this is really weird.. Fuck you

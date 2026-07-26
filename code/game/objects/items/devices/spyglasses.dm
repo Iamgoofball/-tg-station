@@ -54,7 +54,7 @@
 	var/obj/item/clothing/glasses/sunglasses/spy/linked_glasses
 	/// Our camera display popup
 	var/atom/movable/screen/map_view/cam_screen
-	/// How far can we actually see?. Ranges higher than one can be used to see through walls.
+	/// How far can we actually see? Ranges higher than one can be used to see through walls.
 	var/cam_range = 1
 	/// Detects when we move to update the camera view
 	var/datum/movement_detector/tracker

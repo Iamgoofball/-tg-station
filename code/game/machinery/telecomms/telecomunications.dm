@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(telecomm_machines)
 	var/on = TRUE
 	/// Is it toggled on, so is it /meant/ to be active?
 	var/toggled = TRUE
-	/// Can you link it across Z levels or on the otherside of the map?. (Relay & Hub)
+	/// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/long_range_link = FALSE
 	/// Is it a hidden machine?
 	var/hide = FALSE

@@ -6,11 +6,11 @@
 	circuit = /obj/item/circuitboard/computer/cargo
 	light_color = COLOR_BRIGHT_ORANGE
 
-	/// Can the supply console send the shuttle back and forth?. Used in the UI backend.
+	/// Can the supply console send the shuttle back and forth? Used in the UI backend.
 	var/can_send = TRUE
-	/// Can this console only send requests?. Typically used at the cargo front desk for pedestrians.
+	/// Can this console only send requests? Typically used at the cargo front desk for pedestrians.
 	var/requestonly = FALSE
-	/// Can you approve requests placed for cargo?. Works differently between the app and the computer.
+	/// Can you approve requests placed for cargo? Works differently between the app and the computer.
 	var/can_approve_requests = TRUE
 	var/contraband = FALSE
 	var/self_paid = FALSE

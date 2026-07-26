@@ -24,11 +24,11 @@
 	throw_range = 3
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 7.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	interaction_flags_mouse_drop = NEED_DEXTERITY
-	/// Is the pet carrier open?. Allows you to collect/remove pets.
+	/// Is the pet carrier open? Allows you to collect/remove pets.
 	var/open = TRUE
-	/// Does this carrier allow locking?. Disabled for the small pet carrier.
+	/// Does this carrier allow locking? Disabled for the small pet carrier.
 	var/allows_locking = TRUE
-	/// Is this carrier locked?. Locks don't need access, just an alt click.
+	/// Is this carrier locked? Locks don't need access, just an alt click.
 	var/locked = FALSE
 	/// List of all mob occupants from inside of the pet carrier.
 	var/list/occupants = list()

@@ -21,7 +21,7 @@
 	buckle_lying = 0
 	max_integrity = 200
 	interaction_flags_click = NEED_DEXTERITY|FORBID_TELEKINESIS_REACH|ALLOW_RESTING
-	/// Is the machine moving?. Setting this to FALSE will automatically call stop_moving()
+	/// Is the machine moving? Setting this to FALSE will automatically call stop_moving()
 	var/moving = FALSE
 	///The distance the machine is allowed to roam from its starting point
 	var/range = 1

@@ -552,7 +552,7 @@
 	duration = 10 MINUTES //you're cursed for 10 minutes have fun
 	tick_interval = 5 SECONDS
 	alert_type = null
-	/// Which nasty things are we doing?. [CURSE_BLINDING / CURSE_WASTING / CURSE_GRASPING]]
+	/// Which nasty things are we doing? [CURSE_BLINDING / CURSE_WASTING / CURSE_GRASPING]]
 	var/curse_flags = NONE
 	/// When should we next throw hands?
 	var/effect_next_activation = 0

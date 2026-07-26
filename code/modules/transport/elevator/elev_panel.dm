@@ -24,7 +24,7 @@
 	// Indestructible until someone wants to make these constructible, with all the chaos that implies
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	/// Were we instantiated at mapload?. Used to determine when we should link / throw errors
+	/// Were we instantiated at mapload? Used to determine when we should link / throw errors
 	var/maploaded = FALSE
 
 	/// A weakref to the transport_controller datum we control
@@ -42,7 +42,7 @@
 	/// (Reminder: Z1 gets loaded as Central Command, so your map's bottom Z will be Z2!)
 	var/list/preset_destination_names
 
-	/// What z-level did we move to last?. Used for showing the user in the UI which direction we're moving.
+	/// What z-level did we move to last? Used for showing the user in the UI which direction we're moving.
 	var/last_move_target
 	/// TimerID to our door reset timer, made by emergency opening doors
 	var/door_reset_timerid

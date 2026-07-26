@@ -144,7 +144,7 @@
 	/// This is critical non-policy information about the ghost role.. Shown in the spawner menu and after spawning last.
 	var/important_text = ""
 
-	/// Show these on spawn?. Usually used for hardcoded special flavor
+	/// Show these on spawn? Usually used for hardcoded special flavor
 	var/show_flavor = TRUE
 
 	////bans and policy

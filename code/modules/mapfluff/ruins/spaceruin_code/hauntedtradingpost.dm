@@ -127,7 +127,7 @@
 /obj/machinery/power/smes/magical/cybersun
 	name = "cybersun-brand power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. It looks like any other SMES unit, except this one says 'Cybersun' on it."
-	// is this being used as part of the haunted trading post ruin?. if true, will self destruct when boss dies
+	// is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
 
 /obj/machinery/power/smes/magical/cybersun/Initialize(mapload)
@@ -143,7 +143,7 @@
 	max_integrity = 50
 	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
-	// is this being used as part of the haunted trading post ruin?. if true, will self destruct when boss dies
+	// is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
 	//can the trap trigger more than once?
 	var/multiuse = FALSE
@@ -244,7 +244,7 @@
 	var/jitter_time = 5 SECONDS
 	// length of time targets stutter
 	var/stutter_time = 2 SECONDS
-	// is this being used as part of the haunted trading post ruin?. if true, will self destruct when boss dies
+	// is this being used as part of the haunted trading post ruin? if true, will self destruct when boss dies
 	var/donk_ai_slave = FALSE
 	// machine that the trap inhabits
 	var/obj/machinery/host_machine

@@ -626,7 +626,7 @@
 	var/datum/round_event_control/modified_event = locate(/datum/round_event_control/radiation_storm) in SSevents.control
 	modified_event.weight = 0
 
-/// They entered space?. START BOMBING WITH RADS HAHAHAHA.. old_area can be null for new objects
+/// They entered space? START BOMBING WITH RADS HAHAHAHA.. old_area can be null for new objects
 /datum/station_trait/nebula/hostile/radiation/proc/on_entered(area/space, atom/movable/enterer, area/old_area)
 	SIGNAL_HANDLER
 

@@ -16,7 +16,7 @@
 
 	/// The needed strength of explosion for a weakpoint to propogate
 	var/required_strength = EXPLODE_LIGHT
-	// How many turfs should this weakpoint crack when triggered?. Crack length splits by default and doesn't recurse
+	// How many turfs should this weakpoint crack when triggered? Crack length splits by default and doesn't recurse
 	var/crack_length = CRACK_LENGTH_DEFAULT
 	/// How many split off cracks are expected?
 	var/crack_split_count = 2

@@ -32,7 +32,7 @@
 	/// Do not set this directly.. Use Restart() and Stop() instead.
 	VAR_PRIVATE/beating = TRUE
 
-	/// is this mob having a heatbeat sound played?. if so, which?
+	/// is this mob having a heatbeat sound played? if so, which?
 	var/beat = BEAT_NONE
 	/// whether the heart's been operated on to fix some of its damages
 	var/operated = FALSE

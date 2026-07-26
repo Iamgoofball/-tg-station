@@ -410,7 +410,7 @@
 		else
 			if(bagholdingcheck && !not_holding_tele)
 				to_chat(user, span_warning("The bluespace interface on your bag of holding interferes with the teleport!"))
-			get_fragged(user, destination, not_holding_tele) // EMP teleported you into a wall?. Wearing a BoH?. You're dead.
+			get_fragged(user, destination, not_holding_tele) // EMP teleported you into a wall? Wearing a BoH? You're dead.
 	else
 		telefrag(destination, user)
 		do_teleport(user, destination, channel = TELEPORT_CHANNEL_FREE)

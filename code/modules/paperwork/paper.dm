@@ -365,7 +365,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	. += span_warning("You cannot read it!")
 
 /obj/item/paper/ui_status(mob/user, datum/ui_state/state)
-	// Are we on fire?. Hard to read if so
+	// Are we on fire? Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
 	if(camera_holder && can_show_to_mob_through_camera(user) || request_state)
@@ -374,7 +374,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 		return UI_CLOSE
 	if(INCAPACITATED_IGNORING(user, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
-	// Even harder to read if your blind...braile?. humm
+	// Even harder to read if your blind...braile? humm
 	// ... or if you cannot read
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))

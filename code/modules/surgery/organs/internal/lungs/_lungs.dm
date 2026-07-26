@@ -615,7 +615,7 @@
 			breath = breather.wear_mask.consume_filter(breath)
 	// Breath has 0 moles of gas, and we can breathe space
 	else if(HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE))
-		// The lungs can breathe anyways.. What are you?. Some bottom-feeding, scum-sucking algae eater?
+		// The lungs can breathe anyways.. What are you? Some bottom-feeding, scum-sucking algae eater?
 		breather.failed_last_breath = FALSE
 		// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
 		if(breather.health >= breather.crit_threshold && breather.oxyloss)

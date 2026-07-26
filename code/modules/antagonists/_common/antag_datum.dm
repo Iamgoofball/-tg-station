@@ -14,9 +14,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/mind/owner
 	///Silent will prevent the gain/lose texts to show
 	var/silent = FALSE
-	/// What flag is checked for jobbans and polling?. Optional, if unset, will use pref_flag
+	/// What flag is checked for jobbans and polling? Optional, if unset, will use pref_flag
 	var/jobban_flag
-	/// What flag to check for prefs?. Needed for antags with preferences associated
+	/// What flag to check for prefs? Needed for antags with preferences associated
 	var/pref_flag
 	///Should replace jobbanned player with ghosts if granted.
 	var/replace_banned = TRUE
@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antagpanel_category = "Uncategorized"
 	///Will append antagonist name in admin listings - use for categories that share more than one antag type
 	var/show_name_in_check_antagonists = FALSE
-	/// Should this antagonist be shown as antag to ghosts?. Shouldn't be used for stealthy antagonists like traitors
+	/// Should this antagonist be shown as antag to ghosts? Shouldn't be used for stealthy antagonists like traitors
 	var/show_to_ghosts = FALSE
 	/// The typepath for the outfit to show in the preview for the preferences menu.
 	var/preview_outfit

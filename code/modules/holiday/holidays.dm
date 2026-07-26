@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	var/begin_day = 1
 	///What month does the holiday begin on?
 	var/begin_month = 0
-	/// What day of end_month does the holiday end?. Default of 0 means the holiday lasts a single.
+	/// What day of end_month does the holiday end? Default of 0 means the holiday lasts a single.
 	var/end_day = 0
 	/// What month does the holiday end on?
 	var/end_month = 0
@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	var/list/timezones = list(TIMEZONE_LINT, TIMEZONE_UTC, TIMEZONE_ANYWHERE_ON_EARTH)
 	///If this is defined, drones/assistants without a default hat will spawn with this item in their head clothing slot.
 	var/obj/item/holiday_hat
-	/// When this holiday is active, does this prevent mail from arriving to cargo?. Overrides var/list/holiday_mail.. Try not to use this for longer holidays.
+	/// When this holiday is active, does this prevent mail from arriving to cargo? Overrides var/list/holiday_mail.. Try not to use this for longer holidays.
 	var/no_mail_holiday = FALSE
 	/// The list of items we add to the mail pool.. Can either be a weighted list or a normal list.. Leave empty for nothing.
 	var/list/holiday_mail = list()

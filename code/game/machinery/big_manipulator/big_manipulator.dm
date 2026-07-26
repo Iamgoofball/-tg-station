@@ -29,7 +29,7 @@
 	var/obj/item/disk/manipulator/task_disk = null
 	/// The manipulator's arm.
 	var/obj/effect/big_manipulator_arm/manipulator_arm = null
-	/// Is the power access wire cut?. Disables the power button if `TRUE`.
+	/// Is the power access wire cut? Disables the power button if `TRUE`.
 	var/power_access_wire_cut = FALSE
 
 	/// How many tasks total we can have.

@@ -101,7 +101,7 @@
 	overlay_state_active = "module_jetpack_on"
 	required_slots = list(ITEM_SLOT_BACK)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 5)
-	/// Do we have stabilizers?. If yes the user won't move from inertia.
+	/// Do we have stabilizers? If yes the user won't move from inertia.
 	var/stabilize = TRUE
 	/// Callback to see if we can thrust the user.
 	var/thrust_callback

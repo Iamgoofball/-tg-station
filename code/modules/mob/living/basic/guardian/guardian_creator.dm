@@ -15,7 +15,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
 	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "deck_tarot_full"
-	/// Are we used or in the process of being used?. If yes, then we can't be used.
+	/// Are we used or in the process of being used? If yes, then we can't be used.
 	var/used = FALSE
 	/// The visuals we give to the guardian we spawn.
 	var/theme = GUARDIAN_THEME_MAGIC
@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/standard,
 		/mob/living/basic/guardian/support,
 	)
-	/// Have we been refunded?. Used to prevent guardians from being created after we've been refunded
+	/// Have we been refunded? Used to prevent guardians from being created after we've been refunded
 	/// while avoiding scamming people if they use and then destroy us
 	var/was_refunded = FALSE
 

@@ -573,7 +573,7 @@ SUBSYSTEM_DEF(tts)
 	var/use_blips = FALSE
 	/// What's the pitch adjustment?
 	var/pitch = 0
-	/// Should we force play blips?. Used for the blips preview.
+	/// Should we force play blips? Used for the blips preview.
 	var/force_blips = FALSE
 
 

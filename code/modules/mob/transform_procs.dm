@@ -428,7 +428,7 @@
 	if(ispath(MP, /mob/living/basic/parrot))
 		return TRUE // Parrots are no longer unfinished!. -Nodrak
 
-	// Not in here?. Must be untested!
+	// Not in here? Must be untested!
 	return FALSE
 
 #undef PERMANENT_TRANSFORMATION_TRAIT

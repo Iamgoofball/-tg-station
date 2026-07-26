@@ -6,7 +6,7 @@
 /proc/make_datum_reference_lists()
 	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
 	init_keybindings()
-	GLOB.emote_list = init_emote_list() // WHY DOES THIS NEED TO GO HERE?. IT JUST INITS DATUMS
+	GLOB.emote_list = init_emote_list() // WHY DOES THIS NEED TO GO HERE? IT JUST INITS DATUMS
 	init_crafting_recipes()
 	init_crafting_recipes_atoms()
 

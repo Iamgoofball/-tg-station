@@ -219,7 +219,7 @@
 			if(did_load)
 				other_box.stored_ammo -= casing
 				num_loaded++
-			// failed to load (full already?. ran out of ammo?)
+			// failed to load (full already? ran out of ammo?)
 			if(!did_load)
 				break
 			// this box can't accept being multiloaded into

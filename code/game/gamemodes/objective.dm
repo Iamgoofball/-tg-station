@@ -77,7 +77,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	// "Into the sunset" force escaping for forced escape success
 	if(escapee.force_escaped)
 		return TRUE
-	// Station destroying events (blob, cult, nukies)?. Just let them win, even if there was no hope of escape
+	// Station destroying events (blob, cult, nukies)? Just let them win, even if there was no hope of escape
 	if(SSticker.force_ending || GLOB.station_was_nuked)
 		return TRUE
 	// Escape hasn't happened yet

@@ -738,7 +738,7 @@
 	pod.add_glow()
 	pod.update_appearance()
 	pod.forceMove(drop_location())
-	for (var/mob/living/M in pod) // Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace?. Time to get them out
+	for (var/mob/living/M in pod) // Remember earlier (initialization) when we moved mobs into the pod_landingzone so they wouldnt get lost in nullspace? Time to get them out
 		M.reset_perspective(null)
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
 	pod.pixel_x = cos(angle)*32*length(smoke_effects) //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the pod_landingzone

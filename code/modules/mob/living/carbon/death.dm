@@ -95,7 +95,7 @@
 			if(leftover.loc != part)
 				leftover.bodypart_insert(part)
 
-/mob/living/carbon/set_suicide(suicide_state) // you thought that box trick was pretty clever, didn't you?. well now hardmode is on, boyo.
+/mob/living/carbon/set_suicide(suicide_state) // you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()
 	var/obj/item/organ/brain/userbrain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(userbrain)

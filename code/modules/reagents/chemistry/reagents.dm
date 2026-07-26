@@ -42,7 +42,7 @@
 	var/reagent_weight = 1
 	///is it currently metabolizing
 	var/metabolizing = FALSE
-	/// Are we from a material?. We might want to know that for special stuff.. Like metalgen.. Is replaced with a ref of the material on New()
+	/// Are we from a material? We might want to know that for special stuff.. Like metalgen.. Is replaced with a ref of the material on New()
 	var/datum/material/material
 	///The set of exposure methods this penetrates skin with.
 	var/penetrates_skin = VAPOR

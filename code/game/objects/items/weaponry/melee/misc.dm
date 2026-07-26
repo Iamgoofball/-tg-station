@@ -509,7 +509,7 @@
 		MODIFY_ATTACK_FORCE(attack_modifiers, 29)
 	else if(ismoth(target))
 		MODIFY_ATTACK_FORCE(attack_modifiers, 9)
-	else // ??. Whatever
+	else // ?? Whatever
 		MODIFY_ATTACK_FORCE(attack_modifiers, 14)
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)

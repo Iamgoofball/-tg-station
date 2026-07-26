@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergency_last_call_loc
 	/// How many times was the escape shuttle called?
 	var/emergencyCallAmount = 0
-	/// Is the departure of the shuttle currently prevented?. FALSE for no, any other number for yes (thanks shuttle code).
+	/// Is the departure of the shuttle currently prevented? FALSE for no, any other number for yes (thanks shuttle code).
 	var/emergency_no_escape = FALSE
 	/// Do we prevent the recall of the shuttle?
 	var/emergency_no_recall = FALSE
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(shuttle)
 	/// The turf reservation for the current previewed shuttle.
 	var/datum/turf_reservation/preview_reservation
 
-	/// Are we currently in the process of loading a shuttle?. Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
+	/// Are we currently in the process of loading a shuttle? Useful to ensure we don't load more than one at once, to avoid weird inconsistencies and possible runtimes.
 	var/shuttle_loading
 	/// Did the supermatter start a cascade event?
 	var/supermatter_cascade = FALSE
@@ -467,7 +467,7 @@ SUBSYSTEM_DEF(shuttle)
 		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
 	return TRUE
 
-/// Can this user recall the emergency shuttle?. Returns TRUE if they can, otherwise returns FALSE.
+/// Can this user recall the emergency shuttle? Returns TRUE if they can, otherwise returns FALSE.
 /datum/controller/subsystem/shuttle/proc/can_recall(mob/user)
 	if(isnull(emergency) || emergency.mode != SHUTTLE_CALL)
 		return FALSE
@@ -481,7 +481,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	return past_restriction_point()
 
-/// Are we past the restriction point (i.e.. more than half of the shuttle timer has elapsed) for recalling the shuttle?. Returns TRUE if we are, FALSE otherwise.
+/// Are we past the restriction point (i.e.. more than half of the shuttle timer has elapsed) for recalling the shuttle? Returns TRUE if we are, FALSE otherwise.
 /datum/controller/subsystem/shuttle/proc/past_restriction_point()
 	var/security_num = SSsecurity_level.get_current_level_as_number()
 	switch(security_num)

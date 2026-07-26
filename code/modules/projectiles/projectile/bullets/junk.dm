@@ -9,7 +9,7 @@
 	var/extra_damage_mob_biotypes = MOB_ROBOTIC
 	/// How much do we multiply our total base damage?
 	var/extra_damage_multiplier = 1.5
-	/// How much extra damage do we do on top of this total damage?. Separate from the multiplier and unaffected by it.
+	/// How much extra damage do we do on top of this total damage? Separate from the multiplier and unaffected by it.
 	var/extra_damage_added_damage = 0
 	/// What damage type is our extra damage?
 	var/extra_damage_type = BRUTE

@@ -8,7 +8,7 @@
 	name = "base manufacture receiving type"
 	desc = "this shouldnt exist"
 	density = TRUE
-	/// Do we add the simple_rotation component and a text that we are powered by cable?. Also allows unwrenching
+	/// Do we add the simple_rotation component and a text that we are powered by cable? Also allows unwrenching
 	var/may_be_moved = TRUE
 	/// Allow taking in mobs from conveyors?
 	var/allow_mob_bump_intake = FALSE

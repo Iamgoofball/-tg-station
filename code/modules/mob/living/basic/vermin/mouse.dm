@@ -261,7 +261,7 @@
 		ADD_TRAIT(src, TRAIT_BEING_SHOCKED, TRAIT_GENERIC)
 		// Unfortunately we can't check the return value of electrocute_act before displaying a message,
 		// as it's possible the damage from electrocution results in our hunter being deleted.
-		// But what are the odds of the shock failing?. Hahaha...
+		// But what are the odds of the shock failing? Hahaha...
 		electrocute_act(maxHealth * 2, cable, flags = SHOCK_SUPPRESS_MESSAGE)
 
 	else

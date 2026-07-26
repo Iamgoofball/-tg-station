@@ -156,7 +156,7 @@
 	var/displayed_currency_name = MONEY_SYMBOL
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
-	/// How many credits does this vending machine have?. 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted.. Lost on deconstruction.
+	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted.. Lost on deconstruction.
 	var/credits_contained = 0
 	/**
 	  * Is this item on station or not

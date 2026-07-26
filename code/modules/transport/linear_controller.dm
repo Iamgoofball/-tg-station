@@ -133,7 +133,7 @@
 
 ///orders the lift platforms in order of lowest z level to highest z level.
 /datum/transport_controller/linear/proc/order_platforms_by_z_level()
-	// contains nested lists for every z level in the world.. why?. because its really easy to sort
+	// contains nested lists for every z level in the world.. why? because its really easy to sort
 	var/list/platforms_by_z = list()
 	platforms_by_z.len = world.maxz
 
@@ -369,7 +369,7 @@
 	for(var/turf/moving in lift_locs)
 		// Find what's below the turf that's moving
 		var/turf/below_us = get_step_multiz(moving, DOWN)
-		// Hold up the turf below us is also in our locs list.. Multi-z?. Don't show a warning
+		// Hold up the turf below us is also in our locs list.. Multi-z? Don't show a warning
 		if(below_us in lift_locs)
 			continue
 		// Display the warning for until we land

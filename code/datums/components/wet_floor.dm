@@ -11,7 +11,7 @@
 	var/current_overlay
 	var/permanent = FALSE
 	var/last_process = 0
-	/// Should we display an overlay for this component?. Useful mainly for turfs
+	/// Should we display an overlay for this component? Useful mainly for turfs
 	/// that already look wets or just don't need the visuals for any other reason.
 	var/should_display_overlay = TRUE
 

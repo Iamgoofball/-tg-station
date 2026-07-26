@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/pet_command/follow,
 		/datum/pet_command/fetch,
 	)
-	/// Can we wear a collar?. If so, what is our icon state prefix for it?
+	/// Can we wear a collar? If so, what is our icon state prefix for it?
 	var/collar_state = "raptor"
 	/// Raptor color datum assigned to this raptor, this is a singleton
 	var/datum/raptor_color/raptor_color = null

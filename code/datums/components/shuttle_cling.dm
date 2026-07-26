@@ -127,7 +127,7 @@
 				return CLINGING
 	return NOT_HOLDING_ON
 
-/// Are we on a hyperspace tile?. There's some special bullshit with lattices so we just wrap this check
+/// Are we on a hyperspace tile? There's some special bullshit with lattices so we just wrap this check
 /datum/component/shuttle_cling/proc/is_on_hyperspace(atom/movable/clinger)
 	if(istype(clinger.loc, hyperspace_type) && !HAS_TRAIT(clinger.loc, TRAIT_HYPERSPACE_STOPPED))
 		return TRUE

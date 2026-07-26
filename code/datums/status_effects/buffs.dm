@@ -222,7 +222,7 @@
 	if(HAS_TRAIT(new_owner, TRAIT_FAT)) // less xp until you get into shape
 		modifier -= 0.5
 
-	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods?. yes please!
+	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods? yes please!
 		modifier += 3
 
 	if(new_owner.reagents.has_reagent(/datum/reagent/inverse/oxandrolone)) // MOREEEEE

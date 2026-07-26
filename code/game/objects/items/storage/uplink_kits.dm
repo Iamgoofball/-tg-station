@@ -750,7 +750,7 @@
 	new /obj/item/pen/edagger(src) // 2 TC
 	// The necessary equipment to help secure that disky.
 	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
-	new /obj/item/modular_computer/pda/nukeops(src) // ??. TC / Free for nukies
+	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
 	new /obj/item/card/id/advanced/chameleon/elite(src) // 2 TC / Free for nukies
 	var/obj/item/clothing/suit/space/syndicate/spess_suit = pick(GLOB.syndicate_space_suits_to_helmets)
 	new spess_suit(src) // Above allows me to get the helmet from a variable on the object

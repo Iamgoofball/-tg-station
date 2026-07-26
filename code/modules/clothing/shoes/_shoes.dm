@@ -22,7 +22,7 @@
 	/// How do these shoes stay on?
 	var/fastening_type = SHOES_LACED
 
-	/// Are we currently tied?. Can either be SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED
+	/// Are we currently tied? Can either be SHOES_UNTIED, SHOES_TIED, or SHOES_KNOTTED
 	var/tied = SHOES_TIED
 	///How long it takes to lace/unlace these shoes
 	var/lace_time = 5 SECONDS

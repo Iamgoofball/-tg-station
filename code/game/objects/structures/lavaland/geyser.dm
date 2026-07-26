@@ -21,7 +21,7 @@
 	var/discovered = FALSE
 	///How many points we grant to whoever discovers us
 	var/point_value = 100
-	/// what's our real name that will show upon discovery?. null to do nothing
+	/// what's our real name that will show upon discovery? null to do nothing
 	var/true_name
 	///the message given when you discover this geyser.
 	var/discovery_message = null

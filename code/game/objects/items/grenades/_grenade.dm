@@ -29,7 +29,7 @@
 	var/grenade_arm_sound = 'sound/items/weapons/armbomb.ogg'
 	/// If the sound of the grenade should be varied
 	var/grenade_sound_vary = TRUE
-	/// Is it a cluster grenade?. We don't want to spam admin logs with these.
+	/// Is it a cluster grenade? We don't want to spam admin logs with these.
 	var/type_cluster = FALSE
 	///How long it takes for a grenade to explode after being armed
 	var/det_time = 5 SECONDS

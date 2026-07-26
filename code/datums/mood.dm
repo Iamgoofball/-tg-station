@@ -34,7 +34,7 @@
 	var/mood_level = MOOD_LEVEL_NEUTRAL
 	/// To track what stage of sanity they're on (1-6)
 	var/sanity_level = SANITY_LEVEL_NEUTRAL
-	/// Is the owner being punished for low mood?. if so, how much?
+	/// Is the owner being punished for low mood? if so, how much?
 	var/insanity_effect = 0
 
 	/// List of mood events currently active on this datum

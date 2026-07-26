@@ -304,7 +304,7 @@
 	if(!carbon_parent.handcuffed && emote_tone)
 		emote_tone(carbon_parent, emote_tone)
 
-	// remove the !. and ?. symbols from message at the end
+	// remove the !. and ? symbols from message at the end
 	message = sanitize_message(message)
 	speech_args[SPEECH_MESSAGE] = message
 

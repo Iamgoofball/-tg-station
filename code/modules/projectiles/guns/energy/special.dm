@@ -154,7 +154,7 @@
 	user.adjust_fire_stacks(4)
 	user.ignite_mob()
 
-// Can we weld?. Plasma cutter does not use charge continuously.
+// Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount, heat_required)
 	if(QDELETED(cell))

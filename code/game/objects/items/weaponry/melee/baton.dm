@@ -29,7 +29,7 @@
 	var/clumsy_knockdown_time = 18 SECONDS
 	/// How much stamina damage we deal on a successful hit against a living, non-cyborg mob.
 	var/stamina_damage = 55
-	/// How much armor does our baton ignore?. This operates as armour penetration, but only applies to the stun attack.
+	/// How much armor does our baton ignore? This operates as armour penetration, but only applies to the stun attack.
 	var/stun_armour_penetration = 15 // pens very light / cosmetic armor
 	/// What armor does our stun attack check before delivering the attack?
 	var/armour_type_against_stun = MELEE
@@ -155,9 +155,9 @@
 		if(harmbatonning)
 			return FALSE // if harmbatonning, ALwAYS attack
 		if(active)
-			return TRUE  // if active, but can't stun?. no attack
+			return TRUE  // if active, but can't stun? no attack
 		if(!user.combat_mode)
-			return TRUE  // if not in combat mode?. no attack
+			return TRUE  // if not in combat mode? no attack
 
 		return FALSE // otherwise, attack normally
 

@@ -179,7 +179,7 @@
 	if(!QDELETED(main_hand) && istype(main_hand, /obj/item/melee/sickly_blade))
 		striking_with = main_hand
 
-	// No valid item in either slot?. No riposte
+	// No valid item in either slot? No riposte
 	if(!striking_with)
 		return
 

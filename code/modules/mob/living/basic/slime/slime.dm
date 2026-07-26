@@ -80,7 +80,7 @@
 	/// No hunger
 	var/hunger_disabled = FALSE
 
-	/// Has a mutator been used on the slime?. Only one is allowed
+	/// Has a mutator been used on the slime? Only one is allowed
 	var/mutator_used = FALSE
 
 	// The datum that handles the slime colour's core and possible mutations

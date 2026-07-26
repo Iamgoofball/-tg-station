@@ -356,7 +356,7 @@
 	if(candidate.body_position == LYING_DOWN)
 		return
 
-	// No longer lying down?. You're no longer eligible to take the offer, sorry!
+	// No longer lying down? You're no longer eligible to take the offer, sorry!
 	remove_candidate(candidate)
 
 /// Subtype for high fives, so we can fake out people

@@ -179,7 +179,7 @@ Industrial extracts:
 	plasmarequired = 4
 	itempath = /obj/item/grenade/iedcasing/spawned
 
-/obj/item/slimecross/industrial/black // What does this have to do with black slimes?. No clue!. Fun, though
+/obj/item/slimecross/industrial/black // What does this have to do with black slimes? No clue!. Fun, though
 	colour = SLIME_TYPE_BLACK
 	effect_desc = "Produces slime brand regenerative cigarettes."
 	plasmarequired = 6

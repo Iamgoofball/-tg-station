@@ -26,7 +26,7 @@
 	. = ..()
 	if (!. || !uses_skin_color)
 		return
-	return check.skin_color == skin_color // segregation, in my human butcher shop?. how queer!
+	return check.skin_color == skin_color // segregation, in my human butcher shop? how queer!
 
 /obj/item/stack/sheet/animalhide/carbon/proc/set_skin_color(new_skin_color)
 	skin_color = new_skin_color

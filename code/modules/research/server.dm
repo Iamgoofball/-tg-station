@@ -114,7 +114,7 @@
 	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
-/// Master R&D server.. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed.. Destroy it or an antag steals the HDD?. Half research speed.
+/// Master R&D server.. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed.. Destroy it or an antag steals the HDD? Half research speed.
 /obj/machinery/rnd/server/master
 	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
 	circuit = null

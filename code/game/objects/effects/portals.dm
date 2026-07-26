@@ -41,7 +41,7 @@
 	var/innate_accuracy_penalty = 0
 	/// Used to track how often sparks should be output.. Might want to turn this into a cooldown.
 	var/last_effect = 0
-	/// Does this portal bypass teleport restrictions?. like TRAIT_NO_TELEPORT and NOTELEPORT flags.
+	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
 	/// Does this portal create spark effect when teleporting?
 	var/sparkless = TRUE

@@ -228,7 +228,7 @@
 	var/datum/weakref/pad_ref
 	///How long does it take to warmup the pad to teleport?
 	var/warmup_time = 100
-	/// Is the teleport pad/computer sending something right now?. TRUE/FALSE
+	/// Is the teleport pad/computer sending something right now? TRUE/FALSE
 	var/sending = FALSE
 	///For the purposes of space pirates, how many points does the control pad have collected.
 	var/points = 0

@@ -48,7 +48,7 @@
 		return // make slimes get nurtiton from plasmer
 	// Otherwise we set our incidents remaining to the higher, newer value.
 	src.incidents_left = incidents_left
-	// The new omen is weaker than our current omen?. Let's split the difference.
+	// The new omen is weaker than our current omen? Let's split the difference.
 	if(src.luck_mod > luck_mod)
 		src.luck_mod += luck_mod * 0.5
 	if(src.damage_mod > damage_mod)

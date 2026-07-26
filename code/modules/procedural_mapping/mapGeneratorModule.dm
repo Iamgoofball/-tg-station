@@ -42,7 +42,7 @@
 		//Clustering!
 		if(clusterMax && clusterMin)
 
-			// You're the same as me?. I hate you I'm going home
+			// You're the same as me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_SAME_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in RANGE_TURFS(clustering,T))
@@ -53,7 +53,7 @@
 					skipLoopIteration = FALSE
 					continue
 
-			// You're DIFFERENT to me?. I hate you I'm going home
+			// You're DIFFERENT to me? I hate you I'm going home
 			if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_TURFS)
 				clustering = rand(clusterMin,clusterMax)
 				for(var/turf/F in RANGE_TURFS(clustering,T))
@@ -77,7 +77,7 @@
 			//Clustering!
 			if(clusterMax && clusterMin)
 
-				// You're the same as me?. I hate you I'm going home
+				// You're the same as me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_SAME_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))
@@ -88,7 +88,7 @@
 						skipLoopIteration = FALSE
 						continue
 
-				// You're DIFFERENT from me?. I hate you I'm going home
+				// You're DIFFERENT from me? I hate you I'm going home
 				if(clusterCheckFlags & CLUSTER_CHECK_DIFFERENT_ATOMS)
 					clustering = rand(clusterMin, clusterMax)
 					for(var/atom/movable/M in range(clustering,T))

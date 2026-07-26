@@ -47,7 +47,7 @@
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(!activation_signal) // Can't activate?. go away
+	if(!activation_signal) // Can't activate? go away
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, activation_signal, PROC_REF(activate))

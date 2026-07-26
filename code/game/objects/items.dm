@@ -1127,7 +1127,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 	if(!QDELETED(target_holder))
 		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
-/// What should The atom that blended an object do with it afterwards?. Default behaviour is to delete it
+/// What should The atom that blended an object do with it afterwards? Default behaviour is to delete it
 /atom/movable/proc/blended(obj/item/blended_item, grinded)
 	qdel(blended_item)
 
@@ -1386,9 +1386,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		return discover_after
 
 	if(custom_materials?.len) //if we've got materials, let's see what's in it
-		// How many mats have we found?. You can only be affected by two material datums by default
+		// How many mats have we found? You can only be affected by two material datums by default
 		var/found_mats = 0
-		// How much of each material is in it?. Used to determine if the glass should break
+		// How much of each material is in it? Used to determine if the glass should break
 		var/total_material_amount = 0
 
 		for(var/mats in custom_materials)

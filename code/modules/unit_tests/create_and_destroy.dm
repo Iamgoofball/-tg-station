@@ -21,7 +21,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	// This code is responsible for splitting up create & destroy across multiple integration tests.
 	var/total_amount_to_check = length(type_paths_to_check)
 #ifdef RUNNING_LOCAL_TESTS
-	// not ci?. do everything
+	// not ci? do everything
 	var/start_index = 0
 	var/end_index = total_amount_to_check
 #else

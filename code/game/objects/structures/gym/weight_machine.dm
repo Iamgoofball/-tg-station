@@ -201,7 +201,7 @@
 
 	var/affected_gravity = user.has_gravity()
 	if (!affected_gravity)
-		return TRUE // No weight?. I could do this all day
+		return TRUE // No weight? I could do this all day
 	var/gravity_modifier = affected_gravity > STANDARD_GRAVITY ? 0.75 : 1
 	// the amount of workouts you can do before you hit stamcrit
 	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/athletics)] * gravity_modifier

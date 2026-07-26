@@ -50,7 +50,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/effectAnnounce = TRUE
 	var/numTurfs = 0 //Counts the number of turfs with things we can launch in the chosen bay (in the centcom map)
 	var/launchCounter = 1 //Used with the "Ordered" launch mode (launchChoice = 1) to see what item is launched
-	var/atom/specificTarget // Do we want to target a specific mob instead of where we click?. Also used for smiting
+	var/atom/specificTarget // Do we want to target a specific mob instead of where we click? Also used for smiting
 	var/list/orderedArea = list() // Contains an ordered list of turfs in an area (filled in the createOrderedArea() proc), read top-left to bottom-right.. Used for the "ordered" launch mode (launchChoice = 1)
 	var/list/turf/acceptableTurfs = list() // Contians a list of turfs (in the "bay" area on centcom) that have items that can be launched.. Taken from orderedArea
 	var/list/launchList = list() // Contains whatever is going to be put in the supplypod and fired.. Taken from acceptableTurfs

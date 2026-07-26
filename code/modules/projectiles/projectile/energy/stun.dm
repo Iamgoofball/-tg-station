@@ -76,7 +76,7 @@
 	on_remove_on_mob_delete = TRUE
 	/// What atom is tasing us?
 	VAR_PRIVATE/datum/taser
-	/// What atom is using the atom tasing us?. Sometimes the same as the taser, such as with turrets.
+	/// What atom is using the atom tasing us? Sometimes the same as the taser, such as with turrets.
 	VAR_PRIVATE/atom/movable/firer
 	/// The beam datum representing the taser electrodes
 	VAR_PRIVATE/datum/beam/tase_line

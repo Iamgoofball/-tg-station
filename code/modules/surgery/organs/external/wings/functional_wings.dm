@@ -163,7 +163,7 @@
 
 ///Bodypart overlay of function wings, including open and close functionality!
 /datum/bodypart_overlay/mutant/wings/functional
-	/// Are our wings currently open?. Change through open_wings or close_wings()
+	/// Are our wings currently open? Change through open_wings or close_wings()
 	VAR_PRIVATE/wings_open = FALSE
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()

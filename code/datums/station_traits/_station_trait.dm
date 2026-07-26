@@ -21,7 +21,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/show_in_report = FALSE
 	///What message to show in the centcom report?
 	var/report_message
-	/// What code-trait does this station trait give?. gives none if null
+	/// What code-trait does this station trait give? gives none if null
 	var/trait_to_give
 	///What traits are incompatible with this one?
 	var/blacklist

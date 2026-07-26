@@ -14,7 +14,7 @@
 	var/datum/can_pass_info/pass_info
 	/// Were we allowed to path over space?
 	var/pass_space = TRUE
-	/// Were we avoiding a turf?. If so, which one?
+	/// Were we avoiding a turf? If so, which one?
 	var/turf/avoid
 	/// Are we currently being expanded?
 	var/expanding = FALSE
@@ -244,7 +244,7 @@
 				return TRUE
 			continue
 		for(var/turf/adjacent in TURF_NEIGHBORS(next_turf))
-			// Already have a path?. then we're gooood baby
+			// Already have a path? then we're gooood baby
 			if(working_queue[adjacent])
 				continue
 
@@ -263,7 +263,7 @@
 						working_queue[vertical_move] = next_turf
 						working_distances += distance
 					else
-						// Can't do a vertical move?. let's do a horizontal move first
+						// Can't do a vertical move? let's do a horizontal move first
 						if(!working_queue[horizontal_move])
 							working_queue[horizontal_move] = next_turf
 							working_distances += distance

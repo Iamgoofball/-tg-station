@@ -173,7 +173,7 @@
 	if(disassembled)
 		if(spawn_pipe)
 			var/obj/structure/disposalconstruct/construct = stored
-			if(!construct) // Don't have something?. Make one now
+			if(!construct) // Don't have something? Make one now
 				construct = new /obj/structure/disposalconstruct(src, null, SOUTH, FALSE, src)
 			stored = null
 			construct.forceMove(loc)

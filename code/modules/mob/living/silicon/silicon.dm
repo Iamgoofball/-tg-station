@@ -36,7 +36,7 @@
 	///List keeping track of ion laws to announce
 	var/list/ioncheck = list()
 
-	/// Are our siliconHUDs on?. TRUE for yes, FALSE for no.
+	/// Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
 	var/list/silicon_huds = list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, TRAIT_DIAGNOSTIC_HUD)
 

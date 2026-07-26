@@ -390,7 +390,7 @@
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)
-		// Are we trying to pull something we are already pulling?. Then just stop here, no need to continue.
+		// Are we trying to pull something we are already pulling? Then just stop here, no need to continue.
 		if(AM == pulling)
 			return FALSE
 		stop_pulling()
@@ -1318,7 +1318,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		return FALSE
 	if(onSyndieBase() && !(ROLE_SYNDICATE in user?.faction))
 		return FALSE
-	// Now, are they viewable by a camera?. (This is last because it's the most intensive check)
+	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!SScameras.is_visible_by_cameras(src))
 		return FALSE
 	return TRUE

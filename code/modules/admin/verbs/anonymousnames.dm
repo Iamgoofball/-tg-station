@@ -190,7 +190,7 @@ GAME_VERB_PROC(/client, anon_names, "Setup Anonymous Names", "Admin.Events")
 	return "[wizard_name_first] [wizard_name_second]"
 
 /datum/anonymous_theme/wizards/anonymous_ai_name(is_ai = FALSE)
-	return "Crystallized Knowledge [is_ai ? "Nexus" : "Sliver"] +[rand(1,99)]" // Could two people roll the same number?. Yeah, probably.. Do I CARE?. Nawww
+	return "Crystallized Knowledge [is_ai ? "Nexus" : "Sliver"] +[rand(1,99)]" // Could two people roll the same number? Yeah, probably.. Do I CARE? Nawww
 
 /datum/anonymous_theme/spider_clan
 	name = "Spider Clan"

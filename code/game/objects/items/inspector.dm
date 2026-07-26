@@ -29,7 +29,7 @@
 	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/crap
 	///Cell cover status
 	var/cell_cover_open = FALSE
-	/// Does this item scan for contraband correctly?. If not, will provide a flipped response.
+	/// Does this item scan for contraband correctly? If not, will provide a flipped response.
 	var/scans_correctly = TRUE
 
 /obj/item/inspector/Initialize(mapload)

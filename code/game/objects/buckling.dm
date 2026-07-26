@@ -312,7 +312,7 @@
  * * check_loc - TRUE if src and M have to be on the same turf, false otherwise
  */
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	// Is buckling even possible?. Do a full suite of checks.
+	// Is buckling even possible? Do a full suite of checks.
 	if(!is_user_buckle_possible(M, user, check_loc))
 		return FALSE
 

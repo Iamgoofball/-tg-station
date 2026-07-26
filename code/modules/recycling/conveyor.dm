@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/id = ""
 	/// Inverts the direction the conveyor belt moves when true.
 	var/inverted = FALSE
-	/// Is the conveyor's belt flipped?. Useful mostly for conveyor belt corners.. It makes the belt point in the other direction, rather than just going in reverse.
+	/// Is the conveyor's belt flipped? Useful mostly for conveyor belt corners.. It makes the belt point in the other direction, rather than just going in reverse.
 	var/flipped = FALSE
 	/// Are we currently conveying items?
 	var/conveying = FALSE

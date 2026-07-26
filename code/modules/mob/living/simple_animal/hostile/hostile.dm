@@ -326,7 +326,7 @@
 			LoseTarget()
 			return 0
 		var/target_distance = get_dist(target_from,target)
-		if(ranged) // We ranged?. Shoot at em
+		if(ranged) // We ranged? Shoot at em
 			if(!target.Adjacent(target_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
 		if(!Process_Spacemove(0)) //Drifting

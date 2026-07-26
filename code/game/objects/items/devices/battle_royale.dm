@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(battle_royale_regions, list(
 	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "nanite_hypo"
 	w_class = WEIGHT_CLASS_SMALL
-	/// Do we have a linked remote?. Just to prevent headdesk moments
+	/// Do we have a linked remote? Just to prevent headdesk moments
 	var/linked = FALSE
 
 /obj/item/royale_implanter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

@@ -1148,7 +1148,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(value)
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
-		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS // Just wait 10 seconds before the next one aight mate?. cheers.
+		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS // Just wait 10 seconds before the next one aight mate? cheers.
 	else
 		SSambience.remove_ambience_client(src)
 

@@ -221,7 +221,7 @@
 
 	// Breath has 0 moles of gas.
 	else if(can_breathe_vacuum)
-		// The mob can breathe anyways.. What are you?. Some bottom-feeding, scum-sucking algae eater?
+		// The mob can breathe anyways.. What are you? Some bottom-feeding, scum-sucking algae eater?
 		failed_last_breath = FALSE
 		// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
 		if(health >= crit_threshold)

@@ -819,7 +819,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3)
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
-	/// Is this a border_only firelock?. Used in several checks during construction
+	/// Is this a border_only firelock? Used in several checks during construction
 	var/directional = FALSE
 
 /obj/structure/firelock_frame/examine(mob/user)

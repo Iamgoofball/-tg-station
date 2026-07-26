@@ -5,7 +5,7 @@
 	var/name
 	/// Which typepath does this priority handle.
 	var/atom_typepath
-	/// Is this priority active?. If not, it will be ignored.
+	/// Is this priority active? If not, it will be ignored.
 	var/active = TRUE
 
 /datum/manipulator_priority/drop/on_floor

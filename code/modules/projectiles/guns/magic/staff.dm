@@ -190,7 +190,7 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = TRUE
-	school = SCHOOL_FORBIDDEN // this staff is evil.. okay?. it just is.. look at this projectile type list.. this is wrong.
+	school = SCHOOL_FORBIDDEN // this staff is evil.. okay? it just is.. look at this projectile type list.. this is wrong.
 
 	/// List of all projectiles we can fire from our staff.
 	/// Doesn't contain all subtypes of magic projectiles, unlike what it looks like

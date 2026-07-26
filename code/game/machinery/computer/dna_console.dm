@@ -458,7 +458,7 @@
 
 		// Scramble scanner occupant's DNA
 		if("scramble_dna")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			// GUARD CHECK - Is scramble DNA actually ready?
 			if(!can_modify_occupant() || !(scramble_ready < world.time) || HAS_TRAIT(scanner_occupant, TRAIT_NO_DNA_SCRAMBLE))
@@ -487,12 +487,12 @@
 		// params["alias"] - Alias of a mutation.. The alias is the "hidden" name of
 		// the mutation, for example "Mutation 5" or "Mutation 33"
 		if("check_discovery")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
 
-			// GUARD CHECK - Have we somehow cheekily swapped occupants?. This is
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			// unexpected.
 			if(!(scanner_occupant == connected_scanner.occupant))
 				return
@@ -506,12 +506,12 @@
 		// the mutation tabs and handle cases where mutations are solved but not
 		// discovered due to the Monkified mutation being active then removed.
 		if("all_check_discovery")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
 
-			// GUARD CHECK - Have we somehow cheekily swapped occupants?. This is
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			// unexpected.
 			if(!(scanner_occupant == connected_scanner.occupant))
 				return
@@ -532,18 +532,18 @@
 		// params["pos"] - The BYOND index of the letter in the gene sequence to be
 		// changed.
 		if("pulse_gene")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
 
-			// GUARD CHECK - Have we somehow cheekily swapped occupants?. This is
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			// unexpected.
 			if(!(scanner_occupant == connected_scanner.occupant))
 				return
 
 			// GUARD CHECK - Is the occupant currently undergoing some form of
-			// transformation?. If so, we don't want to be pulsing genes.
+			// transformation? If so, we don't want to be pulsing genes.
 			if(scanner_occupant.transformation_timer)
 				to_chat(usr,span_warning("Gene pulse failed: The scanner occupant undergoing a transformation."))
 				return
@@ -618,12 +618,12 @@
 		// params["mutref"] - ATOM Ref of specific mutation to apply the chromo to
 		// params["chromo"] - Name of the chromosome to apply to the mutation
 		if("apply_chromo")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
 
-			// GUARD CHECK - Have we somehow cheekily swapped occupants?. This is
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			// unexpected.
 			if(!(scanner_occupant == connected_scanner.occupant))
 				return
@@ -664,12 +664,12 @@
 		// "console" - From DNA Console storage
 		// "disk" - From inserted diskette
 		if("crispr")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
 
-			// GUARD CHECK - Have we somehow cheekily swapped occupants?. This is
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			// unexpected.
 			if(scanner_occupant != connected_scanner.occupant)
 				return
@@ -976,7 +976,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to nullify
 		if("nullify")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
@@ -1261,7 +1261,7 @@
 		// save the new genetic data to.. Expected as text string, converted to
 		// number later
 		if("save_makeup_console")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
@@ -1346,7 +1346,7 @@
 		// "uf" - Unique Features, changes mutant bodyparts and mutcolors
 		// "mixed" - Combination of ue, ui, and uf
 		if("makeup_apply")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
@@ -1419,7 +1419,7 @@
 		// params["index"] - The BYOND index of the Unique Identity string to
 		// try to modify
 		if("makeup_pulse")
-			// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			// operational guard checks.
 			if(!can_modify_occupant())
 				return
@@ -1934,7 +1934,7 @@
 	tgui_advinjector_mutations.Cut()
 
 	// ------------------------------------------------------------------------ //
-	// GUARD CHECK - Can we genetically modify the occupant?. This check will have
+	// GUARD CHECK - Can we genetically modify the occupant? This check will have
 	// previously included checks to make sure the DNA Scanner is still
 	// operational
 	if(can_modify_occ)
@@ -2284,7 +2284,7 @@
 		* there is a genetic damage pulse in progress. Ends processing.
 	  */
 /obj/machinery/computer/dna_console/proc/genetic_damage_pulse()
-	// GUARD CHECK - Can we genetically modify the occupant?. Includes scanner
+	// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 	// operational guard checks.
 	// If we can't, abort the procedure.
 	if(!can_modify_occupant() || (genetic_damage_pulse_type != GENETIC_DAMAGE_PULSE_UNIQUE_IDENTITY && genetic_damage_pulse_type != GENETIC_DAMAGE_PULSE_UNIQUE_FEATURES))

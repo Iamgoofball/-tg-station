@@ -35,7 +35,7 @@
 	var/datum/worn_feature_offset/worn_suit_offset
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
-	/// Which functional (i.e.. flightpotion) wing types (if any) does this bodypart support?. If count is >1 a radial menu is used to choose between all icons in list
+	/// Which functional (i.e.. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
 	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
 
 /obj/item/bodypart/chest/apply_ownership(mob/living/carbon/new_owner)
@@ -394,7 +394,7 @@
 	var/datum/worn_feature_offset/worn_foot_offset
 	/// Used by the bloodysoles component to make footprints
 	var/footprint_sprite = FOOTPRINT_SPRITE_SHOES
-	/// What does our footsteps (barefoot) sound like?. Only BAREFOOT, CLAW, HEAVY, and SHOE (or null, I guess) are valid
+	/// What does our footsteps (barefoot) sound like? Only BAREFOOT, CLAW, HEAVY, and SHOE (or null, I guess) are valid
 	var/footstep_type = FOOTSTEP_MOB_BAREFOOT
 	/// You can set this to a list of sounds to pick from when a footstep is played rather than use the footstep types
 	/// Needs special formatting: list(list(sounds, go, here), volume, range modifier)

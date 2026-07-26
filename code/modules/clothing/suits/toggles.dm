@@ -4,7 +4,7 @@
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 	/// Alternative mode f. Hiding the hood, instead of storing the hood in the suit it qdels it, useful f. When you deal with hooded suit with storage.
 	var/alternative_mode = FALSE
-	/// What should be added to the end of the icon state when the hood is up?. Set to "" for the suit sprite to not change at all
+	/// What should be added to the end of the icon state when the hood is up? Set to "" for the suit sprite to not change at all
 	var/hood_up_affix = "_t"
 	/// Icon state added as a worn overlay while the hood is down, leave as "" for no overlay
 	var/hood_down_overlay_suffix = ""

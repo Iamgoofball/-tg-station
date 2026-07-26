@@ -203,7 +203,7 @@
 		return
 	if(!borghead)
 		borghead = human_user.head
-	if(!istype(borghead, /obj/item/clothing/head/costume/cardborg)) // why is this done this way?. because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
+	if(!istype(borghead, /obj/item/clothing/head/costume/cardborg)) // why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
 		return
 	RegisterSignal(borghead, COMSIG_ITEM_DROPPED, PROC_REF(helmet_drop)) // Don't need to worry about qdeleting since dropped will be called from there
 	in_use = TRUE

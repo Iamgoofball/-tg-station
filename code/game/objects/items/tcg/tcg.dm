@@ -13,7 +13,7 @@
 	var/series = "coderbus"
 	///Is the card flipped?
 	var/flipped = FALSE
-	/// Has this card been "tapped"?. Also known as is it horizontal?
+	/// Has this card been "tapped"? Also known as is it horizontal?
 	var/tapped = FALSE
 	///Cached icon used for inspecting the card
 	var/icon/cached_flat_icon

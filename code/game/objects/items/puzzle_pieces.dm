@@ -323,7 +323,7 @@
 	var/id //null would literally open every puzzle door without an id
 	/// queue size, must match count of objects this activates!
 	var/queue_size = 2
-	/// should the puzzle machinery perform the final step of the queue link on LateInitialize?. An alternative to queue size
+	/// should the puzzle machinery perform the final step of the queue link on LateInitialize? An alternative to queue size
 	var/late_initialize_pop = FALSE
 
 /obj/machinery/puzzle/get_save_vars()

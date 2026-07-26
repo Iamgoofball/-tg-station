@@ -458,7 +458,7 @@
 			span_hear("You hear ratchet."))
 		investigate_log("was [span_warning("REMOVED")] by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-		// You unwrenched a pipe full of pressure?. Let's splat you into the wall, silly.
+		// You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 		if(unsafe_wrenching)
 			unsafe_pressure_release(user, internal_pressure)
 		deconstruct(TRUE)

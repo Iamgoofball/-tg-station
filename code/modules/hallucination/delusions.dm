@@ -20,7 +20,7 @@
 	/// The icon state of the delusion image
 	var/delusion_icon_state
 
-	/// Do we use an appearance/generated icon?. If yes no icon file or state needed.
+	/// Do we use an appearance/generated icon? If yes no icon file or state needed.
 	var/dynamic_delusion = FALSE
 	/// Appearance to use as a source for our image
 	/// If this exists we'll ignore the icon/state from above

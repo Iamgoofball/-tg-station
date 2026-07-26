@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(ambience)
 		if(!client_mob || isnewplayer(client_mob))
 			continue
 
-		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) // WHAT?. I CAN'T HEAR YOU
+		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) // WHAT? I CAN'T HEAR YOU
 			continue
 
 		//Check to see if the client-mob is in a valid area

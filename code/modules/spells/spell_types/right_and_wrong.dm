@@ -255,7 +255,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
  * If Summon Events has already been triggered, speeds up the event timer.
  */
 /proc/summon_events(mob/user)
-	// Already in wiz-mode?. Speed er up
+	// Already in wiz-mode? Speed er up
 	if(SSevents.wizardmode)
 		SSevents.frequency_upper -= 1 MINUTES //The upper bound falls a minute each time, making the AVERAGE time between events lessen
 		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 		message_admins("Summon Events intensifies, events will now occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes.")
 
-	// Not in wiz-mode?. Get this show on the road
+	// Not in wiz-mode? Get this show on the road
 	else
 		SSevents.frequency_lower = 1 MINUTES //1 minute lower bound
 		SSevents.frequency_upper = 5 MINUTES //5 minutes upper bound

@@ -393,7 +393,7 @@
 /mob/living/basic/revenant/proc/incorporeal_move_check(atom/destination)
 	var/turf/open/floor/step_turf = get_turf(destination)
 	if(isnull(step_turf))
-		return TRUE // what?. whatever let it happen
+		return TRUE // what? whatever let it happen
 
 	if(step_turf.turf_flags & NOJAUNT)
 		to_chat(src, span_warning("Some strange aura is blocking the way."))

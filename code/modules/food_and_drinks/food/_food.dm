@@ -42,7 +42,7 @@
 	var/bite_consumption
 	///Type of atom thats spawned after eating this item
 	var/trash_type
-	/// How much junkiness this food has?. God I should remove junkiness soon
+	/// How much junkiness this food has? God I should remove junkiness soon
 	var/junkiness
 	///Price of this food if sold in a venue
 	var/venue_value

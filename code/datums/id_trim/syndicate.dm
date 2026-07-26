@@ -40,7 +40,7 @@
 	big_pointer = TRUE
 	pointer_color = COLOR_SYNDIE_RED_HEAD
 
-/// Trim for the space IRS agents (why are they syndie access?. I wouldn't worry about it.)
+/// Trim for the space IRS agents (why are they syndie access? I wouldn't worry about it.)
 /datum/id_trim/syndicom/irs
 	assignment = "Internal Revenue Service Agent"
 	trim_state = "trim_securityofficer"

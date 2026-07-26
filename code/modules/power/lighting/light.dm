@@ -543,7 +543,7 @@
 	if(flickering || !on || status != LIGHT_OK)
 		return
 
-	. = TRUE // did we actually flicker?. Send this now because we expect immediate response, before sleeping.
+	. = TRUE // did we actually flicker? Send this now because we expect immediate response, before sleeping.
 	set_light(
 		l_range = brightness * bulb_low_power_brightness_mul,
 		l_power = bulb_low_power_pow_mul,

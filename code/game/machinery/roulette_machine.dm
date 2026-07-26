@@ -301,7 +301,7 @@
 	var/coin_to_drop
 
 	for(var/i in coins_to_dispense) //Find which coin to drop
-		if(coins_to_dispense[i] <= 0) // Less than 1?. go to next potential coin.
+		if(coins_to_dispense[i] <= 0) // Less than 1? go to next potential coin.
 			continue
 		coin_to_drop = i
 		break

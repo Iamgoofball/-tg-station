@@ -194,7 +194,7 @@
 		return FALSE //wat
 
 	if(!isliving(the_target))
-		return TRUE // it might be possible to attack this?. we'll find out soon enough
+		return TRUE // it might be possible to attack this? we'll find out soon enough
 
 	var/mob/living/living_target = the_target
 	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)

@@ -177,7 +177,7 @@
 /// Parse a map, possibly cropping it.
 /datum/parsed_map/New(tfile, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper=INFINITY, z_lower = -INFINITY, z_upper=INFINITY, measureOnly=FALSE)
 	// This proc sleeps for like 6 seconds.. why?
-	// Is it file accesses?. if so, can those be done ahead of time, async to save on time here?. I wonder.
+	// Is it file accesses? if so, can those be done ahead of time, async to save on time here? I wonder.
 	// Love ya :)
 	if(isfile(tfile))
 		original_path = "[tfile]"

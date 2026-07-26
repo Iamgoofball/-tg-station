@@ -71,7 +71,7 @@
 	resistance_flags = FLAMMABLE
 	bar_material = WOOD
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
-	/// When destroyed or deconstructed, how many planks of wood does our barricade drop?. Also determines how many it takes to repair the barricade and by how much.
+	/// When destroyed or deconstructed, how many planks of wood does our barricade drop? Also determines how many it takes to repair the barricade and by how much.
 	var/drop_amount = 3
 
 /obj/structure/barricade/wooden/Initialize(mapload)

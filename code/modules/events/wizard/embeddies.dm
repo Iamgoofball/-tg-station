@@ -89,7 +89,7 @@ GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
 /datum/global_funny_embedding/pointy
 	prefix = "pointy"
 
-/// everything will be.... sticky?. sure, why not
+/// everything will be.... sticky? sure, why not
 /datum/global_funny_embedding/sticky
 	embed_type = /datum/embedding/global_funny/sticky
 	prefix = "sticky"

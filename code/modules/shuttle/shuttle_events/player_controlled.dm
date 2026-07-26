@@ -2,7 +2,7 @@
 /datum/shuttle_event/simple_spawner/player_controlled
 	spawning_list = list(/mob/living/basic/carp)
 
-	/// If we cant find a ghost, do we spawn them anyway?. Otherwise they go in the garbage bin
+	/// If we cant find a ghost, do we spawn them anyway? Otherwise they go in the garbage bin
 	var/spawn_anyway_if_no_player = FALSE
 
 	var/ghost_alert_string = "Would you like to be shot at the shuttle?"

@@ -133,7 +133,7 @@
 	var/misfire_probability = 0
 	///How much does shooting the gun increment the misfire probability?
 	var/misfire_percentage_increment = 0
-	/// What is the cap on our misfire probability?. Do not set this to 100.
+	/// What is the cap on our misfire probability? Do not set this to 100.
 	var/misfire_probability_cap = 25
 
 	/// Fire Selector Variables ///
@@ -392,7 +392,7 @@
 		var/obj/item/clothing/gloves/electrician_gloves = wielder.gloves
 		if(electrician_gloves.max_heat_protection_temperature && electrician_gloves.max_heat_protection_temperature > 360)
 			protected_hands = TRUE
-	// from left to right: are our hands protected from hot things via gloves?. are we or our hands heat resistant?. was this casing shot more than 5 seconds ago?
+	// from left to right: are our hands protected from hot things via gloves? are we or our hands heat resistant? was this casing shot more than 5 seconds ago?
 	if(protected_hands || HAS_TRAIT(wielder, TRAIT_RESISTHEAT) || HAS_TRAIT(wielder, TRAIT_RESISTHEATHANDS) || world.time >= casing.shot_timestamp + CASING_HOT_DELAY)
 		if(wielder.put_in_hands(casing)) // try placement in hand,
 			return CASING_CATCH_SUCCESSFUL // success

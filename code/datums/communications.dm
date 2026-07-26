@@ -8,7 +8,7 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	COOLDOWN_DECLARE(silicon_message_cooldown)
 	COOLDOWN_DECLARE(nonsilicon_message_cooldown)
 
-	/// Are we trying to send a cross-station message that contains soft-filtered words?. If so, flip to TRUE to extend the time admins have to cancel the message.
+	/// Are we trying to send a cross-station message that contains soft-filtered words? If so, flip to TRUE to extend the time admins have to cancel the message.
 	var/soft_filtering = FALSE
 
 	/// The main content of the roundstart report

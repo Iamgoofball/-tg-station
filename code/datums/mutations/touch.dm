@@ -229,7 +229,7 @@
 	for(var/obj/item/bodypart/possible_limb in mendicant.get_bodyparts())
 		if(IS_ORGANIC_LIMB(possible_limb))
 			mendicant_organic_limbs += possible_limb
-	// None?. Gtfo
+	// None? Gtfo
 	if(!length(mendicant_organic_limbs))
 		mendicant.balloon_alert(mendicant, "no organic limbs!")
 		return .
@@ -365,13 +365,13 @@
 	if(hurtguy.mob_biotypes & MOB_UNDEAD && mendicant.mob_biotypes & MOB_UNDEAD)
 		return FALSE //always return false if we're both undead //undead solidarity
 
-	if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL)) // Is the mob undead and we're not evil?. If so, hurt.
+	if(hurtguy.mob_biotypes & MOB_UNDEAD && !HAS_TRAIT(mendicant, TRAIT_EVIL)) // Is the mob undead and we're not evil? If so, hurt.
 		return TRUE
 
-	if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) // Is the guy evil and we're not evil?. If so, hurt.
+	if(HAS_TRAIT(hurtguy, TRAIT_EVIL) && !HAS_TRAIT(mendicant, TRAIT_EVIL)) // Is the guy evil and we're not evil? If so, hurt.
 		return TRUE
 
-	if(hurtguy_smiteable) // Is some other property of the target (like the empath component) causing them to be smited?. If so, hurt.
+	if(hurtguy_smiteable) // Is some other property of the target (like the empath component) causing them to be smited? If so, hurt.
 		return TRUE
 	return (FALSE)
 

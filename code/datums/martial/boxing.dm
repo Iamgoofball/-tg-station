@@ -124,7 +124,7 @@
 	// If true, grants experience for punching; we only gain experience if we punch another boxer.
 	var/grant_experience = FALSE
 
-	// What type of damage does our kind of boxing do?. Defaults to STAMINA for normal boxing, unless you're performing EVIL BOXING.. Subtypes use different damage types.
+	// What type of damage does our kind of boxing do? Defaults to STAMINA for normal boxing, unless you're performing EVIL BOXING.. Subtypes use different damage types.
 	var/damage_type = honorable_boxer ? default_damage_type : attacker.get_attack_type()
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)

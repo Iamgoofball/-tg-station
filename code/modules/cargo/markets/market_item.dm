@@ -128,7 +128,7 @@
 	var/obj/item/market_uplink/uplink
 	/// Shipping method used to buy this item.
 	var/method
-	/// Is this item considered contraband?. If illegal, applies the contraband trait to the item when spawned.
+	/// Is this item considered contraband? If illegal, applies the contraband trait to the item when spawned.
 	var/legallity
 
 /datum/market_purchase/New(datum/market_item/entry, obj/item/market_uplink/uplink, method, legal_status)

@@ -254,7 +254,7 @@
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5)
-	/// Are we currently dropping off ores?. Used to prevent the bag from instantly picking up ores after dropping them
+	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 
 /obj/item/mod/module/orebag/on_equip()

@@ -10,7 +10,7 @@
 	var/start_delay = 0
 	///The time in ticks before a rot component reaches its full effectiveness
 	var/scaling_delay = 0
-	/// How strong is the rot?. used for scaling different aspects of the component.. Between 0 and 1
+	/// How strong is the rot? used for scaling different aspects of the component.. Between 0 and 1
 	var/strength = 0
 	///Is the component active right now?
 	var/active = FALSE

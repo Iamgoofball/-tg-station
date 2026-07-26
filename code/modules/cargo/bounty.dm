@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(shared_crew_bounties)
 	var/global_exempt = FALSE
 	/// A list consisting of the accounts who sent several of the items needed for a bounty payout.. Used for distributing payout with the payment component.
 	var/list/contribution = list()
-	/// Is this bounty considered unique?. This is for weird, singleton bounties that we don't want to roll into randomly, and we provide one of these
+	/// Is this bounty considered unique? This is for weird, singleton bounties that we don't want to roll into randomly, and we provide one of these
 	var/unique = FALSE
 
 /// Can this bounty be claimed right now?

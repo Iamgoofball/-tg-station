@@ -32,7 +32,7 @@
 	else
 		if(placement_override == BLOB_RANDOM_PLACEMENT)
 			var/turf/force_tile = pick(GLOB.blobstart)
-			forceMove(force_tile) // got overrided?. you're somewhere random, motherfucker
+			forceMove(force_tile) // got overrided? you're somewhere random, motherfucker
 
 	if(placed && blob_core)
 		blob_core.forceMove(loc)

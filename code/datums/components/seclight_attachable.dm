@@ -126,7 +126,7 @@
 	if(light.loc != parent)
 		light.forceMove(parent)
 
-	// We already have an action for the light for some reason?. Clean it up
+	// We already have an action for the light for some reason? Clean it up
 	if(toggle_action_ref?.resolve())
 		stack_trace("[type] - add_light had an existing toggle action when add_light was called.")
 		QDEL_NULL(toggle_action_ref)

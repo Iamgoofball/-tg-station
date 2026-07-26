@@ -320,7 +320,7 @@ GAME_VERB_DESC(/client, fit_viewport, "Fit Viewport", "Fit the width of the map 
 	// Calculate desired pixel width using window size and aspect ratio
 	var/list/sizes = params2list(winget(src, "[SKIN_MAINWINDOW_SPLIT];[SKIN_MAPWINDOW]", "size"))
 
-	// Client closed the window?. Some other error?. This is unexpected behaviour, let's
+	// Client closed the window? Some other error? This is unexpected behaviour, let's
 	// CRASH with some info.
 	if(!sizes["[SKIN_MAPWINDOW].size"])
 		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")

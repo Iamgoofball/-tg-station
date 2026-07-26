@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		// Handle the heavy victory operations (where everyone dies) asynchronously
 		INVOKE_ASYNC(src, PROC_REF(victory_sequence))
 	else
-		// Is the station going boom?. No.. But is the station still going to get yelled at?. Yes.
+		// Is the station going boom? No.. But is the station still going to get yelled at? Yes.
 		priority_announce("Experimental, classified, and very expensive emergency countermeasures have been activated to prevent total station loss, \
 			but the initial failure to contain the viral biohazard will be noted on the station's performance report. Expect further penalties.", \
 			"Emergency Biohazard Countermeasure Alert")

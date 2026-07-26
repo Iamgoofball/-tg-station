@@ -211,9 +211,9 @@
 		"6" = 500, // youre fucked frankly
 	)
 
-	/// Have we warned our user of the fact they are at stage 5?. If no, and are at or above stage five, we send a warning and set this to true.
+	/// Have we warned our user of the fact they are at stage 5? If no, and are at or above stage five, we send a warning and set this to true.
 	var/warned_user = FALSE
-	/// Have we ever reached our max stage?. If no, and we are at our max stage, we send a ominous message warning them of their imminent demise.
+	/// Have we ever reached our max stage? If no, and we are at our max stage, we send a ominous message warning them of their imminent demise.
 	var/max_stage_reached = FALSE
 
 /datum/disease/asthma_attack/critical/stage_act(seconds_per_tick)

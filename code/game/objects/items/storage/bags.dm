@@ -107,7 +107,7 @@
 	var/spam_protection = FALSE
 	/// Mob we're currently tracking
 	var/mob/listening_to = null
-	/// Are we currently dropping off ores?. Used to prevent the bag from instantly picking up ores after dropping them
+	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 	/// Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)

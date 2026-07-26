@@ -26,7 +26,7 @@
 	return occupation.vars[datum_var_name]
 
 /// Validate the value of the config type for a given job.. There can be overrides for special instances on subtypes.
-/// Isn't meant for in-depth logic, just bare-bones sanity checks.. Like: is this number a number?. Is this string a string?. Any sanity thing involving a specific job datum goes in set_current_value.
+/// Isn't meant for in-depth logic, just bare-bones sanity checks.. Like: is this number a number? Is this string a string? Any sanity thing involving a specific job datum goes in set_current_value.
 /// Will return TRUE if the value is valid, FALSE if it is not.
 /datum/job_config_type/proc/validate_value(value)
 	SHOULD_CALL_PARENT(FALSE)

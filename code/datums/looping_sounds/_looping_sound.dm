@@ -36,11 +36,11 @@
 	var/falloff_exponent
 	/// The falloff distance of the sound,
 	var/falloff_distance
-	/// Are the sounds affected by pressure?. Defaults to TRUE.
+	/// Are the sounds affected by pressure? Defaults to TRUE.
 	var/pressure_affected = TRUE
-	/// Are the sounds subject to reverb?. Defaults to TRUE.
+	/// Are the sounds subject to reverb? Defaults to TRUE.
 	var/use_reverb = TRUE
-	/// Are we ignoring walls?. Defaults to TRUE.
+	/// Are we ignoring walls? Defaults to TRUE.
 	var/ignore_walls = TRUE
 
 	// State stuff

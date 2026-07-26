@@ -129,7 +129,7 @@
 		if(!found)
 			return FALSE
 
-	// Skip extra needs when unit testing, like, underwater basket weaving?. Get the hell out of here
+	// Skip extra needs when unit testing, like, underwater basket weaving? Get the hell out of here
 	return PERFORM_ALL_TESTS(crafting) || recipe.check_requirements(a, requirements_list)
 
 /datum/component/personal_crafting/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)

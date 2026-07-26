@@ -13,7 +13,7 @@
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return TRUE
 
-	if(force_stun) // Does not take priority over god mode?. I guess
+	if(force_stun) // Does not take priority over god mode? I guess
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GENERIC_STUN_CHECK, check_flags, force_stun) & COMPONENT_NO_STUN)

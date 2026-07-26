@@ -25,7 +25,7 @@
 	var/list/initial_contents
 	/// If the machine shows an approximate number of its contents on its sprite
 	var/visible_contents = TRUE
-	/// Is this smartfridge going to have a glowing screen?. (Drying Racks are not)
+	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
 	var/has_emissive = TRUE
 	/// Whether the smartfridge is welded down to the floor disabling unwrenching
 	var/can_be_welded_down = TRUE

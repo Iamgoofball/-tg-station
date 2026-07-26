@@ -170,7 +170,7 @@
 	layer = BELOW_OBJ_LAYER
 	armor_type = /datum/armor/restaurant_portal
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	/// What venue is this portal for?. Uses a typepath which is turned into an instance on Initialize
+	/// What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue
 
 	/// A weak reference to the mob who turned on the portal

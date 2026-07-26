@@ -16,7 +16,7 @@
 	if(isnull(ore_box) || !HAS_TRAIT(src, TRAIT_OREBOX_FUNCTIONAL))
 		return
 	for(var/obj/item/stack/ore/ore in range(1, src))
-		// we can reach it and it's in front of us?. grab it!
+		// we can reach it and it's in front of us? grab it!
 		if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc))
 			ore.forceMove(ore_box)
 	for(var/obj/item/boulder/boulder in range(1, src))

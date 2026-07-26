@@ -172,7 +172,7 @@
 	var/obj/item/organ/heart/ethereal/ethereal_heart
 	/// Timer for the healing process.. Stops if destroyed.
 	var/crystal_heal_timer
-	/// Is the crystal still being built?. True by default, gets changed after a timer.
+	/// Is the crystal still being built? True by default, gets changed after a timer.
 	var/being_built = TRUE
 
 /obj/structure/ethereal_crystal/relaymove()

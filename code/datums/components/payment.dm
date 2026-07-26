@@ -13,7 +13,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE ///NO OVERRIDING TO CHEESE BOUNTIES
 	///Standardized of operation.
 	var/cost = 10
-	/// Flavor style for handling cash (Friendly?. Hostile?. and so on
+	/// Flavor style for handling cash (Friendly? Hostile? and so on
 	var/transaction_style = "Clinical"
 	///Who's getting paid?
 	var/datum/bank_account/target_acc

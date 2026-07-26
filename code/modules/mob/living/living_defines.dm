@@ -180,7 +180,7 @@
 
 	/// The w_class of the holder when held.
 	var/held_w_class = WEIGHT_CLASS_NORMAL
-	/// if it can be held, can it be equipped to any slots?. (think pAI's on head)
+	/// if it can be held, can it be equipped to any slots? (think pAI's on head)
 	var/worn_slot_flags = NONE
 
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
@@ -253,7 +253,7 @@
 	/// Reference handling is done by the martial arts themselves
 	var/list/datum/martial_art/martial_arts
 
-	/// how many tiles can this mob reach with their hands?. 1 tile is adjacent.
+	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
 	var/reach_length = 1
 
 	/// Lazy assoc list of currently applied fishing difficulty modifiers keyed to their source

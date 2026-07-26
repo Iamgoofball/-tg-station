@@ -11,17 +11,17 @@
 	var/list/traits_which_dispell_us
 
 /datum/component/haunted_item/Initialize(
-	// What color should the haunted item be glowing?. By default the color's white (passed into the haunted element).
+	// What color should the haunted item be glowing? By default the color's white (passed into the haunted element).
 	haunt_color,
-	// How long should the haunt last?. If null, it will last forever / until removed.
+	// How long should the haunt last? If null, it will last forever / until removed.
 	haunt_duration,
-	// How far should the haunted item look for targets when it's created?. If null, it won't aggro anyone by default.
+	// How far should the haunted item look for targets when it's created? If null, it won't aggro anyone by default.
 	aggro_radius,
 	// Optional, what message should the item show when the haunt happens (when the component is applied)?
 	spawn_message,
 	// Optional, what message should the item show when the haunt ends (clear_haunting is called)?
 	despawn_message,
-	// How much throwforce does the haunted item get?. Keep in mind it attacks by throwing itself
+	// How much throwforce does the haunted item get? Keep in mind it attacks by throwing itself
 	throw_force_bonus = 3,
 	// What's the max amount of throwforce that we should consider going to
 	throw_force_max = 15,

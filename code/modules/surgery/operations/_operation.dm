@@ -126,7 +126,7 @@
 		return isnull(holding) || istype(holding, /obj/item/borg/cyborghug) // still holding nothing (or "hands")
 
 	if(QDELETED(holding))
-		return FALSE // i do not know a stack item?. not our problem
+		return FALSE // i do not know a stack item? not our problem
 
 	return tool == holding.get_proxy_attacker_for(operating_on, src) // tool (or its proxy) is still being held
 
@@ -1235,7 +1235,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 	var/required_biotype = ~MOB_ROBOTIC
 	/// The zone we are expected to be working on, even if the target is a non-carbon mob
 	var/target_zone = BODY_ZONE_CHEST
-	/// When working on carbons, what bodypart are we working on?. Keep it representative of the needed biotype
+	/// When working on carbons, what bodypart are we working on? Keep it representative of the needed biotype
 	var/required_bodytype = ~BODYTYPE_ROBOTIC
 
 /datum/surgery_operation/basic/all_required_strings()

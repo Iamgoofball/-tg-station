@@ -788,7 +788,7 @@
 	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 	var/turf/target_old_turf = target.loc
 
-	// Are we hitting anything?. or
+	// Are we hitting anything? or
 	if(shove_flags & SHOVE_CAN_MOVE)
 		if(SEND_SIGNAL(target_shove_turf, COMSIG_LIVING_DISARM_PRESHOVE, src, target, weapon) & COMSIG_LIVING_ACT_SOLID)
 			shove_flags |= SHOVE_BLOCKED

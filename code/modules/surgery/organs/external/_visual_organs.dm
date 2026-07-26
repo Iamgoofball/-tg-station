@@ -7,7 +7,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	///The overlay datum that actually draws stuff on the limb
 	var/datum/bodypart_overlay/mutant/bodypart_overlay
 
-	/// With what DNA block do we mutate in mutate_feature() ?. For genetics
+	/// With what DNA block do we mutate in mutate_feature() ? For genetics
 	var/datum/dna_block/dna_block
 
 	/// Set to EXTERNAL_BEHIND, EXTERNAL_FRONT or EXTERNAL_ADJACENT if you want to draw one of those layers as the object sprite.. FALSE to use your own
@@ -286,7 +286,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	offset_location = UPPER_BODY
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
-	/// Are we burned?. If so we draw differently
+	/// Are we burned? If so we draw differently
 	var/burnt = FALSE
 
 /datum/bodypart_overlay/mutant/antennae/New()

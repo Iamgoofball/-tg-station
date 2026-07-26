@@ -214,7 +214,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 	// these are different concerns, and should not be HANDLED TOGETHER
 	// similarly, if you rip this out, rework diagonal closed turfs to work with this system
 	// it will make them look significantly nicer, and should let you tie into their logic more easily
-	// Just please don't break behavior yeah?. thanks, I love you <3
+	// Just please don't break behavior yeah? thanks, I love you <3
 	if(isclosedturf(our_turf)) //Show girders below closed turfs
 		var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', "girder", layer = BELOW_CLOSED_TURF_LAYER)
 		girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR

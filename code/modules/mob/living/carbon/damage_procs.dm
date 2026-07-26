@@ -335,7 +335,7 @@
 
 		parts -= picked
 
-	if(!.) // no change?. no need to update anything
+	if(!.) // no change? no need to update anything
 		return
 
 	if(updating_health)
@@ -372,7 +372,7 @@
 
 		parts -= picked
 
-	if(!.) // no change?. no need to update anything
+	if(!.) // no change? no need to update anything
 		return
 
 	if(updating_health)

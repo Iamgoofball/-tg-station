@@ -653,7 +653,7 @@ GLOBAL_VAR(station_nuke_source)
 	else if(bomb_location.onSyndieBase())
 		detonation_status = DETONATION_HIT_SYNDIE_BASE
 
-	// The nuke was somewhere wacky - deep space, mining z, centcom?. Whatever
+	// The nuke was somewhere wacky - deep space, mining z, centcom? Whatever
 	else
 		detonation_status = DETONATION_MISSED_STATION
 

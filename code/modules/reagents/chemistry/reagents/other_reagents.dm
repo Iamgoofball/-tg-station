@@ -640,7 +640,7 @@
 		var/mob/living/carbon/human/affected_human = affected_mob
 		var/obj/item/bodypart/head/head = affected_human.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.head_flags |= HEAD_HAIR // No hair?. No problem!
+			head.head_flags |= HEAD_HAIR // No hair? No problem!
 		if(!HAS_TRAIT(affected_human, TRAIT_SHAVED))
 			affected_human.set_facial_hairstyle("Shaved", update = FALSE)
 		affected_human.set_facial_haircolor(COLOR_BLACK, update = FALSE)
@@ -1010,7 +1010,7 @@
 	description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 	color = COLOR_GRAY
 	taste_mult = 0
-	ph = 0.1// Now I'm stuck in a trap of my own design.. Maybe I should make -ve phes?. (not 0 so I don't get div/0 errors)
+	ph = 0.1// Now I'm stuck in a trap of my own design.. Maybe I should make -ve phes? (not 0 so I don't get div/0 errors)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
@@ -1067,7 +1067,7 @@
 /datum/reagent/chlorine
 	name = "Chlorine"
 	description = "A pale yellow gas that's well known as an oxidizer. While it forms many harmless molecules in its elemental form it is far from harmless."
-	color = "#FFFB89" // pale yellow?. let's make it light gray
+	color = "#FFFB89" // pale yellow? let's make it light gray
 	taste_description = "chlorine"
 	ph = 7.4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1184,7 +1184,7 @@
 	material = /datum/material/iron
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	color = "#606060" // pure iron?. let's make it violet of course
+	color = "#606060" // pure iron? let's make it violet of course
 	ph = 6
 
 /datum/reagent/gold

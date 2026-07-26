@@ -22,7 +22,7 @@
 	var/boxtag = ""
 	/// how many slices left
 	var/slices_left = 6
-	/// have we been sliced?. like sliced and you can take it apart by hand
+	/// have we been sliced? like sliced and you can take it apart by hand
 	var/sliced = FALSE
 	/// cutting tools
 	var/list/cutting_tools = list(TOOL_KNIFE, TOOL_SAW, TOOL_SCALPEL)

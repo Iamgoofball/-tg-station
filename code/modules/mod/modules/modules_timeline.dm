@@ -97,7 +97,7 @@
 	balloon_alert(user, "not while rewinding!")
 	return MOD_ABORT_USE
 
-/// Timestopper - Need I really explain?. It's the wizard's time stop, but the user channels it by not moving instead of a duration.
+/// Timestopper - Need I really explain? It's the wizard's time stop, but the user channels it by not moving instead of a duration.
 /obj/item/mod/module/timestopper
 	name = "MOD timestopper module"
 	desc = "A module that can halt time in a small radius around the user... for as long as they \

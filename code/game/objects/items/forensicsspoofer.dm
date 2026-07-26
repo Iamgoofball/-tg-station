@@ -21,7 +21,7 @@
 	var/chosen_fingerprint
 	/// max storage for fibers/fingerprints seperate for each
 	var/max_storage = 5
-	/// do we scan for new material?. if false will tamper
+	/// do we scan for new material? if false will tamper
 	var/scan_mode = TRUE
 	/// do we make forensics scanner messages and sounds
 	var/silent_mode = FALSE

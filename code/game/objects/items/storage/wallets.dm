@@ -43,7 +43,7 @@
 		LAZYINITLIST(combined_access)
 		combined_access |= id_card.access
 
-	// If we didn't pick a front ID - Maybe none of our cards have any command accesses?. Just grab the first card (if we even have one).
+	// If we didn't pick a front ID - Maybe none of our cards have any command accesses? Just grab the first card (if we even have one).
 	// We could also have no ID card in the wallet at all, which will mean we end up with a null front_id. That's fine too.
 	if(!front_id)
 		front_id = (locate(/obj/item/card/id) in contents)

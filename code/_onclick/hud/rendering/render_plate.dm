@@ -331,7 +331,7 @@
 	if(!.)
 		return
 	// This applies a backdrop to our lighting plane
-	// Why do plane masters need a backdrop sometimes?. Read https://secure.byond.com/forum/?post=2141928
+	// Why do plane masters need a backdrop sometimes? Read https://secure.byond.com/forum/?post=2141928
 	// Basically, we need something to brighten
 	// unlit is perhaps less needed rn, it exists to provide a fullbright for things that can't see the lighting plane
 	// but we don't actually use invisibility to hide the lighting plane anymore, so it's pointless

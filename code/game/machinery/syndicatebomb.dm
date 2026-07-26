@@ -35,7 +35,7 @@
 	var/delayedbig = FALSE
 	/// Is the activation wire pulsed?
 	var/delayedlittle = FALSE
-	/// Should we just tell the payload to explode now?. Usually triggered by an event (like cutting the wrong wire)
+	/// Should we just tell the payload to explode now? Usually triggered by an event (like cutting the wrong wire)
 	var/explode_now = FALSE
 	/// The timer for the bomb.
 	var/detonation_timer

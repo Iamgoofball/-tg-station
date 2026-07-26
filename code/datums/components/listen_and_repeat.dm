@@ -113,7 +113,7 @@
 	SIGNAL_HANDLER
 	var/atom/movable/atom_source = source
 	var/datum/ai_controller/controller = atom_source.ai_controller
-	if(!LAZYLEN(speech_buffer)) // what?. well whatever let's just move on
+	if(!LAZYLEN(speech_buffer)) // what? well whatever let's just move on
 		return
 
 	controller.override_blackboard_key(BB_EXPORTABLE_STRING_BUFFER_LIST, speech_buffer.Copy())

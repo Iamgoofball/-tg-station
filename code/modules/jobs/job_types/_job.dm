@@ -56,7 +56,7 @@
 	/// Experience type granted by playing in this job.
 	var/exp_granted_type = ""
 
-	/// How much money does this crew member make in a single paycheck?. Note that passive paychecks are capped to PAYCHECK_CREW in regular gameplay after roundstart.
+	/// How much money does this crew member make in a single paycheck? Note that passive paychecks are capped to PAYCHECK_CREW in regular gameplay after roundstart.
 	var/paycheck = PAYCHECK_CREW
 	///Which department does this paycheck pay from?
 	var/paycheck_department = ACCOUNT_CIV
@@ -69,7 +69,7 @@
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
-	/// What types of bounty tasks can this job receive past the default?. To do move to id trims.
+	/// What types of bounty tasks can this job receive past the default? To do move to id trims.
 	var/bounty_types = CIV_JOB_BASIC
 
 	/// Goodies that can be received via the mail system.

@@ -97,7 +97,7 @@
 ///Pauses the move loop for some passed in period
 ///This functionally means shifting its timer up, and clearing it from its current bucket
 /datum/move_loop/proc/pause_for(time)
-	if(!controller || !(status & MOVELOOP_STATUS_RUNNING)) // No controller or not running?. go away
+	if(!controller || !(status & MOVELOOP_STATUS_RUNNING)) // No controller or not running? go away
 		return
 	//Dequeue us from our current bucket
 	controller.dequeue_loop(src)
@@ -373,7 +373,7 @@
 	var/simulated_only
 	///A perticular turf to avoid
 	var/turf/avoid
-	/// Should we skip the first step?. This is the tile we're currently on, which breaks some things
+	/// Should we skip the first step? This is the tile we're currently on, which breaks some things
 	var/skip_first
 	///Whether we replace diagonal movements with cardinal movements or follow through with them
 	var/diagonal_handling

@@ -48,7 +48,7 @@ Difficulty: Hard
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/simple/lavaland/hierophant_new.dmi'
-	faction = list(FACTION_BOSS) // asteroid mobs?. get that shit out of my beautiful square house
+	faction = list(FACTION_BOSS) // asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
 	armour_penetration = 50
 	melee_damage_lower = 15
@@ -672,7 +672,7 @@ Difficulty: Hard
 
 /obj/effect/temp_visual/hierophant/blast/damaging
 	var/damage = 10 //how much damage do we do?
-	var/monster_damage_boost = TRUE // do we deal extra damage to monsters?. Used by the boss
+	var/monster_damage_boost = TRUE // do we deal extra damage to monsters? Used by the boss
 	var/list/hit_things = list() //we hit these already, ignore them
 	var/friendly_fire_check = FALSE
 	var/bursting = FALSE //if we're bursting and need to hit anyone crossing us

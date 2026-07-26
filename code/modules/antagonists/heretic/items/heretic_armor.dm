@@ -29,7 +29,7 @@
 	if(!IS_HERETIC(user))
 		robes_side_effect(user)
 		return
-	// Heretic equipped the robes?. Grant them the effects
+	// Heretic equipped the robes? Grant them the effects
 	on_robes_gained(user)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/dropped(mob/living/user)

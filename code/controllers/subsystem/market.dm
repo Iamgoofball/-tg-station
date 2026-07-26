@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(market)
 	var/list/obj/machinery/ltsrbt/telepads = list()
 	/// Currently queued purchases.
 	var/list/queued_purchases = list()
-	/// How many admin items have been spawned this round?. Used to iterate the identifier of admin-created market items.
+	/// How many admin items have been spawned this round? Used to iterate the identifier of admin-created market items.
 	var/admin_items_spawned = 0
 
 /datum/controller/subsystem/market/Initialize()

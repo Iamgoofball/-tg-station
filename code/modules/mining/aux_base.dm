@@ -67,7 +67,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	data["turrets"] = list()
 	for(var/datum/weakref/turret_ref as anything in turrets)
 		var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
-		if(!istype(base_turret)) // null or invalid in turrets list?. axe it
+		if(!istype(base_turret)) // null or invalid in turrets list? axe it
 			LAZYREMOVE(turrets, turret_ref)
 			continue
 

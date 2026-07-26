@@ -34,7 +34,7 @@
 /datum/status_effect/heart_attack/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/human_owner = owner
 	if(!istype(human_owner) || !human_owner.can_heartattack())
-		qdel(src) // No heart?. No effects.
+		qdel(src) // No heart? No effects.
 		return
 
 	if(time_until_stoppage > ATTACK_CURE_THRESHOLD)
@@ -85,7 +85,7 @@
 			owner.emote("cough")
 			if(SPT_PROB(5, seconds_between_ticks))
 				to_chat(owner, span_userdanger("You cough. Everything goes dark. You're going to die soon."))
-				owner.adjust_temp_blindness(10 SECONDS) // Are you panicking yet?. You should be panicking by now.
+				owner.adjust_temp_blindness(10 SECONDS) // Are you panicking yet? You should be panicking by now.
 			else
 				to_chat(owner, span_userdanger("As you cough, your chest surges in pain and darkness closes in around your sight."))
 				owner.adjust_temp_blindness(2 SECONDS)

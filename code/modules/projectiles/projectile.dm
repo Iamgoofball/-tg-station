@@ -242,7 +242,7 @@
 	/// In order to preserve animations, projectiles are only deleted the tick *after* they impact something.
 	/// Same is applied to reaching the range limit
 	var/deletion_queued = NONE
-	/// How many ticks should we wait in queued deletion mode before qdeleting?. Sometimes increased in animations
+	/// How many ticks should we wait in queued deletion mode before qdeleting? Sometimes increased in animations
 	var/ticks_to_deletion = 1
 
 	/// If defined, on hit we create an item of this type then call hitby() on the hit target with this, mainly used f. Embedding items (bullets) in targets

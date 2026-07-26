@@ -33,7 +33,7 @@
 	var/mutable_appearance/assembliesoverlay
 	/// The person who attached an assembly to this dispenser, for bomb logging purposes
 	var/last_rigger = ""
-	/// is it climbable?. some of our wall-mounted dispensers should not have this
+	/// is it climbable? some of our wall-mounted dispensers should not have this
 	var/climbable = FALSE
 	/// Flags passed to the reagents datum upon creation
 	var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE

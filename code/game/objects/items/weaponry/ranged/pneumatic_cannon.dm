@@ -41,7 +41,7 @@
 	var/range_multiplier = 1
 	/// How many items to throw per fire
 	var/throw_amount = 1
-	/// What methodology should be used when firing?. See #defines at top of file.
+	/// What methodology should be used when firing? See #defines at top of file.
 	var/fire_mode = PCANNON_FIFO
 	/// Allows you to hold down LMB to continuously fire.
 	var/automatic = FALSE

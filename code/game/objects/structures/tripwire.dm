@@ -260,7 +260,7 @@
 		return
 
 	var/obj/vehicle/sealed/mecha/falling_down = entered
-	if(falling_down.toppled) // did you trip directly into a tripwire?. We don't want this to chain, but amusing the image might be.
+	if(falling_down.toppled) // did you trip directly into a tripwire? We don't want this to chain, but amusing the image might be.
 		return
 
 	if(astype(falling_down, /obj/vehicle/sealed/mecha/phazon)?.phasing)
@@ -297,7 +297,7 @@
 		blind_message = span_danger("You hear a deafening CRASH!"), \
 		ignored_mobs = drivers)
 
-	for(var/mob/living/driver as anything in drivers) // can any mechs have two drivers?. No.. Could they?. yes.
+	for(var/mob/living/driver as anything in drivers) // can any mechs have two drivers? No.. Could they? yes.
 		var/damage = driver.apply_damage(damage_value / 3, BRUTE, BODY_ZONE_HEAD, driver.run_armor_check(BODY_ZONE_HEAD, MELEE), wound_bonus = 30, wound_clothing = FALSE)
 		var/falling_string
 		switch(damage)

@@ -82,7 +82,7 @@
 #define _OFFSET_RENDER_TARGET(render_target, offset) ("[(render_target)] #[(offset)]")
 
 // Known issues:
-// Potentially too much client load?. Hard to tell due to not having a potato pc to hand.
+// Potentially too much client load? Hard to tell due to not having a potato pc to hand.
 // This is solvable with lowspec preferences, which would not be hard to add
 // Player popups will now render their effects, like overlay lights.. this is fixable, but I've not gotten to it
 // I think overlay lights can render on the wrong z layer.. s fucked

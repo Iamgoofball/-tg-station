@@ -282,7 +282,7 @@
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
 	if(override)
-		// aight, no head?. tough luck
+		// aight, no head? tough luck
 		my_head?.override_hair_color = hex_string
 	else
 		hair_color = hex_string
@@ -425,7 +425,7 @@
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 
 	if(override)
-		// so no head?. tough luck
+		// so no head? tough luck
 		my_head?.override_hair_color = hex_string
 	else
 		facial_hair_color = hex_string

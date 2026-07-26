@@ -13,7 +13,7 @@
 	var/list/bodyparts = list()
 	/// Minimum amount of bodyparts needed for on_apply to be called.. When tipping below, on_remove is called
 	var/minimum_bodyparts = 1
-	/// Are we currently active?. We don't NEED to track it, but it's a lot easier and faster if we do
+	/// Are we currently active? We don't NEED to track it, but it's a lot easier and faster if we do
 	var/is_active = FALSE
 
 /datum/status_effect/grouped/bodypart_effect/source_added(source, obj/item/bodypart/bodypart)
@@ -62,7 +62,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	is_active = TRUE
-	// Maybe add support for different stages?. Also known as add a stronger effect when there are more limbs
+	// Maybe add support for different stages? Also known as add a stronger effect when there are more limbs
 
 /// Remove an effect whenever a threshold is no longer reached
 /datum/status_effect/grouped/bodypart_effect/proc/deactivate()

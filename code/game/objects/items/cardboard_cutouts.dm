@@ -13,7 +13,7 @@
 	var/pushed_over = FALSE
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
-	/// What cutout datum we spawn at the start?. Uses the name, not the path.
+	/// What cutout datum we spawn at the start? Uses the name, not the path.
 	var/starting_cutout
 	/// Reference to the tactical component that should be deleted when the cutout is toppled.
 	var/datum/component/tactical/tacticool

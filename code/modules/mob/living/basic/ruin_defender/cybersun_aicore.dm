@@ -30,7 +30,7 @@
 	var/datum/action/cooldown/mob_cooldown/lightning_strike
 	/// Ability which fires da big laser
 	var/datum/action/cooldown/mob_cooldown/targeted_mob_ability/donk_laser
-	// is this being used as part of the haunted trading post ruin?. if true, stuff there will self destruct when this mob dies
+	// is this being used as part of the haunted trading post ruin? if true, stuff there will self destruct when this mob dies
 	var/donk_ai_master = FALSE
 	/// the queue id for the stuff that selfdestructs when we die
 	var/selfdestruct_queue_id = "hauntedtradingpost_sd"

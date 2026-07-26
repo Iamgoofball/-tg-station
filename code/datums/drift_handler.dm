@@ -9,7 +9,7 @@
 	/// This is to some extent a temporary solution around the order of operations
 	/// Around COMSIG_MOVELOOP_POSTPROCESS.. I'm sorry lad
 	var/ignore_next_glide = FALSE
-	/// Have we been delayed?. that is active, but not working right this second?
+	/// Have we been delayed? that is active, but not working right this second?
 	var/delayed = FALSE
 	var/block_inputs_until
 	/// How much force is behind this drift.

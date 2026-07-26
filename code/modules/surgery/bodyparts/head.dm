@@ -29,7 +29,7 @@
 	base_meat_amount = 0
 	stump_typepath = /obj/item/bodypart/head/stump
 
-	/// Do we show the information about missing organs upon being examined?. Defaults to TRUE, useful for Dullahan heads.
+	/// Do we show the information about missing organs upon being examined? Defaults to TRUE, useful for Dullahan heads.
 	var/show_organs_on_examine = TRUE
 
 	//Limb appearance info:

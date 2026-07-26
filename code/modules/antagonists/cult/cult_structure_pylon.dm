@@ -68,7 +68,7 @@
 		new /obj/effect/temp_visual/cult/turf/floor(cult_turf)
 
 	else
-		// Are we in space or something?. No cult turfs or convertable turfs?. Double the cooldown
+		// Are we in space or something? No cult turfs or convertable turfs? Double the cooldown
 		COOLDOWN_START(src, corruption_cooldown, corruption_cooldown_duration * 2)
 		return
 

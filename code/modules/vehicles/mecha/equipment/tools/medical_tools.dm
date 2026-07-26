@@ -189,7 +189,7 @@
 		for(var/datum/reagent/medication as anything in shooter.reagents.reagent_list)
 			if(action == ("inject_reagent_" + medication.name))
 				inject_reagent(medication, shooter)
-				break // or maybe return TRUE?. i'm not certain
+				break // or maybe return TRUE? i'm not certain
 
 /obj/item/mecha_parts/mecha_equipment/sleeper/medical/proc/inject_reagent(datum/reagent/reagent_to_inject, obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
 	if(!reagent_to_inject || !patient || !SG || !(SG in chassis.flat_equipment))

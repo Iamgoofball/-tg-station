@@ -63,7 +63,7 @@
 	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
 	var/fire_cd = 0
 	var/weapon_weight = WEAPON_LIGHT
-	/// Can we hold up our target with this?. Default to yes
+	/// Can we hold up our target with this? Default to yes
 	var/can_hold_up = TRUE
 	/// If TRUE, and we aim at ourselves, it will initiate a do after to fire at ourselves.
 	/// If FALSE it will just try to fire at ourselves straight up.
