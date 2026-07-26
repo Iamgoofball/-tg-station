@@ -22,98 +22,91 @@ class StyleRule(BaseRule):
     def check(self, tokens, lines, reporter, filename):
         """Inspect source lines for style convention violations.
 
-        Checks each line for trailing whitespace, mixed tabs/spaces,
-        hard-tab indentation, excessive line length, and empty brace
-        blocks. Issues are reported at appropriate severity levels
-        (warnings and info).
+        Checks for:
+        - Trailing whitespace on any line
+        - Lines exceeding MAX_LINE_LENGTH characters
+        - Hard tab indentation (reported as info-level tab-indent)
+        - Mixed tabs and spaces on the same indent line
+        - Empty block bodies (consecutive opening/closing braces)
         """
-        for i, line in enumerate(lines, start=1):
+        for idx, line in enumerate(lines, start=1):
             stripped = line.rstrip("\n")
 
             # Trailing whitespace
-            if stripped != stripped.rstrip(" \t"):
+            if stripped != stripped.rstrip():
                 reporter.add(
                     filename=filename,
-                    line=i,
-                    column=len(stripped.rstrip(" \t")) + 1,
+                    line=idx,
+                    column=len(stripped.rstrip()) + 1,
                     severity=Severity.WARNING,
                     message="Trailing whitespace",
-                    rule=self.name + "/trailing-whitespace",
-                )
-
-            # Mixed tabs and spaces
-            if "\t" in stripped and "    " in stripped.replace("\t", ""):
-                reporter.add(
-                    filename=filename,
-                    line=i,
-                    column=1,
-                    severity=Severity.WARNING,
-                    message="Mixed tabs and spaces for indentation",
-                    rule=self.name + "/mixed-indent",
-                )
-
-            # Hard tabs
-            if stripped.startswith("\t"):
-                reporter.add(
-                    filename=filename,
-                    line=i,
-                    column=1,
-                    severity=Severity.INFO,
-                    message="Line indented with hard tab (prefer spaces)",
-                    rule=self.name + "/tab-indent",
+                    rule=f"{self.name}/trailing-whitespace",
                 )
 
             # Line length
-            if len(stripped) > self.MAX_LINE_LENGTH:
+            content = stripped.rstrip()
+            if len(content) > self.MAX_LINE_LENGTH:
                 reporter.add(
                     filename=filename,
-                    line=i,
+                    line=idx,
                     column=self.MAX_LINE_LENGTH + 1,
-                    severity=Severity.INFO,
-                    message=f"Line too long ({len(stripped)} > {self.MAX_LINE_LENGTH} characters)",
-                    rule=self.name + "/line-length",
+                    severity=Severity.WARNING,
+                    message=f"Line too long ({len(content)} > {self.MAX_LINE_LENGTH})",
+                    rule=f"{self.name}/line-length",
                 )
 
-            # Empty block
-            if stripped.rstrip().endswith("{}") or stripped.rstrip().endswith("{ }"):
+            # Tab indentation (info level)
+            indent = len(content) - len(content.lstrip())
+            if indent > 0 and "\t" in content[:indent]:
                 reporter.add(
                     filename=filename,
-                    line=i,
-                    column=len(stripped) - 1,
+                    line=idx,
+                    column=1,
                     severity=Severity.INFO,
-                    message="Empty block — consider adding a comment or removing",
-                    rule=self.name + "/empty-block",
+                    message="Line indented with hard tab (prefer spaces)",
+                    rule=f"{self.name}/tab-indent",
+                )
+
+            # Mixed tabs and spaces
+            if indent > 0 and "\t" in content[:indent] and " " in content[:indent]:
+                reporter.add(
+                    filename=filename,
+                    line=idx,
+                    column=1,
+                    severity=Severity.WARNING,
+                    message="Mixed tabs and spaces in indentation",
+                    rule=f"{self.name}/mixed-indent",
+                )
+
+            # Empty block — consecutive { and }
+            stripped_content = content.strip()
+            if stripped_content in ("{}", "()", "[]"):
+                reporter.add(
+                    filename=filename,
+                    line=idx,
+                    column=content.index(stripped_content[0]) + 1,
+                    severity=Severity.INFO,
+                    message="Empty block body — consider a comment explaining intent",
+                    rule=f"{self.name}/empty-block",
                 )
 
     def fix(self, lines: list[str]) -> list[str]:
-        """Apply auto-fixes: strip trailing whitespace and convert tabs to spaces.
+        """Auto-correct trailing whitespace and tab indentation.
 
-        Processes each line to remove trailing whitespace characters and
-        replaces leading hard-tab characters with spaces (4 spaces per tab).
-        Tab characters in the middle of lines (after non-whitespace content)
-        are left unchanged to avoid breaking aligned content.
-
-        Args:
-            lines: The source file lines (with trailing newlines preserved).
-
-        Returns:
-            A new list of lines with style fixes applied.
+        Each hard tab at the start of a line is replaced with
+        TAB_WIDTH spaces.  Trailing whitespace is stripped from
+        every line.
         """
         fixed: list[str] = []
         for line in lines:
-            # Strip trailing whitespace (preserve trailing newline if present)
-            had_newline = line.endswith("\n")
-            stripped = line.rstrip("\n").rstrip(" \t")
-            if had_newline:
-                stripped += "\n"
-
+            stripped = line.rstrip("\n")
+            # Strip trailing whitespace first
+            cleaned = stripped.rstrip()
             # Convert leading tabs to spaces
             leading = ""
-            rest = stripped
-            while rest.startswith("\t"):
+            rest = cleaned
+            while rest and rest[0] == "\t":
                 leading += " " * self.TAB_WIDTH
                 rest = rest[1:]
-            # Preserve the newline at end if present
-            fixed.append(leading + rest)
-
+            fixed.append(leading + rest + "\n")
         return fixed

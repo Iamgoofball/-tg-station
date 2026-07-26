@@ -14,43 +14,34 @@ from .scanner import discover_dm_files, read_file_lines
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Construct the argparse parser with all CLI options.
-
-    Defines positional and optional arguments for scanning paths,
-    output format selection, rule filtering, and verbosity control.
-    Returns a fully configured ArgumentParser ready for parsing.
-    """
+    """Build the argument parser for the dmlint CLI."""
     parser = argparse.ArgumentParser(
         prog="dmlint",
-        description="Standalone linter for DreamMaker (.dm) source files",
+        description="Standalone DreamMaker linter",
     )
     parser.add_argument(
-        "path",
-        nargs="?",
-        default=".",
-        help="Root directory to scan for .dm files (default: current directory)",
+        "paths",
+        nargs="*",
+        default=["code"],
+        help="Directories or files to lint (default: code/)",
     )
     parser.add_argument(
         "--json",
         action="store_true",
-        help="Output diagnostics as JSON",
-    )
-    parser.add_argument(
-        "--version",
-        action="version",
-        version=f"dmlint {__version__}",
+        help="Output results as JSON (CI-friendly)",
     )
     parser.add_argument(
         "--rule",
         action="append",
         dest="rules",
-        help="Only run specific rule(s) (can be repeated). Default: all rules.",
+        help="Only run the specified rule(s). May be repeated.",
     )
     parser.add_argument(
         "--exclude-rule",
         action="append",
         dest="exclude_rules",
-        help="Exclude specific rule(s) (can be repeated).",
+        default=[],
+        help="Exclude the specified rule(s). May be repeated.",
     )
     parser.add_argument(
         "-q", "--quiet",
@@ -66,71 +57,99 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
-    """Entry point for the dmlint command-line tool.
+    """Entry point for the dmlint CLI.
 
-    Parses arguments, discovers .dm files, instantiates rules, and
-    runs each rule against every file. Emits diagnostics in terminal
-    or JSON format and returns a non-zero exit code on errors.
+    Args:
+        argv: Command-line arguments (defaults to sys.argv[1:]).
+
+    Returns:
+        Exit code (0 on success, 1 if errors found, 2 on internal error).
     """
     parser = build_parser()
     args = parser.parse_args(argv)
 
-    # Resolve root path
-    root = Path(args.path).resolve()
-    if not root.exists():
-        print(f"dmlint: error: path '{args.path}' does not exist", file=sys.stderr)
-        return 1
+    # Resolve rule set
+    selected_rules = list(ALL_RULES)
+    if args.rules:
+        selected_rules = [r for r in selected_rules if r.name in args.rules]
+        if not selected_rules:
+            print(f"dmlint: no rules matched {args.rules}", file=sys.stderr)
+            return 2
 
-    if not root.is_dir():
-        print(f"dmlint: error: path '{args.path}' is not a directory", file=sys.stderr)
-        return 1
+    if args.exclude_rules:
+        selected_rules = [r for r in selected_rules if r.name not in args.exclude_rules]
 
-    # Discover .dm files
-    dm_files = discover_dm_files(root)
+    if not selected_rules:
+        print("dmlint: no rules selected after filtering", file=sys.stderr)
+        return 2
+
+    # Discover files
+    dm_files: list[Path] = []
+    for path_str in args.paths:
+        path = Path(path_str)
+        if path.is_file():
+            if path.suffix == ".dm":
+                dm_files.append(path)
+        else:
+            dm_files.extend(discover_dm_files(path))
+
     if not dm_files:
-        print(f"dmlint: no .dm files found under '{root}'", file=sys.stderr)
+        if not args.quiet:
+            paths_display = "', '".join(args.paths)
+            print(f"dmlint: no .dm files found under '{paths_display}'", file=sys.stderr)
         return 0
 
     if not args.quiet:
-        print(f"dmlint: scanning {len(dm_files)} .dm file(s) under '{root}'", file=sys.stderr)
-
-    # Filter rules
-    rules = ALL_RULES
-    if args.rules:
-        rule_names = set(args.rules)
-        rules = [r for r in rules if r.name in rule_names]
-    if args.exclude_rules:
-        exclude = set(args.exclude_rules)
-        rules = [r for r in rules if r.name not in exclude]
-
-    if not rules:
-        print("dmlint: no rules selected", file=sys.stderr)
-        return 0
+        print(f"dmlint: scanning {len(dm_files)} .dm file(s) under {', '.join(args.paths)}")
 
     # Instantiate rules
-    rule_instances = [r() for r in rules]
+    rule_instances = [rule_cls() for rule_cls in selected_rules]
 
-    # Lint each file
+    # Instantiate reporter
+    reporter = Reporter(json_output=args.json)
+
     lexer = Lexer()
-    reporter = Reporter()
 
+    # Lint every file
     for dm_file in dm_files:
         try:
             lines = read_file_lines(dm_file)
-            source = "".join(lines)
-            tokens = lexer.tokenize(source)
+        except OSError as exc:
+            reporter.add(
+                filename=str(dm_file),
+                line=0,
+                column=0,
+                severity=Severity.ERROR,
+                message=f"Cannot read file: {exc}",
+                rule="internal",
+            )
+            continue
 
-            for rule in rule_instances:
-                rule.check(tokens, lines, reporter, str(dm_file))
+        try:
+            tokens = lexer.tokenize("".join(lines))
         except Exception as exc:
             reporter.add(
                 filename=str(dm_file),
-                line=1,
-                column=1,
+                line=0,
+                column=0,
                 severity=Severity.ERROR,
-                message=f"Internal error while linting: {exc}",
+                message=f"Lexer error: {exc}",
                 rule="internal",
             )
+            continue
+
+        for rule in rule_instances:
+            try:
+                rule.check(tokens, lines, reporter, str(dm_file))
+            except Exception:
+                reporter.add(
+                    filename=str(dm_file),
+                    line=0,
+                    column=0,
+                    severity=Severity.ERROR,
+                    message=f"Rule {rule.name} crashed",
+                    rule="internal",
+                )
 
     # Apply auto-fixes when --fix is enabled
     if args.fix:
@@ -142,26 +161,20 @@ def main(argv: list[str] | None = None) -> int:
                 for rule in rule_instances:
                     fixed_lines = rule.fix(fixed_lines)
                 if fixed_lines != lines:
-                    with open(dm_file, "w", encoding="utf-8") as f:
-                        f.writelines(fixed_lines)
-                    files_fixed += 1
+                    with open(dm_file, "w", encoding="utf-8") as fh:
+                        fh.writelines(fixed_lines)
                     if not args.quiet:
-                        print(f"dmlint: fixed {dm_file}", file=sys.stderr)
-            except Exception as exc:
-                if not args.quiet:
-                    print(f"dmlint: error fixing {dm_file}: {exc}", file=sys.stderr)
-        if not args.quiet and files_fixed > 0:
-            print(f"dmlint: {files_fixed} file(s) reformatted", file=sys.stderr)
+                        print(f"dmlint: fixed {dm_file}")
+                    files_fixed += 1
+            except OSError:
+                pass
+        if not args.quiet and files_fixed:
+            print(f"dmlint: {files_fixed} file(s) reformatted")
 
-    # Emit results
-    if args.json:
-        reporter.emit_json()
-    else:
-        reporter.emit_terminal()
-
-    # Exit non-zero on errors
-    return 1 if reporter.has_errors() else 0
+    # Final output
+    reporter.finalize()
+    return reporter.exit_code()
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())
