@@ -15,6 +15,12 @@
 			"type": "icon_state",
 			"icon_state": "base_mouth",
 			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "base_feet",
+			"blend_mode": "overlay",
+			"color_ids": [1]
 		}
 	],
 	"base_dead": [
@@ -28,6 +34,12 @@
 			"type": "icon_state",
 			"icon_state": "base_dead_mouth",
 			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "base_feet_dead",
+			"blend_mode": "overlay",
+			"color_ids": [1]
 		}
 	]
 }
