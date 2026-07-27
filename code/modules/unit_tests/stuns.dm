@@ -30,6 +30,20 @@
 	gets_knockdown.Knockdown(1 SECONDS)
 	TEST_ASSERT(!gets_knockdown.IsKnockdown(), "Knockdown() knocked over despite not having CANKNOCKDOWN flag")
 
+/// Tests that the running trip mechanic respects move intent and applies knockdown.
+/datum/unit_test/running_trip
+
+/datum/unit_test/running_trip/Run()
+	var/mob/living/carbon/human/runner = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
+
+	runner.move_intent = MOVE_INTENT_WALK
+	TEST_ASSERT(!runner.try_running_trip(100), "Walking mob tripped despite a forced probability")
+	TEST_ASSERT(!runner.IsKnockdown(), "Walking mob was knocked down by the running trip mechanic")
+
+	runner.move_intent = MOVE_INTENT_RUN
+	TEST_ASSERT(runner.try_running_trip(100), "Grounded running mob did not trip with a forced probability")
+	TEST_ASSERT(runner.IsKnockdown(), "Running trip failed to apply knockdown")
+
 /// Tests paralyze and stuns that have two flags checked (in this case, canstun and canknockdown)
 /datum/unit_test/paralyze
 
