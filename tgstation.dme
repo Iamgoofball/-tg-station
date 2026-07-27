@@ -943,6 +943,7 @@
 #include "code\datums\actions\mobs\assume_form.dm"
 #include "code\datums\actions\mobs\blood_warp.dm"
 #include "code\datums\actions\mobs\charge.dm"
+#include "code\datums\actions\mobs\dodge_roll.dm"
 #include "code\datums\actions\mobs\charge_apc.dm"
 #include "code\datums\actions\mobs\chase_target.dm"
 #include "code\datums\actions\mobs\conjure_foamwall.dm"
