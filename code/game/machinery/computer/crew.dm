@@ -190,9 +190,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		return data_by_z["[z]"]
 
 	var/list/results = list()
-	for(var/tracked_mob in GLOB.suit_sensors_list)
+	for(var/tracked_mob in GLOB.suit_sensors_list | GLOB.nanite_sensors_list)
 		if(!tracked_mob)
-			stack_trace("Null entry in suit sensors list.")
+			stack_trace("Null entry in suit sensors or nanite sensors list.")
 			continue
 
 		var/mob/living/tracked_living_mob = tracked_mob

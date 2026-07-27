@@ -35,7 +35,9 @@
 #define DIAG_PATH_HUD "15"
 /// Gland indicators for abductors
 #define GLAND_HUD "16"
-#define AI_DETECT_HUD "17"
+//#define AI_DETECT_HUD "19"
+#define NANITE_HUD "20"
+#define DIAG_NANITE_FULL_HUD "21"
 /// Displays launchpads' targeting reticle
 #define DIAG_LAUNCHPAD_HUD "18"
 /// for antag huds. these are used at the /mob level

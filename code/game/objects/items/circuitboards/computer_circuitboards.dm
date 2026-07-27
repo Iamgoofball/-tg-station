@@ -754,3 +754,14 @@
 /obj/item/circuitboard/computer/shuttle/docker
 	name = "Shuttle Navigation Computer"
 	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom
+
+
+/obj/item/circuitboard/computer/nanite_chamber_control
+	name = "Nanite Chamber Control (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/nanite_chamber_control
+
+/obj/item/circuitboard/computer/nanite_cloud_controller
+	name = "Nanite Cloud Control (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/computer/nanite_cloud_controller

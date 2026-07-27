@@ -352,3 +352,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/aisat, 32)
 	icon_state = "vault"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/vault, 32)
+
+/obj/structure/sign/departments/nanites
+	name = "\improper Nanite Lab sign"
+	sign_change_name = "Department - Science: Nanites"
+	desc = "A sign labelling an area where testing and development of nanites is performed."
+	icon_state = "nanites"
+	is_editable = TRUE
+

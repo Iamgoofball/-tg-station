@@ -873,3 +873,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return ..()
 	var/obj/machinery/fishing_portal_generator/portal = tool.buffer
 	return portal.link_fishing_spot(GLOB.preset_fish_sources[fish_source], src, user)
+
+	else if (toxvomit == VOMIT_NANITE)
+		V.name = "metallic slurry"
+		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
+		V.icon_state = "vomitnanite_[pick(1,4)]"

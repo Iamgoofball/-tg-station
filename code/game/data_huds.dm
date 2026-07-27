@@ -18,7 +18,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(STATUS_HUD, HEALTH_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD, NANITE_HUD)
 
 /// Sees health (0-100) status (alive, dead), but relies on suit sensors being on
 /datum/atom_hud/data/human/medical/basic
@@ -560,3 +560,12 @@ Diagnostic HUDs!
 	if (x_offset || y_offset)
 		holder.pixel_w += x_offset
 		holder.pixel_z += y_offset
+
+/mob/living/proc/hud_set_nanite_indicator()
+	var/image/holder = hud_list[NANITE_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = null
+	if(HAS_TRAIT(src, TRAIT_NANITE_MONITORING))
+		holder.icon_state = "nanite_ping"
+

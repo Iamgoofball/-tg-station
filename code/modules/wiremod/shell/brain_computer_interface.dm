@@ -248,9 +248,9 @@
 	name = "brain-computer interface manipulation chamber"
 	desc = "A machine that, when given a brain-computer interface, will implant it into an occupant. Otherwise, will remove any brain-computer interfaces they already have."
 	circuit = /obj/item/circuitboard/machine/bci_implanter
-	icon = 'icons/obj/machines/bci_implanter.dmi'
-	icon_state = "bci_implanter"
-	base_icon_state = "bci_implanter"
+	icon = 'icons/obj/machines/nanite_chamber.dmi'
+	icon_state = "nanite_chamber"
+	base_icon_state = "nanite_chamber"
 	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = TRUE

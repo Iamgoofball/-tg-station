@@ -25,6 +25,7 @@
 #define INVESTIGATE_RADIATION "radiation"
 #define INVESTIGATE_RECORDS "records"
 #define INVESTIGATE_RESEARCH "research"
+#define INVESTIGATE_NANITES "nanites"
 #define INVESTIGATE_WIRES "wires"
 
 // Logging types for log_message()

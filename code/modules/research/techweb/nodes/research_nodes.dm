@@ -102,3 +102,32 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/anomalies = TECHWEB_TIER_5_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+
+
+// Nanite Technology
+/datum/techweb_node/nanite_movement
+	id = "nanite_movement"
+	display_name = "Nanite Movement"
+	description = "Program nanites to move around a host body."
+	prereq_ids = list("datatheory")
+	design_ids = list("nanite_remote", "nanite_chamber", "nanite_programmer", "nanite_program_hub")
+	research_costs = list(TECHWEB_POINT_TYPE_NANITES = 2500)
+	required_experiments = list()
+
+/datum/techweb_node/nanite_movement/New()
+	..()
+	design_ids += list("nanite_scanner", "nanite_disk")
+
+/datum/techweb_node/nanite_faults
+	id = "nanite_faults"
+	display_name = "Nanite Programming"
+	description = "Allows programming of nanite programs"
+	prereq_ids = list("nanite_movement")
+	design_ids = list()
+	research_costs = list(TECHWEB_POINT_TYPE_NANITES = 2500)
+	required_experiments = list()
+
+/datum/techweb_node/nanite_faults/New()
+	..()
+	design_ids += list("nanite_remote", "nanite_chamber", "nanite_programmer", "nanite_program_hub", "nanite_scanner", "nanite_disk")

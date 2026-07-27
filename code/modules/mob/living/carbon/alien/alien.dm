@@ -203,3 +203,8 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/get_fire_overlay(stacks, on_fire)
 	return make_generic_fire_overlay()
+
+	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
+	if(nanites)
+		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
+		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)

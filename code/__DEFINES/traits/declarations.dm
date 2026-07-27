@@ -1687,3 +1687,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MINING_AGGRO "mining_aggro"
 
 // END TRAIT DEFINES
+
+/// Applied to mobs who are being monitored by a nanite program
+#define TRAIT_NANITE_MONITORING "nanite_monitoring"

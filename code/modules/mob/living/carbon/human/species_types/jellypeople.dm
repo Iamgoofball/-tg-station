@@ -830,3 +830,11 @@
 #undef JELLY_REGEN_RATE
 #undef JELLY_REGEN_RATE_EMPTY
 #undef BLOOD_VOLUME_LOSE_NUTRITION
+
+
+	var/datum/component/nanites/owner_nanites = H.GetComponent(/datum/component/nanites)
+	if(owner_nanites)
+		//copying over nanite programs/cloud sync with 50% saturation in host and spare
+		owner_nanites.nanite_volume *= 0.5
+		spare.AddComponent(/datum/component/nanites, owner_nanites.nanite_volume)
+		SEND_SIGNAL(spare, COMSIG_NANITE_SYNC, owner_nanites, TRUE, TRUE) //The trues are to copy activation as well

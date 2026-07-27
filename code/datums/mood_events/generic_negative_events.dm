@@ -660,3 +660,11 @@
 	description = "I hear a voice whispering, and I don't like what it says."
 	mood_change = -3
 	timeout = 30 SECONDS
+
+
+/datum/mood_event/nanite_sadness
+	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
+	mood_change = -7
+
+/datum/mood_event/nanite_sadness/add_effects(message)
+	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
