@@ -714,3 +714,11 @@
 	description = "I hear a voice whispering kind words in my ear!"
 	mood_change = 3
 	timeout = 30 SECONDS
+
+
+/datum/mood_event/nanite_happiness
+	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
+	mood_change = 7
+
+/datum/mood_event/nanite_happiness/add_effects(message)
+	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>\n"

@@ -91,6 +91,11 @@
 	icon_state = "abandoned_sci"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/science/nanite
+
+/area/station/science/nanite
+	name = "\improper Nanite Lab"
+	icon_state = "nanite"
 /area/station/science/zoo
 	name = "\improper Science Public Zoo"
 	icon_state = "cytology"

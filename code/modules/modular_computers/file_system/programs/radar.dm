@@ -533,3 +533,6 @@
 #undef RADAR_NOT_TRACKABLE
 #undef RADAR_TRACKABLE
 #undef RADAR_TRACKABLE_ANYWAY
+
+		if (humanoid in GLOB.nanite_sensors_list)
+			return TRUE

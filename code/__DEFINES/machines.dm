@@ -65,6 +65,7 @@
 #define AUTOLATHE (1<<2) //Prints basic designs without research
 #define MECHFAB (1<<3) //Remember, objects utilising this flag should have construction_time and construction_cost vars.
 #define BIOGENERATOR (1<<4) //Uses biomass
+#define NANITE_COMPILER  (1<<7) //Prints nanite disks
 #define LIMBGROWER (1<<5) //Uses synthetic flesh
 #define SMELTER (1<<6) //uses various minerals
 /// Protolathes for offstation roles. More limited tech tree.

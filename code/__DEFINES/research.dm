@@ -13,6 +13,7 @@
 
 //! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
+#define TECHWEB_POINT_TYPE_NANITES "Nanite Research"
 
 //!  Amount of points required to unlock nodes of corresponding tiers
 #define TECHWEB_TIER_1_POINTS 40

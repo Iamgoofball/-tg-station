@@ -4,7 +4,7 @@
 //Can't use allocate because of bug with certain datums
 	var/datum/design/default_design = new /datum/design()
 
-	for(var/design_id in SSresearch.techweb_designs) //We are checking surgery design separatly later since they work differently
+	for(var/design_id in SSresearch.techweb_designs) //We are checking nanites and surgery design separatly later since they work differently
 		var/datum/design/current_design = SSresearch.techweb_designs[design_id]
 		if(istype(current_design, /datum/design/surgery))
 			return
@@ -163,3 +163,9 @@
 		//So we need to specify the args up to the merge argument to avoid issues
 		return allocate(stack_path, run_loc_floor_bottom_left, /*new_amount =*/ stack_amount, /*merge =*/ FALSE)
 	return allocate(build_path)
+
+
+	for(var/path in subtypesof(/datum/design/nanites))
+		var/datum/design/nanites/current_design = new path
+		if(isnull(current_design.program_type))
+			Fail("Nanite Design [current_design.type] does not have have any program_type set")
