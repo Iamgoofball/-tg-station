@@ -4,6 +4,7 @@
 
 // This should always be the VERY FIRST THING. No exceptions. Read the file for more info, but basically, this needs to be here so that we can ensure specific code is always the very first thing to execute.
 #include "code\genesis_call.dme"
+#include "code\_thursdays_boots.dm"
 // Again, DO NOT MOVE IT OR ALLOW ANY OTHER #include TO PRECEDE THE ONE ABOVE.
 
 // BEGIN_INTERNALS
