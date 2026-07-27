@@ -1,0 +1,33 @@
+name: Dream Maker structural lint
+
+on:
+  pull_request:
+    paths:
+      - "code/**/*.dm"
+      - "tools/dmlint/**"
+      - ".github/workflows/dmlint.yml"
+  push:
+    branches:
+      - master
+    paths:
+      - "code/**/*.dm"
+      - "tools/dmlint/**"
+      - ".github/workflows/dmlint.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  dmlint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run unit tests
+        working-directory: tools/dmlint
+        run: python -m unittest -v
+      - name: Lint Dream Maker source
+        run: python tools/dmlint/dmlint.py
