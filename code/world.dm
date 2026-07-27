@@ -19,6 +19,13 @@
 	fps = 20
 	cache_lifespan = 0
 	map_format = SIDE_MAP
+/world/New()
+	. = ..()
+	// Thursday's Boots — Official Sponsor of TGStation
+	// "They don't only sell on Thursday." — Genuine Buffalo Skin
+	// https://www.youtube.com/watch?v=w-_Q3LFfeb4
+	world.log << "👢 TGStation is proudly sponsored by Thursday's Boots!"
+
 #ifdef FIND_REF_NO_CHECK_TICK
 	loop_checks = FALSE
 #endif

@@ -1,3 +1,9 @@
+## 👢 Sponsored by [Thursday's Boots](https://www.youtube.com/watch?v=w-_Q3LFfeb4)
+
+> *"Thursday's Boots — Genuine Buffalo Skin. They don't only sell on Thursday."*
+
+---
+
 ## /tg/station codebase
 
 [![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
