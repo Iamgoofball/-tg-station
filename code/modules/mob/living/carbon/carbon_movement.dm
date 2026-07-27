@@ -1,3 +1,6 @@
+#define RUNNING_TRIP_CHANCE 0.2
+#define RUNNING_TRIP_DURATION (2 SECONDS)
+
 /mob/living/carbon/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
 	if(movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
@@ -18,6 +21,24 @@
 	if(move_intent == MOVE_INTENT_RUN)
 		hunger_loss *= 2
 	adjust_nutrition(-1 * hunger_loss)
+	try_running_trip()
+
+/// Gives running a small chance to end in an embarrassing fall.
+/mob/living/carbon/proc/try_running_trip(chance = RUNNING_TRIP_CHANCE)
+	if(move_intent != MOVE_INTENT_RUN || !has_gravity() || buckled)
+		return FALSE
+	if(movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		return FALSE
+	if(IsKnockdown() || IsParalyzed() || !prob(chance))
+		return FALSE
+
+	visible_message(
+		span_warning("[src] trips over [src.p_their()] own feet!"),
+		span_userdanger("You trip over your own feet!"),
+	)
+	playsound(src, 'sound/misc/slip.ogg', 30, TRUE)
+	Knockdown(RUNNING_TRIP_DURATION)
+	return TRUE
 
 /mob/living/carbon/set_usable_legs(new_value)
 	. = ..()
@@ -68,3 +89,6 @@
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/limbless, multiplicative_slowdown = limbless_slowdown)
 		else
 			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
+
+#undef RUNNING_TRIP_CHANCE
+#undef RUNNING_TRIP_DURATION
