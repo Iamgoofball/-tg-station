@@ -4118,6 +4118,7 @@
 #include "code\modules\cargo\bounty.dm"
 #include "code\modules\cargo\centcom_podlauncher.dm"
 #include "code\modules\cargo\coupon.dm"
+#include "code\modules\cargo\enterprise_integrations.dm"
 #include "code\modules\cargo\exports.dm"
 #include "code\modules\cargo\expressconsole.dm"
 #include "code\modules\cargo\goodies.dm"
