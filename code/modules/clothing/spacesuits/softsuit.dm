@@ -13,16 +13,17 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
-	name = "\improper engineering void helmet"
-	desc = "A CentCom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
-	icon_state = "void"
-	visor_dirt = "void_dirt"
+	name = "\improper utility void helmet"
+	desc = "A matte-black utility void helmet with high-visibility engineering markings and a reinforced salvage visor."
+	icon_state = "syndicate-helm-black-engie"
+	inhand_icon_state = "space_helmet_syndicate"
+	visor_dirt = "helm_dirt"
 
 /obj/item/clothing/suit/space/nasavoid/old
-	name = "\improper engineering voidsuit"
-	icon_state = "void"
-	inhand_icon_state = "void_suit"
-	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making it difficult to move around in."
+	name = "\improper utility voidsuit"
+	icon_state = "syndicate-black-engie"
+	inhand_icon_state = "engi_suit"
+	desc = "A rugged utility voidsuit rebuilt for structural repair work, with segmented plating, bright hazard markings, and just enough flexibility to crawl through maintenance."
 	slowdown = 4
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
