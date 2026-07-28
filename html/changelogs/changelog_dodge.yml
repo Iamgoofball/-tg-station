@@ -1,0 +1,6 @@
+- type: add
+  id: dodge_roll
+  author: harshaaaaw
+  message: Added a dodge roll mechanic — players can perform a dodge roll that briefly avoids all incoming damage, with a short cooldown.
+  changes:
+    - add: Players can now perform a dodge roll (IC verb) that grants brief damage immunity.
