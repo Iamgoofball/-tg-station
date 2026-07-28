@@ -1436,7 +1436,7 @@
 /obj/item/toy/figure/secofficer
 	name = "\improper Security Officer action figure"
 	icon_state = "secofficer"
-	toysay = "I am the law!"
+	toysay = "Secure. Contain. Protect."
 	toysound = 'sound/runtime/complionator/dredd.ogg'
 
 

@@ -1700,8 +1700,8 @@
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
-/obj/item/firing_pin/dna/dredd,
-/obj/item/firing_pin/dna/dredd,
+/obj/item/firing_pin/dna/security,
+/obj/item/firing_pin/dna/security,
 /obj/item/dnainjector/insulated,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/secure)
