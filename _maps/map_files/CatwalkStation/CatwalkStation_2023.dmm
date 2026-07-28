@@ -81318,7 +81318,7 @@
 /area/station/command/vault)
 "vDM" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/soda_cans/thirteenloko{
+/obj/item/reagent_containers/cup/soda_cans/circuitcrush{
 	pixel_x = 14;
 	pixel_y = 3
 	},

@@ -4061,7 +4061,7 @@
 /area/awaymission/museum)
 "GB" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/soda_cans/thirteenloko{
+/obj/item/reagent_containers/cup/soda_cans/circuitcrush{
 	pixel_y = 7
 	},
 /turf/open/floor/iron/cafeteria,
