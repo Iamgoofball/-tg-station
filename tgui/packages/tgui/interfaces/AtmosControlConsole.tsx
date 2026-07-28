@@ -61,7 +61,7 @@ export const AtmosControlConsole = (props) => {
         <Section
           title={selectedChamber ? selectedChamber.name : 'Chamber Reading'}
           buttons={
-            !!data.reconnecting && (
+            data.reconnecting && (
               <Button
                 icon="undo"
                 content="Reconnect"
@@ -70,7 +70,7 @@ export const AtmosControlConsole = (props) => {
             )
           }
         >
-          {!!selectedChamber && !!selectedChamber.gasmix ? (
+          {selectedChamber?.gasmix ? (
             <GasmixParser
               gasmix={selectedChamber.gasmix}
               gasesOnClick={setActiveGasId}
