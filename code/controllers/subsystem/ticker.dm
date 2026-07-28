@@ -178,6 +178,7 @@ SUBSYSTEM_DEF(ticker)
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
+				SSsap_kpi.export_round_end() // SAP KPI telemetry export (Bounty #353)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
 		if(GAME_STATE_FINISHED)

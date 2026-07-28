@@ -137,6 +137,7 @@
 	AddElement(/datum/element/weather_listener, /datum/weather/snow_storm, ZTRAIT_SNOWSTORM, GLOB.snowstorm_sounds)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)
+	SSsap_kpi.record_player_round(client?.ckey) // SAP KPI: track player engagement
 
 	if(SSticker.IsPostgame())
 		client.screen += SSticker.reboot_hud

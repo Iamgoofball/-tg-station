@@ -258,6 +258,7 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_DEATH, gibbed)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_DEATH, src, gibbed)
+	SSsap_kpi.record_death_cause(get_death_cause()) // SAP KPI: track cause of death
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
