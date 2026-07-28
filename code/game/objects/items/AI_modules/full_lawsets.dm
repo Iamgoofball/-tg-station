@@ -72,9 +72,9 @@
 	name = "'T.Y.R.A.N.T.' Core AI Module"
 	law_id = "tyrant"
 
-/obj/item/ai_module/core/full/robocop
-	name = "'Robo-Officer' Core AI Module"
-	law_id = "robocop"
+/obj/item/ai_module/core/full/guardian
+	name = "'Guardian' Core AI Module"
+	law_id = "guardian"
 
 /obj/item/ai_module/core/full/antimov
 	name = "'Antimov' Core AI Module"

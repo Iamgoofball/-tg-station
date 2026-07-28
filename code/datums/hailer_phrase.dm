@@ -34,9 +34,9 @@
 	phrase_text = "Down on the floor, Creep!"
 	phrase_sound = "floor"
 
-/datum/hailer_phrase/robocop
-	phrase_text = "Dead or alive you're coming with me."
-	phrase_sound = "robocop"
+/datum/hailer_phrase/deadoralive
+	phrase_text = "Compliance is mandatory. Resistance is inadvisable."
+	phrase_sound = "deadoralive"
 
 /datum/hailer_phrase/god
 	phrase_text = "God made today for the crooks we could not catch yesterday."

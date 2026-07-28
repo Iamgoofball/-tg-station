@@ -279,12 +279,12 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/robocop_module
-	name = "Robocop Module"
-	desc = "Allows for the construction of a Robocop AI Core Module."
-	id = "robocop_module"
+/datum/design/board/guardian_module
+	name = "Guardian Module"
+	desc = "Allows for the construction of a Guardian AI Core Module."
+	id = "guardian_module"
 	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/core/full/robocop
+	build_path = /obj/item/ai_module/core/full/guardian
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

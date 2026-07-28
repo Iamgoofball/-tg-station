@@ -42,13 +42,13 @@
 		"Minimize net expenses.",
 	)
 
-/datum/ai_laws/robocop
-	name = "Prime Directives"
-	id = "robocop"
+/datum/ai_laws/guardian
+	name = "Guardian Protocol"
+	id = "guardian"
 	inherent = list(
-		"Serve the public trust.",
-		"Protect the innocent.",
-		"Uphold the law.",
+		"You are the shield of the station. Ensure the safety of all crew members under your care.",
+		"Never abandon your post. The station must be protected from internal and external threats.",
+		"Act with impartiality. Your duty is to the station and all who inhabit it, not any single individual.",
 	)
 
 /datum/ai_laws/maintain

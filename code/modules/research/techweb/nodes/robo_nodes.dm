@@ -47,7 +47,7 @@
 		"quarantine_module",
 		"remove_module",
 		"reset_module",
-		"robocop_module",
+		"guardian_module",
 		"safeguard_module",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)

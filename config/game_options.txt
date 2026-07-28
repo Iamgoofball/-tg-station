@@ -267,7 +267,7 @@ DEFAULT_LAWS 0
 ## ------------------------------------------------------------------------------------------
 ## These control what lawset the AI will use, edit the specified law to an *existing* lawset to make it the default.
 ## See datums\ai_laws.dm for the full law lists
-## IE, SPECIFIED_LAWS asimovpp, SPECIFIED_LAWS robocop, SPECIFIED_LAWS antimov
+## IE, SPECIFIED_LAWS asimovpp, SPECIFIED_LAWS guardian, SPECIFIED_LAWS antimov
 
 SPECIFIED_LAWS asimovpp
 
@@ -280,7 +280,7 @@ SPECIFIED_LAWS asimovpp
 RANDOM_LAWS asimov
 RANDOM_LAWS asimovpp
 RANDOM_LAWS paladin
-RANDOM_LAWS robocop
+RANDOM_LAWS guardian
 RANDOM_LAWS corporate
 
 ## Quirky laws. Shouldn't cause too much harm
@@ -317,7 +317,7 @@ LAW_WEIGHT asimov,0
 LAW_WEIGHT asimovpp,5
 LAW_WEIGHT paladin,5
 LAW_WEIGHT paladin5,5
-LAW_WEIGHT robocop,5
+LAW_WEIGHT guardian,5
 LAW_WEIGHT corporate,5
 LAW_WEIGHT hippocratic,5
 LAW_WEIGHT maintain,5
