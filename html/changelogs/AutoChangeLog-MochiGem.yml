@@ -1,0 +1,4 @@
+author: "MochiGem"
+delete-after: True
+changes:
+  - rscadd: "Added Dodge Rolling action with temporary invulnerability and GODMODE state preservation."
