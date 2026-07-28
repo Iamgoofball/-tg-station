@@ -65,7 +65,7 @@
 	)
 
 /// Builds an SAP S/4HANA-style procurement reservation payload without adding an ABAP runtime dependency.
-/datum/cargo_enterprise_integration/proc/build_sap_reservation(pack, pack_id, quantity = 1, cost_center = "CARGO")
+/datum/cargo_enterprise_integration/proc/build_sap_reservation(datum/supply_pack/pack, pack_id, quantity = 1, cost_center = "CARGO")
 	if(!istype(pack))
 		return list()
 
