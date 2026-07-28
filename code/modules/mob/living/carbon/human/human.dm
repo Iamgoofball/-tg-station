@@ -2,6 +2,10 @@
 	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
+	// Give humans the dodge roll ability
+	var/datum/action/cooldown/mob_cooldown/dodge_roll/dodge_action = new(src)
+	dodge_action.Grant(src)
+
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
 	setup_mood()

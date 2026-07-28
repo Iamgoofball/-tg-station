@@ -631,6 +631,7 @@
 	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	languages_native = list(/datum/language/nekomimetic)
 	actions_types = list(/datum/action/item_action/organ_action/go_feral)
+	modifies_speech = TRUE
 	var/feral_mode = FALSE
 
 /obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
@@ -660,6 +661,17 @@
 		add_organ_trait(TRAIT_FERAL_BITER)
 	else
 		remove_organ_trait(TRAIT_FERAL_BITER)
+
+/obj/item/organ/tongue/cat/modify_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] == "*")
+		return
+	message = replacetext(message, regex("th", "g"), "f")
+	message = replacetext(message, regex("Th", "g"), "F")
+	message = replacetext(message, regex("TH", "g"), "F")
+	message = replacetext(message, regex("[rl]", "g"), "w")
+	message = replacetext(message, regex("[RL]", "g"), "W")
+	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/jelly
 	name = "jelly tongue"
