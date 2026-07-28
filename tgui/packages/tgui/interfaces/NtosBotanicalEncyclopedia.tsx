@@ -1,6 +1,6 @@
 import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
-import { SeedTable, SeedData, TraitData } from './SeedTable';
+import { SeedTable, type SeedData, type TraitData } from './SeedTable';
 
 type Data = {
   seeds: SeedData[];
