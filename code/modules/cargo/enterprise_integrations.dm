@@ -1,7 +1,5 @@
-/// Builds no-network Shopify, CRM, and SAP payloads for cargo enterprise integrations.
 /datum/cargo_enterprise_integration
 
-/// Builds a Shopify-style draft listing payload for a supply pack without making an external request.
 /datum/cargo_enterprise_integration/proc/build_shopify_listing(datum/supply_pack/pack, pack_id, quantity = 1)
 	if(!istype(pack))
 		return list()
@@ -24,7 +22,6 @@
 		"tags" = list("cargo", "supply-shuttle", pack.group),
 	)
 
-/// Builds the abandoned cart reminder payload requested by CentCom growth marketing.
 /datum/cargo_enterprise_integration/proc/build_abandoned_cart_alert(customer_name, pack_name, discount_code = "GREYTIDE5")
 	return list(
 		"provider" = "shopify",
@@ -36,7 +33,6 @@
 		"channel" = "pda",
 	)
 
-/// Builds a Salesforce/HubSpot-compatible contact payload without blocking on a real webhook.
 /datum/cargo_enterprise_integration/proc/build_crm_contact(customer_name, role, heard_phrase, violent_churn = FALSE)
 	var/status = "Prospect - Warm"
 	var/sentiment = "neutral"
@@ -64,7 +60,6 @@
 		"notify_security" = violent_churn,
 	)
 
-/// Builds an SAP S/4HANA-style procurement reservation payload without adding an ABAP runtime dependency.
 /datum/cargo_enterprise_integration/proc/build_sap_reservation(datum/supply_pack/pack, pack_id, quantity = 1, cost_center = "CARGO")
 	if(!istype(pack))
 		return list()
@@ -88,7 +83,6 @@
 		"external_call_required" = FALSE,
 	)
 
-/// Serializes payloads through BYOND JSON so webhook callers and tests share the same contract.
 /datum/cargo_enterprise_integration/proc/serialize_payload(list/payload)
 	return json_encode(payload)
 
