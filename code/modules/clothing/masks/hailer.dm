@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	/datum/hailer_phrase/running,
 	/datum/hailer_phrase/dontmove,
 	/datum/hailer_phrase/floor,
-	/datum/hailer_phrase/robocop,
+	/datum/hailer_phrase/deadoralive,
 	/datum/hailer_phrase/god,
 	/datum/hailer_phrase/freeze,
 	/datum/hailer_phrase/imperial,
