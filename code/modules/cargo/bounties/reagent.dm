@@ -76,7 +76,7 @@
 		/datum/reagent/consumable/ethanol/syndicatebomb,
 		/datum/reagent/consumable/ethanol/tequila_sunrise,
 		/datum/reagent/consumable/ethanol/manly_dorf,
-		/datum/reagent/consumable/ethanol/thirteenloko,
+		/datum/reagent/consumable/ethanol/circuitcrush,
 		/datum/reagent/consumable/triple_citrus,
 		/datum/reagent/consumable/ethanol/vodkamartini,
 		/datum/reagent/consumable/ethanol/whiskeysoda,

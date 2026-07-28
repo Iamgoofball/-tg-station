@@ -48,7 +48,7 @@
 		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 15,
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 15,
 		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 10,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5,
+		/obj/item/reagent_containers/cup/soda_cans/circuitcrush = 5,
 	)
 
 /obj/item/storage/cans/sixgamerdrink/PopulateContents()
@@ -65,7 +65,7 @@
 		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 50,
 		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 30,
 		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 15,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5,
+		/obj/item/reagent_containers/cup/soda_cans/circuitcrush = 5,
 	)
 
 /obj/item/storage/cans/sixenergydrink/PopulateContents()

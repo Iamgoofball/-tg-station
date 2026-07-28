@@ -172,7 +172,7 @@
 
 /datum/chemical_reaction/drink/hiveminderaser
 	results = list(/datum/reagent/consumable/ethanol/hiveminderaser = 4)
-	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 2, /datum/reagent/consumable/ethanol/thirteenloko = 1, /datum/reagent/consumable/grenadine = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/black_russian = 2, /datum/reagent/consumable/ethanol/circuitcrush = 1, /datum/reagent/consumable/grenadine = 1)
 
 /datum/chemical_reaction/drink/manhattan
 	results = list(/datum/reagent/consumable/ethanol/manhattan = 3)
@@ -326,8 +326,8 @@
 	results = list(/datum/reagent/consumable/ethanol/driestmartini = 2)
 	required_reagents = list(/datum/reagent/consumable/nothing = 1, /datum/reagent/consumable/ethanol/gin = 1)
 
-/datum/chemical_reaction/drink/thirteenloko
-	results = list(/datum/reagent/consumable/ethanol/thirteenloko = 3)
+/datum/chemical_reaction/drink/circuitcrush
+	results = list(/datum/reagent/consumable/ethanol/circuitcrush = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/coffee = 1, /datum/reagent/consumable/limejuice = 1)
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 

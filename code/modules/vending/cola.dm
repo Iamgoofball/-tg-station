@@ -20,7 +20,7 @@
 		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 3,
 	)
 	contraband = list(
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 6,
+		/obj/item/reagent_containers/cup/soda_cans/circuitcrush = 6,
 		/obj/item/reagent_containers/cup/soda_cans/shamblers = 6,
 		/obj/item/reagent_containers/cup/soda_cans/wellcheers = 6,
 	)
@@ -44,7 +44,7 @@
 		/datum/reagent/consumable/ethanol/gin = 5,
 		/datum/reagent/consumable/ethanol/rum = 5,
 		// A bit rarer, can be dangerous if you take too much
-		/datum/reagent/consumable/ethanol/thirteenloko = 3,
+		/datum/reagent/consumable/ethanol/circuitcrush = 3,
 		/datum/reagent/consumable/ethanol/absinthe = 3,
 		/datum/reagent/consumable/ethanol/hooch = 3,
 		/datum/reagent/consumable/ethanol/moonshine = 3,
