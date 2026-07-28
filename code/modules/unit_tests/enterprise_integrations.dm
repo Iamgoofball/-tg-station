@@ -29,5 +29,16 @@
 	TEST_ASSERT_EQUAL(churned_contact["status"], "Churned (Violent)", "Beanbag victim did not receive violent churn status.")
 	TEST_ASSERT_EQUAL(churned_contact["notify_security"], TRUE, "Violent churn contact did not notify Security.")
 
+	var/list/sap_payload = integration.build_sap_reservation(pack, /datum/supply_pack, 4, "ENG-CARGO")
+	var/list/sap_record = safe_json_decode(integration.serialize_payload(sap_payload))
+	TEST_ASSERT_EQUAL(sap_record["provider"], "sap_s4hana", "SAP procurement provider was incorrect.")
+	TEST_ASSERT_EQUAL(sap_record["event"], "material_reservation", "SAP procurement event was incorrect.")
+	TEST_ASSERT_EQUAL(sap_record["material_id"], "SS13-/datum/supply_pack", "SAP material id was incorrect.")
+	TEST_ASSERT_EQUAL(sap_record["material_group"], "Engineering", "SAP material group was incorrect.")
+	TEST_ASSERT_EQUAL(sap_record["quantity"], 4, "SAP procurement quantity was incorrect.")
+	TEST_ASSERT_EQUAL(sap_record["unit_of_measure"], "EA", "SAP unit of measure was incorrect.")
+	TEST_ASSERT_EQUAL(sap_record["cost_center"], "ENG-CARGO", "SAP cost center was incorrect.")
+	TEST_ASSERT_EQUAL(sap_record["external_call_required"], FALSE, "SAP payload should not perform external calls.")
+
 	qdel(integration)
 	qdel(pack)

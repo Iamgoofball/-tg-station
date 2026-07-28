@@ -1,4 +1,4 @@
-/// Builds no-network Shopify and CRM payloads for cargo enterprise integrations.
+/// Builds no-network Shopify, CRM, and SAP payloads for cargo enterprise integrations.
 /datum/cargo_enterprise_integration
 
 /// Builds a Shopify-style draft listing payload for a supply pack without making an external request.
@@ -64,6 +64,30 @@
 		"notify_security" = violent_churn,
 	)
 
+/// Builds an SAP S/4HANA-style procurement reservation payload without adding an ABAP runtime dependency.
+/datum/cargo_enterprise_integration/proc/build_sap_reservation(pack, pack_id, quantity = 1, cost_center = "CARGO")
+	if(!istype(pack))
+		return list()
+
+	var/material_value = pack.cost
+	if(!isnull(SSeconomy))
+		material_value = pack.get_cost()
+
+	return list(
+		"provider" = "sap_s4hana",
+		"event" = "material_reservation",
+		"material_id" = "SS13-[pack_id]",
+		"material_description" = pack.name,
+		"material_group" = pack.group || "Cargo",
+		"quantity" = max(1, quantity),
+		"unit_of_measure" = "EA",
+		"valuation_amount" = material_value,
+		"currency" = MONEY_SYMBOL,
+		"cost_center" = cost_center,
+		"source_system" = "cargo_shuttle",
+		"external_call_required" = FALSE,
+	)
+
 /// Serializes payloads through BYOND JSON so webhook callers and tests share the same contract.
 /datum/cargo_enterprise_integration/proc/serialize_payload(list/payload)
 	return json_encode(payload)
@@ -80,8 +104,10 @@
 
 	data["enterprise_commerce"] = TRUE
 	data["shopify_listings"] = list()
+	data["sap_procurement_records"] = list()
 	for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
 		UNTYPED_LIST_ADD(data["shopify_listings"], integration.build_shopify_listing(order.pack, order.id))
+		UNTYPED_LIST_ADD(data["sap_procurement_records"], integration.build_sap_reservation(order.pack, order.id))
 
 	data["abandoned_cart_recovery"] = integration.build_abandoned_cart_alert("Greytide Assistant", "Crate of Insulated Gloves")
 	data["service_crm_sample"] = integration.build_crm_contact("Hungry Crew", "Assistant", "where food")
