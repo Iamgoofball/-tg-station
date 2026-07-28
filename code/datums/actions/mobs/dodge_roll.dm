@@ -22,6 +22,8 @@
 	if(!user)
 		return
 
+	var/was_already_godmode = (user.status_flags & GODMODE) != 0
+
 	// Grant temporary invulnerability (no damage taken)
 	user.status_flags |= GODMODE
 	user.visible_message(
@@ -38,11 +40,12 @@
 		step(user, user.dir)
 		sleep(1)
 
-	// Remove invulnerability after roll finishes
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/end_dodge_invulnerability, user), roll_duration)
+	// Remove invulnerability after roll finishes only if user was not originally in godmode
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/end_dodge_invulnerability, user, was_already_godmode), roll_duration)
 
-/proc/end_dodge_invulnerability(mob/living/user)
+/proc/end_dodge_invulnerability(mob/living/user, was_already_godmode = FALSE)
 	if(!user || QDELETED(user))
 		return
-	user.status_flags &= ~GODMODE
+	if(!was_already_godmode)
+		user.status_flags &= ~GODMODE
 	user.transform = matrix() // Reset transform matrix
