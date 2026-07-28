@@ -1,0 +1,4 @@
+author: "louiss72"
+delete-after: True
+changes:
+  - code_imp: "Added Agile/SCRUM planning metadata for station jobs."

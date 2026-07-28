@@ -169,6 +169,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.map_check()) //Even though we initialize before mapping, this is fine because the config is loaded at new
 			log_job_debug("Removed [job.title] due to map config")
 			continue
+		apply_agile_scrum_management(job)
 		new_all_occupations += job
 		name_occupations[job.title] = job
 		for(var/alt_title in job.alternate_titles)
@@ -214,6 +215,12 @@ SUBSYSTEM_DEF(job)
 	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_SETUP)
 
 	return TRUE
+
+/datum/controller/subsystem/job/proc/apply_agile_scrum_management(datum/job/job)
+	if(!job)
+		return
+	job.apply_agile_scrum_defaults()
+	job_debug("SCRUM: [job.title] planned for [job.agile_work_hours]h, KPI: [job.agile_kpi]")
 
 
 /datum/controller/subsystem/job/proc/get_job(rank)

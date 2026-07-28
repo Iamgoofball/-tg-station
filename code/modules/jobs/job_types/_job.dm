@@ -135,6 +135,18 @@
 
 	/// How desensitized this job is to seeing death as a base - applied with the job
 	var/desensitized_base = 1.0
+	/// Standard station role workday budget, in hours, for SCRUM planning.
+	var/agile_work_hours = 8
+	/// The role's default KPI in the station SCRUM board.
+	var/agile_kpi = "Keep the station productive without overworking crew."
+	/// If this role may complete sprint work away from its primary department.
+	var/agile_remote_work = FALSE
+	/// If this role may split sprint work between department and remote duties.
+	var/agile_hybrid_work = TRUE
+	/// If this role is eligible for the standard bowl-rice sprint benefit.
+	var/agile_bowl_rice = TRUE
+	/// If this role is eligible for the standard catwife sprint benefit.
+	var/agile_catwife = TRUE
 
 /datum/job/New()
 	. = ..()
@@ -144,6 +156,14 @@
 	var/new_total_positions = CHECK_MAP_JOB_CHANGE(title, "total_positions")
 	if(isnum(new_total_positions))
 		total_positions = new_total_positions
+
+/datum/job/proc/apply_agile_scrum_defaults()
+	if(agile_work_hours < 1)
+		agile_work_hours = initial(agile_work_hours)
+	if(!agile_kpi)
+		agile_kpi = initial(agile_kpi)
+	if(agile_remote_work && agile_hybrid_work)
+		agile_remote_work = FALSE
 
 /// Executes after the mob has been spawned in the map. Client might not be yet in the mob, and is thus a separate variable.
 /datum/job/proc/after_spawn(mob/living/spawned, client/player_client)
