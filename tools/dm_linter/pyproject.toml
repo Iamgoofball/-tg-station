@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dm-linter"
+version = "1.0.0"
+description = "Standalone DreamMaker (.dm) source code linter"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+keywords = ["linter", "dreammaker", "byond", "dm"]
+
+[project.scripts]
+dm-linter = "dm_linter.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
