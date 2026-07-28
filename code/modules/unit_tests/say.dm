@@ -266,3 +266,39 @@
 
 #undef NORMAL_HEARING_RANGE
 #undef WHISPER_HEARING_RANGE
+
+/datum/unit_test/runechat_effect_parser
+
+/datum/unit_test/runechat_effect_parser/Run()
+	var/list/plain = parse_runechat_effects("Hello there")
+	TEST_ASSERT_EQUAL(plain["text"], "Hello there", "Plain runechat text was modified.")
+	TEST_ASSERT(isnull(plain["color"]), "Plain runechat text acquired a colour effect.")
+	TEST_ASSERT(isnull(plain["motion"]), "Plain runechat text acquired a motion effect.")
+
+	var/list/static_color = parse_runechat_effects("ReD:Hello there")
+	TEST_ASSERT_EQUAL(static_color["text"], "Hello there", "Static colour prefix was not stripped.")
+	TEST_ASSERT_EQUAL(static_color["color"], "red", "Static colour prefix was not parsed case-insensitively.")
+
+	var/list/combined = parse_runechat_effects("rainbow:wave2:Hello there")
+	TEST_ASSERT_EQUAL(combined["text"], "Hello there", "Combined runechat prefixes were not stripped.")
+	TEST_ASSERT_EQUAL(combined["color"], "rainbow", "Combined colour effect was not parsed.")
+	TEST_ASSERT_EQUAL(combined["motion"], "wave2", "Combined motion effect was not parsed.")
+
+	var/list/reversed = parse_runechat_effects("shake:cyan:Hello there")
+	TEST_ASSERT_EQUAL(reversed["text"], "Hello there", "Reverse-order prefixes were not stripped.")
+	TEST_ASSERT_EQUAL(reversed["color"], "cyan", "Reverse-order colour effect was not parsed.")
+	TEST_ASSERT_EQUAL(reversed["motion"], "shake", "Reverse-order motion effect was not parsed.")
+
+	var/list/unknown = parse_runechat_effects("banana:Hello there")
+	TEST_ASSERT_EQUAL(unknown["text"], "banana:Hello there", "Unknown prefix was incorrectly consumed.")
+	TEST_ASSERT(isnull(unknown["color"]), "Unknown prefix acquired a colour effect.")
+	TEST_ASSERT(isnull(unknown["motion"]), "Unknown prefix acquired a motion effect.")
+
+	var/list/duplicate = parse_runechat_effects("red:green:Hello there")
+	TEST_ASSERT_EQUAL(duplicate["text"], "green:Hello there", "Duplicate category prefix was incorrectly consumed.")
+	TEST_ASSERT_EQUAL(duplicate["color"], "red", "First valid colour prefix was not retained.")
+
+	var/list/all_effects = list("yellow", "red", "green", "cyan", "purple", "white", "flash1", "flash2", "flash3", "glow1", "glow2", "glow3", "rainbow", "wave", "wave2", "shake", "slide", "scroll")
+	for(var/effect in all_effects)
+		var/list/parsed = parse_runechat_effects("[effect]:proof")
+		TEST_ASSERT_EQUAL(parsed["text"], "proof", "Required effect [effect] was not recognised.")
