@@ -143,12 +143,12 @@ Building on this, if your obj and worn sprites have the same amount of component
 
 ```c
 /datum/greyscale_config/trek
-	name = "Trek Uniform"
+	name = "Retro Department Uniform"
 	icon_file = 'icons/obj/clothing/under/trek.dmi'
 	json_config = 'code/datums/greyscale/json_configs/trek.json'
 
 /datum/greyscale_config/trek/worn
-	name = "Worn Trek Uniform"
+	name = "Worn Retro Department Uniform"
 	icon_file = 'icons/mob/clothing/under/trek.dmi'
 	//The worn json is exactly the same, and both icon files use identically-named component states; so, we can just inherit the json!
 ```

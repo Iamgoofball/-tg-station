@@ -304,13 +304,13 @@
 	icon_file = 'icons/mob/clothing/under/ethereal.dmi'
 
 /datum/greyscale_config/trek
-	name = "Trek Uniform"
+	name = "Retro Department Uniform"
 	icon_file = 'icons/obj/clothing/under/trek.dmi'
 	json_config = 'code/datums/greyscale/json_configs/trek.json'
-	//All Trek uniforms are different icon_states in the same json so we dont have seperate jsons for all the different types
+	// All retro department uniforms are different icon_states in the same json, so we do not have separate jsons for each type.
 
 /datum/greyscale_config/trek/worn
-	name = "Trek Uniform (Worn)"
+	name = "Retro Department Uniform (Worn)"
 	icon_file = 'icons/mob/clothing/under/trek.dmi'
 
 // DRESSES AND SKIRTS
