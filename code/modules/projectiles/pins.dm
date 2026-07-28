@@ -224,7 +224,7 @@
 	else
 		..()
 
-/obj/item/firing_pin/dna/dredd
+/obj/item/firing_pin/dna/security
 	desc = "This is a DNA-locked firing pin which only authorizes one user. Attempt to fire once to DNA-link. It has a small explosive charge on it."
 	selfdestruct = TRUE
 

@@ -47,7 +47,7 @@
 	phrase_sound = "freeze"
 
 /datum/hailer_phrase/imperial
-	phrase_text = "Stop right there, criminal scum!"
+	phrase_text = "By order of the station, stand down immediately."
 	phrase_sound = "imperial"
 
 /datum/hailer_phrase/bash
@@ -55,7 +55,7 @@
 	phrase_sound = "bash"
 
 /datum/hailer_phrase/harry
-	phrase_text = "Go ahead, make my day."
+	phrase_text = "You've got one chance. Take it."
 	phrase_sound = "harry"
 
 /datum/hailer_phrase/asshole
@@ -75,5 +75,5 @@
 	phrase_sound = "super"
 
 /datum/hailer_phrase/dredd
-	phrase_text = "I am, the LAW!"
+	phrase_text = "You are in violation of station code."
 	phrase_sound = "dredd"
