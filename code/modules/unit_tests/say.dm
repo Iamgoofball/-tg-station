@@ -266,3 +266,35 @@
 
 #undef NORMAL_HEARING_RANGE
 #undef WHISPER_HEARING_RANGE
+/// Felinid speech uses the native speechmod component only while the species is active.
+/datum/unit_test/felinid_owospeak
+	var/list/captured_speech
+
+/datum/unit_test/felinid_owospeak/proc/capture_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	captured_speech = list()
+	captured_speech += speech_args
+
+/datum/unit_test/felinid_owospeak/Run()
+	var/mob/living/carbon/human/test_felinid = allocate(/mob/living/carbon/human/consistent)
+	test_felinid.set_species(/datum/species/human/felinid)
+
+	var/datum/species/human/felinid/felinid_species = test_felinid.dna.species
+	TEST_ASSERT_NOTNULL(felinid_species.owospeak, "Felinid species gain did not install its owospeak component.")
+	TEST_ASSERT(" :3" in felinid_species.owospeak_endings, "The felinid owospeak endings do not include :3.")
+
+	RegisterSignal(test_felinid, COMSIG_MOB_SAY, PROC_REF(capture_speech))
+	test_felinid.say("Hello there, little friend")
+	TEST_ASSERT_NOTNULL(captured_speech, "Felinid speech did not emit COMSIG_MOB_SAY.")
+	TEST_ASSERT(findtext(captured_speech[SPEECH_MESSAGE], "Hewwo thewe, wittwe fwiend") == 1, \
+		"Felinid speech was not transformed through speechmod. Got: [captured_speech[SPEECH_MESSAGE]]")
+
+	UnregisterSignal(test_felinid, COMSIG_MOB_SAY)
+	captured_speech = null
+	test_felinid.set_species(/datum/species/human)
+	RegisterSignal(test_felinid, COMSIG_MOB_SAY, PROC_REF(capture_speech))
+	test_felinid.say("Hello there, little friend")
+	TEST_ASSERT_NOTNULL(captured_speech, "Post-felinid speech did not emit COMSIG_MOB_SAY.")
+	TEST_ASSERT_EQUAL(captured_speech[SPEECH_MESSAGE], "Hello there, little friend", \
+		"Owospeak remained active after the mob lost the felinid species.")

@@ -24,6 +24,21 @@
 	var/original_felinid = TRUE
 	/// Yummy!
 	species_cookie = /obj/item/food/nugget
+	/// Native speech modifier applied only while this species datum is active.
+	var/datum/component/speechmod/owospeak
+	/// Classic owospeak substitutions. Speechmod preserves the input casing.
+	var/static/list/owospeak_replacements = list(
+		"l" = "w",
+		"r" = "w",
+	)
+	/// A random flourish is occasionally appended without making tests probabilistic.
+	var/static/list/owospeak_endings = list(
+		" :3",
+		" owo",
+		" uwu",
+		" nya~",
+		" rawr",
+	)
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
 	if(!pref_load) //Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
@@ -35,7 +50,15 @@
 	// Swapping out feline ears for normal ol' human ears if they have invisible cat ears.
 	if(human_who_gained_species.dna.features[FEATURE_EARS] == SPRITE_ACCESSORY_NONE)
 		mutantears = /obj/item/organ/ears
-	return ..()
+
+	. = ..()
+	QDEL_NULL(owospeak)
+	owospeak = human_who_gained_species.AddComponent(/datum/component/speechmod, replacements = owospeak_replacements, end_string = owospeak_endings, end_string_chance = 30)
+	return .
+
+/datum/species/human/felinid/on_species_loss(mob/living/carbon/human/human_who_lost_species, datum/species/new_species, pref_load)
+	. = ..()
+	QDEL_NULL(owospeak)
 
 /datum/species/human/felinid/get_hiss_sound(mob/living/carbon/human/felinid)
 	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
