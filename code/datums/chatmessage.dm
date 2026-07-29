@@ -4,6 +4,9 @@
 
 #define RUNECHAT_ANIMATION_STEP (0.35 SECONDS)
 #define RUNECHAT_MOTION_DISTANCE 4
+#define RUNECHAT_CHARACTER_FRAME_COUNT 8
+#define RUNECHAT_CHARACTER_FRAME_STEP (0.15 SECONDS)
+#define RUNECHAT_CHARACTER_AMPLITUDE 4
 
 /// How long the chat message's spawn-in animation will occur for
 #define CHAT_MESSAGE_SPAWN_TIME (0.2 SECONDS)
@@ -116,6 +119,100 @@
 		if("white", "flash1", "flash2", "flash3", "glow1", "glow2", "glow3", "rainbow")
 			return "#ffffff"
 	return fallback_color
+
+/// Whether this combination needs character-phased maptext frames.
+/proc/runechat_uses_character_frames(color_effect, motion_effect)
+	return color_effect == "rainbow" || (motion_effect in list("wave", "wave2", "shake"))
+
+/// Builds a deterministic per-character frame while preserving markup and HTML entities.
+/proc/runechat_build_character_frame(text, frame, color_effect, motion_effect)
+	var/static/list/rainbow_colors = list(
+		"#ff0000",
+		"#ff8000",
+		"#ffff00",
+		"#00ff00",
+		"#00ffff",
+		"#0000ff",
+		"#a020f0",
+	)
+	var/static/list/shake_x = list(-2, 1, 2, -1, 0, 2, -2, 1)
+	var/static/list/shake_y = list(1, -2, 2, 0, -1, 1, -1, 2)
+
+	var/result = ""
+	var/markup_buffer = ""
+	var/in_tag = FALSE
+	var/in_entity = FALSE
+	var/visible_index = 0
+	var/character_count = length_char(text)
+
+	for(var/character_index in 1 to character_count)
+		var/character = copytext_char(text, character_index, character_index + 1)
+
+		if(in_tag)
+			markup_buffer += character
+			if(character == ">")
+				result += markup_buffer
+				markup_buffer = ""
+				in_tag = FALSE
+			continue
+
+		if(in_entity)
+			markup_buffer += character
+			if(character == ";")
+				visible_index++
+				result += runechat_style_character(markup_buffer, visible_index, frame, color_effect, motion_effect, rainbow_colors, shake_x, shake_y)
+				markup_buffer = ""
+				in_entity = FALSE
+			continue
+
+		if(character == "<")
+			in_tag = TRUE
+			markup_buffer = character
+			continue
+
+		if(character == "&")
+			in_entity = TRUE
+			markup_buffer = character
+			continue
+
+		visible_index++
+		result += runechat_style_character(character, visible_index, frame, color_effect, motion_effect, rainbow_colors, shake_x, shake_y)
+
+	// Malformed input is preserved rather than discarded.
+	result += markup_buffer
+	return result
+
+/// Wraps one visible character with its phase-specific style.
+/proc/runechat_style_character(character, visible_index, frame, color_effect, motion_effect, list/rainbow_colors, list/shake_x, list/shake_y)
+	var/x_offset = 0
+	var/y_offset = 0
+	var/character_color
+	var/phase = (visible_index - 1 + frame) % RUNECHAT_CHARACTER_FRAME_COUNT
+
+	if(color_effect == "rainbow")
+		character_color = rainbow_colors[((visible_index - 1 + frame) % length(rainbow_colors)) + 1]
+
+	switch(motion_effect)
+		if("wave")
+			y_offset = round(sin((visible_index - 1) * 45 + frame * 45) * RUNECHAT_CHARACTER_AMPLITUDE)
+		if("wave2")
+			x_offset = round(sin((visible_index - 1) * 45 + frame * 45) * 2)
+			y_offset = round(sin((visible_index - 1) * 45 + frame * 45) * RUNECHAT_CHARACTER_AMPLITUDE)
+		if("shake")
+			x_offset = shake_x[phase + 1]
+			y_offset = shake_y[phase + 1]
+
+	if(!character_color && !x_offset && !y_offset)
+		return character
+
+	var/list/styles = list("position:relative")
+	if(x_offset)
+		styles += "left:[x_offset]px"
+	if(y_offset)
+		styles += "top:[y_offset]px"
+	if(character_color)
+		styles += "color:[character_color]"
+	return "<span style='[styles.Join(";")]'>[character]</span>"
 
 /**
  * Constructs a chat message overlay
@@ -253,28 +350,38 @@
 			LAZYSET(language_icons, language_icon_key, language_icon)
 		LAZYADD(prefixes, "\icon[language_icon]")
 
-	text = "[prefixes?.Join("&nbsp;")][text]"
-
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = runechat_effect_initial_color(color_effect, extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color)
 
+	var/prefix_text = prefixes?.Join("&nbsp;")
+	var/emphasized_text = owner.apply_message_emphasis(text)
+	var/list/maptext_frames
+
+	if(runechat_uses_character_frames(color_effect, motion_effect))
+		maptext_frames = list()
+		for(var/frame in 0 to RUNECHAT_CHARACTER_FRAME_COUNT - 1)
+			var/framed_text = runechat_build_character_frame(emphasized_text, frame, color_effect, motion_effect)
+			maptext_frames += "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[prefix_text][framed_text]</span></span>"
+
 	// Approximate text height
-	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>"
+	var/complete_text = maptext_frames ? maptext_frames[1] : "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[prefix_text][emphasized_text]</span></span>"
 
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
+	if(maptext_frames)
+		mheight += RUNECHAT_CHARACTER_AMPLITUDE * 2
 
 
 	if(!VERB_SHOULD_YIELD)
-		return finish_image_generation(mheight, target, owner, complete_text, lifespan, color_effect, motion_effect)
+		return finish_image_generation(mheight, target, owner, complete_text, lifespan, color_effect, motion_effect, maptext_frames)
 
-	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan, color_effect, motion_effect)
+	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan, color_effect, motion_effect, maptext_frames)
 	SSrunechat.message_queue += finish_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
 ///necessary because after that call the proc can resume at the end of the tick and cause overtime.
-/datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan, color_effect, motion_effect)
+/datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan, color_effect, motion_effect, list/maptext_frames)
 	finish_callback = null
 	var/rough_time = REALTIMEOFDAY
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
@@ -368,6 +475,7 @@
 
 	apply_runechat_color_effect(color_effect)
 	apply_runechat_motion_effect(motion_effect, time_before_fade)
+	apply_runechat_character_frames(maptext_frames)
 	RegisterSignal(message_loc, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(loc_z_changed))
 
 	// Register with the runechat SS to handle destruction
@@ -401,32 +509,11 @@
 			animate(color = "#00ff00", time = RUNECHAT_ANIMATION_STEP)
 			animate(color = "#ffffff", time = RUNECHAT_ANIMATION_STEP)
 			animate(color = "#00ffff", time = RUNECHAT_ANIMATION_STEP)
-		if("rainbow")
-			animate(message, color = "#ff0000", time = RUNECHAT_ANIMATION_STEP, loop = -1, flags = ANIMATION_PARALLEL)
-			animate(color = "#ff8000", time = RUNECHAT_ANIMATION_STEP)
-			animate(color = "#ffff00", time = RUNECHAT_ANIMATION_STEP)
-			animate(color = "#00ff00", time = RUNECHAT_ANIMATION_STEP)
-			animate(color = "#00ffff", time = RUNECHAT_ANIMATION_STEP)
-			animate(color = "#0000ff", time = RUNECHAT_ANIMATION_STEP)
-			animate(color = "#a020f0", time = RUNECHAT_ANIMATION_STEP)
 
 /// Applies motion through transforms/maptext offsets, leaving stacking's pixel_z untouched.
 /datum/chatmessage/proc/apply_runechat_motion_effect(motion_effect, visible_time)
 	var/matrix/base_transform = matrix()
 	switch(motion_effect)
-		if("wave")
-			animate(message, transform = base_transform.Translate(0, RUNECHAT_MOTION_DISTANCE), time = RUNECHAT_ANIMATION_STEP, loop = -1, flags = ANIMATION_PARALLEL)
-			animate(transform = matrix(), time = RUNECHAT_ANIMATION_STEP)
-			animate(transform = matrix().Translate(0, -RUNECHAT_MOTION_DISTANCE), time = RUNECHAT_ANIMATION_STEP)
-			animate(transform = matrix(), time = RUNECHAT_ANIMATION_STEP)
-		if("wave2")
-			animate(message, transform = base_transform.Translate(RUNECHAT_MOTION_DISTANCE, RUNECHAT_MOTION_DISTANCE), time = RUNECHAT_ANIMATION_STEP, loop = -1, flags = ANIMATION_PARALLEL)
-			animate(transform = matrix().Translate(-RUNECHAT_MOTION_DISTANCE, -RUNECHAT_MOTION_DISTANCE), time = RUNECHAT_ANIMATION_STEP)
-		if("shake")
-			animate(message, transform = base_transform.Translate(-2, 2), time = 1, loop = -1, flags = ANIMATION_PARALLEL)
-			animate(transform = matrix().Translate(2, -2), time = 1)
-			animate(transform = matrix().Translate(2, 2), time = 1)
-			animate(transform = matrix().Translate(-2, -2), time = 1)
 		if("slide")
 			message.transform = base_transform.Translate(0, 16)
 			animate(message, transform = matrix(), time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
@@ -435,6 +522,15 @@
 		if("scroll")
 			message.maptext_x += CHAT_MESSAGE_WIDTH
 			animate(message, maptext_x = message.maptext_x - (CHAT_MESSAGE_WIDTH * 2), time = animate_lifespan, flags = ANIMATION_PARALLEL)
+
+/// Loops bounded, precomputed character frames on the existing runechat image.
+/datum/chatmessage/proc/apply_runechat_character_frames(list/maptext_frames)
+	if(!length(maptext_frames))
+		return
+
+	animate(message, maptext = MAPTEXT(maptext_frames[1]), time = RUNECHAT_CHARACTER_FRAME_STEP, loop = -1, flags = ANIMATION_PARALLEL)
+	for(var/frame in 2 to length(maptext_frames))
+		animate(maptext = MAPTEXT(maptext_frames[frame]), time = RUNECHAT_CHARACTER_FRAME_STEP)
 
 /datum/chatmessage/proc/get_current_alpha(time_spent)
 	if(time_spent < CHAT_MESSAGE_SPAWN_TIME)
@@ -489,6 +585,9 @@
 	)
 
 #undef RUNECHAT_ANIMATION_STEP
+#undef RUNECHAT_CHARACTER_AMPLITUDE
+#undef RUNECHAT_CHARACTER_FRAME_COUNT
+#undef RUNECHAT_CHARACTER_FRAME_STEP
 #undef RUNECHAT_EFFECT_COLOR
 #undef RUNECHAT_EFFECT_MOTION
 #undef RUNECHAT_EFFECT_TEXT

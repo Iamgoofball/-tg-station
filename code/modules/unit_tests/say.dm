@@ -302,3 +302,32 @@
 	for(var/effect in all_effects)
 		var/list/parsed = parse_runechat_effects("[effect]:proof")
 		TEST_ASSERT_EQUAL(parsed["text"], "proof", "Required effect [effect] was not recognised.")
+
+/datum/unit_test/runechat_character_frames
+
+/datum/unit_test/runechat_character_frames/Run()
+	TEST_ASSERT(runechat_uses_character_frames("rainbow", null), "Rainbow did not select character frames.")
+	TEST_ASSERT(runechat_uses_character_frames(null, "wave"), "Wave did not select character frames.")
+	TEST_ASSERT(runechat_uses_character_frames(null, "wave2"), "Wave2 did not select character frames.")
+	TEST_ASSERT(runechat_uses_character_frames(null, "shake"), "Shake did not select character frames.")
+	TEST_ASSERT(!runechat_uses_character_frames("flash1", "scroll"), "Whole-message effects incorrectly selected character frames.")
+
+	var/rainbow_frame = runechat_build_character_frame("proof", 0, "rainbow", null)
+	TEST_ASSERT(findtext(rainbow_frame, "#ff0000"), "Rainbow frame omitted its first colour.")
+	TEST_ASSERT(findtext(rainbow_frame, "#ff8000"), "Rainbow frame did not distribute colours across characters.")
+	TEST_ASSERT(findtext(rainbow_frame, "position:relative"), "Rainbow frame omitted character spans.")
+
+	var/wave_frame_zero = runechat_build_character_frame("proof", 0, null, "wave")
+	var/wave_frame_one = runechat_build_character_frame("proof", 1, null, "wave")
+	TEST_ASSERT(wave_frame_zero != wave_frame_one, "Wave frames did not advance their character phase.")
+
+	var/combined_frame = runechat_build_character_frame("proof", 2, "rainbow", "wave2")
+	TEST_ASSERT(findtext(combined_frame, "color:"), "Combined frame omitted character colours.")
+	TEST_ASSERT(findtext(combined_frame, "top:"), "Combined frame omitted vertical motion.")
+	TEST_ASSERT(findtext(combined_frame, "left:"), "Combined frame omitted diagonal motion.")
+
+	var/markup_frame = runechat_build_character_frame("<b>A&amp;B</b>", 0, "rainbow", "wave")
+	TEST_ASSERT(findtext(markup_frame, "<b>"), "Character framing corrupted an opening HTML tag.")
+	TEST_ASSERT(findtext(markup_frame, "</b>"), "Character framing corrupted a closing HTML tag.")
+	TEST_ASSERT(findtext(markup_frame, "&amp;"), "Character framing corrupted an HTML entity.")
+	TEST_ASSERT_EQUAL(length_char(markup_frame) - length_char(replacetext(markup_frame, "position:relative", "")), 51, "Character framing did not treat the HTML entity atomically.")
