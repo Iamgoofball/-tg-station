@@ -1,0 +1,4 @@
+// PuzzleScript module includes
+#include "puzzlescript.dm"
+#include "puzzlescript_paper.dm"
+#include "puzzlescript_paper_crafting.dm"
