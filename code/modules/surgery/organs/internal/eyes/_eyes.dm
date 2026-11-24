@@ -71,6 +71,12 @@
 		eyelid_left = new(src, "[eye_icon_state]_l")
 		eyelid_right = new(src, "[eye_icon_state]_r")
 
+// NOVA EDIT ADDITION START - Robots
+/obj/item/organ/eyes/proc/damage_threshold_crossed(new_damage)
+	owner.adjust_temp_blindness(new_damage * 2 SECONDS)
+	owner.set_eye_blur_if_lower(new_damage * rand(6 SECONDS, 12 SECONDS))
+// NOVA EDIT ADDITION END
+
 /obj/item/organ/eyes/Destroy()
 	QDEL_NULL(eyelid_left)
 	QDEL_NULL(eyelid_right)

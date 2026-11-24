@@ -10,6 +10,9 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/crew
 	light_color = LIGHT_COLOR_BLUE
+	// DOPPLER EDIT ADDITION START - Robots
+	var/skip_existing_monitor = FALSE
+	// DOPPLER EDIT ADDITION END
 
 /obj/machinery/computer/crew/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -84,7 +87,10 @@
 
 /obj/machinery/computer/crew/ui_interact(mob/user)
 	. = ..()
-	GLOB.crewmonitor.show(user,src)
+	// DOPPLER EDIT ADDITION START - Robots
+	if(!skip_existing_monitor)
+		GLOB.crewmonitor.show(user,src)
+	// DOPPLER EDIT ADDITION END - Robots
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
@@ -171,6 +177,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_ERT_DEATHSQUAD = 227,
 
 		// ANYTHING ELSE = UNKNOWN_JOB_ID, Unknowns/custom jobs will appear after civilians, and before assistants
+		JOB_ROUSTABOUT = 998, // DOPPLER EDIT CHANGE
 		JOB_ASSISTANT = 999,
 	)
 
@@ -259,10 +266,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 				entry["ijob"] = jobs[trim_assignment]
 
 		// DOPPLER EDIT ADDITION START
-		var/obj/item/organ/stomach/charging/charging_stomach = tracked_human.get_organ_slot(ORGAN_SLOT_STOMACH)
-		if(istype(charging_stomach))
-			entry["is_robot"] = TRUE
-			entry["charge"] = charging_stomach.get_charge_string()
+		if(isandroid(tracked_human))
+			continue
 		// DOPPLER EDIT ADDITION END
 
 		// Broken sensors show garbage data

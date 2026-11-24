@@ -149,6 +149,12 @@
 /datum/wound_pregen_data/proc/wounding_types_valid(suggested_wounding_type)
 	if (required_wounding_type == WOUND_ALL)
 		return TRUE
+	// DOPPLER EDIT START: Robots
+	if (required_wounding_type == WOUND_BLUNT_AND_BURN && (suggested_wounding_type == WOUND_BLUNT || suggested_wounding_type == WOUND_BURN))
+		return TRUE
+	if (required_wounding_type == WOUND_PIERCE_AND_SLASH && (suggested_wounding_type == WOUND_PIERCE || suggested_wounding_type == WOUND_SLASH))
+		return TRUE
+	// NOVA EDIT END
 	return suggested_wounding_type == required_wounding_type
 
 /**

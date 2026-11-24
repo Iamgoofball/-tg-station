@@ -109,7 +109,6 @@
 	back = /obj/item/storage/backpack/rucksack
 	box = /obj/item/storage/box/survival/centcom
 	backpack_contents = list(
-		/obj/item/storage/medkit/robotic_repair/stocked = 1,
 		/obj/item/storage/medkit/tactical_lite = 1,
 		/obj/item/gun/ballistic/automatic/pistol/kieran = 1,
 		/obj/item/melee/baton/doppler_security/loaded = 1,

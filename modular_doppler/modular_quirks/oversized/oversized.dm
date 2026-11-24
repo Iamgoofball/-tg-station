@@ -46,9 +46,6 @@
 	var/datum/action/cooldown/spell/adjust_sprite_size/action = new(src)
 	action.Grant(human_holder)
 
-	var/obj/item/organ/stomach/charging/potential_charger = human_holder.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(istype(potential_charger))
-		potential_charger.become_oversized()
 	ADD_TRAIT(human_holder, TRAIT_MOUNTED_GUN_FREESTYLE, REF(src))
 
 /datum/quirk/oversized/remove()
@@ -103,9 +100,6 @@
 	var/datum/component/seethrough_mob/component = human_holder.GetComponent(/datum/component/seethrough_mob)
 	qdel(component)
 
-	var/obj/item/organ/stomach/charging/potential_charger = human_holder.get_organ_slot(ORGAN_SLOT_STOMACH)
-	if(istype(potential_charger))
-		potential_charger.remove_oversized()
 	REMOVE_TRAIT(human_holder, TRAIT_MOUNTED_GUN_FREESTYLE, REF(src))
 
 /datum/quirk/oversized/proc/on_gain_limb(datum/source, obj/item/bodypart/gained, special)

@@ -1057,6 +1057,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi, seconds_per_tick, times_fired)
+	// NOVA EDIT ADDITION START - Robots
+	if(SEND_SIGNAL(humi, COMSIG_SPECIES_HANDLE_TEMPERATURE, src, seconds_per_tick))
+		return
+	// NOVA EDIT ADDTIION END
 	// When in a cryo unit we suspend all natural body regulation
 	if(istype(humi.loc, /obj/machinery/cryo_cell))
 		return
@@ -1412,7 +1416,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			|| (preference.relevant_organ in mut_organs) \
 			|| (preference.relevant_head_flag && check_head_flags(preference.relevant_head_flag)) \
 			|| (preference.relevant_body_markings in body_markings) \
-		)
+			|| (preference.relevant_species == type)) // DOPPLER EDIT CHANGE
 			features += preference.savefile_key
 
 	GLOB.features_by_species[type] = features

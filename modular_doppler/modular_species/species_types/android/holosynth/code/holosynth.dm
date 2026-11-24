@@ -131,6 +131,14 @@
 		SPECIES_PERK_NAME = "Regenerator",
 		SPECIES_PERK_DESC = "Being made of soft-light, a Holosynth's projector and controller will mend tears in their form and aerogel.",
 	))
+	perks += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_SATELLITE_DISH,
+		SPECIES_PERK_NAME = "Distress Beacon",
+		SPECIES_PERK_DESC = "If you die, whether from power loss or physical trauma, a distress beacon will automatically activate, flagging you up on the \
+		Distress Beacon console in Robotics. You'll show up even if your sensors were off! An EMP will shut off the \
+		beacon if it's active, however.",
+	))
 	return perks
 
 /datum/species/android/holosynth/get_species_description()

@@ -37,3 +37,7 @@
  *	TRAIT SOURCES
 */
 #define TRAIT_GHOSTROLE "ghostrole"
+
+// Trait that stops you from entering stamina crit ever.
+#define TRAIT_NOSTAMCRIT "nostamcrit"
+

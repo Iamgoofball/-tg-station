@@ -24,7 +24,6 @@
 				/obj/item/stack/medical/mesh = 4,
 				/obj/item/stack/medical/mesh/bloody = 2,
 				/obj/item/stack/medical/bandage = 4,
-				/obj/item/reagent_containers/applicator/patch/robotic_patch/synth_repair = 4,
 				/obj/item/stack/medical/gauze/alu_splint = 2,
 				/obj/item/storage/medkit/civil_defense/stocked = 2,
 			),
@@ -44,8 +43,6 @@
 				/obj/item/inhaler/disposable/soberup = 3,
 				/obj/item/inhaler/disposable/aslanane = 3,
 				/obj/item/inhaler/disposable/asthma = 3,
-				/obj/item/reagent_containers/hypospray/medipen/doppler/robot_system_cleaner = 3,
-				/obj/item/reagent_containers/hypospray/medipen/doppler/robot_liquid_solder = 3,
 			),
 		),
 	)

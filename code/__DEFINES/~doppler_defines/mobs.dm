@@ -23,3 +23,4 @@ GLOBAL_LIST_INIT(digi_leg_types, list(
 	DIGI_BUG,
 	DIGI_ETHEREAL,
 ))
+#define ROBOT_POWER_DRAIN 0.00625

@@ -17,3 +17,9 @@
 		"science_hud_projector",
 	)
 	return ..()
+
+/datum/techweb_node/robotics/New()
+	design_ids += list(
+		"duct_tape",
+	)
+	return ..()

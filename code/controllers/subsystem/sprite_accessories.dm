@@ -45,6 +45,10 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	var/list/list/feature_list
 
 	var/list/cached_mutant_icon_files = list() // DOPPLER ADDITION - caches files for the mutant parts system
+	// DOPPLER EDIT ADDITION START - Robots
+	//Android chassis
+	var/list/android_chassis_list
+	// DOPPLER EDIT ADDITION END
 /datum/controller/subsystem/accessories/PreInit() // this stuff NEEDS to be set up before GLOB for preferences and stuff to work so this must go here. sorry
 	setup_lists()
 	init_hair_gradients()
@@ -74,6 +78,10 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	undershirt_list = undershirt_lists[DEFAULT_SPRITE_LIST]
 	undershirt_m = undershirt_lists[MALE_SPRITE_LIST]
 	undershirt_f = undershirt_lists[FEMALE_SPRITE_LIST]
+
+	// DOPPLER EDIT ADDITION START - Robots
+	android_chassis_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/android_chassis)[DEFAULT_SPRITE_LIST]
+	// DOPPLER EDIT ADDITION END - Robots
 
 	socks_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/socks)[DEFAULT_SPRITE_LIST]
 

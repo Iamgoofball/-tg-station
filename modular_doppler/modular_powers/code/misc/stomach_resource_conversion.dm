@@ -42,21 +42,6 @@
 	Special stomach versions below.
 */
 
-/// Charging stomach
-/obj/item/organ/stomach/charging/get_usable_hunger_range()
-	return (CHARGING_STOMACH_CHARGE_FULL - CHARGING_STOMACH_CHARGE_LOW)
-
-/obj/item/organ/stomach/charging/get_hunger_range_minimum()
-	return CHARGING_STOMACH_CHARGE_LOW
-
-/obj/item/organ/stomach/charging/get_hunger_target_value()
-	return internal_cell.charge()
-
-/obj/item/organ/stomach/charging/spend_hunger(base_cost)
-	if(base_cost <= 0)
-		return
-	adjust_charge(-get_adjusted_hunger_cost(base_cost))
-
 /// Ethereal stomach
 /obj/item/organ/stomach/ethereal/get_usable_hunger_range()
 	return ( ETHEREAL_CHARGE_FULL - ETHEREAL_CHARGE_LOWPOWER)

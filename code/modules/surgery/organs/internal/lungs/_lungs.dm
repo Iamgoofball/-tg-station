@@ -116,9 +116,14 @@
 
 	var/breath_noise = "steady in- and exhalation"
 
+// DOPPLER EDIT ADDITION START - Robots
 // assign the respiration_type
 /obj/item/organ/lungs/Initialize(mapload)
-	. = ..()
+	..()
+	setup_breathing()
+
+/obj/item/organ/lungs/proc/setup_breathing()
+// DOPPLER EDIT ADDITION END
 	breath_out = new(BREATH_VOLUME)
 
 	if(safe_nitro_min)

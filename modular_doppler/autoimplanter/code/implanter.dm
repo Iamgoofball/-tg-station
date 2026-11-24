@@ -180,7 +180,7 @@
 		var/obj/item/bodypart/damaged_bodypart = carbon_occupant.get_bodypart(organ_body_zone)
 		playsound(src, 'sound/items/handling/surgery/saw.ogg', 50, TRUE)
 		if(damaged_bodypart.bodytype & BODYTYPE_ROBOTIC)
-			var/datum/wound/slash/flesh/surgery_wound = new /datum/wound/electrical_damage/slash/moderate()
+			var/datum/wound/robotic_bleed/moderate/surgery_wound = new /datum/wound/robotic_bleed/moderate()
 			surgery_wound.apply_wound(damaged_bodypart)
 		else
 			var/datum/wound/slash/flesh/surgery_wound = new /datum/wound/slash/flesh/severe()
